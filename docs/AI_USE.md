@@ -1,0 +1,29 @@
+# AI Use Disclosure
+
+## Tools Used
+
+- Codex/OpenAI-assisted development
+
+## Current Use
+
+AI assistance was used for:
+
+- repository architecture
+- environment configuration guidance
+- documentation drafting
+- Git workflow assistance
+
+## Student Responsibility
+
+The student remains responsible for:
+
+- understanding the code and repository structure
+- validating generated work
+- testing outputs
+- complying with course policies
+
+## Update Log
+
+| Date | Tool | Task | Verification |
+| ---- | ---- | ---- | ------------ |
+| 2026-08-30 | Codex/OpenAI-assisted development | Assignment 2 repository setup, environment configuration, documentation, and Git workflow assistance | Student review and local verification commands |
