@@ -27,3 +27,4 @@ The student remains responsible for:
 | Date | Tool | Task | Verification |
 | ---- | ---- | ---- | ------------ |
 | 2026-08-30 | Codex/OpenAI-assisted development | Assignment 2 repository setup, environment configuration, documentation, and Git workflow assistance | Student review and local verification commands |
+| 2026-08-30 | Codex/OpenAI-assisted development | Updated project geographic framing from a fixed regional pilot to a scalable Metropolitan Statistical Area (MSA), Micropolitan Statistical Area, and County architecture | Git diff review and local Git status verification |
