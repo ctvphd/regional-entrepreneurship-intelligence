@@ -7,6 +7,8 @@ dependencies = [
     "jupyter>=1.1.1",
     "numpy>=2.2.6",
     "pandas>=2.3.3",
+    "requests>=2.34.2",
+    "statsmodels>=0.15.0",
 ]
 
 [build-system]
