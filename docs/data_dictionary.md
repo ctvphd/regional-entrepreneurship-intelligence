@@ -304,3 +304,21 @@ A4.6 adds BDS firm-age raw ingestion, mapping-status fields, startup constructio
 | `int_entrepreneurship` | `startup_rate_lag1` | REAL |  | Yes | Derived after standardization | Prior calendar-year startup rate within geography-industry panel. | Null if year `t - 1` is missing or suppressed. |
 | `int_entrepreneurship` | `startup_rate_lag2` | REAL |  | Yes | Derived after standardization | Two-year lagged startup rate within geography-industry panel. | Null if year `t - 2` is missing or suppressed. |
 | `int_entrepreneurship` | `startup_rate_lag3` | REAL |  | Yes | Derived after standardization | Three-year lagged startup rate within geography-industry panel. | Null if year `t - 3` is missing or suppressed. |
+
+## A4.7 Maintained Addendum
+
+A4.7 verifies QCEW annual CSV source fields and expands `raw_qcew` from provisional identifiers to source-faithful annual area fields. No `stg_qcew`, `int_industry_growth`, growth-rate, or lag construction is performed in A4.7.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `raw_qcew` | `source_geography_id` | TEXT |  | Yes | QCEW `area_fips` | Source-native QCEW area code. | Preserve as text. A4.8 should aggregate county rows to July 2023 CBSA through `ref_geography_county_crosswalk` before analysis. |
+| `raw_qcew` | `source_industry_id` | TEXT |  | Yes | QCEW `industry_code` | Source-native QCEW industry code. | Preserve native QCEW coding; do not assume direct 2022 NAICS comparability until mapping review. |
+| `raw_qcew` | `source_naics_version` | TEXT |  | Yes | Project metadata | Source-vintage note for QCEW industry coding. | A4.7 stores `QCEW source-native NAICS-based industry_code`; source-to-2022 classification is deferred. |
+| `raw_qcew` | `source_ownership_code` | TEXT |  | Yes | QCEW `own_code` | Source-native ownership category. | Recommended A4.8 analytical scope is private sector, `own_code = 5`; do not combine totals with ownership-specific rows. |
+| `raw_qcew` | `source_size_code` | TEXT |  | Yes | QCEW `size_code` | Source-native QCEW establishment-size category. | Included in the raw grain and source row identifier. |
+| `raw_qcew` | `disclosure_code` | TEXT |  | Yes | QCEW `disclosure_code` | Source disclosure/status code. | Nonblank disclosure/status values set `is_suppressed = 1`; preserve original values in `raw_payload`. |
+| `raw_qcew` | `annual_avg_estabs` | TEXT |  | Yes | QCEW annual CSV | Annual average establishment count as published. | Raw layer keeps source text; numeric casting belongs in staging. |
+| `raw_qcew` | `annual_avg_emplvl` | TEXT |  | Yes | QCEW annual CSV | Annual average employment level as published. | Raw layer keeps source text; numeric casting belongs in staging. |
+| `raw_qcew` | `total_annual_wages` | TEXT |  | Yes | QCEW annual CSV | Total annual wages as published. | Raw layer keeps source text; monetary adjustment is deferred. |
+| `raw_qcew` | `avg_annual_pay` | TEXT |  | Yes | QCEW annual CSV | Average annual pay as published. | Raw layer keeps source text; growth and inflation adjustment are deferred. |
+| `raw_qcew` | `source_row_identifier` | TEXT |  | Yes | Project loader | Deterministic identifier built from year, `area_fips`, `own_code`, `industry_code`, `size_code`, and `qtr`. | Used to make raw sample ingestion idempotent. |

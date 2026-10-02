@@ -43,6 +43,7 @@ EXPECTED_INDEXES = {
     "idx_ref_geography_county_geoid",
     "idx_ref_industry_naics",
     "idx_raw_bds_firm_age_source_keys",
+    "idx_raw_qcew_ownership",
     "idx_stg_bds_grain",
     "idx_stg_qcew_grain",
     "idx_stg_cbp_grain",

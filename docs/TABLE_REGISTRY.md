@@ -15,7 +15,7 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `metadata_pipeline_run` | Metadata | One row per pipeline stage run | `pipeline_run_id` | None | Pipeline metadata | Yes | Generated in SQLite | Records run status, timing, stage, counts, warnings, and errors. |
 | `raw_bds` | Raw | One source-native BDS MSA-sector row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.5 | Preserves source-native BDS MSA, sector, year, status values, and raw payload without standardizing geography or NAICS. |
 | `raw_bds_firm_age` | Raw | One source-native BDS MSA-sector-firm-age row | `raw_bds_firm_age_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.6 | Preserves source-native BDS firm-age-coarse rows used for age-0 startup construction. |
-| `raw_qcew` | Raw | One source-native QCEW row | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | QCEW | Yes | Generated in SQLite | Preserves source-native QCEW identifiers and raw payload. Provisional fields must be verified during ingestion. |
+| `raw_qcew` | Raw | One source-native QCEW annual area row | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | QCEW | Yes | Generated in SQLite; sample-loaded in A4.7 | Preserves source-native QCEW area, ownership, industry, size, annual measures, disclosure codes, and raw payload without standardizing geography or NAICS. |
 | `raw_cbp` | Raw | One source-native CBP row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite | Preserves source-native CBP identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_acs` | Raw | One source-native ACS row | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | ACS | Yes | Generated in SQLite | Preserves source-native ACS identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `stg_bds` | Staging | BDS MSA x sector x year x firm-age-derived startup row | `stg_bds_id` | `raw_bds_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | BDS | Yes | Generated in SQLite by A4.6 | Standardizes BDS age-0 startup fields while retaining source-native codes, mapping statuses, and missing/suppression flags. |
@@ -78,3 +78,23 @@ Implemented artifacts:
 - Transformation documentation: `docs/BDS_TRANSFORMATION.md`
 
 The primary startup concept is firm age 0. A4.6 computes `startup_rate` as age-0 firms divided by all firms in the same source-native MSA-sector-year, multiplied by 100, only when numerator and denominator are usable. `startup_rate_lag1`, `startup_rate_lag2`, and `startup_rate_lag3` are created only in `int_entrepreneurship` after standardization, with calendar-year continuity checks. A4.6 does not ingest QCEW, ACS, or CBP, and it does not create the final integrated analytics table or entrepreneurial-gap target.
+
+## A4.7 QCEW Raw Ingestion
+
+Assignment 4.7 profiles official BLS QCEW annual CSV open data and loads a small official area-slice sample into `raw_qcew`.
+
+Implemented artifacts:
+
+- Source profile: `docs/QCEW_SOURCE_PROFILE.md`
+- Loader: `src/regional_entrepreneurship_intelligence/etl/extract_qcew.py`
+- Sample: `data/raw/qcew/sample/qcew_annual_area_sample_2022_2023.csv`
+
+The preferred full-scale acquisition path is the official annual by-area bulk file pattern `https://data.bls.gov/cew/data/files/{year}/csv/{year}_annual_by_area.zip`. The committed sample uses official annual area CSV slices for selected Texas counties and preserves the source-native grain:
+
+```text
+area_fips x own_code x industry_code x size_code x year x qtr
+```
+
+A4.7 records one QCEW manifest row and loads 36 raw rows, including disclosure/status rows, into `raw_qcew`. The loader preserves `area_fips`, `own_code`, `industry_code`, `size_code`, annual measures, disclosure/status columns, and the full row JSON payload.
+
+A4.7 recommends county-level QCEW aggregation to the fixed July 2023 CBSA standard for A4.8, with private-sector ownership (`own_code = 5`) as the default analytical scope. It does not populate `stg_qcew` or `int_industry_growth`, does not calculate growth rates or lags, and does not ingest ACS or CBP.

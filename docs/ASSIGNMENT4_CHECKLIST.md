@@ -22,7 +22,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
 | BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
-| QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
+| QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
@@ -41,6 +41,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Validation framework | Reusable validation logic under `src/regional_entrepreneurship_intelligence/validation/` | Planned |
 | Reference row counts | A4.4 loader/test evidence for geography, county crosswalk, industry, and manifests | Complete |
 | BDS quality metrics | A4.6 quality metrics for BDS raw, staging, intermediate, mapping, missingness, and lag checks | Complete |
+| QCEW raw quality checks | A4.7 QCEW raw row-count, manifest, status-row, and duplicate-key tests | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
 | Duplicates | Duplicate-key checks at relevant grains | In progress |
@@ -116,3 +117,18 @@ A4.6 completes BDS standardization, startup construction, and lag framework only
 - build `analytics_msa_industry_year`
 - create expected entrepreneurship, alignment residuals, or entrepreneurial-gap targets
 - begin Assignment 4.7
+
+## A4.7 Stop Line
+
+A4.7 completes QCEW source profiling and raw sample ingestion only. It profiles official BLS QCEW annual CSV open data, commits a small official annual area-slice sample, loads `raw_qcew`, records a manifest, and verifies raw-ingestion idempotency. It explicitly does not:
+
+- create `stg_qcew`
+- populate `int_industry_growth`
+- calculate QCEW employment, establishment, payroll, or pay growth
+- create QCEW lags
+- aggregate QCEW county rows to CBSA
+- standardize QCEW industry codes to 2022 NAICS
+- ingest ACS or CBP
+- build `analytics_msa_industry_year`
+- create expected entrepreneurship, alignment residuals, or entrepreneurial-gap targets
+- begin Assignment 4.8

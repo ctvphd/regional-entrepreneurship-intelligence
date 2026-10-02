@@ -37,6 +37,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.4 authoritative source selection, CBSA/NAICS reference loading, validation design, crosswalk planning, documentation updates, and Git/GitHub workflow support | Official Census source checks, checksum/manifest recording, idempotent loader tests, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.5 BDS source profiling, native geography/industry review, raw-ingestion architecture, validation planning, documentation updates, and Git/GitHub workflow support | Official Census BDS source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.6 BDS geography mapping audit, NAICS comparability audit, startup measure construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, lag panel-gap tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.7 QCEW source profiling, annual CSV raw-ingestion design, geography/ownership strategy review, documentation updates, and Git/GitHub workflow support | Official BLS QCEW source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -115,3 +116,17 @@ For the Assignment 4.6 BDS standardization stage, student-directed implementatio
 - retaining unresolved or suppressed rows in staging while excluding unusable rows from intermediate construction
 
 A substantive AI-assisted shortcut was rejected during this step: blanket 2017-to-2022 NAICS conversion was not used. The student-directed decision was to validate comparability sector by sector and preserve source-native BDS sector codes and combined-sector conventions.
+
+## Assignment 4.7 Student-Directed Decisions
+
+For the Assignment 4.7 QCEW raw-ingestion stage, student-directed implementation decisions include:
+
+- using official BLS QCEW annual CSV open data only
+- preferring full-scale annual by-area bulk files for later production acquisition
+- committing only a small official area-slice sample rather than the large annual national files
+- preserving native `area_fips`, `own_code`, `industry_code`, `size_code`, annual measure fields, and disclosure/status fields in `raw_qcew`
+- recommending county-level QCEW aggregation to the fixed July 2023 CBSA standard before analytical use
+- recommending private-sector ownership, `own_code = 5`, for the later industry-growth panel unless a later research decision changes the scope
+- deferring `stg_qcew`, growth calculations, lags, and industry standardization to A4.8
+
+A substantive AI-assisted shortcut was rejected during this step: QCEW MSA-area rows were not treated as automatically equivalent to the project's July 2023 CBSA reference. The student-directed decision was to preserve native QCEW area codes in raw ingestion and require county-to-CBSA aggregation or explicit mapping review before standardization.

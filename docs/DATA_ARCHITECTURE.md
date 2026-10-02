@@ -397,3 +397,41 @@ startup_rate = age_0_firms / all_firms * 100
 The denominator comes from the BDS MSA-sector backbone for the same source-native MSA-sector-year. Suppressed, unavailable, nonnumeric, or zero-denominator cases remain null and are not converted to zero.
 
 Startup-rate lags are created only in `int_entrepreneurship`, after geography and industry standardization. Lags use calendar-year continuity within `geography_id x industry_id` panels and do not forward-fill across missing years, MSAs, sectors, or suppressed prior values.
+
+## Implemented Assignment 4.7 QCEW Source Profiling And Raw Ingestion
+
+Assignment 4.7 profiles official BLS QCEW annual CSV open data and loads a small official source-native sample into the raw database layer.
+
+Implemented A4.7 artifacts:
+
+- `docs/QCEW_SOURCE_PROFILE.md`
+- `src/regional_entrepreneurship_intelligence/etl/extract_qcew.py`
+- `data/raw/qcew/sample/qcew_annual_area_sample_2022_2023.csv`
+- `tests/test_qcew_raw_ingestion.py`
+
+The preferred full-scale QCEW acquisition path is the official annual by-area bulk file pattern:
+
+```text
+https://data.bls.gov/cew/data/files/{year}/csv/{year}_annual_by_area.zip
+```
+
+The A4.7 sample uses official annual area CSV slices for selected Texas counties and years 2022-2023. It preserves the source-native QCEW grain:
+
+```text
+area_fips x own_code x industry_code x size_code x year x qtr
+```
+
+Raw ingestion stores:
+
+- `source_year` from QCEW `year`
+- `source_geography_id` from QCEW `area_fips`
+- `source_industry_id` from QCEW `industry_code`
+- `source_ownership_code` from QCEW `own_code`
+- `source_size_code` from QCEW `size_code`
+- annual establishments, employment, wages, and pay as source text
+- QCEW disclosure/status values
+- the complete QCEW row in `raw_payload`
+
+The recommended A4.8 geography strategy is to aggregate county-level QCEW rows to the fixed July 2023 CBSA reference using `ref_geography_county_crosswalk`, rather than assuming historical QCEW MSA area codes directly match the analytical geography vintage. The recommended analytical ownership scope is private sector, `own_code = 5`, unless a later research decision documents another scope.
+
+A4.7 explicitly does not populate `stg_qcew` or `int_industry_growth`, calculate QCEW growth rates or lags, ingest ACS or CBP, or create the final integrated analytics table.
