@@ -13,6 +13,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | ERD | Formal ERD in `docs/` | Complete |
 | Schema matching implementation | Database creation code aligned with ERD and data dictionary | Complete |
 | A4.1 architecture conventions | `docs/DATA_ARCHITECTURE.md` | Complete |
+| Reference year/source seed data | Deterministic `ref_year` and approved `ref_source` helpers with tests | Complete |
 
 ## ETL Implementation - 30 pts
 
@@ -23,11 +24,12 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | Transformations | Staging and intermediate transformation modules | Planned |
-| Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | Planned |
+| Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
-| Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | Planned |
+| Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
 | Rerunnability | Documented idempotency or rerun evidence | Planned |
 | Target pipeline command documented | `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` | Complete |
+| Metadata helper utilities | Source manifest, pipeline run, quality metric, and rejected-record helpers | Complete |
 
 ## Data Quality - 20 pts
 
@@ -37,7 +39,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
 | Duplicates | Duplicate-key checks at relevant grains | Planned |
-| Rejected records | Rejected-record table or file with reason codes | Planned |
+| Rejected records | Rejected-record table or file with reason codes | In progress |
 | Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | Planned |
 | Quality report | Generated report under `reports/` or documented output path | Planned |
 | Bad-record policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
@@ -68,3 +70,12 @@ A4.1 stops after repository audit and data architecture setup. The following are
 - QCEW ingestion
 - CBP ingestion
 - ACS ingestion
+
+## A4.3 Stop Line
+
+A4.3 completes a small reference and metadata framework only. It seeds `ref_year` and `ref_source`, adds helper functions for metadata and quality records, and tests those helpers in temporary SQLite databases. It explicitly does not:
+
+- ingest BDS, QCEW, CBP, or ACS data
+- download full source datasets
+- fabricate geography, CBSA, NAICS, or industry reference rows
+- begin Assignment 4.4 transformations or pipeline execution

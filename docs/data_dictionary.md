@@ -2,6 +2,8 @@
 
 This skeleton data dictionary is generated from the Assignment 4.2 SQLite schema. Raw source fields are provisional until live source ingestion verifies the exact source columns.
 
+Assignment 4.3 adds deterministic seed helpers for the reference and metadata framework. `ref_year` is populated with exactly the 2010-2023 primary study window, and `ref_source` is populated with the four approved source systems. `ref_geography` and `ref_industry` remain empty structural tables until authoritative CBSA/geography and NAICS references or crosswalks are available; no geography or industry records are fabricated.
+
 | Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `analytics_msa_industry_year` | `geography_id` | INTEGER | PK, FK -> ref_geography.geography_id | No | integrated analytics | Surrogate key for standardized geography. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |

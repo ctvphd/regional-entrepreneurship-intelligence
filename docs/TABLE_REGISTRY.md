@@ -1,13 +1,15 @@
 # Table Registry
 
-This registry defines the Assignment 4.2 SQLite schema. It documents the planned table grain, layer, keys, and business rule for every implemented table. Raw tables are intentionally flexible and source-faithful; standardized reference, staging, intermediate, analytics, metadata, and quality tables are normalized where practical.
+This registry defines the Assignment 4 SQLite schema. It documents the planned table grain, layer, keys, business rule, and current population status for every implemented table. Raw tables are intentionally flexible and source-faithful; standardized reference, staging, intermediate, analytics, metadata, and quality tables are normalized where practical.
+
+Assignment 4.3 populates only verified deterministic reference records: `ref_year` contains the 14 primary study years from 2010 through 2023, and `ref_source` contains the four approved source systems. `ref_geography` and `ref_industry` remain structural only until authoritative CBSA/geography and NAICS reference files or crosswalks are added. No geography or industry rows are fabricated.
 
 | Table | Layer | Grain | PK | Main FKs | Source | Materialized? | Committed or generated | Purpose |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ref_geography` | Reference | One standardized geography record per CBSA/source vintage | `geography_id` | None | Reference/crosswalk | Yes | Generated in SQLite | Stores standardized CBSA/MSA geography references without hard-coding historical crosswalk logic. |
-| `ref_industry` | Reference | One NAICS record per NAICS code/version | `industry_id` | None | Reference/crosswalk | Yes | Generated in SQLite | Stores standardized NAICS references with version metadata. |
-| `ref_year` | Reference | One row per calendar year | `year` | None | Deterministic reference | Yes | Generated in SQLite | Identifies the 2010-2023 primary study years. |
-| `ref_source` | Reference | One row per source registry entry | `source_id` | None | Project metadata | Yes | Generated in SQLite | Registers planned source datasets and agencies. |
+| `ref_geography` | Reference | One standardized geography record per CBSA/source vintage | `geography_id` | None | Reference/crosswalk | Yes | Generated in SQLite; structural only in A4.3 | Stores standardized CBSA/MSA geography references without hard-coding historical crosswalk logic. |
+| `ref_industry` | Reference | One NAICS record per NAICS code/version | `industry_id` | None | Reference/crosswalk | Yes | Generated in SQLite; structural only in A4.3 | Stores standardized NAICS references with version metadata. |
+| `ref_year` | Reference | One row per calendar year | `year` | None | Deterministic reference | Yes | Generated and seeded in SQLite | Identifies the 2010-2023 primary study years; A4.3 seeds exactly 14 rows. |
+| `ref_source` | Reference | One row per source registry entry | `source_id` | None | Project metadata | Yes | Generated and seeded in SQLite | Registers the four approved planned source datasets and agencies. |
 | `metadata_source_manifest` | Metadata | One row per retrieved source file or API result | `manifest_id` | `source_id` -> `ref_source` | Pipeline metadata | Yes | Generated in SQLite | Records provenance, access method, source version, raw filename, checksum, and row count. |
 | `metadata_pipeline_run` | Metadata | One row per pipeline stage run | `pipeline_run_id` | None | Pipeline metadata | Yes | Generated in SQLite | Records run status, timing, stage, counts, warnings, and errors. |
 | `raw_bds` | Raw | One source-native BDS row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite | Preserves source-native BDS identifiers and raw payload. Provisional fields must be verified during ingestion. |
@@ -29,3 +31,14 @@ This registry defines the Assignment 4.2 SQLite schema. It documents the planned
 ## Model-Ready Layer
 
 No physical model-ready table is materialized in A4.2. The model-ready layer belongs primarily to Assignments 5-6, where fold-specific targets and leakage-safe derived outcomes can be created within temporal training logic.
+
+## A4.3 Seeded Source Registry
+
+The `src/regional_entrepreneurship_intelligence/database/reference.py` helper seeds the following `ref_source` records only:
+
+- Census Business Dynamics Statistics (BDS)
+- BLS Quarterly Census of Employment and Wages (QCEW)
+- Census County Business Patterns (CBP)
+- American Community Survey (ACS)
+
+Endpoint and homepage fields are intentionally left null until source-specific ingestion verifies the exact official access path used by the pipeline.

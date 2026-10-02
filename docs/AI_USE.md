@@ -33,6 +33,7 @@ The student remains responsible for:
 | 2026-09-27 | Codex/OpenAI-assisted development | Created a Markdown companion version of the Assignment 3 proposal from the submitted PDF content | PDF-to-Markdown consistency checks and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.1 repository audit, data architecture documentation, directory scaffold setup, `.gitignore` review, and Git/GitHub workflow support | Repository structure review, documentation review, Git status checks, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.2 SQLite schema organization, normalization review, ERD/table-registry drafting, data-dictionary skeleton generation, and schema smoke-test support | Schema initialization, unittest smoke test, documentation review, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.3 reference-table implementation, metadata helper design, unit-test planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite unittest execution, reference row-count checks, documentation review, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -59,3 +60,15 @@ For the Assignment 4.2 schema stage, student-directed design decisions include:
 - keeping fold-specific entrepreneurial-gap construction out of the database to avoid modeling leakage
 
 No substantive AI suggestion was rejected or corrected during this A4.2 schema step. This disclosure should be updated in a later Assignment 4 segment when there is a genuine AI suggestion that the student corrects or rejects.
+
+## Assignment 4.3 Student-Directed Decisions
+
+For the Assignment 4.3 reference and metadata stage, student-directed implementation decisions include:
+
+- seeding only deterministic `ref_year` values for 2010-2023
+- registering only the four approved source systems: BDS, QCEW, CBP, and ACS
+- leaving source endpoint URL fields null until source-specific ingestion verifies the exact official access paths
+- adding metadata helpers for manifests, pipeline runs, table metrics, and rejected records before live ingestion begins
+- testing with temporary SQLite databases and synthetic metadata records only
+
+A substantive AI-assisted path was corrected during this step: geography and NAICS/industry reference rows were not manually populated from memory or generic assumptions. That idea was rejected because those tables need authoritative CBSA/geography and NAICS source references or crosswalks to preserve auditability and avoid false joins.

@@ -118,7 +118,7 @@ Raw data should preserve native NAICS values and any available NAICS vintage or 
 | Staging | `stg_` | `stg_bds`, `stg_qcew`, `stg_cbp`, `stg_acs` |
 | Intermediate | `int_` | `int_entrepreneurship`, `int_industry_growth`, `int_regional_controls`, `int_business_structure` |
 | Analytics | `analytics_` | `analytics_msa_industry_year` |
-| Metadata / quality | `metadata_`, `quality_`, `rejected_` | `metadata_source_manifest`, `quality_pipeline_run`, `rejected_staging_records` |
+| Metadata / quality | `metadata_`, `quality_` | `metadata_source_manifest`, `metadata_pipeline_run`, `quality_rejected_record`, `quality_table_metric` |
 
 The Assignment 4.2 schema implements these conventions in `src/regional_entrepreneurship_intelligence/database/schema.py`.
 
@@ -280,3 +280,23 @@ Assignment 4.2 implements indexes for:
 - quality/rejected-record review
 
 Indexes are intentionally moderate until real query patterns emerge during later Assignment 4 work.
+
+## Implemented Assignment 4.3 Reference And Metadata Framework
+
+Assignment 4.3 adds reference seed helpers, metadata helpers, tests, and documentation without starting live source ingestion.
+
+Implemented artifacts:
+
+- `src/regional_entrepreneurship_intelligence/database/reference.py`
+- `src/regional_entrepreneurship_intelligence/database/metadata.py`
+- `tests/test_reference_data.py`
+- `tests/test_metadata.py`
+
+The reference helper populates:
+
+- `ref_year`: exactly the 14 primary study years, 2010-2023
+- `ref_source`: Census Business Dynamics Statistics (BDS), BLS Quarterly Census of Employment and Wages (QCEW), Census County Business Patterns (CBP), and American Community Survey (ACS)
+
+The helper does not populate `ref_geography` or `ref_industry`. Those tables require authoritative CBSA/geography and NAICS references or crosswalks. Fabricating rows would create false lineage and could corrupt later joins, so they remain structural until verified source files are available.
+
+The metadata helper supports inserting source-manifest rows, starting/updating/finishing pipeline-run rows, storing quality metrics, and recording rejected records. The tests use temporary SQLite databases and synthetic metadata records only; they do not pollute the project database, download source data, or call external APIs.
