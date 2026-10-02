@@ -34,6 +34,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.1 repository audit, data architecture documentation, directory scaffold setup, `.gitignore` review, and Git/GitHub workflow support | Repository structure review, documentation review, Git status checks, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.2 SQLite schema organization, normalization review, ERD/table-registry drafting, data-dictionary skeleton generation, and schema smoke-test support | Schema initialization, unittest smoke test, documentation review, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.3 reference-table implementation, metadata helper design, unit-test planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite unittest execution, reference row-count checks, documentation review, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.4 authoritative source selection, CBSA/NAICS reference loading, validation design, crosswalk planning, documentation updates, and Git/GitHub workflow support | Official Census source checks, checksum/manifest recording, idempotent loader tests, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -72,3 +73,16 @@ For the Assignment 4.3 reference and metadata stage, student-directed implementa
 - testing with temporary SQLite databases and synthetic metadata records only
 
 A substantive AI-assisted path was corrected during this step: geography and NAICS/industry reference rows were not manually populated from memory or generic assumptions. That idea was rejected because those tables need authoritative CBSA/geography and NAICS source references or crosswalks to preserve auditability and avoid false joins.
+
+## Assignment 4.4 Student-Directed Decisions
+
+For the Assignment 4.4 authoritative reference stage, student-directed implementation decisions include:
+
+- using official Census CBSA delineation and NAICS reference files rather than unofficial lists
+- selecting the July 2023 CBSA delineation as a fixed geography vintage for later source mapping
+- adding a county-to-CBSA crosswalk table because county membership has a different grain from CBSA geography
+- using the 2022 NAICS structure as the analytical reference version while preserving 2012/2017/2022 concordance files for later mapping
+- not applying speculative NAICS crosswalk mappings before source-native NAICS versions are verified
+- testing reference loading in temporary SQLite databases rather than writing to the project database
+
+A substantive AI-assisted shortcut was rejected during this step: simplified manually curated MSA or 2-digit NAICS lists were not used. The student-directed standard was to preserve official source files, checksums, manifests, and documented vintage/version choices before any BDS, QCEW, CBP, or ACS ingestion begins.

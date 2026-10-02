@@ -14,6 +14,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Schema matching implementation | Database creation code aligned with ERD and data dictionary | Complete |
 | A4.1 architecture conventions | `docs/DATA_ARCHITECTURE.md` | Complete |
 | Reference year/source seed data | Deterministic `ref_year` and approved `ref_source` helpers with tests | Complete |
+| Authoritative geography/industry references | Census CBSA and NAICS assets, loader, schema updates, and tests | Complete |
 
 ## ETL Implementation - 30 pts
 
@@ -27,7 +28,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
 | Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
-| Rerunnability | Documented idempotency or rerun evidence | Planned |
+| Rerunnability | Documented idempotency or rerun evidence | In progress |
 | Target pipeline command documented | `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` | Complete |
 | Metadata helper utilities | Source manifest, pipeline run, quality metric, and rejected-record helpers | Complete |
 
@@ -36,9 +37,10 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
 | Validation framework | Reusable validation logic under `src/regional_entrepreneurship_intelligence/validation/` | Planned |
+| Reference row counts | A4.4 loader/test evidence for geography, county crosswalk, industry, and manifests | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
-| Duplicates | Duplicate-key checks at relevant grains | Planned |
+| Duplicates | Duplicate-key checks at relevant grains | In progress |
 | Rejected records | Rejected-record table or file with reason codes | In progress |
 | Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | Planned |
 | Quality report | Generated report under `reports/` or documented output path | Planned |
@@ -79,3 +81,13 @@ A4.3 completes a small reference and metadata framework only. It seeds `ref_year
 - download full source datasets
 - fabricate geography, CBSA, NAICS, or industry reference rows
 - begin Assignment 4.4 transformations or pipeline execution
+
+## A4.4 Stop Line
+
+A4.4 completes authoritative geography and NAICS reference loading only. It loads Census CBSA and NAICS reference assets, records manifests, validates uniqueness and foreign-key compatibility, and verifies rerun behavior. It explicitly does not:
+
+- ingest BDS, QCEW, CBP, or ACS observations
+- calculate startup rates, lag variables, employment growth, or analytical targets
+- apply speculative NAICS crosswalk mappings
+- mix multiple CBSA vintages inside the reference layer
+- begin Assignment 4.5

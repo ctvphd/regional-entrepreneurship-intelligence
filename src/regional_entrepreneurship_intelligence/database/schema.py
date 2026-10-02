@@ -65,6 +65,22 @@ SCHEMA_STATEMENTS: tuple[str, ...] = (
     );
     """,
     """
+    CREATE TABLE IF NOT EXISTS ref_geography_county_crosswalk (
+        county_crosswalk_id INTEGER PRIMARY KEY,
+        geography_id INTEGER NOT NULL REFERENCES ref_geography(geography_id),
+        cbsa_code TEXT NOT NULL,
+        county_name TEXT NOT NULL,
+        state_name TEXT NOT NULL,
+        state_fips TEXT NOT NULL CHECK (length(state_fips) = 2),
+        county_fips TEXT NOT NULL CHECK (length(county_fips) = 3),
+        county_geoid TEXT NOT NULL CHECK (length(county_geoid) = 5),
+        central_outlying TEXT CHECK (central_outlying IS NULL OR central_outlying IN ('Central', 'Outlying')),
+        source_vintage TEXT NOT NULL,
+        notes TEXT,
+        UNIQUE (cbsa_code, county_geoid, source_vintage)
+    );
+    """,
+    """
     CREATE TABLE IF NOT EXISTS metadata_source_manifest (
         manifest_id INTEGER PRIMARY KEY,
         source_id INTEGER REFERENCES ref_source(source_id),
@@ -374,6 +390,8 @@ SCHEMA_STATEMENTS: tuple[str, ...] = (
 
 INDEX_STATEMENTS: tuple[str, ...] = (
     "CREATE INDEX IF NOT EXISTS idx_ref_geography_cbsa ON ref_geography(cbsa_code);",
+    "CREATE INDEX IF NOT EXISTS idx_ref_geography_county_cbsa ON ref_geography_county_crosswalk(cbsa_code);",
+    "CREATE INDEX IF NOT EXISTS idx_ref_geography_county_geoid ON ref_geography_county_crosswalk(county_geoid);",
     "CREATE INDEX IF NOT EXISTS idx_ref_industry_naics ON ref_industry(naics_code);",
     "CREATE INDEX IF NOT EXISTS idx_manifest_source_year ON metadata_source_manifest(source_id, source_year);",
     "CREATE INDEX IF NOT EXISTS idx_pipeline_run_status_stage ON metadata_pipeline_run(status, stage);",

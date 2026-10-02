@@ -1,12 +1,13 @@
 # Entity Relationship Diagram
 
-This ERD documents the Assignment 4.2 SQLite schema implemented in `src/regional_entrepreneurship_intelligence/database/schema.py`.
+This ERD documents the Assignment 4 SQLite schema implemented in `src/regional_entrepreneurship_intelligence/database/schema.py`.
 
 ## Normalization Review
 
 The implemented logical design is normalized to 3NF where practical:
 
 - Reference tables isolate geography, industry, year, and source concepts.
+- A dedicated county crosswalk preserves CBSA-county membership at its own grain rather than repeating county fields in `ref_geography`.
 - Standardized staging, intermediate, and analytics tables use reference-table foreign keys instead of repeating descriptive geography and industry attributes.
 - The canonical analytical table uses the grain `MSA x 2-digit NAICS x year` and does not store global expected entrepreneurship, residual alignment, or final entrepreneurial-gap targets.
 - Metadata and quality tables are separated from analytical data so provenance, run state, rejected records, and table metrics do not create repeating groups inside analytical tables.
@@ -23,6 +24,7 @@ erDiagram
     REF_GEOGRAPHY ||--o{ STG_QCEW : standardizes
     REF_GEOGRAPHY ||--o{ STG_CBP : standardizes
     REF_GEOGRAPHY ||--o{ STG_ACS : standardizes
+    REF_GEOGRAPHY ||--o{ REF_GEOGRAPHY_COUNTY_CROSSWALK : contains
     REF_GEOGRAPHY ||--o{ INT_ENTREPRENEURSHIP : keys
     REF_GEOGRAPHY ||--o{ INT_INDUSTRY_GROWTH : keys
     REF_GEOGRAPHY ||--o{ INT_REGIONAL_CONTROLS : keys
@@ -74,6 +76,7 @@ erDiagram
 | Table | PK | Main FKs | Purpose |
 | --- | --- | --- | --- |
 | `ref_geography` | `geography_id` | None | Standardized CBSA/MSA geography reference. |
+| `ref_geography_county_crosswalk` | `county_crosswalk_id` | `geography_id` | County-to-CBSA membership by source vintage. |
 | `ref_industry` | `industry_id` | None | Standardized NAICS reference. |
 | `ref_year` | `year` | None | Year reference and primary study-window marker. |
 | `ref_source` | `source_id` | None | Source registry. |
@@ -101,7 +104,7 @@ The intermediate tables are intended to contribute values to `analytics_msa_indu
 
 Indexes are implemented for:
 
-- geography and industry lookup fields (`cbsa_code`, `naics_code`)
+- geography, county crosswalk, and industry lookup fields (`cbsa_code`, `county_geoid`, `naics_code`)
 - source manifest lookup by source/year
 - pipeline run lookup by status/stage
 - source-native raw keys for audit and review

@@ -15,6 +15,7 @@ EXPECTED_TABLES = {
     "ref_industry",
     "ref_year",
     "ref_source",
+    "ref_geography_county_crosswalk",
     "metadata_source_manifest",
     "metadata_pipeline_run",
     "raw_bds",
@@ -37,6 +38,8 @@ EXPECTED_TABLES = {
 
 EXPECTED_INDEXES = {
     "idx_ref_geography_cbsa",
+    "idx_ref_geography_county_cbsa",
+    "idx_ref_geography_county_geoid",
     "idx_ref_industry_naics",
     "idx_stg_bds_grain",
     "idx_stg_qcew_grain",

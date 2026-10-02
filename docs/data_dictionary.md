@@ -2,7 +2,9 @@
 
 This skeleton data dictionary is generated from the Assignment 4.2 SQLite schema. Raw source fields are provisional until live source ingestion verifies the exact source columns.
 
-Assignment 4.3 adds deterministic seed helpers for the reference and metadata framework. `ref_year` is populated with exactly the 2010-2023 primary study window, and `ref_source` is populated with the four approved source systems. `ref_geography` and `ref_industry` remain empty structural tables until authoritative CBSA/geography and NAICS references or crosswalks are available; no geography or industry records are fabricated.
+Assignment 4.3 adds deterministic seed helpers for the reference and metadata framework. `ref_year` is populated with exactly the 2010-2023 primary study window, and `ref_source` is populated with the four approved source systems.
+
+Assignment 4.4 loads authoritative Census reference files. `ref_geography` uses the July 2023 CBSA delineation vintage, `ref_geography_county_crosswalk` preserves county-to-CBSA membership, and `ref_industry` uses the 2022 NAICS structure as the analytical reference version. Official 2012/2017/2022 NAICS concordance files are preserved for later source-specific mapping, but no speculative crosswalk mappings are applied in A4.4.
 
 | Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -256,3 +258,21 @@ Assignment 4.3 adds deterministic seed helpers for the reference and metadata fr
 | `stg_qcew` | `is_missing` | INTEGER |  | Yes | QCEW staging | Boolean-like indicator that a value is missing. | Missingness is not suppression and is not true zero. |
 | `stg_qcew` | `is_suppressed` | INTEGER |  | Yes | QCEW staging | Boolean-like indicator that a value or row is suppressed. | Suppression is not zero; preserve separately from missingness. |
 | `stg_qcew` | `notes` | TEXT |  | Yes | QCEW staging | Free-text notes. |  |
+
+## A4.4 Maintained Addendum
+
+The generated A4.2 dictionary is supplemented by the A4.4 county crosswalk and reference-loading decisions below.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `ref_geography_county_crosswalk` | `county_crosswalk_id` | INTEGER | PK | No | Census CBSA List 1 | Primary key for a county membership row. | One row per CBSA x county x source vintage. |
+| `ref_geography_county_crosswalk` | `geography_id` | INTEGER | FK -> ref_geography.geography_id | No | Census CBSA List 1 | Surrogate key for the parent CBSA record. | Must match the same source vintage represented by the parent CBSA. |
+| `ref_geography_county_crosswalk` | `cbsa_code` | TEXT | Unique key component | No | Census CBSA List 1 | Five-digit CBSA code. | Used with `county_geoid` and `source_vintage` to prevent duplicate memberships. |
+| `ref_geography_county_crosswalk` | `county_name` | TEXT |  | No | Census CBSA List 1 | County or county-equivalent name. | Preserve official file spelling. |
+| `ref_geography_county_crosswalk` | `state_name` | TEXT |  | No | Census CBSA List 1 | State or territory name. | Preserve official file spelling. |
+| `ref_geography_county_crosswalk` | `state_fips` | TEXT |  | No | Census CBSA List 1 | Two-digit state FIPS code. | Store as text to preserve leading zeroes. |
+| `ref_geography_county_crosswalk` | `county_fips` | TEXT |  | No | Census CBSA List 1 | Three-digit county FIPS code. | Store as text to preserve leading zeroes. |
+| `ref_geography_county_crosswalk` | `county_geoid` | TEXT | Unique key component | No | Census CBSA List 1 | Five-digit state-plus-county GEOID. | Derived directly from state and county FIPS values in the official file. |
+| `ref_geography_county_crosswalk` | `central_outlying` | TEXT |  | Yes | Census CBSA List 1 | Central or outlying county classification. | Values constrained to `Central` or `Outlying` when present. |
+| `ref_geography_county_crosswalk` | `source_vintage` | TEXT | Unique key component | No | Census CBSA List 1 | Reference vintage label. | A4.4 uses `July 2023 CBSA delineation`. |
+| `ref_geography_county_crosswalk` | `notes` | TEXT |  | Yes | Project metadata | Free-text provenance notes. | Does not replace manifest-level source metadata. |

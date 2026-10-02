@@ -300,3 +300,45 @@ The reference helper populates:
 The helper does not populate `ref_geography` or `ref_industry`. Those tables require authoritative CBSA/geography and NAICS references or crosswalks. Fabricating rows would create false lineage and could corrupt later joins, so they remain structural until verified source files are available.
 
 The metadata helper supports inserting source-manifest rows, starting/updating/finishing pipeline-run rows, storing quality metrics, and recording rejected records. The tests use temporary SQLite databases and synthetic metadata records only; they do not pollute the project database, download source data, or call external APIs.
+
+## Implemented Assignment 4.4 Geography And NAICS References
+
+Assignment 4.4 loads small authoritative public reference files from official Census sources into the reference layer. These assets are stored in `data/external/reference/` with official filenames preserved.
+
+Implemented A4.4 artifacts:
+
+- `data/external/reference/list1_2023.xlsx`
+- `data/external/reference/2022_NAICS_Structure.xlsx`
+- `data/external/reference/2022_to_2017_NAICS.xlsx`
+- `data/external/reference/2017_to_2022_NAICS.xlsx`
+- `data/external/reference/2017_to_2012_NAICS.xlsx`
+- `data/external/reference/2012_to_2017_NAICS.xlsx`
+- `tests/test_geography_reference.py`
+- `tests/test_industry_reference.py`
+
+The loader command is:
+
+```powershell
+uv run python -m regional_entrepreneurship_intelligence.database.reference
+```
+
+The command initializes the schema if needed, records reference-file manifests, and loads geography and industry reference tables. It does not ingest BDS, QCEW, CBP, or ACS data.
+
+### Geography Standardization
+
+The selected geography standard is the U.S. Census Bureau July 2023 CBSA delineation List 1 file. The file reflects OMB/Census metropolitan and micropolitan delineations based on the 2020 standards. A4.4 uses this as a fixed-vintage reference framework for later mapping of source records.
+
+Loaded geography tables:
+
+- `ref_geography`: one row per CBSA/source vintage
+- `ref_geography_county_crosswalk`: one row per CBSA/county/source vintage
+
+The July 2023 vintage is preserved in `source_vintage`. `valid_from_year` and `valid_to_year` remain null because the selected workbook identifies a delineation vintage but does not provide record-level historical validity periods. Later ingestion should map source-native county or CBSA identifiers to this fixed reference vintage instead of silently mixing CBSA vintages.
+
+The county crosswalk table is needed because county-to-CBSA membership is a different grain from the CBSA area table. It will support later QCEW/CBP county aggregation and geography validation.
+
+### NAICS Standardization
+
+The analytical industry reference standard is the U.S. Census Bureau 2022 NAICS Structure with Change Indicator. A4.4 loads the 2022 hierarchy into `ref_industry`, including official combined two-digit sectors such as `31-33`, `44-45`, and `48-49`.
+
+The study period spans 2010-2023, so relevant NAICS versions include 2012, 2017, and 2022. Official Census concordance files for 2012-to-2017, 2017-to-2012, 2017-to-2022, and 2022-to-2017 are preserved as reference assets and recorded in the source manifest. A4.4 does not apply speculative mappings across versions; source-specific transformation should decide how to use concordances once each source's native NAICS vintage is verified.
