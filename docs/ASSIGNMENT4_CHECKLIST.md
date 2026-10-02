@@ -26,7 +26,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
-| Other source transformations | QCEW, CBP, and ACS transformation modules | Planned |
+| Other source transformations | QCEW transformation complete; CBP and ACS transformation modules remain planned | In progress |
 | Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
 | Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
@@ -42,6 +42,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Reference row counts | A4.4 loader/test evidence for geography, county crosswalk, industry, and manifests | Complete |
 | BDS quality metrics | A4.6 quality metrics for BDS raw, staging, intermediate, mapping, missingness, and lag checks | Complete |
 | QCEW raw quality checks | A4.7 QCEW raw row-count, manifest, status-row, and duplicate-key tests | Complete |
+| QCEW transformation quality checks | A4.8 QCEW mapping, aggregation, growth, lag, duplicate-key, and idempotency tests | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
 | Duplicates | Duplicate-key checks at relevant grains | In progress |
@@ -132,3 +133,16 @@ A4.7 completes QCEW source profiling and raw sample ingestion only. It profiles 
 - build `analytics_msa_industry_year`
 - create expected entrepreneurship, alignment residuals, or entrepreneurial-gap targets
 - begin Assignment 4.8
+
+## A4.8 Stop Line
+
+A4.8 completes QCEW standardization, industry-growth construction, and growth-lag framework only. It moves QCEW through `raw_qcew`, `stg_qcew`, and `int_industry_growth`; records mapping/exclusion/coverage quality metrics; and documents county aggregation, private ownership, nominal-dollar treatment, growth formulas, and lag formulas. It explicitly does not:
+
+- ingest ACS
+- ingest CBP
+- join BDS and QCEW
+- build `analytics_msa_industry_year`
+- create expected entrepreneurship
+- create alignment residuals
+- create entrepreneurial-gap targets
+- begin Assignment 4.9

@@ -19,11 +19,11 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `raw_cbp` | Raw | One source-native CBP row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite | Preserves source-native CBP identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_acs` | Raw | One source-native ACS row | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | ACS | Yes | Generated in SQLite | Preserves source-native ACS identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `stg_bds` | Staging | BDS MSA x sector x year x firm-age-derived startup row | `stg_bds_id` | `raw_bds_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | BDS | Yes | Generated in SQLite by A4.6 | Standardizes BDS age-0 startup fields while retaining source-native codes, mapping statuses, and missing/suppression flags. |
-| `stg_qcew` | Staging | MSA x 2-digit NAICS x year where supported by QCEW | `stg_qcew_id` | `raw_qcew_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | QCEW | Yes | Generated in SQLite | Standardizes QCEW employment, establishments, payroll, and average pay fields. |
+| `stg_qcew` | Staging | Aggregated QCEW CBSA-sector-year row | `stg_qcew_id` | `raw_qcew_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | QCEW | Yes | Generated in SQLite by A4.8 | Standardizes private-sector QCEW county rows to July 2023 CBSA-sector-year geography with coverage and suppression indicators. |
 | `stg_cbp` | Staging | MSA x 2-digit NAICS x year where supported by CBP | `stg_cbp_id` | `raw_cbp_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | CBP | Yes | Generated in SQLite | Standardizes CBP business-structure fields for validation/context. |
 | `stg_acs` | Staging | MSA x year | `stg_acs_id` | `raw_acs_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `year` | ACS | Yes | Generated in SQLite | Standardizes ACS regional control fields for MSA-year joins. |
 | `int_entrepreneurship` | Intermediate | Standardized MSA x directly comparable sector x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | BDS-derived | Yes | Generated in SQLite by A4.6 | Holds standardized BDS entrepreneurship measures and startup-rate lags without final gap targets. |
-| `int_industry_growth` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | QCEW-derived | Yes | Generated in SQLite | Holds industry level and growth measures, with nominal/real-adjustment flag. |
+| `int_industry_growth` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | QCEW-derived | Yes | Generated in SQLite by A4.8 | Holds nominal QCEW industry levels, growth measures, selected growth lags, coverage flags, and nominal/real-adjustment flag. |
 | `int_regional_controls` | Intermediate | MSA x year | `(geography_id, year)` | `geography_id`, `year`, `source_manifest_id`, `pipeline_run_id` | ACS-derived | Yes | Generated in SQLite | Holds regional population, income, education, labor-force, and unemployment controls. |
 | `int_business_structure` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | CBP-derived | Yes | Generated in SQLite | Holds business-structure measures used for validation/context. |
 | `analytics_msa_industry_year` | Analytics | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `pipeline_run_id` | Integrated analytical panel | Yes | Generated in SQLite | Canonical clean analytical table. It intentionally excludes global expected entrepreneurship, residual alignment, and final gap target fields. |
@@ -98,3 +98,17 @@ area_fips x own_code x industry_code x size_code x year x qtr
 A4.7 records one QCEW manifest row and loads 36 raw rows, including disclosure/status rows, into `raw_qcew`. The loader preserves `area_fips`, `own_code`, `industry_code`, `size_code`, annual measures, disclosure/status columns, and the full row JSON payload.
 
 A4.7 recommends county-level QCEW aggregation to the fixed July 2023 CBSA standard for A4.8, with private-sector ownership (`own_code = 5`) as the default analytical scope. It does not populate `stg_qcew` or `int_industry_growth`, does not calculate growth rates or lags, and does not ingest ACS or CBP.
+
+## A4.8 QCEW Standardization, Growth, And Lags
+
+Assignment 4.8 moves QCEW through `raw_qcew` to `stg_qcew` and `int_industry_growth`.
+
+Implemented artifacts:
+
+- Transform module: `src/regional_entrepreneurship_intelligence/etl/transform_qcew.py`
+- Transformation documentation: `docs/QCEW_TRANSFORMATION.md`
+- Focused tests: `tests/test_qcew_mapping.py`, `tests/test_qcew_transform.py`, `tests/test_qcew_growth.py`, and `tests/test_qcew_lags.py`
+
+A4.8 uses county-level source rows, maps counties to the fixed July 2023 CBSA reference, and aggregates private-sector (`own_code = 5`) sector-level rows only. Additive measures are summed; average annual pay is recalculated after aggregation. Dollar measures remain nominal.
+
+Growth rates use `(value_t - value_t_minus_1) / value_t_minus_1` with calendar-year continuity checks. Employment and establishment growth receive 1-, 2-, and 3-year lags; payroll and average-pay growth receive one-year lags. A4.8 does not ingest ACS or CBP, join BDS and QCEW, build `analytics_msa_industry_year`, or create entrepreneurial-gap targets.

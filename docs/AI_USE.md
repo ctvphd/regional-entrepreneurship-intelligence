@@ -38,6 +38,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.5 BDS source profiling, native geography/industry review, raw-ingestion architecture, validation planning, documentation updates, and Git/GitHub workflow support | Official Census BDS source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.6 BDS geography mapping audit, NAICS comparability audit, startup measure construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, lag panel-gap tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.7 QCEW source profiling, annual CSV raw-ingestion design, geography/ownership strategy review, documentation updates, and Git/GitHub workflow support | Official BLS QCEW source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.8 QCEW county-to-CBSA standardization, ownership/NAICS audit, industry-growth construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, growth/lag edge-case tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -130,3 +131,19 @@ For the Assignment 4.7 QCEW raw-ingestion stage, student-directed implementation
 - deferring `stg_qcew`, growth calculations, lags, and industry standardization to A4.8
 
 A substantive AI-assisted shortcut was rejected during this step: QCEW MSA-area rows were not treated as automatically equivalent to the project's July 2023 CBSA reference. The student-directed decision was to preserve native QCEW area codes in raw ingestion and require county-to-CBSA aggregation or explicit mapping review before standardization.
+
+## Assignment 4.8 Student-Directed Decisions
+
+For the Assignment 4.8 QCEW standardization stage, student-directed implementation decisions include:
+
+- selecting county-level QCEW aggregation to the fixed July 2023 CBSA standard
+- using private ownership only, `own_code = 5`, for the industry-growth panel
+- excluding total and government ownership rows to prevent double counting
+- preserving QCEW source-native industry codes while allowing only direct 2022 sector matches into the intermediate layer
+- summing additive measures and recalculating average annual pay after aggregation
+- preserving wage and payroll values as nominal dollars
+- using simple percent growth rather than log growth as the primary Assignment 4 definition
+- creating 1-, 2-, and 3-year employment and establishment growth lags with calendar continuity checks
+- deferring ACS, CBP, source integration, and final target construction
+
+A substantive AI-assisted shortcut was rejected during this step: county average-pay values were not averaged across counties. The student-directed rule was to recalculate average annual pay from aggregated wages and employment after county-to-CBSA aggregation.

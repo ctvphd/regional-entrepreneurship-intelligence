@@ -23,7 +23,10 @@ REJECTION_REASON_CODES = {
     "failed_reference_match",
     "unresolved_geography",
     "unresolved_industry",
+    "excluded_ownership",
     "duplicate_standardized_key",
+    "incomplete_aggregation",
+    "missing_required_measure",
     "missing_required_startup_measure",
     "other",
 }

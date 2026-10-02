@@ -118,3 +118,9 @@ Indexes are implemented for:
 - quality review by run/reason and run/table
 
 The schema avoids excessive indexes until real query patterns emerge during later Assignment 4 implementation.
+
+## A4.8 QCEW Update
+
+Assignment 4.8 expands `stg_qcew` and `int_industry_growth` while preserving the same ERD relationships. `stg_qcew` now stores QCEW county-to-CBSA mapping status, selected ownership scope, standardized CBSA and sector codes, county coverage indicators, and nominal annual measures. `int_industry_growth` now stores the standardized CBSA-sector-year QCEW panel with nominal level measures, growth rates, selected growth lags, completeness indicators, and source lineage.
+
+No new relationship to ACS, CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.8.

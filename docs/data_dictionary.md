@@ -322,3 +322,32 @@ A4.7 verifies QCEW annual CSV source fields and expands `raw_qcew` from provisio
 | `raw_qcew` | `total_annual_wages` | TEXT |  | Yes | QCEW annual CSV | Total annual wages as published. | Raw layer keeps source text; monetary adjustment is deferred. |
 | `raw_qcew` | `avg_annual_pay` | TEXT |  | Yes | QCEW annual CSV | Average annual pay as published. | Raw layer keeps source text; growth and inflation adjustment are deferred. |
 | `raw_qcew` | `source_row_identifier` | TEXT |  | Yes | Project loader | Deterministic identifier built from year, `area_fips`, `own_code`, `industry_code`, `size_code`, and `qtr`. | Used to make raw sample ingestion idempotent. |
+
+## A4.8 Maintained Addendum
+
+A4.8 expands QCEW staging and intermediate documentation for county-to-CBSA aggregation, nominal measures, growth, and lags.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `stg_qcew` | `source_geography_id` | TEXT |  | Yes | QCEW `area_fips` | Comma-separated county GEOIDs contributing to the aggregated CBSA-sector-year row. | Preserve lineage for county aggregation. |
+| `stg_qcew` | `source_ownership_code` | TEXT |  | Yes | QCEW `own_code` | Ownership code selected for staging. | A4.8 uses private ownership only, `5`. |
+| `stg_qcew` | `ownership_scope` | TEXT |  | Yes | Project rule | Human-readable ownership scope. | Do not mix total ownership with ownership-specific rows. |
+| `stg_qcew` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | QCEW geography mapping status. | County rows mapped through July 2023 crosswalk use `crosswalk_required`. |
+| `stg_qcew` | `industry_mapping_status` | TEXT |  | Yes | Mapping audit | QCEW industry mapping status. | Exact 2022 sector matches are `directly_comparable`; unresolved source codes are retained in quality metadata. |
+| `stg_qcew` | `total_annual_wages_nominal` | REAL |  | Yes | Aggregated QCEW | Sum of county total annual wages. | Nominal dollars; no deflator applied in A4.8. |
+| `stg_qcew` | `average_annual_pay_nominal` | REAL |  | Yes | Derived after aggregation | Recalculated average annual pay. | `round(total_annual_wages_nominal / employment)` when denominator is valid. |
+| `stg_qcew` | `counties_expected` | INTEGER |  | Yes | July 2023 county crosswalk | Number of counties expected for the CBSA. | Used to flag partial coverage. |
+| `stg_qcew` | `counties_observed` | INTEGER |  | Yes | QCEW raw rows | Number of contributing source counties observed. | Must equal expected counties for complete aggregation. |
+| `stg_qcew` | `counties_suppressed` | INTEGER |  | Yes | QCEW disclosure flags | Number of contributing counties with suppression/status flags. | Suppressed counties are not treated as zero. |
+| `int_industry_growth` | `total_annual_wages_nominal` | REAL |  | Yes | `stg_qcew` | Nominal annual wages at CBSA-sector-year grain. | Not real-adjusted. |
+| `int_industry_growth` | `average_annual_pay_nominal` | REAL |  | Yes | `stg_qcew` | Nominal average annual pay at CBSA-sector-year grain. | Recalculated after county aggregation. |
+| `int_industry_growth` | `employment_growth` | REAL |  | Yes | Derived | Annual employment growth. | Null when prior calendar year or valid denominator is unavailable. |
+| `int_industry_growth` | `establishment_growth` | REAL |  | Yes | Derived | Annual establishment growth. | Null when prior calendar year or valid denominator is unavailable. |
+| `int_industry_growth` | `payroll_growth` | REAL |  | Yes | Derived | Annual nominal payroll growth. | Do not label as real growth. |
+| `int_industry_growth` | `wage_growth` | REAL |  | Yes | Derived | Annual nominal average-pay growth. | Do not label as real growth. |
+| `int_industry_growth` | `employment_growth_lag1` | REAL |  | Yes | Derived | One-year lag of employment growth. | Requires actual `t - 1` year in same geography-industry panel. |
+| `int_industry_growth` | `employment_growth_lag2` | REAL |  | Yes | Derived | Two-year lag of employment growth. | Requires actual `t - 2` year in same geography-industry panel. |
+| `int_industry_growth` | `employment_growth_lag3` | REAL |  | Yes | Derived | Three-year lag of employment growth. | Requires actual `t - 3` year in same geography-industry panel. |
+| `int_industry_growth` | `establishment_growth_lag1` | REAL |  | Yes | Derived | One-year lag of establishment growth. | Requires actual `t - 1` year in same geography-industry panel. |
+| `int_industry_growth` | `establishment_growth_lag2` | REAL |  | Yes | Derived | Two-year lag of establishment growth. | Requires actual `t - 2` year in same geography-industry panel. |
+| `int_industry_growth` | `establishment_growth_lag3` | REAL |  | Yes | Derived | Three-year lag of establishment growth. | Requires actual `t - 3` year in same geography-industry panel. |

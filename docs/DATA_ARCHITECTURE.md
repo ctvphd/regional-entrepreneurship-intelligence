@@ -435,3 +435,28 @@ Raw ingestion stores:
 The recommended A4.8 geography strategy is to aggregate county-level QCEW rows to the fixed July 2023 CBSA reference using `ref_geography_county_crosswalk`, rather than assuming historical QCEW MSA area codes directly match the analytical geography vintage. The recommended analytical ownership scope is private sector, `own_code = 5`, unless a later research decision documents another scope.
 
 A4.7 explicitly does not populate `stg_qcew` or `int_industry_growth`, calculate QCEW growth rates or lags, ingest ACS or CBP, or create the final integrated analytics table.
+
+## Implemented Assignment 4.8 QCEW Standardization And Lag Framework
+
+Assignment 4.8 standardizes QCEW county-level annual rows to the fixed July 2023 CBSA geography and constructs nominal industry-growth measures.
+
+Implemented A4.8 artifacts:
+
+- `src/regional_entrepreneurship_intelligence/etl/transform_qcew.py`
+- `docs/QCEW_TRANSFORMATION.md`
+- `tests/test_qcew_mapping.py`
+- `tests/test_qcew_transform.py`
+- `tests/test_qcew_growth.py`
+- `tests/test_qcew_lags.py`
+
+A4.8 selects county aggregation over direct historical MSA records because county identifiers provide the clearest path to the fixed July 2023 CBSA reference. The selected ownership scope is private ownership, `own_code = 5`, to avoid double counting total and ownership-specific records.
+
+The QCEW intermediate grain is:
+
+```text
+geography_id x industry_id x year
+```
+
+Conceptually this is `MSA/CBSA x 2022 NAICS 2-digit sector x year`. Additive measures are summed across counties, and average annual pay is recalculated after aggregation. Dollar measures remain nominal. Growth rates and lags require calendar-year continuity within each geography-industry panel.
+
+A4.8 does not ingest ACS or CBP, join BDS and QCEW, build the final analytics table, or create model targets.

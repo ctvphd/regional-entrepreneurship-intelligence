@@ -115,3 +115,9 @@ Before `stg_qcew` and `int_industry_growth` can be built, A4.8 must:
 - classify QCEW native industry codes against the 2022 NAICS reference
 - preserve disclosure codes and avoid converting non-disclosed values to zero
 - calculate employment, establishment, payroll, and pay growth only after standardization
+
+## A4.8 Resolution
+
+A4.8 implements the county-level aggregation strategy recommended above. Private ownership (`own_code = 5`) is the selected analytical scope. County records are mapped through the July 2023 CBSA county crosswalk, additive measures are summed, and average annual pay is recalculated from aggregated total annual wages divided by annual average employment.
+
+The transformation documentation is maintained in `docs/QCEW_TRANSFORMATION.md`.
