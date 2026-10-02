@@ -6,12 +6,12 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
-| 3NF design | Normalized schema documentation and implemented database schema | Planned |
-| Primary keys and foreign keys | Schema SQL or database utility code defining PK/FK relationships | Planned |
-| Constraints | Schema implementation with type, nullability, uniqueness, and check constraints where appropriate | Planned |
-| Indexing | Documented indexes for lookup, joins, and analytical query paths | Planned |
-| ERD | Formal ERD in `docs/` | Planned |
-| Schema matching implementation | Database creation code aligned with ERD and data dictionary | Planned |
+| 3NF design | Normalized schema documentation and implemented database schema | Complete |
+| Primary keys and foreign keys | Schema SQL or database utility code defining PK/FK relationships | Complete |
+| Constraints | Schema implementation with type, nullability, uniqueness, and check constraints where appropriate | Complete |
+| Indexing | Documented indexes for lookup, joins, and analytical query paths | Complete |
+| ERD | Formal ERD in `docs/` | Complete |
+| Schema matching implementation | Database creation code aligned with ERD and data dictionary | Complete |
 | A4.1 architecture conventions | `docs/DATA_ARCHITECTURE.md` | Complete |
 
 ## ETL Implementation - 30 pts
@@ -47,10 +47,10 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
-| ERD | Formal diagram in `docs/` | Planned |
-| Data dictionary | Field-level dictionary for tables and analytical variables | Planned |
+| ERD | Formal diagram in `docs/` | Complete |
+| Data dictionary | Field-level dictionary for tables and analytical variables | Complete |
 | ETL documentation | Source-specific and end-to-end pipeline documentation | Planned |
-| Docstrings | Docstrings in ETL, database, and validation modules | Planned |
+| Docstrings | Docstrings in ETL, database, and validation modules | In progress |
 | Setup instructions | README and Assignment 4 documentation | Planned |
 | Safe review path | Raw-data policy and reproducibility guidance in `docs/DATA_ARCHITECTURE.md` | Complete |
 | Git history | Meaningful commits for Assignment 4 segments | In progress |

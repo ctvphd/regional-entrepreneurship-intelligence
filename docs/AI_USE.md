@@ -32,6 +32,7 @@ The student remains responsible for:
 | 2026-09-27 | Codex/OpenAI-assisted development | Assignment 3 proposal submission-readiness review, PDF placement, scientific-method checklist review, and Git/GitHub workflow support | PDF text extraction, rendered-page inspection, repository status checks, and Git diff review |
 | 2026-09-27 | Codex/OpenAI-assisted development | Created a Markdown companion version of the Assignment 3 proposal from the submitted PDF content | PDF-to-Markdown consistency checks and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.1 repository audit, data architecture documentation, directory scaffold setup, `.gitignore` review, and Git/GitHub workflow support | Repository structure review, documentation review, Git status checks, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.2 SQLite schema organization, normalization review, ERD/table-registry drafting, data-dictionary skeleton generation, and schema smoke-test support | Schema initialization, unittest smoke test, documentation review, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -45,3 +46,16 @@ For the Assignment 4.1 planning stage, student-directed architectural decisions 
 - prioritizing auditability and traceability
 
 No substantive AI suggestion was rejected or corrected during this A4.1 setup step. This disclosure should be updated in a later Assignment 4 segment when there is a genuine AI suggestion that the student corrects or rejects.
+
+## Assignment 4.2 Student-Directed Decisions
+
+For the Assignment 4.2 schema stage, student-directed design decisions include:
+
+- retaining the layered architecture from A4.1
+- preserving raw, staging, intermediate, analytics, and metadata/quality versions rather than overwriting source data
+- using `MSA x 2-digit NAICS x year` as the final analytical grain
+- using 2010-2023 as the primary Assignment 4 study window
+- using SQLite and Python's standard `sqlite3` library for transparency and reproducibility
+- keeping fold-specific entrepreneurial-gap construction out of the database to avoid modeling leakage
+
+No substantive AI suggestion was rejected or corrected during this A4.2 schema step. This disclosure should be updated in a later Assignment 4 segment when there is a genuine AI suggestion that the student corrects or rejects.

@@ -1,0 +1,113 @@
+# Entity Relationship Diagram
+
+This ERD documents the Assignment 4.2 SQLite schema implemented in `src/regional_entrepreneurship_intelligence/database/schema.py`.
+
+## Normalization Review
+
+The implemented logical design is normalized to 3NF where practical:
+
+- Reference tables isolate geography, industry, year, and source concepts.
+- Standardized staging, intermediate, and analytics tables use reference-table foreign keys instead of repeating descriptive geography and industry attributes.
+- The canonical analytical table uses the grain `MSA x 2-digit NAICS x year` and does not store global expected entrepreneurship, residual alignment, or final entrepreneurial-gap targets.
+- Metadata and quality tables are separated from analytical data so provenance, run state, rejected records, and table metrics do not create repeating groups inside analytical tables.
+
+Documented exception:
+
+- Raw tables are intentionally not forced into strict 3NF. They preserve source-native identifiers and a raw payload for provenance and auditability. This is a deliberate exception because normalizing unknown source-native columns before ingestion would make raw data harder to review and trace.
+
+## High-Level ERD
+
+```mermaid
+erDiagram
+    REF_GEOGRAPHY ||--o{ STG_BDS : standardizes
+    REF_GEOGRAPHY ||--o{ STG_QCEW : standardizes
+    REF_GEOGRAPHY ||--o{ STG_CBP : standardizes
+    REF_GEOGRAPHY ||--o{ STG_ACS : standardizes
+    REF_GEOGRAPHY ||--o{ INT_ENTREPRENEURSHIP : keys
+    REF_GEOGRAPHY ||--o{ INT_INDUSTRY_GROWTH : keys
+    REF_GEOGRAPHY ||--o{ INT_REGIONAL_CONTROLS : keys
+    REF_GEOGRAPHY ||--o{ INT_BUSINESS_STRUCTURE : keys
+    REF_GEOGRAPHY ||--o{ ANALYTICS_MSA_INDUSTRY_YEAR : keys
+
+    REF_INDUSTRY ||--o{ STG_BDS : standardizes
+    REF_INDUSTRY ||--o{ STG_QCEW : standardizes
+    REF_INDUSTRY ||--o{ STG_CBP : standardizes
+    REF_INDUSTRY ||--o{ INT_ENTREPRENEURSHIP : keys
+    REF_INDUSTRY ||--o{ INT_INDUSTRY_GROWTH : keys
+    REF_INDUSTRY ||--o{ INT_BUSINESS_STRUCTURE : keys
+    REF_INDUSTRY ||--o{ ANALYTICS_MSA_INDUSTRY_YEAR : keys
+
+    REF_YEAR ||--o{ STG_BDS : year
+    REF_YEAR ||--o{ STG_QCEW : year
+    REF_YEAR ||--o{ STG_CBP : year
+    REF_YEAR ||--o{ STG_ACS : year
+    REF_YEAR ||--o{ INT_ENTREPRENEURSHIP : year
+    REF_YEAR ||--o{ INT_INDUSTRY_GROWTH : year
+    REF_YEAR ||--o{ INT_REGIONAL_CONTROLS : year
+    REF_YEAR ||--o{ INT_BUSINESS_STRUCTURE : year
+    REF_YEAR ||--o{ ANALYTICS_MSA_INDUSTRY_YEAR : year
+
+    REF_SOURCE ||--o{ METADATA_SOURCE_MANIFEST : describes
+    REF_SOURCE ||--o{ QUALITY_REJECTED_RECORD : source
+    METADATA_SOURCE_MANIFEST ||--o{ RAW_BDS : manifests
+    METADATA_SOURCE_MANIFEST ||--o{ RAW_QCEW : manifests
+    METADATA_SOURCE_MANIFEST ||--o{ RAW_CBP : manifests
+    METADATA_SOURCE_MANIFEST ||--o{ RAW_ACS : manifests
+
+    METADATA_PIPELINE_RUN ||--o{ RAW_BDS : run
+    METADATA_PIPELINE_RUN ||--o{ RAW_QCEW : run
+    METADATA_PIPELINE_RUN ||--o{ RAW_CBP : run
+    METADATA_PIPELINE_RUN ||--o{ RAW_ACS : run
+    METADATA_PIPELINE_RUN ||--o{ QUALITY_REJECTED_RECORD : run
+    METADATA_PIPELINE_RUN ||--o{ QUALITY_TABLE_METRIC : run
+    METADATA_PIPELINE_RUN ||--o{ ANALYTICS_MSA_INDUSTRY_YEAR : run
+
+    RAW_BDS ||--o{ STG_BDS : stages
+    RAW_QCEW ||--o{ STG_QCEW : stages
+    RAW_CBP ||--o{ STG_CBP : stages
+    RAW_ACS ||--o{ STG_ACS : stages
+
+```
+
+## Table Purposes And Keys
+
+| Table | PK | Main FKs | Purpose |
+| --- | --- | --- | --- |
+| `ref_geography` | `geography_id` | None | Standardized CBSA/MSA geography reference. |
+| `ref_industry` | `industry_id` | None | Standardized NAICS reference. |
+| `ref_year` | `year` | None | Year reference and primary study-window marker. |
+| `ref_source` | `source_id` | None | Source registry. |
+| `metadata_source_manifest` | `manifest_id` | `source_id` | Source retrieval manifest. |
+| `metadata_pipeline_run` | `pipeline_run_id` | None | Pipeline run metadata. |
+| `raw_bds` | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | Source-faithful BDS records. |
+| `raw_qcew` | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | Source-faithful QCEW records. |
+| `raw_cbp` | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | Source-faithful CBP records. |
+| `raw_acs` | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | Source-faithful ACS records. |
+| `stg_bds` | `stg_bds_id` | raw, manifest, run, geography, industry, year | Standardized BDS staging. |
+| `stg_qcew` | `stg_qcew_id` | raw, manifest, run, geography, industry, year | Standardized QCEW staging. |
+| `stg_cbp` | `stg_cbp_id` | raw, manifest, run, geography, industry, year | Standardized CBP staging. |
+| `stg_acs` | `stg_acs_id` | raw, manifest, run, geography, year | Standardized ACS staging. |
+| `int_entrepreneurship` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate entrepreneurship measures. |
+| `int_industry_growth` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate industry-growth measures. |
+| `int_regional_controls` | `(geography_id, year)` | geography, year, manifest, run | Intermediate MSA-year controls. |
+| `int_business_structure` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate CBP-derived business structure. |
+| `analytics_msa_industry_year` | `(geography_id, industry_id, year)` | geography, industry, year, run | Canonical analysis-ready panel. |
+| `quality_rejected_record` | `rejection_id` | run, source | Rejected-record and review-reason tracking. |
+| `quality_table_metric` | `metric_id` | run | Quality metric tracking. |
+
+The intermediate tables are intended to contribute values to `analytics_msa_industry_year` during later transformation work, but the implemented A4.2 schema does not declare direct foreign keys from the analytics table to those intermediate tables. The analytics table is keyed to the shared reference dimensions instead.
+
+## Indexing Strategy
+
+Indexes are implemented for:
+
+- geography and industry lookup fields (`cbsa_code`, `naics_code`)
+- source manifest lookup by source/year
+- pipeline run lookup by status/stage
+- source-native raw keys for audit and review
+- staging table access patterns by standardized geography, industry, and year
+- MSA-year access for ACS staging and regional controls
+- analytical query patterns by year
+- quality review by run/reason and run/table
+
+The schema avoids excessive indexes until real query patterns emerge during later Assignment 4 implementation.

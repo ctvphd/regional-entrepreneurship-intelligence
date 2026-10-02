@@ -120,7 +120,7 @@ Raw data should preserve native NAICS values and any available NAICS vintage or 
 | Analytics | `analytics_` | `analytics_msa_industry_year` |
 | Metadata / quality | `metadata_`, `quality_`, `rejected_` | `metadata_source_manifest`, `quality_pipeline_run`, `rejected_staging_records` |
 
-Exact schemas will be finalized during Assignment 4.2.
+The Assignment 4.2 schema implements these conventions in `src/regional_entrepreneurship_intelligence/database/schema.py`.
 
 ## File Naming Conventions
 
@@ -244,4 +244,39 @@ The command will eventually:
 6. generate quality metrics
 7. log execution
 
-A4.1 only establishes this as the target interface.
+A4.1 only established this as the target interface. Assignment 4.2 adds a separate schema initialization command:
+
+```powershell
+uv run python -m regional_entrepreneurship_intelligence.database.schema
+```
+
+This command initializes the SQLite schema at `database/regional_entrepreneurship.sqlite`. It does not download source data or run the final ETL pipeline.
+
+## Implemented Assignment 4.2 Schema
+
+Assignment 4.2 implements the normalized SQLite schema, table registry, ERD, and data dictionary.
+
+Implemented schema artifacts:
+
+- `src/regional_entrepreneurship_intelligence/database/connection.py`
+- `src/regional_entrepreneurship_intelligence/database/schema.py`
+- `docs/TABLE_REGISTRY.md`
+- `docs/ERD.md`
+- `docs/data_dictionary.md`
+- `tests/test_schema.py`
+
+The physical SQLite database file remains ignored by Git. The schema code is safe to rerun and uses `CREATE TABLE IF NOT EXISTS`.
+
+## Indexing Strategy
+
+Assignment 4.2 implements indexes for:
+
+- CBSA and NAICS reference lookup
+- source manifest lookup by source/year
+- pipeline run status/stage lookup
+- source-native raw key review
+- staging grain access
+- intermediate and analytics year filtering
+- quality/rejected-record review
+
+Indexes are intentionally moderate until real query patterns emerge during later Assignment 4 work.
