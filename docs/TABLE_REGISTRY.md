@@ -13,7 +13,7 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `ref_source` | Reference | One row per source registry entry | `source_id` | None | Project metadata | Yes | Generated and seeded in SQLite | Registers the four approved planned source datasets and agencies. |
 | `metadata_source_manifest` | Metadata | One row per retrieved source file or API result | `manifest_id` | `source_id` -> `ref_source` | Pipeline metadata | Yes | Generated in SQLite | Records provenance, access method, source version, raw filename, checksum, and row count. |
 | `metadata_pipeline_run` | Metadata | One row per pipeline stage run | `pipeline_run_id` | None | Pipeline metadata | Yes | Generated in SQLite | Records run status, timing, stage, counts, warnings, and errors. |
-| `raw_bds` | Raw | One source-native BDS row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite | Preserves source-native BDS identifiers and raw payload. Provisional fields must be verified during ingestion. |
+| `raw_bds` | Raw | One source-native BDS row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.5 | Preserves source-native BDS MSA, sector, year, status values, and raw payload without standardizing geography or NAICS. |
 | `raw_qcew` | Raw | One source-native QCEW row | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | QCEW | Yes | Generated in SQLite | Preserves source-native QCEW identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_cbp` | Raw | One source-native CBP row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite | Preserves source-native CBP identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_acs` | Raw | One source-native ACS row | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | ACS | Yes | Generated in SQLite | Preserves source-native ACS identifiers and raw payload. Provisional fields must be verified during ingestion. |
@@ -53,3 +53,15 @@ Reference assets are stored under `data/external/reference/` with official filen
 - `2022_to_2017_NAICS.xlsx`, `2017_to_2022_NAICS.xlsx`, `2017_to_2012_NAICS.xlsx`, `2012_to_2017_NAICS.xlsx`: Census NAICS concordance assets preserved for later source-specific mapping
 
 The A4.4 loader records these files in `metadata_source_manifest` with official URLs, checksums, row counts, source versions, and notes. It loads `ref_geography`, `ref_geography_county_crosswalk`, and `ref_industry`; it does not ingest BDS, QCEW, CBP, or ACS observations.
+
+## A4.5 BDS Raw Ingestion
+
+Assignment 4.5 profiles the official Census BDS source family and implements source-native raw ingestion for a permitted sample:
+
+- Source profile: `docs/BDS_SOURCE_PROFILE.md`
+- Loader: `src/regional_entrepreneurship_intelligence/etl/extract_bds.py`
+- Sample: `data/raw/bds/sample/bds2023_msa_sec_sample_2010_2023.csv`
+
+The sample is derived from the official Census BDS `bds2023_msa_sec.csv` bulk file and preserves real field names and source-native `year`, `msa`, and `sector` codes. The full BDS file is not committed. A4.5 records one BDS manifest row and loads raw rows into `raw_bds` with the original source row serialized in `raw_payload`.
+
+A4.5 does not populate `stg_bds`, `int_entrepreneurship`, or `analytics_msa_industry_year`, and it does not map BDS records to July 2023 CBSA or 2022 NAICS standards.

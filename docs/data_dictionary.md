@@ -276,3 +276,10 @@ The generated A4.2 dictionary is supplemented by the A4.4 county crosswalk and r
 | `ref_geography_county_crosswalk` | `central_outlying` | TEXT |  | Yes | Census CBSA List 1 | Central or outlying county classification. | Values constrained to `Central` or `Outlying` when present. |
 | `ref_geography_county_crosswalk` | `source_vintage` | TEXT | Unique key component | No | Census CBSA List 1 | Reference vintage label. | A4.4 uses `July 2023 CBSA delineation`. |
 | `ref_geography_county_crosswalk` | `notes` | TEXT |  | Yes | Project metadata | Free-text provenance notes. | Does not replace manifest-level source metadata. |
+| `raw_bds` | `source_year` | INTEGER |  | Yes | BDS bulk CSV `year` | BDS source-native year. | A4.5 sample is restricted to 2010-2023; no lag construction is performed. |
+| `raw_bds` | `source_geography_id` | TEXT |  | Yes | BDS bulk CSV `msa` | BDS source-native MSA code. | Do not assume direct compatibility with July 2023 CBSA until A4.6 mapping review. |
+| `raw_bds` | `source_industry_id` | TEXT |  | Yes | BDS bulk CSV `sector` | BDS source-native sector code, including combined sectors where present. | Do not assume direct compatibility with 2022 NAICS until A4.6 mapping review. |
+| `raw_bds` | `source_naics_version` | TEXT |  | Yes | Project metadata | Text note identifying that the raw value is BDS source-native sector coding. | This is not a standardized NAICS version assignment. |
+| `raw_bds` | `source_row_identifier` | TEXT |  | Yes | Project loader | Deterministic source-native row identifier built from BDS file, year, MSA, and sector. | Used by the loader to avoid duplicate raw sample rows on rerun. |
+| `raw_bds` | `is_suppressed` | INTEGER |  | Yes | BDS source values | Boolean-like indicator set when source row contains `D` or `S` values. | `D`, `N`, `S`, and `X` values remain preserved in `raw_payload`; numeric values are not coerced to zero. |
+| `raw_bds` | `raw_payload` | TEXT |  | Yes | BDS bulk CSV row | JSON serialization of the complete source-native BDS row. | Raw layer preserves source fidelity and does not derive startup rates. |

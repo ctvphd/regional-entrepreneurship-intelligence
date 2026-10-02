@@ -20,7 +20,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
-| BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
+| BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | In progress |
 | QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
@@ -53,7 +53,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | --- | --- | --- |
 | ERD | Formal diagram in `docs/` | Complete |
 | Data dictionary | Field-level dictionary for tables and analytical variables | Complete |
-| ETL documentation | Source-specific and end-to-end pipeline documentation | Planned |
+| ETL documentation | Source-specific and end-to-end pipeline documentation | In progress |
 | Docstrings | Docstrings in ETL, database, and validation modules | In progress |
 | Setup instructions | README and Assignment 4 documentation | Planned |
 | Safe review path | Raw-data policy and reproducibility guidance in `docs/DATA_ARCHITECTURE.md` | Complete |
@@ -91,3 +91,15 @@ A4.4 completes authoritative geography and NAICS reference loading only. It load
 - apply speculative NAICS crosswalk mappings
 - mix multiple CBSA vintages inside the reference layer
 - begin Assignment 4.5
+
+## A4.5 Stop Line
+
+A4.5 completes BDS source profiling, native-vintage review, and raw sample ingestion only. It profiles official BDS bulk/API options, commits a small permitted source-native BDS sample, loads `raw_bds`, records a manifest, and verifies raw-ingestion idempotency. It explicitly does not:
+
+- create `stg_bds`
+- calculate startup rates or lag variables
+- map BDS geography to the July 2023 CBSA standard
+- map BDS sectors to the 2022 NAICS reference
+- populate `int_entrepreneurship`
+- ingest QCEW, CBP, or ACS
+- begin Assignment 4.6

@@ -342,3 +342,33 @@ The county crosswalk table is needed because county-to-CBSA membership is a diff
 The analytical industry reference standard is the U.S. Census Bureau 2022 NAICS Structure with Change Indicator. A4.4 loads the 2022 hierarchy into `ref_industry`, including official combined two-digit sectors such as `31-33`, `44-45`, and `48-49`.
 
 The study period spans 2010-2023, so relevant NAICS versions include 2012, 2017, and 2022. Official Census concordance files for 2012-to-2017, 2017-to-2012, 2017-to-2022, and 2022-to-2017 are preserved as reference assets and recorded in the source manifest. A4.4 does not apply speculative mappings across versions; source-specific transformation should decide how to use concordances once each source's native NAICS vintage is verified.
+
+## Implemented Assignment 4.5 BDS Source Profiling And Raw Ingestion
+
+Assignment 4.5 profiles the official Census BDS source family and loads a permitted source-native BDS sample into the raw database layer.
+
+Implemented A4.5 artifacts:
+
+- `docs/BDS_SOURCE_PROFILE.md`
+- `src/regional_entrepreneurship_intelligence/etl/extract_bds.py`
+- `data/raw/bds/sample/bds2023_msa_sec_sample_2010_2023.csv`
+- `tests/test_bds_raw_ingestion.py`
+
+The selected source family is the official Census BDS 2023 release. A4.5 uses the bulk CSV approach rather than the API because the API requires a key and the official bulk files are directly reproducible. The profiled file is `bds2023_msa_sec.csv`, which supports the source-native grain:
+
+```text
+year x msa x sector
+```
+
+The committed sample covers 2010-2023 for selected MSAs and sectors. It is not the full dataset and must not be treated as complete analytical input.
+
+Raw ingestion stores:
+
+- `source_year` from BDS `year`
+- `source_geography_id` from BDS `msa`
+- `source_industry_id` from BDS `sector`
+- source-native row identifiers
+- the complete BDS row in `raw_payload`
+- suppression/status preservation for `D`, `N`, `S`, and `X` values
+
+A4.5 explicitly does not standardize BDS geography to the July 2023 CBSA reference, standardize BDS industry to 2022 NAICS, calculate startup rates, create lag variables, or populate `stg_bds` or `int_entrepreneurship`.

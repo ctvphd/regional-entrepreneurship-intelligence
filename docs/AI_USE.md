@@ -35,6 +35,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.2 SQLite schema organization, normalization review, ERD/table-registry drafting, data-dictionary skeleton generation, and schema smoke-test support | Schema initialization, unittest smoke test, documentation review, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.3 reference-table implementation, metadata helper design, unit-test planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite unittest execution, reference row-count checks, documentation review, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.4 authoritative source selection, CBSA/NAICS reference loading, validation design, crosswalk planning, documentation updates, and Git/GitHub workflow support | Official Census source checks, checksum/manifest recording, idempotent loader tests, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.5 BDS source profiling, native geography/industry review, raw-ingestion architecture, validation planning, documentation updates, and Git/GitHub workflow support | Official Census BDS source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -86,3 +87,16 @@ For the Assignment 4.4 authoritative reference stage, student-directed implement
 - testing reference loading in temporary SQLite databases rather than writing to the project database
 
 A substantive AI-assisted shortcut was rejected during this step: simplified manually curated MSA or 2-digit NAICS lists were not used. The student-directed standard was to preserve official source files, checksums, manifests, and documented vintage/version choices before any BDS, QCEW, CBP, or ACS ingestion begins.
+
+## Assignment 4.5 Student-Directed Decisions
+
+For the Assignment 4.5 BDS raw-ingestion stage, student-directed implementation decisions include:
+
+- using official Census BDS sources only
+- choosing the bulk CSV source family over the API because BDS API data calls require a key and bulk files are directly reproducible
+- committing only a small permitted sample from the official BDS MSA-by-sector bulk file rather than the full national raw file
+- preserving source-native `msa`, `sector`, `year`, measure values, and `D`/`N`/`S`/`X` status values in the raw payload
+- avoiding source-to-reference geography or NAICS mapping until A4.6
+- testing BDS raw ingestion in temporary SQLite databases
+
+A substantive AI-assisted shortcut was rejected during this step: BDS `msa` and `sector` values were not mapped directly to the July 2023 CBSA and 2022 NAICS standards. The student-directed decision was to preserve native BDS coding first and require explicit mapping review before staging or entrepreneurship-measure construction.
