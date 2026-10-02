@@ -23,14 +23,14 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | --- | --- | --- |
 | BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
-| CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
+| CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
-| Other source transformations | QCEW and ACS transformations complete; CBP transformation remains planned | In progress |
-| Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
+| Other source transformations | QCEW, ACS, and CBP transformations complete through source-specific intermediate layers | Complete |
+| Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | Complete |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
-| Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
-| Rerunnability | Documented idempotency or rerun evidence | In progress |
+| Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | Complete |
+| Rerunnability | Documented idempotency or rerun evidence | Complete |
 | Target pipeline command documented | `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` | Complete |
 | Metadata helper utilities | Source manifest, pipeline run, quality metric, and rejected-record helpers | Complete |
 
@@ -44,11 +44,12 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | QCEW raw quality checks | A4.7 QCEW raw row-count, manifest, status-row, and duplicate-key tests | Complete |
 | QCEW transformation quality checks | A4.8 QCEW mapping, aggregation, growth, lag, duplicate-key, and idempotency tests | Complete |
 | ACS quality checks | A4.9 ACS raw-ingestion, geography, MSA-year transform, population-growth, lag, duplicate-key, and idempotency tests | Complete |
+| CBP quality checks | A4.10 CBP raw-ingestion, geography/industry mapping, complete county coverage, duplicate-key, rejected-record, and idempotency tests | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
-| Duplicates | Duplicate-key checks at relevant grains | In progress |
-| Rejected records | Rejected-record table or file with reason codes | In progress |
-| Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | In progress |
+| Duplicates | Duplicate-key checks at relevant grains | Complete |
+| Rejected records | Rejected-record table or file with reason codes | Complete |
+| Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | Complete |
 | Quality report | Generated report under `reports/` or documented output path | Planned |
 | Bad-record policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
 | Suppression policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
@@ -59,7 +60,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | --- | --- | --- |
 | ERD | Formal diagram in `docs/` | Complete |
 | Data dictionary | Field-level dictionary for tables and analytical variables | Complete |
-| ETL documentation | Source-specific and end-to-end pipeline documentation | In progress |
+| ETL documentation | Source-specific and end-to-end pipeline documentation | Complete |
 | Docstrings | Docstrings in ETL, database, and validation modules | In progress |
 | Setup instructions | README and Assignment 4 documentation | Planned |
 | Safe review path | Raw-data policy and reproducibility guidance in `docs/DATA_ARCHITECTURE.md` | Complete |
@@ -160,3 +161,14 @@ A4.9 completes ACS raw acquisition, regional-control construction, and one-year 
 - create alignment residuals
 - create entrepreneurial-gap targets
 - begin Assignment 4.10
+
+## A4.10 Stop Line
+
+A4.10 completes CBP raw acquisition, county-to-CBSA business-structure construction, and quality checks only. It moves CBP through `raw_cbp`, `stg_cbp`, and `int_business_structure`; records mapping, suppression, incomplete-coverage, duplicate, and rejected-record metrics; and documents CBP source fields, 2017 NAICS source coding, 2022 NAICS analytical checks, and payroll units. It explicitly does not:
+
+- merge CBP with BDS, QCEW, or ACS
+- build `analytics_msa_industry_year`
+- create expected entrepreneurship
+- create alignment residuals
+- create entrepreneurial-gap targets
+- begin Assignment 4.11

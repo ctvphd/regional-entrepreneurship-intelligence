@@ -40,6 +40,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.7 QCEW source profiling, annual CSV raw-ingestion design, geography/ownership strategy review, documentation updates, and Git/GitHub workflow support | Official BLS QCEW source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.8 QCEW county-to-CBSA standardization, ownership/NAICS audit, industry-growth construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, growth/lag edge-case tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.9 ACS product selection, Census API raw-ingestion design, MSA-year regional-control construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Official Census ACS API source checks, raw sample creation, temporary SQLite ingestion tests, population-growth/lag tests, idempotency checks, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.10 CBP source profiling, Census API raw-ingestion design, county-to-CBSA business-structure construction, completeness policy, validation planning, documentation updates, and Git/GitHub workflow support | Official Census CBP API source checks, raw sample creation, temporary SQLite ingestion tests, mapping/aggregation tests, idempotency checks, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -165,3 +166,18 @@ For the Assignment 4.9 ACS regional-control stage, student-directed implementati
 - deferring CBP, source integration, final analytics, and target construction
 
 A substantive AI-assisted shortcut was rejected during this step: ACS controls were not duplicated by industry in the ACS intermediate table. The student-directed rule was to keep ACS at MSA-year grain and allow later final integration to repeat regional controls across industries only when building the final panel.
+
+## Assignment 4.10 Student-Directed Decisions
+
+For the Assignment 4.10 CBP business-structure stage, student-directed implementation decisions include:
+
+- using official Census CBP API endpoints only
+- committing only a small official sample rather than a full national CBP pull
+- preserving CBP source-native county, legal-form, employment-size, 2017 NAICS, measure, flag, and raw payload fields
+- mapping county rows to the July 2023 CBSA reference through the county crosswalk
+- treating CBP source industry as 2017 NAICS and the analytical industry reference as 2022 NAICS
+- allowing only directly comparable sector codes into `int_business_structure`
+- using complete-case county aggregation and not zero-filling missing or flagged county components
+- deferring source integration, final analytics, and target construction
+
+A substantive AI-assisted shortcut was rejected during this step: the CBP `NAICS2017` source sectors were not treated as natively 2022 NAICS, and incomplete county-sector groups were not aggregated by pretending missing counties were zero.

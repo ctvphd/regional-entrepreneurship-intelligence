@@ -486,3 +486,34 @@ geography_id x year
 Conceptually this is `MSA/CBSA x year`. The controls are total population, median household income, bachelor degree or higher percentage, labor-force participation percentage, and unemployment rate. ACS MOEs are preserved in raw and staging, while the intermediate layer uses point estimates.
 
 A4.9 does not ingest CBP, merge ACS with BDS/QCEW, build the final analytics table, duplicate ACS by industry, or create model targets.
+
+## Implemented Assignment 4.10 CBP Business Structure
+
+Assignment 4.10 ingests a small official Census CBP API sample and builds CBSA-sector-year business-structure measures.
+
+Implemented A4.10 artifacts:
+
+- `data/raw/cbp/sample/cbp_county_sector_sample_2022_2023.csv`
+- `src/regional_entrepreneurship_intelligence/etl/extract_cbp.py`
+- `src/regional_entrepreneurship_intelligence/etl/transform_cbp.py`
+- `docs/CBP_SOURCE_PROFILE.md`
+- `docs/CBP_TRANSFORMATION.md`
+- `tests/test_cbp_raw_ingestion.py`
+- `tests/test_cbp_mapping.py`
+- `tests/test_cbp_transform.py`
+
+CBP source rows are county-level business-structure records. The A4.10 staging grain is:
+
+```text
+county x source NAICS2017 sector x year
+```
+
+The A4.10 intermediate grain is:
+
+```text
+geography_id x industry_id x year
+```
+
+Conceptually this is `MSA/CBSA x 2022 NAICS 2-digit sector x year`. Additive establishment, employment, annual payroll, and first-quarter payroll measures are summed across counties only after county-to-CBSA mapping, direct sector comparability checks, source-flag checks, and complete county-coverage checks. CBP payroll values remain nominal and in thousands of dollars.
+
+A4.10 does not merge CBP with BDS, QCEW, or ACS, build the final analytics table, or create model targets.

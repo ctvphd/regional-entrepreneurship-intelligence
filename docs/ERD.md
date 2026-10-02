@@ -130,3 +130,9 @@ No new relationship to ACS, CBP, `analytics_msa_industry_year`, or model-ready t
 Assignment 4.9 expands `raw_acs`, `stg_acs`, and `int_regional_controls` while preserving the existing ERD relationships. `raw_acs` now stores ACS source geography labels, variable IDs, MOE variable IDs, product metadata, estimates, margins of error, and raw payloads. `stg_acs` pivots source variables to one MSA-year row with MOE fields and geography mapping status. `int_regional_controls` stores MSA-year regional controls, population growth, selected one-year lags, and source lineage.
 
 No relationship to CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.9.
+
+## A4.10 CBP Update
+
+Assignment 4.10 expands `raw_cbp`, `stg_cbp`, and `int_business_structure` while preserving the same ERD relationships. `raw_cbp` stores source-native county, 2017 NAICS sector, legal-form, employment-size, measure, flag, and payload fields. `stg_cbp` keeps county-level rows with July 2023 CBSA mapping status and 2022 sector comparability status. `int_business_structure` stores complete-coverage CBSA-sector-year establishment, employment, annual payroll, and first-quarter payroll measures with county coverage indicators and source lineage.
+
+No relationship to `analytics_msa_industry_year` or model-ready target tables is introduced in A4.10.

@@ -378,3 +378,39 @@ A4.9 expands ACS raw, staging, and intermediate documentation for source variabl
 | `int_regional_controls` | `educational_attainment_pct_lag1` | REAL |  | Yes | Derived | One-year lag of bachelor-degree-or-higher percentage. | No forward fill across missing years. |
 | `int_regional_controls` | `labor_force_participation_pct_lag1` | REAL |  | Yes | Derived | One-year lag of labor-force participation percentage. | No cross-MSA leakage. |
 | `int_regional_controls` | `unemployment_rate_lag1` | REAL |  | Yes | Derived | One-year lag of unemployment rate. | No cross-MSA leakage. |
+
+## A4.10 Maintained Addendum
+
+A4.10 verifies CBP API source fields and expands CBP raw, staging, and intermediate documentation for county identifiers, source flags, 2017 NAICS source coding, 2022 sector comparability, and complete county-coverage aggregation.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `raw_cbp` | `source_state_fips` | TEXT |  | Yes | CBP `state` | Two-digit source state FIPS code. | Preserve leading zeroes as text. |
+| `raw_cbp` | `source_county_fips` | TEXT |  | Yes | CBP `county` | Three-digit source county FIPS code. | Preserve leading zeroes as text. |
+| `raw_cbp` | `source_county_geoid` | TEXT |  | Yes | Derived from CBP `state` and `county` | Five-digit county GEOID. | Used for July 2023 CBSA county-crosswalk lookup. |
+| `raw_cbp` | `source_industry_id` | TEXT |  | Yes | CBP `NAICS2017` | Source-native industry code. | A4.10 treats CBP source sectors as 2017 NAICS. |
+| `raw_cbp` | `source_industry_label` | TEXT |  | Yes | CBP `NAICS2017_LABEL` | Source industry label. | Preserve Census label for audit. |
+| `raw_cbp` | `source_naics_version` | TEXT |  | Yes | Project metadata | Source NAICS version note. | A4.10 stores `2017`; it does not relabel as 2022. |
+| `raw_cbp` | `legal_form_code` | TEXT |  | Yes | CBP `LFO` | Legal-form code. | Sample uses `001` total legal forms. |
+| `raw_cbp` | `employment_size_code` | TEXT |  | Yes | CBP `EMPSZES` | Employment-size code. | Sample uses `001` all sizes. |
+| `raw_cbp` | `establishments` | TEXT |  | Yes | CBP `ESTAB` | Number of establishments as source text. | Numeric casting belongs in staging. |
+| `raw_cbp` | `employment` | TEXT |  | Yes | CBP `EMP` | Employment as source text. | Numeric casting belongs in staging. |
+| `raw_cbp` | `annual_payroll` | TEXT |  | Yes | CBP `PAYANN` | Annual payroll as source text. | Units are thousands of dollars. |
+| `raw_cbp` | `first_quarter_payroll` | TEXT |  | Yes | CBP `PAYQTR1` | First-quarter payroll as source text. | Units are thousands of dollars. |
+| `raw_cbp` | `establishments_flag` | TEXT |  | Yes | CBP `ESTAB_F` | Establishment source flag. | Nonblank flags set `is_suppressed = 1`. |
+| `raw_cbp` | `employment_flag` | TEXT |  | Yes | CBP `EMP_F` | Employment source flag. | Flagged values are not treated as zero. |
+| `raw_cbp` | `annual_payroll_flag` | TEXT |  | Yes | CBP `PAYANN_F` | Annual-payroll source flag. | Flagged values are retained in raw. |
+| `raw_cbp` | `first_quarter_payroll_flag` | TEXT |  | Yes | CBP `PAYQTR1_F` | First-quarter-payroll source flag. | Flagged values are retained in raw. |
+| `stg_cbp` | `source_county_geoid` | TEXT |  | Yes | `raw_cbp` | Source county GEOID retained in staging. | Staging remains county-level. |
+| `stg_cbp` | `source_industry_id` | TEXT |  | Yes | `raw_cbp` | Source NAICS2017 industry code. | Do not overwrite with analytical sector code. |
+| `stg_cbp` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | CBP county mapping status. | County rows mapped through July 2023 crosswalk use `crosswalk_required`. |
+| `stg_cbp` | `industry_mapping_status` | TEXT |  | Yes | Mapping audit | CBP industry mapping status. | Exact 2022 sector matches are `directly_comparable`; source `00` is unresolved. |
+| `stg_cbp` | `noise_or_suppression_flags` | TEXT |  | Yes | CBP flag fields | Serialized nonblank source flags. | Flagged rows do not advance to the intermediate layer. |
+| `int_business_structure` | `standardized_cbsa_code` | TEXT |  | Yes | July 2023 CBSA reference | Analytical CBSA code. | Derived through county-to-CBSA crosswalk. |
+| `int_business_structure` | `standardized_sector_code` | TEXT |  | Yes | 2022 NAICS reference | Analytical sector code. | Only directly comparable sectors enter A4.10 intermediate. |
+| `int_business_structure` | `counties_expected` | INTEGER |  | Yes | July 2023 county crosswalk | Expected county count for the CBSA. | Used to enforce complete coverage. |
+| `int_business_structure` | `counties_observed` | INTEGER |  | Yes | `stg_cbp` | Number of contributing counties observed. | Must equal expected counties for intermediate inclusion. |
+| `int_business_structure` | `counties_suppressed` | INTEGER |  | Yes | `stg_cbp` flags | Number of contributing flagged counties. | Must be zero for intermediate inclusion. |
+| `int_business_structure` | `is_complete_county_coverage` | INTEGER |  | Yes | Derived | Complete-coverage indicator. | A4.10 intermediate rows require value `1`. |
+| `int_business_structure` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | Geography mapping status inherited from staging. | A4.10 intermediate rows use `crosswalk_required`. |
+| `int_business_structure` | `industry_mapping_status` | TEXT |  | Yes | Mapping audit | Industry mapping status inherited from staging. | A4.10 intermediate rows use `directly_comparable`. |

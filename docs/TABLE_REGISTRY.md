@@ -16,16 +16,16 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `raw_bds` | Raw | One source-native BDS MSA-sector row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.5 | Preserves source-native BDS MSA, sector, year, status values, and raw payload without standardizing geography or NAICS. |
 | `raw_bds_firm_age` | Raw | One source-native BDS MSA-sector-firm-age row | `raw_bds_firm_age_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.6 | Preserves source-native BDS firm-age-coarse rows used for age-0 startup construction. |
 | `raw_qcew` | Raw | One source-native QCEW annual area row | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | QCEW | Yes | Generated in SQLite; sample-loaded in A4.7 | Preserves source-native QCEW area, ownership, industry, size, annual measures, disclosure codes, and raw payload without standardizing geography or NAICS. |
-| `raw_cbp` | Raw | One source-native CBP row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite | Preserves source-native CBP identifiers and raw payload. Provisional fields must be verified during ingestion. |
+| `raw_cbp` | Raw | One source-native CBP county-sector-year row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite; sample-loaded in A4.10 | Preserves source-native CBP county, 2017 NAICS sector, legal-form, employment-size, measure, flag, and raw payload fields. |
 | `raw_acs` | Raw | One ACS estimate/MOE variable row per source geography-year | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | ACS | Yes | Generated in SQLite; sample-loaded in A4.9 | Preserves source-native ACS geography, variable IDs, estimates, MOEs, product metadata, request URL, and raw payload. |
 | `stg_bds` | Staging | BDS MSA x sector x year x firm-age-derived startup row | `stg_bds_id` | `raw_bds_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | BDS | Yes | Generated in SQLite by A4.6 | Standardizes BDS age-0 startup fields while retaining source-native codes, mapping statuses, and missing/suppression flags. |
 | `stg_qcew` | Staging | Aggregated QCEW CBSA-sector-year row | `stg_qcew_id` | `raw_qcew_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | QCEW | Yes | Generated in SQLite by A4.8 | Standardizes private-sector QCEW county rows to July 2023 CBSA-sector-year geography with coverage and suppression indicators. |
-| `stg_cbp` | Staging | MSA x 2-digit NAICS x year where supported by CBP | `stg_cbp_id` | `raw_cbp_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | CBP | Yes | Generated in SQLite | Standardizes CBP business-structure fields for validation/context. |
+| `stg_cbp` | Staging | County x source sector x year row with mapping statuses | `stg_cbp_id` | `raw_cbp_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | CBP | Yes | Generated in SQLite by A4.10 | Preserves CBP county-level rows while adding July 2023 CBSA mapping status, 2022 sector comparability status, measures, and source flags. |
 | `stg_acs` | Staging | MSA x year | `stg_acs_id` | `raw_acs_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `year` | ACS | Yes | Generated in SQLite by A4.9 | Standardizes ACS regional control fields and MOEs for MSA-year joins without adding industry identifiers. |
 | `int_entrepreneurship` | Intermediate | Standardized MSA x directly comparable sector x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | BDS-derived | Yes | Generated in SQLite by A4.6 | Holds standardized BDS entrepreneurship measures and startup-rate lags without final gap targets. |
 | `int_industry_growth` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | QCEW-derived | Yes | Generated in SQLite by A4.8 | Holds nominal QCEW industry levels, growth measures, selected growth lags, coverage flags, and nominal/real-adjustment flag. |
 | `int_regional_controls` | Intermediate | MSA x year | `(geography_id, year)` | `geography_id`, `year`, `source_manifest_id`, `pipeline_run_id` | ACS-derived | Yes | Generated in SQLite by A4.9 | Holds ACS regional controls, population growth, and selected one-year regional-control lags. |
-| `int_business_structure` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | CBP-derived | Yes | Generated in SQLite | Holds business-structure measures used for validation/context. |
+| `int_business_structure` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | CBP-derived | Yes | Generated in SQLite by A4.10 | Holds complete-coverage CBP business-structure measures used for validation/context. |
 | `analytics_msa_industry_year` | Analytics | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `pipeline_run_id` | Integrated analytical panel | Yes | Generated in SQLite | Canonical clean analytical table. It intentionally excludes global expected entrepreneurship, residual alignment, and final gap target fields. |
 | `quality_rejected_record` | Quality | One rejected or explicitly reviewed record | `rejection_id` | `pipeline_run_id`, `source_id` | Pipeline quality | Yes | Generated in SQLite | Records bad-record handling and reason codes without silently discarding records. |
 | `quality_table_metric` | Quality | One quality metric per table/run/scope | `metric_id` | `pipeline_run_id` | Pipeline quality | Yes | Generated in SQLite | Supports row counts, missingness, duplicates, rejected records, and merge-rate metrics. |
@@ -129,3 +129,20 @@ Implemented artifacts:
 A4.9 uses ACS 5-year Data Profile API estimates for population, median household income, bachelor degree or higher, labor-force participation, and unemployment. Raw rows preserve estimate and MOE variables. Staging pivots the source-variable rows to MSA-year controls, and the intermediate layer adds population growth and selected one-year lags.
 
 A4.9 does not ingest CBP, merge ACS with BDS/QCEW, build `analytics_msa_industry_year`, or create entrepreneurial-gap targets.
+
+## A4.10 CBP Raw Ingestion And Business Structure
+
+Assignment 4.10 moves CBP through `raw_cbp`, `stg_cbp`, and `int_business_structure`.
+
+Implemented artifacts:
+
+- Source profile: `docs/CBP_SOURCE_PROFILE.md`
+- Transformation documentation: `docs/CBP_TRANSFORMATION.md`
+- Raw loader: `src/regional_entrepreneurship_intelligence/etl/extract_cbp.py`
+- Transform module: `src/regional_entrepreneurship_intelligence/etl/transform_cbp.py`
+- Sample: `data/raw/cbp/sample/cbp_county_sector_sample_2022_2023.csv`
+- Focused tests: `tests/test_cbp_raw_ingestion.py`, `tests/test_cbp_mapping.py`, and `tests/test_cbp_transform.py`
+
+A4.10 uses official Census CBP API rows at county x NAICS2017 sector x year x legal-form x employment-size grain. County rows are mapped through the July 2023 CBSA county crosswalk, source sectors are checked against the 2022 NAICS sector reference, and additive business-structure measures are summed only for complete, unsuppressed CBSA-sector-year groups.
+
+A4.10 does not merge CBP with BDS, QCEW, or ACS, build `analytics_msa_industry_year`, or create entrepreneurial-gap targets.
