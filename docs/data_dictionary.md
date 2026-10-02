@@ -351,3 +351,30 @@ A4.8 expands QCEW staging and intermediate documentation for county-to-CBSA aggr
 | `int_industry_growth` | `establishment_growth_lag1` | REAL |  | Yes | Derived | One-year lag of establishment growth. | Requires actual `t - 1` year in same geography-industry panel. |
 | `int_industry_growth` | `establishment_growth_lag2` | REAL |  | Yes | Derived | Two-year lag of establishment growth. | Requires actual `t - 2` year in same geography-industry panel. |
 | `int_industry_growth` | `establishment_growth_lag3` | REAL |  | Yes | Derived | Three-year lag of establishment growth. | Requires actual `t - 3` year in same geography-industry panel. |
+
+## A4.9 Maintained Addendum
+
+A4.9 expands ACS raw, staging, and intermediate documentation for source variables, MOEs, MSA-year regional controls, population growth, and one-year lags.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `raw_acs` | `source_geography_name` | TEXT |  | Yes | ACS `NAME` | Source geography label. | Preserve source label; do not map by name alone. |
+| `raw_acs` | `source_variable_id` | TEXT |  | Yes | ACS API | Estimate variable ID. | Required for source lineage. |
+| `raw_acs` | `source_moe_variable_id` | TEXT |  | Yes | ACS API | Margin-of-error variable ID. | Preserve ACS uncertainty metadata. |
+| `raw_acs` | `source_product` | TEXT |  | Yes | ACS API | ACS product name. | A4.9 uses ACS 5-year Data Profile. |
+| `raw_acs` | `control_name` | TEXT |  | Yes | Project mapping | Canonical regional-control name. | Used to pivot raw variables to staging. |
+| `raw_acs` | `estimate_value` | TEXT |  | Yes | ACS API | Source estimate as text. | Raw layer keeps source values. |
+| `raw_acs` | `margin_of_error` | TEXT |  | Yes | ACS API | Source MOE as text. | Special negative Census codes are preserved in raw. |
+| `stg_acs` | `source_geography_id` | TEXT |  | Yes | ACS geography code | Source-native MSA/CBSA code. | Audited against July 2023 CBSA reference. |
+| `stg_acs` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | Direct/crosswalk/unresolved status. | Unresolved rows are retained in staging and excluded from intermediate controls. |
+| `stg_acs` | `population_moe` | REAL |  | Yes | ACS MOE variable | MOE for population where available. | Census special negative MOE codes become null in staging. |
+| `stg_acs` | `median_household_income_moe` | REAL |  | Yes | ACS MOE variable | MOE for median household income. | Preserved for transparency; intermediate uses point estimates. |
+| `stg_acs` | `educational_attainment_pct_moe` | REAL |  | Yes | ACS MOE variable | MOE for bachelor-degree-or-higher percentage. | Percent estimates must remain within 0-100. |
+| `stg_acs` | `labor_force_participation_pct_moe` | REAL |  | Yes | ACS MOE variable | MOE for labor-force participation percentage. | Percent estimates must remain within 0-100. |
+| `stg_acs` | `unemployment_rate_moe` | REAL |  | Yes | ACS MOE variable | MOE for unemployment rate. | Percent estimates must remain within 0-100. |
+| `int_regional_controls` | `population_growth` | REAL |  | Yes | Derived | Annual population growth. | Null when prior calendar year or valid denominator is unavailable. |
+| `int_regional_controls` | `population_growth_lag1` | REAL |  | Yes | Derived | One-year lag of population growth. | Requires actual `t - 1` year within same MSA. |
+| `int_regional_controls` | `median_household_income_lag1` | REAL |  | Yes | Derived | One-year lag of median household income. | Source-reported ACS dollars; not harmonized real dollars. |
+| `int_regional_controls` | `educational_attainment_pct_lag1` | REAL |  | Yes | Derived | One-year lag of bachelor-degree-or-higher percentage. | No forward fill across missing years. |
+| `int_regional_controls` | `labor_force_participation_pct_lag1` | REAL |  | Yes | Derived | One-year lag of labor-force participation percentage. | No cross-MSA leakage. |
+| `int_regional_controls` | `unemployment_rate_lag1` | REAL |  | Yes | Derived | One-year lag of unemployment rate. | No cross-MSA leakage. |

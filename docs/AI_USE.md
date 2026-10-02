@@ -39,6 +39,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.6 BDS geography mapping audit, NAICS comparability audit, startup measure construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, lag panel-gap tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.7 QCEW source profiling, annual CSV raw-ingestion design, geography/ownership strategy review, documentation updates, and Git/GitHub workflow support | Official BLS QCEW source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.8 QCEW county-to-CBSA standardization, ownership/NAICS audit, industry-growth construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, growth/lag edge-case tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.9 ACS product selection, Census API raw-ingestion design, MSA-year regional-control construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Official Census ACS API source checks, raw sample creation, temporary SQLite ingestion tests, population-growth/lag tests, idempotency checks, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -147,3 +148,20 @@ For the Assignment 4.8 QCEW standardization stage, student-directed implementati
 - deferring ACS, CBP, source integration, and final target construction
 
 A substantive AI-assisted shortcut was rejected during this step: county average-pay values were not averaged across counties. The student-directed rule was to recalculate average annual pay from aggregated wages and employment after county-to-CBSA aggregation.
+
+## Assignment 4.9 Student-Directed Decisions
+
+For the Assignment 4.9 ACS regional-control stage, student-directed implementation decisions include:
+
+- selecting ACS 5-year Data Profile estimates for consistent MSA/CBSA-style coverage
+- using the official Census API as the acquisition method
+- committing only a small official sample rather than a full national ACS pull
+- preserving ACS estimate variable IDs, MOE variable IDs, source geography codes, and raw payloads
+- using official ACS percentage estimates instead of manually constructing percentages
+- preserving ACS MOEs in raw and staging
+- building `int_regional_controls` at MSA-year grain without industry duplication
+- creating population growth only after standardization
+- creating selected one-year regional-control lags only
+- deferring CBP, source integration, final analytics, and target construction
+
+A substantive AI-assisted shortcut was rejected during this step: ACS controls were not duplicated by industry in the ACS intermediate table. The student-directed rule was to keep ACS at MSA-year grain and allow later final integration to repeat regional controls across industries only when building the final panel.

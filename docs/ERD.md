@@ -124,3 +124,9 @@ The schema avoids excessive indexes until real query patterns emerge during late
 Assignment 4.8 expands `stg_qcew` and `int_industry_growth` while preserving the same ERD relationships. `stg_qcew` now stores QCEW county-to-CBSA mapping status, selected ownership scope, standardized CBSA and sector codes, county coverage indicators, and nominal annual measures. `int_industry_growth` now stores the standardized CBSA-sector-year QCEW panel with nominal level measures, growth rates, selected growth lags, completeness indicators, and source lineage.
 
 No new relationship to ACS, CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.8.
+
+## A4.9 ACS Update
+
+Assignment 4.9 expands `raw_acs`, `stg_acs`, and `int_regional_controls` while preserving the existing ERD relationships. `raw_acs` now stores ACS source geography labels, variable IDs, MOE variable IDs, product metadata, estimates, margins of error, and raw payloads. `stg_acs` pivots source variables to one MSA-year row with MOE fields and geography mapping status. `int_regional_controls` stores MSA-year regional controls, population growth, selected one-year lags, and source lineage.
+
+No relationship to CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.9.

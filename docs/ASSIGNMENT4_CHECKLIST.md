@@ -24,9 +24,9 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
-| ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
+| ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
-| Other source transformations | QCEW transformation complete; CBP and ACS transformation modules remain planned | In progress |
+| Other source transformations | QCEW and ACS transformations complete; CBP transformation remains planned | In progress |
 | Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
 | Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
@@ -43,6 +43,7 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | BDS quality metrics | A4.6 quality metrics for BDS raw, staging, intermediate, mapping, missingness, and lag checks | Complete |
 | QCEW raw quality checks | A4.7 QCEW raw row-count, manifest, status-row, and duplicate-key tests | Complete |
 | QCEW transformation quality checks | A4.8 QCEW mapping, aggregation, growth, lag, duplicate-key, and idempotency tests | Complete |
+| ACS quality checks | A4.9 ACS raw-ingestion, geography, MSA-year transform, population-growth, lag, duplicate-key, and idempotency tests | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
 | Duplicates | Duplicate-key checks at relevant grains | In progress |
@@ -146,3 +147,16 @@ A4.8 completes QCEW standardization, industry-growth construction, and growth-la
 - create alignment residuals
 - create entrepreneurial-gap targets
 - begin Assignment 4.9
+
+## A4.9 Stop Line
+
+A4.9 completes ACS raw acquisition, regional-control construction, and one-year regional-control lag framework only. It moves ACS through `raw_acs`, `stg_acs`, and `int_regional_controls`; records geography/missingness/duplicate/lag quality metrics; and documents ACS product choice, variables, MOE preservation, population growth, income treatment, and lag rules. It explicitly does not:
+
+- ingest CBP
+- merge ACS with BDS or QCEW
+- duplicate ACS controls by industry
+- build `analytics_msa_industry_year`
+- create expected entrepreneurship
+- create alignment residuals
+- create entrepreneurial-gap targets
+- begin Assignment 4.10

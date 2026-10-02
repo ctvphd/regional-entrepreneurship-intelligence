@@ -460,3 +460,29 @@ geography_id x industry_id x year
 Conceptually this is `MSA/CBSA x 2022 NAICS 2-digit sector x year`. Additive measures are summed across counties, and average annual pay is recalculated after aggregation. Dollar measures remain nominal. Growth rates and lags require calendar-year continuity within each geography-industry panel.
 
 A4.8 does not ingest ACS or CBP, join BDS and QCEW, build the final analytics table, or create model targets.
+
+## Implemented Assignment 4.9 ACS Regional Controls
+
+Assignment 4.9 ingests a small official ACS 5-year Data Profile API sample and builds MSA-year regional controls.
+
+Implemented A4.9 artifacts:
+
+- `data/raw/acs/sample/acs5_profile_msa_sample_2020_2023.csv`
+- `src/regional_entrepreneurship_intelligence/etl/extract_acs.py`
+- `src/regional_entrepreneurship_intelligence/etl/transform_acs.py`
+- `docs/ACS_SOURCE_PROFILE.md`
+- `docs/ACS_TRANSFORMATION.md`
+- `tests/test_acs_raw_ingestion.py`
+- `tests/test_acs_mapping.py`
+- `tests/test_acs_transform.py`
+- `tests/test_acs_lags.py`
+
+ACS is regional data, not industry-level data. The A4.9 intermediate grain is:
+
+```text
+geography_id x year
+```
+
+Conceptually this is `MSA/CBSA x year`. The controls are total population, median household income, bachelor degree or higher percentage, labor-force participation percentage, and unemployment rate. ACS MOEs are preserved in raw and staging, while the intermediate layer uses point estimates.
+
+A4.9 does not ingest CBP, merge ACS with BDS/QCEW, build the final analytics table, duplicate ACS by industry, or create model targets.
