@@ -10,9 +10,12 @@ from pathlib import Path
 
 from regional_entrepreneurship_intelligence.database.schema import create_schema
 from regional_entrepreneurship_intelligence.etl.extract_bds import (
+    BDS_FIRM_AGE_SAMPLE_PATH,
     BDS_SAMPLE_PATH,
     REQUIRED_BDS_COLUMNS,
+    load_bds_firm_age_raw,
     load_bds_raw,
+    read_bds_firm_age_csv,
     read_bds_csv,
 )
 
@@ -84,6 +87,41 @@ class BDSRawIngestionTest(unittest.TestCase):
                 """
             ).fetchone()[0]
             self.assertEqual(duplicate_count, 0)
+
+            connection.close()
+
+    def test_bds_firm_age_sample_loads_age0_rows_idempotently(self) -> None:
+        """The firm-age sample preserves the Census age-0 startup category."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            connection = sqlite3.connect(Path(tmpdir) / "bds_firm_age_raw.sqlite")
+            connection.execute("PRAGMA foreign_keys = ON;")
+            create_schema(connection)
+
+            rows = read_bds_firm_age_csv(BDS_FIRM_AGE_SAMPLE_PATH)
+            self.assertEqual(len(rows), 224)
+            self.assertIn("fagecoarse", rows[0])
+            self.assertTrue(any(row["fagecoarse"] == "a) 0" for row in rows))
+
+            first = load_bds_firm_age_raw(connection, BDS_FIRM_AGE_SAMPLE_PATH)
+            second = load_bds_firm_age_raw(connection, BDS_FIRM_AGE_SAMPLE_PATH)
+
+            self.assertEqual(first.rows_inserted, 224)
+            self.assertEqual(first.age0_row_count, 112)
+            self.assertEqual(second.rows_inserted, 0)
+            self.assertEqual(second.rows_skipped_existing, 224)
+            self.assertEqual(second.raw_row_count, 224)
+
+            age0 = connection.execute(
+                """
+                SELECT source_fagecoarse, source_naics_version, is_suppressed
+                FROM raw_bds_firm_age
+                WHERE source_row_identifier =
+                    'bds2023_msa_sec_fac|year=2010|msa=10180|sector=23|fagecoarse=a) 0';
+                """
+            ).fetchone()
+            self.assertEqual(age0[0], "a) 0")
+            self.assertIn("2017 NAICS", age0[1])
+            self.assertEqual(age0[2], 0)
 
             connection.close()
 

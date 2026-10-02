@@ -21,6 +21,10 @@ REJECTION_REASON_CODES = {
     "invalid_numeric_value",
     "suppressed_value",
     "failed_reference_match",
+    "unresolved_geography",
+    "unresolved_industry",
+    "duplicate_standardized_key",
+    "missing_required_startup_measure",
     "other",
 }
 

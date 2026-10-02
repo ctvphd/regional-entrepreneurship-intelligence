@@ -15,16 +15,18 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | A4.1 architecture conventions | `docs/DATA_ARCHITECTURE.md` | Complete |
 | Reference year/source seed data | Deterministic `ref_year` and approved `ref_source` helpers with tests | Complete |
 | Authoritative geography/industry references | Census CBSA and NAICS assets, loader, schema updates, and tests | Complete |
+| BDS firm-age raw structure | Dedicated BDS firm-age raw table and schema tests | Complete |
 
 ## ETL Implementation - 30 pts
 
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
-| BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | In progress |
+| BDS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Complete |
 | QCEW extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | CBP extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
 | ACS extract | Source-specific extraction module under `src/regional_entrepreneurship_intelligence/etl/` | Planned |
-| Transformations | Staging and intermediate transformation modules | Planned |
+| BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
+| Other source transformations | QCEW, CBP, and ACS transformation modules | Planned |
 | Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | In progress |
 | Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
 | Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | In progress |
@@ -38,11 +40,12 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | --- | --- | --- |
 | Validation framework | Reusable validation logic under `src/regional_entrepreneurship_intelligence/validation/` | Planned |
 | Reference row counts | A4.4 loader/test evidence for geography, county crosswalk, industry, and manifests | Complete |
+| BDS quality metrics | A4.6 quality metrics for BDS raw, staging, intermediate, mapping, missingness, and lag checks | Complete |
 | Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
 | Missingness | Quality report with missingness by source and key variable | Planned |
 | Duplicates | Duplicate-key checks at relevant grains | In progress |
 | Rejected records | Rejected-record table or file with reason codes | In progress |
-| Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | Planned |
+| Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | In progress |
 | Quality report | Generated report under `reports/` or documented output path | Planned |
 | Bad-record policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
 | Suppression policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
@@ -103,3 +106,13 @@ A4.5 completes BDS source profiling, native-vintage review, and raw sample inges
 - populate `int_entrepreneurship`
 - ingest QCEW, CBP, or ACS
 - begin Assignment 4.6
+
+## A4.6 Stop Line
+
+A4.6 completes BDS standardization, startup construction, and lag framework only. It adds BDS firm-age raw ingestion, geography and industry mapping audits, `stg_bds`, `int_entrepreneurship`, and startup-rate lags. It explicitly does not:
+
+- ingest QCEW, ACS, or CBP
+- create industry-growth measures
+- build `analytics_msa_industry_year`
+- create expected entrepreneurship, alignment residuals, or entrepreneurial-gap targets
+- begin Assignment 4.7

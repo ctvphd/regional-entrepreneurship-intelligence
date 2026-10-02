@@ -36,6 +36,7 @@ The student remains responsible for:
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.3 reference-table implementation, metadata helper design, unit-test planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite unittest execution, reference row-count checks, documentation review, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.4 authoritative source selection, CBSA/NAICS reference loading, validation design, crosswalk planning, documentation updates, and Git/GitHub workflow support | Official Census source checks, checksum/manifest recording, idempotent loader tests, unittest discovery, and Git diff review |
 | 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.5 BDS source profiling, native geography/industry review, raw-ingestion architecture, validation planning, documentation updates, and Git/GitHub workflow support | Official Census BDS source checks, raw sample creation, temporary SQLite ingestion tests, idempotency checks, unittest discovery, and Git diff review |
+| 2026-10-02 | Codex/OpenAI-assisted development | Assignment 4.6 BDS geography mapping audit, NAICS comparability audit, startup measure construction, lag design, validation planning, documentation updates, and Git/GitHub workflow support | Temporary SQLite transformation tests, lag panel-gap tests, idempotency checks, quality-metric review, unittest discovery, and Git diff review |
 
 ## Assignment 4 Student-Directed Decisions
 
@@ -100,3 +101,17 @@ For the Assignment 4.5 BDS raw-ingestion stage, student-directed implementation 
 - testing BDS raw ingestion in temporary SQLite databases
 
 A substantive AI-assisted shortcut was rejected during this step: BDS `msa` and `sector` values were not mapped directly to the July 2023 CBSA and 2022 NAICS standards. The student-directed decision was to preserve native BDS coding first and require explicit mapping review before staging or entrepreneurship-measure construction.
+
+## Assignment 4.6 Student-Directed Decisions
+
+For the Assignment 4.6 BDS standardization stage, student-directed implementation decisions include:
+
+- treating BDS native sector coding as 2017 NAICS, not 2022 NAICS
+- preserving combined sectors such as `31-33` and `44-45`
+- validating sector comparability against the 2022 NAICS reference rather than applying a blanket conversion
+- defining startups from BDS firm-age-coarse age-0 firms
+- constructing startup-rate lags only after geography and industry standardization
+- requiring calendar-year continuity for lag construction
+- retaining unresolved or suppressed rows in staging while excluding unusable rows from intermediate construction
+
+A substantive AI-assisted shortcut was rejected during this step: blanket 2017-to-2022 NAICS conversion was not used. The student-directed decision was to validate comparability sector by sector and preserve source-native BDS sector codes and combined-sector conventions.

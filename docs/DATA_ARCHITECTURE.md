@@ -372,3 +372,28 @@ Raw ingestion stores:
 - suppression/status preservation for `D`, `N`, `S`, and `X` values
 
 A4.5 explicitly does not standardize BDS geography to the July 2023 CBSA reference, standardize BDS industry to 2022 NAICS, calculate startup rates, create lag variables, or populate `stg_bds` or `int_entrepreneurship`.
+
+## Implemented Assignment 4.6 BDS Standardization And Lag Framework
+
+Assignment 4.6 adds a dedicated BDS firm-age raw sample, mapping audits, BDS staging, intermediate entrepreneurship construction, and startup-rate lags.
+
+Implemented A4.6 artifacts:
+
+- `data/raw/bds/sample/bds2023_msa_sec_fac_sample_2010_2023.csv`
+- `src/regional_entrepreneurship_intelligence/etl/transform_bds.py`
+- `docs/BDS_TRANSFORMATION.md`
+- `tests/test_bds_mapping.py`
+- `tests/test_bds_transform.py`
+- `tests/test_bds_lags.py`
+
+BDS native industry is treated as 2017 NAICS sector coding. The analytical reference remains 2022 NAICS. A4.6 validates comparability at the sector level and preserves combined sectors such as `31-33` and `44-45`; it does not apply blanket NAICS conversion.
+
+The primary startup measure uses BDS firm-age-coarse age-0 rows. The implemented rate is:
+
+```text
+startup_rate = age_0_firms / all_firms * 100
+```
+
+The denominator comes from the BDS MSA-sector backbone for the same source-native MSA-sector-year. Suppressed, unavailable, nonnumeric, or zero-denominator cases remain null and are not converted to zero.
+
+Startup-rate lags are created only in `int_entrepreneurship`, after geography and industry standardization. Lags use calendar-year continuity within `geography_id x industry_id` panels and do not forward-fill across missing years, MSAs, sectors, or suppressed prior values.

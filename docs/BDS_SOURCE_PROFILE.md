@@ -125,3 +125,32 @@ Before BDS can become `stg_bds`, A4.6 must:
 - choose whether the MSA-by-sector file is sufficient or whether the MSA-by-sector-by-firm-age-coarse file is required for firm-startup concepts
 - preserve `D`, `N`, `S`, and `X` status semantics during staging
 - avoid calculating lag variables until the later lag framework step
+
+## Startup Measure Construction
+
+A4.6 uses the BDS MSA by Sector by Firm Age Coarse source for the primary startup concept.
+
+- Source table: `bds2023_msa_sec_fac.csv`
+- Firm age category: `a) 0`
+- Numerator: `firms` from age-0 rows
+- Denominator: `firms` from the BDS MSA by Sector backbone for the same MSA-sector-year
+- Resulting measure: `startup_rate = age_0_firms / all_firms * 100`
+
+This measure is appropriate because Census defines startups as firms with age 0. When the numerator or denominator is suppressed, unavailable, nonnumeric, or zero, the startup rate is left null. Establishment entry and establishment entry rate are retained as supporting measures, not as the primary startup definition.
+
+## Lag Construction
+
+A4.6 creates `startup_rate_lag1`, `startup_rate_lag2`, and `startup_rate_lag3` only after BDS records are standardized to internal geography and industry identifiers.
+
+Lag grouping keys:
+
+- `geography_id`
+- `industry_id`
+
+Calendar-year continuity rule:
+
+- lag1 requires year `t - 1`
+- lag2 requires year `t - 2`
+- lag3 requires year `t - 3`
+
+If a calendar year is missing, the corresponding lag is null. Lags are not forward-filled, and suppressed prior values are not used as valid lag values.

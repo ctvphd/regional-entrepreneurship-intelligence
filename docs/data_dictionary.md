@@ -283,3 +283,24 @@ The generated A4.2 dictionary is supplemented by the A4.4 county crosswalk and r
 | `raw_bds` | `source_row_identifier` | TEXT |  | Yes | Project loader | Deterministic source-native row identifier built from BDS file, year, MSA, and sector. | Used by the loader to avoid duplicate raw sample rows on rerun. |
 | `raw_bds` | `is_suppressed` | INTEGER |  | Yes | BDS source values | Boolean-like indicator set when source row contains `D` or `S` values. | `D`, `N`, `S`, and `X` values remain preserved in `raw_payload`; numeric values are not coerced to zero. |
 | `raw_bds` | `raw_payload` | TEXT |  | Yes | BDS bulk CSV row | JSON serialization of the complete source-native BDS row. | Raw layer preserves source fidelity and does not derive startup rates. |
+
+## A4.6 Maintained Addendum
+
+A4.6 adds BDS firm-age raw ingestion, mapping-status fields, startup construction, and lag fields.
+
+| Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `raw_bds_firm_age` | `raw_bds_firm_age_id` | INTEGER | PK | No | BDS firm-age sample | Primary key for a source-native BDS firm-age row. | Preserves the MSA-sector-firm-age grain. |
+| `raw_bds_firm_age` | `source_fagecoarse` | TEXT |  | Yes | BDS `fagecoarse` | Source-native firm-age-coarse category. | Age-0 startup category is `a) 0`; do not infer other categories. |
+| `raw_bds_firm_age` | `source_naics_version` | TEXT |  | Yes | Project metadata | Notes that BDS sector coding is treated as 2017 NAICS. | Does not convert to 2022 NAICS. |
+| `raw_bds_firm_age` | `raw_payload` | TEXT |  | Yes | BDS firm-age CSV row | JSON serialization of the complete source-native row. | `D`, `N`, `S`, and `X` values remain source-faithful. |
+| `stg_bds` | `source_geography_id` | TEXT |  | Yes | BDS `msa` | Source-native BDS MSA code. | Mapping audit classifies but does not manually fix codes. |
+| `stg_bds` | `source_industry_id` | TEXT |  | Yes | BDS `sector` | Source-native BDS sector code. | Combined sectors are preserved. |
+| `stg_bds` | `source_fagecoarse` | TEXT |  | Yes | BDS `fagecoarse` | Source-native firm-age category used for startup construction. | A4.6 uses age-0 rows only. |
+| `stg_bds` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | Direct-match/crosswalk-required/unresolved geography status. | Unresolved rows are retained in staging and excluded from intermediate construction. |
+| `stg_bds` | `industry_mapping_status` | TEXT |  | Yes | Mapping audit | Directly-comparable/official-mapping-required/unresolved industry status. | Blanket 2017-to-2022 conversion is not performed. |
+| `stg_bds` | `startup_rate` | REAL |  | Yes | Derived from BDS age-0 and backbone rows | Age-0 firms divided by all firms in the same MSA-sector-year, multiplied by 100. | Null when numerator or denominator is suppressed, unavailable, nonnumeric, or zero. |
+| `stg_bds` | `establishment_entry_rate` | REAL |  | Yes | BDS MSA-sector backbone | Supporting establishment entry rate. | Robustness/supporting measure, not the primary startup definition. |
+| `int_entrepreneurship` | `startup_rate_lag1` | REAL |  | Yes | Derived after standardization | Prior calendar-year startup rate within geography-industry panel. | Null if year `t - 1` is missing or suppressed. |
+| `int_entrepreneurship` | `startup_rate_lag2` | REAL |  | Yes | Derived after standardization | Two-year lagged startup rate within geography-industry panel. | Null if year `t - 2` is missing or suppressed. |
+| `int_entrepreneurship` | `startup_rate_lag3` | REAL |  | Yes | Derived after standardization | Three-year lagged startup rate within geography-industry panel. | Null if year `t - 3` is missing or suppressed. |

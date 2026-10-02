@@ -13,15 +13,16 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `ref_source` | Reference | One row per source registry entry | `source_id` | None | Project metadata | Yes | Generated and seeded in SQLite | Registers the four approved planned source datasets and agencies. |
 | `metadata_source_manifest` | Metadata | One row per retrieved source file or API result | `manifest_id` | `source_id` -> `ref_source` | Pipeline metadata | Yes | Generated in SQLite | Records provenance, access method, source version, raw filename, checksum, and row count. |
 | `metadata_pipeline_run` | Metadata | One row per pipeline stage run | `pipeline_run_id` | None | Pipeline metadata | Yes | Generated in SQLite | Records run status, timing, stage, counts, warnings, and errors. |
-| `raw_bds` | Raw | One source-native BDS row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.5 | Preserves source-native BDS MSA, sector, year, status values, and raw payload without standardizing geography or NAICS. |
+| `raw_bds` | Raw | One source-native BDS MSA-sector row | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.5 | Preserves source-native BDS MSA, sector, year, status values, and raw payload without standardizing geography or NAICS. |
+| `raw_bds_firm_age` | Raw | One source-native BDS MSA-sector-firm-age row | `raw_bds_firm_age_id` | `manifest_id`, `pipeline_run_id` | BDS | Yes | Generated in SQLite; sample-loaded in A4.6 | Preserves source-native BDS firm-age-coarse rows used for age-0 startup construction. |
 | `raw_qcew` | Raw | One source-native QCEW row | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | QCEW | Yes | Generated in SQLite | Preserves source-native QCEW identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_cbp` | Raw | One source-native CBP row | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | CBP | Yes | Generated in SQLite | Preserves source-native CBP identifiers and raw payload. Provisional fields must be verified during ingestion. |
 | `raw_acs` | Raw | One source-native ACS row | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | ACS | Yes | Generated in SQLite | Preserves source-native ACS identifiers and raw payload. Provisional fields must be verified during ingestion. |
-| `stg_bds` | Staging | MSA x 2-digit NAICS x year where supported by BDS | `stg_bds_id` | `raw_bds_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | BDS | Yes | Generated in SQLite | Standardizes BDS entrepreneurship fields while retaining lineage and missing/suppression flags. |
+| `stg_bds` | Staging | BDS MSA x sector x year x firm-age-derived startup row | `stg_bds_id` | `raw_bds_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | BDS | Yes | Generated in SQLite by A4.6 | Standardizes BDS age-0 startup fields while retaining source-native codes, mapping statuses, and missing/suppression flags. |
 | `stg_qcew` | Staging | MSA x 2-digit NAICS x year where supported by QCEW | `stg_qcew_id` | `raw_qcew_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | QCEW | Yes | Generated in SQLite | Standardizes QCEW employment, establishments, payroll, and average pay fields. |
 | `stg_cbp` | Staging | MSA x 2-digit NAICS x year where supported by CBP | `stg_cbp_id` | `raw_cbp_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `industry_id`, `year` | CBP | Yes | Generated in SQLite | Standardizes CBP business-structure fields for validation/context. |
 | `stg_acs` | Staging | MSA x year | `stg_acs_id` | `raw_acs_id`, `manifest_id`, `pipeline_run_id`, `geography_id`, `year` | ACS | Yes | Generated in SQLite | Standardizes ACS regional control fields for MSA-year joins. |
-| `int_entrepreneurship` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | BDS-derived | Yes | Generated in SQLite | Holds derived entrepreneurship measures without final gap targets. |
+| `int_entrepreneurship` | Intermediate | Standardized MSA x directly comparable sector x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | BDS-derived | Yes | Generated in SQLite by A4.6 | Holds standardized BDS entrepreneurship measures and startup-rate lags without final gap targets. |
 | `int_industry_growth` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | QCEW-derived | Yes | Generated in SQLite | Holds industry level and growth measures, with nominal/real-adjustment flag. |
 | `int_regional_controls` | Intermediate | MSA x year | `(geography_id, year)` | `geography_id`, `year`, `source_manifest_id`, `pipeline_run_id` | ACS-derived | Yes | Generated in SQLite | Holds regional population, income, education, labor-force, and unemployment controls. |
 | `int_business_structure` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | CBP-derived | Yes | Generated in SQLite | Holds business-structure measures used for validation/context. |
@@ -65,3 +66,15 @@ Assignment 4.5 profiles the official Census BDS source family and implements sou
 The sample is derived from the official Census BDS `bds2023_msa_sec.csv` bulk file and preserves real field names and source-native `year`, `msa`, and `sector` codes. The full BDS file is not committed. A4.5 records one BDS manifest row and loads raw rows into `raw_bds` with the original source row serialized in `raw_payload`.
 
 A4.5 does not populate `stg_bds`, `int_entrepreneurship`, or `analytics_msa_industry_year`, and it does not map BDS records to July 2023 CBSA or 2022 NAICS standards.
+
+## A4.6 BDS Standardization And Lags
+
+Assignment 4.6 adds the BDS MSA by Sector by Firm Age Coarse sample and moves BDS through `raw_bds` / `raw_bds_firm_age` to `stg_bds` and `int_entrepreneurship`.
+
+Implemented artifacts:
+
+- Raw firm-age sample: `data/raw/bds/sample/bds2023_msa_sec_fac_sample_2010_2023.csv`
+- Transform module: `src/regional_entrepreneurship_intelligence/etl/transform_bds.py`
+- Transformation documentation: `docs/BDS_TRANSFORMATION.md`
+
+The primary startup concept is firm age 0. A4.6 computes `startup_rate` as age-0 firms divided by all firms in the same source-native MSA-sector-year, multiplied by 100, only when numerator and denominator are usable. `startup_rate_lag1`, `startup_rate_lag2`, and `startup_rate_lag3` are created only in `int_entrepreneurship` after standardization, with calendar-year continuity checks. A4.6 does not ingest QCEW, ACS, or CBP, and it does not create the final integrated analytics table or entrepreneurial-gap target.

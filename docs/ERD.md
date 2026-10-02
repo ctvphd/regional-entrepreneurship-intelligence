@@ -52,11 +52,13 @@ erDiagram
     REF_SOURCE ||--o{ METADATA_SOURCE_MANIFEST : describes
     REF_SOURCE ||--o{ QUALITY_REJECTED_RECORD : source
     METADATA_SOURCE_MANIFEST ||--o{ RAW_BDS : manifests
+    METADATA_SOURCE_MANIFEST ||--o{ RAW_BDS_FIRM_AGE : manifests
     METADATA_SOURCE_MANIFEST ||--o{ RAW_QCEW : manifests
     METADATA_SOURCE_MANIFEST ||--o{ RAW_CBP : manifests
     METADATA_SOURCE_MANIFEST ||--o{ RAW_ACS : manifests
 
     METADATA_PIPELINE_RUN ||--o{ RAW_BDS : run
+    METADATA_PIPELINE_RUN ||--o{ RAW_BDS_FIRM_AGE : run
     METADATA_PIPELINE_RUN ||--o{ RAW_QCEW : run
     METADATA_PIPELINE_RUN ||--o{ RAW_CBP : run
     METADATA_PIPELINE_RUN ||--o{ RAW_ACS : run
@@ -65,6 +67,7 @@ erDiagram
     METADATA_PIPELINE_RUN ||--o{ ANALYTICS_MSA_INDUSTRY_YEAR : run
 
     RAW_BDS ||--o{ STG_BDS : stages
+    RAW_BDS_FIRM_AGE ||--o{ STG_BDS : startup_age
     RAW_QCEW ||--o{ STG_QCEW : stages
     RAW_CBP ||--o{ STG_CBP : stages
     RAW_ACS ||--o{ STG_ACS : stages
@@ -83,6 +86,7 @@ erDiagram
 | `metadata_source_manifest` | `manifest_id` | `source_id` | Source retrieval manifest. |
 | `metadata_pipeline_run` | `pipeline_run_id` | None | Pipeline run metadata. |
 | `raw_bds` | `raw_bds_id` | `manifest_id`, `pipeline_run_id` | Source-faithful BDS records. |
+| `raw_bds_firm_age` | `raw_bds_firm_age_id` | `manifest_id`, `pipeline_run_id` | Source-faithful BDS MSA-sector-firm-age records. |
 | `raw_qcew` | `raw_qcew_id` | `manifest_id`, `pipeline_run_id` | Source-faithful QCEW records. |
 | `raw_cbp` | `raw_cbp_id` | `manifest_id`, `pipeline_run_id` | Source-faithful CBP records. |
 | `raw_acs` | `raw_acs_id` | `manifest_id`, `pipeline_run_id` | Source-faithful ACS records. |
@@ -90,7 +94,7 @@ erDiagram
 | `stg_qcew` | `stg_qcew_id` | raw, manifest, run, geography, industry, year | Standardized QCEW staging. |
 | `stg_cbp` | `stg_cbp_id` | raw, manifest, run, geography, industry, year | Standardized CBP staging. |
 | `stg_acs` | `stg_acs_id` | raw, manifest, run, geography, year | Standardized ACS staging. |
-| `int_entrepreneurship` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate entrepreneurship measures. |
+| `int_entrepreneurship` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate BDS entrepreneurship measures and startup-rate lags. |
 | `int_industry_growth` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate industry-growth measures. |
 | `int_regional_controls` | `(geography_id, year)` | geography, year, manifest, run | Intermediate MSA-year controls. |
 | `int_business_structure` | `(geography_id, industry_id, year)` | geography, industry, year, manifest, run | Intermediate CBP-derived business structure. |
