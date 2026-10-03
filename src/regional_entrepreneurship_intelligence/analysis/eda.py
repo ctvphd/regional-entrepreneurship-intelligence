@@ -119,6 +119,146 @@ VARIABLE_GROUPS: dict[str, frozenset[str]] = {
 _PROHIBITED_NAME_FRAGMENTS = FORBIDDEN_FIELD_FRAGMENTS
 _LAG_PATTERN = re.compile(r"_lag(\d+)$")
 
+PATTERN_MEASURES = (
+    "startup_rate", "employment_growth", "establishment_growth", "payroll_growth",
+    "wage_growth", "acs_population_growth", "unemployment_rate",
+    "educational_attainment_pct", "median_household_income",
+    "labor_force_participation_pct",
+)
+ACS_MSA_YEAR_MEASURES = (
+    "acs_population_growth", "median_household_income", "educational_attainment_pct",
+    "labor_force_participation_pct", "unemployment_rate",
+)
+
+
+def _grouped_measure_summary(frame: pd.DataFrame, keys: list[str], measures: tuple[str, ...]) -> pd.DataFrame:
+    """Long-form distribution statistics with explicit observed and missing N."""
+    missing = set(keys + list(measures)) - set(frame.columns)
+    if missing:
+        raise ValueError(f"Summary fields are absent: {sorted(missing)}")
+    records: list[dict[str, object]] = []
+    for group_key, group in frame.groupby(keys, sort=True, dropna=False):
+        if not isinstance(group_key, tuple):
+            group_key = (group_key,)
+        labels = dict(zip(keys, group_key))
+        for variable in measures:
+            values = pd.to_numeric(group[variable], errors="coerce").dropna()
+            row: dict[str, object] = {
+                **labels, "variable": variable, "row_count": len(group),
+                "count": int(values.count()), "missing_count": int(group[variable].isna().sum()),
+                "missing_pct": float(group[variable].isna().mean() * 100),
+                "mean": float(values.mean()) if len(values) else np.nan,
+                "median": float(values.median()) if len(values) else np.nan,
+                "std": float(values.std(ddof=1)) if len(values) > 1 else np.nan,
+                "p05": float(values.quantile(.05)) if len(values) else np.nan,
+                "p25": float(values.quantile(.25)) if len(values) else np.nan,
+                "p75": float(values.quantile(.75)) if len(values) else np.nan,
+                "p95": float(values.quantile(.95)) if len(values) else np.nan,
+                "min": float(values.min()) if len(values) else np.nan,
+                "max": float(values.max()) if len(values) else np.nan,
+            }
+            row["iqr"] = row["p75"] - row["p25"] if len(values) else np.nan
+            row["mad"] = float((values - values.median()).abs().median()) if len(values) else np.nan
+            row["zero_pct"] = float(values.eq(0).mean() * 100) if len(values) else np.nan
+            records.append(row)
+    return pd.DataFrame(records)
+
+
+def summarize_by_year(frame: pd.DataFrame, measures: tuple[str, ...] = PATTERN_MEASURES) -> pd.DataFrame:
+    """Summarize annual panel measures; ACS values remain available-case panel rows."""
+    return _grouped_measure_summary(frame, ["year"], measures)
+
+
+def summarize_by_sector(frame: pd.DataFrame, measures: tuple[str, ...] = PATTERN_MEASURES) -> pd.DataFrame:
+    """Summarize distributions across the observed sector rows."""
+    result = _grouped_measure_summary(frame, ["sector_code"], measures)
+    coverage = frame.groupby("sector_code").agg(
+        msa_count=("geography_id", "nunique"), year_count=("year", "nunique"),
+    )
+    return result.join(coverage, on="sector_code")
+
+
+def summarize_sector_volatility(frame: pd.DataFrame, measures: tuple[str, ...] = (
+    "startup_rate", "employment_growth",
+)) -> pd.DataFrame:
+    """Report robust and conventional sector dispersion measures."""
+    return summarize_by_sector(frame, measures)
+
+
+def collapse_acs_to_msa_year(frame: pd.DataFrame) -> pd.DataFrame:
+    """Validate repeated ACS values, then retain one record per MSA-year."""
+    keys = ["geography_id", "year"]
+    columns = keys + [c for c in ("cbsa_code", "cbsa_name", *ACS_MSA_YEAR_MEASURES) if c in frame]
+    acs = frame[columns].copy()
+    for column in ACS_MSA_YEAR_MEASURES:
+        if column in acs:
+            inconsistent = acs.groupby(keys, dropna=False)[column].nunique(dropna=False).gt(1)
+            if inconsistent.any():
+                raise ValueError(f"Conflicting repeated MSA-year ACS values: {column}")
+    return acs.drop_duplicates(keys, keep="first").sort_values(keys).reset_index(drop=True)
+
+
+def summarize_msa_coverage(frame: pd.DataFrame, *, min_rows: int = 100,
+                           min_sectors: int = 5, min_years: int = 10) -> pd.DataFrame:
+    """Keep all MSAs and flag comparison eligibility using explicit coverage rules."""
+    coverage = frame.groupby(["geography_id", "cbsa_code", "cbsa_name"], dropna=False).agg(
+        row_count=("year", "size"), sector_count=("sector_code", "nunique"),
+        year_count=("year", "nunique"), panel_count=("industry_id", "nunique"),
+    ).reset_index()
+    coverage["eligible_for_comparison"] = (
+        coverage.row_count.ge(min_rows) & coverage.sector_count.ge(min_sectors)
+        & coverage.year_count.ge(min_years)
+    )
+    return coverage
+
+
+def summarize_by_msa(frame: pd.DataFrame, measures: tuple[str, ...] = PATTERN_MEASURES,
+                     *, min_rows: int = 100, min_sectors: int = 5,
+                     min_years: int = 10) -> pd.DataFrame:
+    """Summarize MSA panel distributions and attach non-replicated ACS context."""
+    coverage = summarize_msa_coverage(frame, min_rows=min_rows, min_sectors=min_sectors,
+                                      min_years=min_years)
+    result = _grouped_measure_summary(frame, ["geography_id", "cbsa_code", "cbsa_name"], measures)
+    result = result.merge(coverage, on=["geography_id", "cbsa_code", "cbsa_name"],
+                          validate="many_to_one")
+    acs = collapse_acs_to_msa_year(frame)
+    acs_summary = _grouped_measure_summary(acs, ["geography_id"], ACS_MSA_YEAR_MEASURES)
+    # Keep one transparent regional median per MSA and control, without industry replication.
+    medians = acs_summary[["geography_id", "variable", "median"]]
+    medians = medians.pivot(index="geography_id", columns="variable", values="median").reset_index()
+    return result.merge(medians, on="geography_id", how="left", validate="many_to_one",
+                       suffixes=("", "_acs"))
+
+
+def build_descriptive_quadrants(
+    frame: pd.DataFrame,
+    *,
+    group_by: tuple[str, ...] = ("year", "sector_code"),
+) -> pd.DataFrame:
+    """Aggregate contemporaneous sector-year median quadrants; no leads/targets."""
+    required = {"year", "sector_code", "geography_id", "cbsa_code", "cbsa_name",
+                "startup_rate", "employment_growth"}
+    if missing := required - set(frame.columns):
+        raise ValueError(f"Quadrant fields are absent: {sorted(missing)}")
+    dimensions = list(group_by)
+    if not dimensions or set(dimensions) - required:
+        raise ValueError("Quadrant grouping must use available year/sector/MSA dimensions")
+    rows = frame[[*dict.fromkeys(["year", "sector_code", *dimensions, "geography_id",
+                                  "cbsa_code", "cbsa_name", "startup_rate",
+                                  "employment_growth"]) ]].copy()
+    rows["startup_cutoff"] = rows.groupby(["year", "sector_code"])["startup_rate"].transform("median")
+    rows["growth_cutoff"] = rows.groupby(["year", "sector_code"])["employment_growth"].transform("median")
+    rows = rows.dropna(subset=["startup_rate", "employment_growth"])
+    rows["startup_level"] = np.where(rows.startup_rate.ge(rows.startup_cutoff), "high", "low")
+    rows["growth_level"] = np.where(rows.employment_growth.ge(rows.growth_cutoff), "high", "low")
+    rows["quadrant"] = rows.growth_level + "_growth_" + rows.startup_level + "_startup"
+    grouped = rows.groupby([*dimensions, "quadrant"], as_index=False).agg(
+        observation_count=("geography_id", "size"), msa_count=("geography_id", "nunique"),
+    )
+    totals = grouped.groupby(dimensions)["observation_count"].transform("sum")
+    grouped["percent_within_group"] = grouped.observation_count / totals * 100
+    return grouped
+
 
 def _connect_read_only(database_path: str | Path) -> sqlite3.Connection:
     path = Path(database_path).resolve()

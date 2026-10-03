@@ -1,0 +1,382 @@
+geography_id,cbsa_code,cbsa_name,row_count,sector_count,year_count,panel_count,eligible_for_comparison
+3,10180,"Abilene, TX",164,17,14,17,True
+7,10420,"Akron, OH",217,19,14,19,True
+10,10500,"Albany, GA",100,12,14,12,True
+11,10540,"Albany, OR",207,19,14,19,True
+12,10580,"Albany-Schenectady-Troy, NY",190,15,14,15,True
+16,10740,"Albuquerque, NM",123,16,14,16,True
+18,10780,"Alexandria, LA",92,12,14,12,False
+21,10900,"Allentown-Bethlehem-Easton, PA-NJ",192,17,14,17,True
+24,11020,"Altoona, PA",193,19,14,19,True
+26,11100,"Amarillo, TX",22,6,14,6,False
+28,11180,"Ames, IA",137,16,14,16,True
+29,11200,"Amherst Town-Northampton, MA",233,19,14,19,True
+31,11260,"Anchorage, AK",240,19,14,19,True
+35,11460,"Ann Arbor, MI",237,19,14,19,True
+36,11500,"Anniston-Oxford, AL",190,17,14,17,True
+37,11540,"Appleton, WI",140,16,14,16,True
+43,11700,"Asheville, NC",143,12,14,12,True
+50,12020,"Athens-Clarke County, GA",93,9,14,9,False
+51,12060,"Atlanta-Sandy Springs-Roswell, GA",65,6,14,6,False
+52,12100,"Atlantic City-Hammonton, NJ",216,19,14,19,True
+55,12220,"Auburn-Opelika, AL",94,12,14,12,False
+56,12260,"Augusta-Richmond County, GA-SC",80,8,14,8,False
+59,12420,"Austin-Round Rock-San Marcos, TX",227,19,14,19,True
+62,12540,"Bakersfield-Delano, CA",254,19,14,19,True
+63,12580,"Baltimore-Columbia-Towson, MD",193,16,14,16,True
+64,12620,"Bangor, ME",212,18,14,18,True
+66,12700,"Barnstable Town, MA",222,19,14,19,True
+71,12940,"Baton Rouge, LA",41,6,14,6,False
+72,12980,"Battle Creek, MI",158,17,14,17,True
+73,13020,"Bay City, MI",170,17,14,17,True
+76,13140,"Beaumont-Port Arthur, TX",221,19,14,19,True
+78,13220,"Beckley, WV",188,19,14,19,True
+82,13380,"Bellingham, WA",238,19,14,19,True
+84,13460,"Bend, OR",182,16,14,16,True
+88,13740,"Billings, MT",163,17,14,17,True
+89,13780,"Binghamton, NY",175,18,14,18,True
+90,13820,"Birmingham, AL",95,13,14,13,False
+92,13900,"Bismarck, ND",46,11,14,11,False
+94,13980,"Blacksburg-Christiansburg-Radford, VA",73,9,14,9,False
+95,14010,"Bloomington, IL",192,18,14,18,True
+96,14020,"Bloomington, IN",137,16,14,16,True
+101,14260,"Boise City, ID",82,12,14,12,False
+105,14460,"Boston-Cambridge-Newton, MA-NH",202,15,14,15,True
+106,14500,"Boulder, CO",230,19,14,19,True
+107,14540,"Bowling Green, KY",48,6,14,6,False
+108,14580,"Bozeman, MT",236,19,14,19,True
+114,14740,"Bremerton-Silverdale-Port Orchard, WA",229,18,14,18,True
+122,15180,"Brownsville-Harlingen, TX",232,19,14,19,True
+124,15260,"Brunswick-St. Simons, GA",96,10,14,10,False
+126,15380,"Buffalo-Cheektowaga, NY",227,17,14,17,True
+129,15500,"Burlington, NC",209,18,14,18,True
+130,15540,"Burlington-South Burlington, VT",128,14,14,14,True
+140,15940,"Canton-Massillon, OH",195,17,14,17,True
+141,15980,"Cape Coral-Fort Myers, FL",229,19,14,19,True
+142,16020,"Cape Girardeau, MO-IL",59,8,14,8,False
+146,16180,"Carson City, NV",179,15,14,15,True
+147,16220,"Casper, WY",230,19,14,19,True
+149,16300,"Cedar Rapids, IA",140,14,14,14,True
+154,16540,"Chambersburg, PA",217,19,14,19,True
+155,16580,"Champaign-Urbana, IL",136,14,14,14,True
+156,16620,"Charleston, WV",67,11,14,11,False
+158,16700,"Charleston-North Charleston, SC",206,18,14,18,True
+159,16740,"Charlotte-Concord-Gastonia, NC-SC",101,11,14,11,True
+160,16820,"Charlottesville, VA",128,12,14,12,True
+161,16860,"Chattanooga, TN-GA",65,10,14,10,False
+162,16940,"Cheyenne, WY",231,19,14,19,True
+163,16980,"Chicago-Naperville-Elgin, IL-IN",95,11,14,11,False
+164,17020,"Chico, CA",239,19,14,19,True
+166,17140,"Cincinnati, OH-KY-IN",17,3,14,3,False
+169,17300,"Clarksville, TN-KY",97,10,14,10,False
+172,17410,"Cleveland, OH",207,17,14,17,True
+173,17420,"Cleveland, TN",110,12,14,12,True
+180,17660,"Coeur d'Alene, ID",241,19,14,19,True
+182,17780,"College Station-Bryan, TX",166,16,14,16,True
+183,17820,"Colorado Springs, CO",221,18,14,18,True
+184,17860,"Columbia, MO",91,11,14,11,False
+185,17900,"Columbia, SC",83,11,14,11,False
+186,17980,"Columbus, GA-AL",13,1,13,1,False
+187,18020,"Columbus, IN",180,18,14,18,True
+190,18140,"Columbus, OH",134,11,14,11,True
+200,18580,"Corpus Christi, TX",169,16,14,16,True
+203,18700,"Corvallis, OR",179,18,14,18,True
+207,18880,"Crestview-Fort Walton Beach-Destin, FL",235,19,14,19,True
+211,19100,"Dallas-Fort Worth-Arlington, TX",206,17,14,17,True
+212,19140,"Dalton, GA",118,12,14,12,True
+216,19300,"Daphne-Fairhope-Foley, AL",233,19,14,19,True
+217,19340,"Davenport-Moline-Rock Island, IA-IL",159,13,14,13,True
+218,19430,"Dayton-Kettering-Beavercreek, OH",186,16,14,16,True
+219,19460,"Decatur, AL",129,15,14,15,True
+220,19500,"Decatur, IL",174,19,14,19,True
+224,19660,"Deltona-Daytona Beach-Ormond Beach, FL",206,18,14,18,True
+226,19740,"Denver-Aurora-Centennial, CO",86,13,14,13,False
+228,19780,"Des Moines-West Des Moines, IA",140,13,14,13,True
+230,19820,"Detroit-Warren-Dearborn, MI",199,18,14,18,True
+234,20020,"Dothan, AL",89,12,14,12,False
+236,20100,"Dover, DE",198,17,14,17,True
+239,20220,"Dubuque, IA",199,17,14,17,True
+240,20260,"Duluth, MN-WI",183,15,14,15,True
+245,20500,"Durham-Chapel Hill, NC",204,17,14,17,True
+247,20580,"Eagle Pass, TX",122,15,14,15,True
+250,20740,"Eau Claire, WI",184,17,14,17,True
+254,20940,"El Centro, CA",213,19,14,19,True
+257,21060,"Elizabethtown, KY",130,12,14,12,True
+259,21140,"Elkhart-Goshen, IN",201,19,14,19,True
+263,21300,"Elmira, NY",162,17,14,17,True
+264,21340,"El Paso, TX",53,8,14,8,False
+266,21420,"Enid, OK",171,19,14,19,True
+268,21500,"Erie, PA",227,19,14,19,True
+272,21660,"Eugene-Springfield, OR",257,19,14,19,True
+275,21780,"Evansville, IN",152,17,14,17,True
+276,21820,"Fairbanks-College, AK",201,19,14,19,True
+280,22020,"Fargo, ND-MN",193,17,14,17,True
+283,22140,"Farmington, NM",211,19,14,19,True
+284,22180,"Fayetteville, NC",176,15,14,15,True
+286,22220,"Fayetteville-Springdale-Rogers, AR",133,12,14,12,True
+290,22380,"Flagstaff, AZ",225,19,14,19,True
+291,22420,"Flint, MI",215,19,14,19,True
+292,22500,"Florence, SC",201,18,14,18,True
+293,22520,"Florence-Muscle Shoals, AL",189,17,14,17,True
+294,22540,"Fond du Lac, WI",185,17,14,17,True
+297,22660,"Fort Collins-Loveland, CO",243,19,14,19,True
+303,22900,"Fort Smith, AR-OK",177,17,14,17,True
+304,23060,"Fort Wayne, IN",140,13,14,13,True
+312,23420,"Fresno, CA",228,19,14,19,True
+313,23460,"Gadsden, AL",190,19,14,19,True
+315,23540,"Gainesville, FL",126,13,14,13,True
+316,23580,"Gainesville, GA",226,19,14,19,True
+323,23900,"Gettysburg, PA",175,19,14,19,True
+326,24020,"Glens Falls, NY",167,17,14,17,True
+328,24140,"Goldsboro, NC",175,17,14,17,True
+330,24220,"Grand Forks, ND-MN",176,17,14,17,True
+331,24260,"Grand Island, NE",74,8,14,8,False
+332,24300,"Grand Junction, CO",240,19,14,19,True
+334,24340,"Grand Rapids-Wyoming-Kentwood, MI",144,13,14,13,True
+335,24420,"Grants Pass, OR",181,17,14,17,True
+337,24500,"Great Falls, MT",214,19,14,19,True
+338,24540,"Greeley, CO",243,19,14,19,True
+339,24580,"Green Bay, WI",110,11,14,11,True
+343,24660,"Greensboro-High Point, NC",211,17,14,17,True
+346,24780,"Greenville, NC",211,19,14,19,True
+348,24860,"Greenville-Anderson-Greer, SC",170,15,14,15,True
+353,25060,"Gulfport-Biloxi, MS",151,14,14,14,True
+355,25180,"Hagerstown-Martinsburg, MD-WV",145,15,14,15,True
+357,25220,"Hammond, LA",221,19,14,19,True
+358,25260,"Hanford-Corcoran, CA",186,17,14,17,True
+360,25420,"Harrisburg-Carlisle, PA",186,15,14,15,True
+362,25500,"Harrisonburg, VA",171,16,14,16,True
+365,25620,"Hattiesburg, MS",110,16,14,16,True
+368,25740,"Helena, MT",110,15,14,15,True
+375,25860,"Hickory-Lenoir-Morganton, NC",152,17,14,17,True
+378,25940,"Hilton Head Island-Bluffton-Port Royal, SC",198,18,14,18,True
+379,25980,"Hinesville, GA",50,8,13,8,False
+382,26140,"Homosassa Springs, FL",221,19,14,19,True
+384,26300,"Hot Springs, AR",213,19,14,19,True
+386,26380,"Houma-Bayou Cane-Thibodaux, LA",234,19,14,19,True
+387,26420,"Houston-Pasadena-The Woodlands, TX",123,16,14,16,True
+391,26580,"Huntington-Ashland, WV-KY-OH",74,10,14,10,False
+392,26620,"Huntsville, AL",203,16,14,16,True
+397,26820,"Idaho Falls, ID",87,14,14,14,False
+399,26900,"Indianapolis-Carmel-Greenwood, IN",101,13,14,13,True
+400,26980,"Iowa City, IA",186,15,14,15,True
+402,27060,"Ithaca, NY",179,16,14,16,True
+403,27100,"Jackson, MI",188,17,14,17,True
+404,27140,"Jackson, MS",99,11,14,11,False
+405,27180,"Jackson, TN",80,9,14,9,False
+407,27260,"Jacksonville, FL",160,14,14,14,True
+409,27340,"Jacksonville, NC",201,17,14,17,True
+413,27500,"Janesville-Beloit, WI",196,19,14,19,True
+416,27620,"Jefferson City, MO",69,10,14,10,False
+418,27740,"Johnson City, TN",117,11,14,11,True
+419,27780,"Johnstown, PA",201,19,14,19,True
+420,27860,"Jonesboro, AR",151,16,14,16,True
+421,27900,"Joplin, MO-KS",144,13,14,13,True
+424,28020,"Kalamazoo-Portage, MI",214,17,14,17,True
+426,28100,"Kankakee, IL",165,17,14,17,True
+427,28140,"Kansas City, MO-KS",58,8,14,8,False
+433,28420,"Kennewick-Richland, WA",188,14,14,14,True
+434,28450,"Kenosha, WI",189,17,14,17,True
+439,28660,"Killeen-Temple, TX",142,14,14,14,True
+441,28700,"Kingsport-Bristol, TN-VA",81,12,14,12,False
+442,28740,"Kingston, NY",222,19,14,19,True
+446,28880,"Kiryas Joel-Poughkeepsie-Newburgh, NY",221,18,14,18,True
+448,28940,"Knoxville, TN",58,11,14,11,False
+449,29020,"Kokomo, IN",174,17,14,17,True
+451,29100,"La Crosse-Onalaska, WI-MN",127,15,14,15,True
+452,29180,"Lafayette, LA",215,19,14,19,True
+453,29200,"Lafayette-West Lafayette, IN",59,9,14,9,False
+456,29340,"Lake Charles, LA",112,13,14,13,True
+458,29420,"Lake Havasu City-Kingman, AZ",217,18,14,18,True
+459,29460,"Lakeland-Winter Haven, FL",244,19,14,19,True
+461,29540,"Lancaster, PA",252,19,14,19,True
+462,29620,"Lansing-East Lansing, MI",190,16,14,16,True
+464,29700,"Laredo, TX",231,19,14,19,True
+466,29740,"Las Cruces, NM",223,19,14,19,True
+468,29820,"Las Vegas-Henderson-North Las Vegas, NV",249,19,14,19,True
+471,29940,"Lawrence, KS",206,18,14,18,True
+473,30020,"Lawton, OK",91,11,14,11,False
+475,30140,"Lebanon, PA",180,18,14,18,True
+480,30300,"Lewiston, ID-WA",112,13,14,13,True
+481,30340,"Lewiston-Auburn, ME",197,18,14,18,True
+484,30460,"Lexington-Fayette, KY",135,12,14,12,True
+485,30500,"Lexington Park, MD",142,16,14,16,True
+487,30620,"Lima, OH",178,18,14,18,True
+489,30700,"Lincoln, NE",168,14,14,14,True
+490,30780,"Little Rock-North Little Rock-Conway, AR",87,9,14,9,False
+492,30860,"Logan, UT-ID",172,17,14,17,True
+494,30980,"Longview, TX",180,18,14,18,True
+495,31020,"Longview-Kelso, WA",205,19,14,19,True
+497,31080,"Los Angeles-Long Beach-Anaheim, CA",265,19,14,19,True
+498,31140,"Louisville/Jefferson County, KY-IN",56,10,14,10,False
+499,31180,"Lubbock, TX",26,4,14,4,False
+503,31340,"Lynchburg, VA",114,11,14,11,True
+505,31420,"Macon-Bibb County, GA",21,4,14,4,False
+507,31540,"Madison, WI",145,12,14,12,True
+511,31700,"Manchester-Nashua, NH",242,19,14,19,True
+512,31740,"Manhattan, KS",121,13,14,13,True
+514,31860,"Mankato, MN",126,13,14,13,True
+515,31900,"Mansfield, OH",182,18,14,18,True
+534,32580,"McAllen-Edinburg-Mission, TX",240,19,14,19,True
+539,32780,"Medford, OR",235,19,14,19,True
+540,32820,"Memphis, TN-MS-AR",35,5,14,5,False
+542,32900,"Merced, CA",190,17,14,17,True
+546,33100,"Miami-Fort Lauderdale-West Palm Beach, FL",265,19,14,19,True
+547,33140,"Michigan City-La Porte, IN",170,18,14,18,True
+549,33220,"Midland, MI",158,16,14,16,True
+550,33260,"Midland, TX",115,13,14,13,True
+552,33340,"Milwaukee-Waukesha, WI",202,15,14,15,True
+555,33460,"Minneapolis-St. Paul-Bloomington, MN-WI",129,12,14,12,True
+556,33500,"Minot, ND",58,10,14,10,False
+557,33540,"Missoula, MT",112,14,14,14,True
+560,33660,"Mobile, AL",240,19,14,19,True
+561,33700,"Modesto, CA",224,19,14,19,True
+562,33740,"Monroe, LA",119,13,14,13,True
+563,33780,"Monroe, MI",156,15,14,15,True
+564,33860,"Montgomery, AL",91,14,14,14,False
+570,34060,"Morgantown, WV",158,18,14,18,True
+571,34100,"Morristown, TN",113,12,14,12,True
+583,34580,"Mount Vernon-Anacortes, WA",224,19,14,19,True
+584,34620,"Muncie, IN",175,18,14,18,True
+588,34740,"Muskegon-Norton Shores, MI",171,17,14,17,True
+590,34820,"Myrtle Beach-Conway-North Myrtle Beach, SC",236,19,14,19,True
+593,34900,"Napa, CA",219,18,14,18,True
+594,34940,"Naples-Marco Island, FL",236,19,14,19,True
+595,34980,"Nashville-Davidson--Murfreesboro--Franklin, TN",58,7,14,7,False
+603,35380,"New Orleans-Metairie, LA",121,10,14,10,True
+608,35620,"New York-Newark-Jersey City, NY-NJ",178,14,14,14,True
+609,35660,"Niles, MI",191,17,14,17,True
+613,35840,"North Port-Bradenton-Sarasota, FL",234,19,14,19,True
+618,36100,"Ocala, FL",251,19,14,19,True
+620,36220,"Odessa, TX",222,18,14,18,True
+621,36260,"Ogden, UT",178,17,14,17,True
+624,36420,"Oklahoma City, OK",132,16,14,16,True
+626,36500,"Olympia-Lacey-Tumwater, WA",241,19,14,19,True
+627,36540,"Omaha, NE-IA",115,12,14,12,True
+632,36740,"Orlando-Kissimmee-Sanford, FL",247,19,14,19,True
+633,36780,"Oshkosh-Neenah, WI",188,15,14,15,True
+640,36980,"Owensboro, KY",81,11,14,11,False
+643,37100,"Oxnard-Thousand Oaks-Ventura, CA",241,19,14,19,True
+645,37140,"Paducah, KY-IL",44,9,14,9,False
+649,37340,"Palm Bay-Melbourne-Titusville, FL",237,19,14,19,True
+651,37460,"Panama City-Panama City Beach, FL",114,14,14,14,True
+655,37620,"Parkersburg-Vienna, WV",68,10,14,10,False
+658,37860,"Pensacola-Ferry Pass-Brent, FL",228,19,14,19,True
+659,37900,"Peoria, IL",77,11,14,11,False
+662,37980,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",179,17,14,17,True
+663,38060,"Phoenix-Mesa-Chandler, AZ",257,19,14,19,True
+668,38240,"Pinehurst-Southern Pines, NC",166,19,14,19,True
+670,38300,"Pittsburgh, PA",249,19,14,19,True
+671,38340,"Pittsfield, MA",218,19,14,19,True
+676,38540,"Pocatello, ID",178,17,14,17,True
+682,38860,"Portland-South Portland, ME",186,14,14,14,True
+683,38900,"Portland-Vancouver-Hillsboro, OR-WA",135,13,14,13,True
+685,38940,"Port St. Lucie, FL",204,18,14,18,True
+689,39150,"Prescott Valley-Prescott, AZ",235,19,14,19,True
+691,39300,"Providence-Warwick, RI-MA",182,16,14,16,True
+692,39340,"Provo-Orem-Lehi, UT",127,14,14,14,True
+693,39380,"Pueblo, CO",215,19,14,19,True
+695,39460,"Punta Gorda, FL",225,19,14,19,True
+698,39540,"Racine-Mount Pleasant, WI",198,17,14,17,True
+699,39580,"Raleigh-Cary, NC",193,17,14,17,True
+700,39660,"Rapid City, SD",159,15,14,15,True
+702,39740,"Reading, PA",239,19,14,19,True
+704,39820,"Redding, CA",223,19,14,19,True
+706,39900,"Reno, NV",117,14,14,14,True
+710,40060,"Richmond, VA",20,3,12,3,False
+714,40140,"Riverside-San Bernardino-Ontario, CA",247,19,14,19,True
+716,40220,"Roanoke, VA",54,7,14,7,False
+719,40340,"Rochester, MN",136,13,14,13,True
+720,40380,"Rochester, NY",164,15,14,15,True
+721,40420,"Rockford, IL",192,15,14,15,True
+724,40580,"Rocky Mount, NC",142,14,14,14,True
+726,40660,"Rome, GA",164,17,14,17,True
+734,40900,"Sacramento-Roseville-Folsom, CA",214,19,14,19,True
+736,40980,"Saginaw, MI",190,18,14,18,True
+737,41060,"St. Cloud, MN",184,17,14,17,True
+738,41100,"St. George, UT",231,19,14,19,True
+739,41140,"St. Joseph, MO-KS",86,10,14,10,False
+740,41180,"St. Louis, MO-IL",42,5,14,5,False
+743,41420,"Salem, OR",208,17,14,17,True
+745,41500,"Salinas, CA",255,19,14,19,True
+746,41540,"Salisbury, MD",140,14,14,14,True
+747,41620,"Salt Lake City-Murray, UT",210,19,14,19,True
+748,41660,"San Angelo, TX",75,10,14,10,False
+749,41700,"San Antonio-New Braunfels, TX",147,14,14,14,True
+750,41740,"San Diego-Chula Vista-Carlsbad, CA",252,19,14,19,True
+752,41780,"Sandusky, OH",145,14,14,14,True
+754,41860,"San Francisco-Oakland-Fremont, CA",210,18,14,18,True
+755,41940,"San Jose-Sunnyvale-Santa Clara, CA",184,16,14,16,True
+757,42020,"San Luis Obispo-Paso Robles, CA",239,19,14,19,True
+758,42100,"Santa Cruz-Watsonville, CA",221,19,14,19,True
+759,42140,"Santa Fe, NM",238,19,14,19,True
+760,42200,"Santa Maria-Santa Barbara, CA",249,19,14,19,True
+761,42220,"Santa Rosa-Petaluma, CA",246,19,14,19,True
+763,42340,"Savannah, GA",127,14,14,14,True
+767,42540,"Scranton--Wilkes-Barre, PA",195,19,14,19,True
+770,42660,"Seattle-Tacoma-Bellevue, WA",251,19,14,19,True
+771,42680,"Sebastian-Vero Beach-West Vero Corridor, FL",218,19,14,19,True
+772,42700,"Sebring, FL",199,18,14,18,True
+782,43100,"Sheboygan, WI",175,17,14,17,True
+787,43300,"Sherman-Denison, TX",218,19,14,19,True
+789,43340,"Shreveport-Bossier City, LA",207,17,14,17,True
+791,43420,"Sierra Vista-Douglas, AZ",207,19,14,19,True
+794,43580,"Sioux City, IA-NE-SD",142,12,14,12,True
+795,43620,"Sioux Falls, SD-MN",78,9,14,9,False
+796,43640,"Slidell-Mandeville-Covington, LA",237,19,14,19,True
+801,43780,"South Bend-Mishawaka, IN-MI",177,16,14,16,True
+803,43900,"Spartanburg, SC",157,16,14,16,True
+807,44060,"Spokane-Spokane Valley, WA",193,16,14,16,True
+808,44100,"Springfield, IL",143,13,14,13,True
+809,44140,"Springfield, MA",227,19,14,19,True
+810,44180,"Springfield, MO",107,10,14,10,True
+811,44220,"Springfield, OH",183,17,14,17,True
+813,44300,"State College, PA",219,19,14,19,True
+815,44420,"Staunton-Stuarts Draft, VA",132,14,14,14,True
+822,44700,"Stockton-Lodi, CA",245,19,14,19,True
+827,44940,"Sumter, SC",187,18,14,18,True
+831,45060,"Syracuse, NY",189,17,14,17,True
+834,45220,"Tallahassee, FL",136,14,14,14,True
+835,45300,"Tampa-St. Petersburg-Clearwater, FL",239,19,14,19,True
+838,45460,"Terre Haute, IN",91,11,14,11,False
+839,45500,"Texarkana, TX-AR",95,9,14,9,False
+846,45780,"Toledo, OH",162,15,14,15,True
+847,45820,"Topeka, KS",56,7,14,7,False
+850,45900,"Traverse City, MI",143,13,14,13,True
+851,45940,"Trenton-Princeton, NJ",235,19,14,19,True
+854,46060,"Tucson, AZ",235,19,14,19,True
+856,46140,"Tulsa, OK",84,13,14,13,False
+858,46220,"Tuscaloosa, AL",68,8,14,8,False
+859,46300,"Twin Falls, ID",161,16,14,16,True
+860,46340,"Tyler, TX",238,19,14,19,True
+864,46520,"Urban Honolulu, HI",243,19,14,19,True
+865,46540,"Utica-Rome, NY",230,19,14,19,True
+868,46660,"Valdosta, GA",8,2,7,2,False
+869,46700,"Vallejo, CA",239,19,14,19,True
+875,47020,"Victoria, TX",97,16,14,16,False
+878,47220,"Vineland, NJ",183,19,14,19,True
+880,47260,"Virginia Beach-Chesapeake-Norfolk, VA-NC",25,4,14,4,False
+881,47300,"Visalia, CA",231,19,14,19,True
+883,47380,"Waco, TX",106,11,14,11,True
+885,47460,"Walla Walla, WA",157,16,14,16,True
+887,47580,"Warner Robins, GA",161,16,14,16,True
+893,47900,"Washington-Arlington-Alexandria, DC-VA-MD-WV",42,7,14,7,False
+896,47940,"Waterloo-Cedar Falls, IA",112,13,14,13,True
+899,48060,"Watertown-Fort Drum, NY",210,19,14,19,True
+900,48140,"Wausau, WI",193,17,14,17,True
+904,48260,"Weirton-Steubenville, WV-OH",83,13,14,13,False
+905,48300,"Wenatchee-East Wenatchee, WA",185,17,14,17,True
+907,48540,"Wheeling, WV-OH",116,14,14,14,True
+909,48620,"Wichita, KS",147,13,14,13,True
+910,48660,"Wichita Falls, TX",94,10,14,10,False
+911,48680,"Wildwood-The Villages, FL",191,19,14,19,True
+912,48700,"Williamsport, PA",199,19,14,19,True
+915,48900,"Wilmington, NC",174,14,14,14,True
+919,49020,"Winchester, VA-WV",75,9,14,9,False
+922,49180,"Winston-Salem, NC",141,15,14,15,True
+926,49340,"Worcester, MA",247,19,14,19,True
+928,49420,"Yakima, WA",239,19,14,19,True
+930,49620,"York-Hanover, PA",235,19,14,19,True
+931,49660,"Youngstown-Warren, OH",228,19,14,19,True
+932,49700,"Yuba City, CA",169,17,14,17,True
+933,49740,"Yuma, AZ",220,19,14,19,True

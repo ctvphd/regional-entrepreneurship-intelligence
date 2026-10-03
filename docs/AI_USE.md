@@ -281,3 +281,19 @@ incomplete. A denominator alias mismatch and a Matplotlib API change were
 also caught by the first workflow run and corrected. Unit tests and the
 rerun verified the corrections; no raw or analytical source values were
 modified.
+
+## Assignment 5.3 Time, Industry, And MSA Patterns
+
+AI assistance implemented reusable annual, sector, MSA, coverage, volatility,
+ACS MSA-year collapse, and aggregate descriptive-quadrant summaries; added a
+repeatable runner, focused figures, tests, and a report. Student-directed
+decisions were to keep A5.3 descriptive, compare quadrants within sector-year
+using current-year medians, retain all MSAs while explicitly flagging
+comparison coverage, emphasize medians and IQR for heavy-tailed growth, and
+avoid event-study/causal language and target construction. ACS values are
+checked for within-MSA-year consistency and collapsed before regional-only
+summaries, preventing industry replication weighting. During review, the
+summary design was refined so annual and MSA ACS context comes from
+deduplicated MSA-year observations rather than integrated industry rows.
+This refinement is covered by tests; no source data are modified. A5.4
+relationship or hypothesis analysis was not begun.

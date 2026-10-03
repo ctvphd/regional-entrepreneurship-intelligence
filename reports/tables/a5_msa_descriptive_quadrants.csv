@@ -1,0 +1,1490 @@
+geography_id,cbsa_code,cbsa_name,quadrant,observation_count,msa_count,percent_within_group,eligible_for_comparison
+3,10180,"Abilene, TX",high_growth_high_startup,47,1,32.413793,True
+3,10180,"Abilene, TX",high_growth_low_startup,34,1,23.448276,True
+3,10180,"Abilene, TX",low_growth_high_startup,28,1,19.310345,True
+3,10180,"Abilene, TX",low_growth_low_startup,36,1,24.827586,True
+7,10420,"Akron, OH",high_growth_high_startup,28,1,13.930348,True
+7,10420,"Akron, OH",high_growth_low_startup,49,1,24.378109,True
+7,10420,"Akron, OH",low_growth_high_startup,28,1,13.930348,True
+7,10420,"Akron, OH",low_growth_low_startup,96,1,47.761194,True
+10,10500,"Albany, GA",high_growth_high_startup,14,1,17.5,True
+10,10500,"Albany, GA",high_growth_low_startup,21,1,26.25,True
+10,10500,"Albany, GA",low_growth_high_startup,11,1,13.75,True
+10,10500,"Albany, GA",low_growth_low_startup,34,1,42.5,True
+11,10540,"Albany, OR",high_growth_high_startup,56,1,29.62963,True
+11,10540,"Albany, OR",high_growth_low_startup,39,1,20.634921,True
+11,10540,"Albany, OR",low_growth_high_startup,56,1,29.62963,True
+11,10540,"Albany, OR",low_growth_low_startup,38,1,20.10582,True
+12,10580,"Albany-Schenectady-Troy, NY",high_growth_high_startup,30,1,17.44186,True
+12,10580,"Albany-Schenectady-Troy, NY",high_growth_low_startup,37,1,21.511628,True
+12,10580,"Albany-Schenectady-Troy, NY",low_growth_high_startup,41,1,23.837209,True
+12,10580,"Albany-Schenectady-Troy, NY",low_growth_low_startup,64,1,37.209302,True
+16,10740,"Albuquerque, NM",high_growth_high_startup,29,1,29.591837,True
+16,10740,"Albuquerque, NM",high_growth_low_startup,11,1,11.22449,True
+16,10740,"Albuquerque, NM",low_growth_high_startup,35,1,35.714286,True
+16,10740,"Albuquerque, NM",low_growth_low_startup,23,1,23.469388,True
+18,10780,"Alexandria, LA",high_growth_high_startup,13,1,18.055556,False
+18,10780,"Alexandria, LA",high_growth_low_startup,13,1,18.055556,False
+18,10780,"Alexandria, LA",low_growth_high_startup,11,1,15.277778,False
+18,10780,"Alexandria, LA",low_growth_low_startup,35,1,48.611111,False
+21,10900,"Allentown-Bethlehem-Easton, PA-NJ",high_growth_high_startup,20,1,11.695906,True
+21,10900,"Allentown-Bethlehem-Easton, PA-NJ",high_growth_low_startup,49,1,28.654971,True
+21,10900,"Allentown-Bethlehem-Easton, PA-NJ",low_growth_high_startup,26,1,15.204678,True
+21,10900,"Allentown-Bethlehem-Easton, PA-NJ",low_growth_low_startup,76,1,44.444444,True
+24,11020,"Altoona, PA",high_growth_high_startup,18,1,10.055866,True
+24,11020,"Altoona, PA",high_growth_low_startup,44,1,24.581006,True
+24,11020,"Altoona, PA",low_growth_high_startup,27,1,15.083799,True
+24,11020,"Altoona, PA",low_growth_low_startup,90,1,50.27933,True
+26,11100,"Amarillo, TX",high_growth_high_startup,3,1,23.076923,False
+26,11100,"Amarillo, TX",high_growth_low_startup,4,1,30.769231,False
+26,11100,"Amarillo, TX",low_growth_high_startup,4,1,30.769231,False
+26,11100,"Amarillo, TX",low_growth_low_startup,2,1,15.384615,False
+28,11180,"Ames, IA",high_growth_high_startup,20,1,17.241379,True
+28,11180,"Ames, IA",high_growth_low_startup,44,1,37.931034,True
+28,11180,"Ames, IA",low_growth_high_startup,15,1,12.931034,True
+28,11180,"Ames, IA",low_growth_low_startup,37,1,31.896552,True
+29,11200,"Amherst Town-Northampton, MA",high_growth_high_startup,42,1,19.266055,True
+29,11200,"Amherst Town-Northampton, MA",high_growth_low_startup,65,1,29.816514,True
+29,11200,"Amherst Town-Northampton, MA",low_growth_high_startup,35,1,16.055046,True
+29,11200,"Amherst Town-Northampton, MA",low_growth_low_startup,76,1,34.862385,True
+31,11260,"Anchorage, AK",high_growth_high_startup,44,1,20.183486,True
+31,11260,"Anchorage, AK",high_growth_low_startup,28,1,12.844037,True
+31,11260,"Anchorage, AK",low_growth_high_startup,82,1,37.614679,True
+31,11260,"Anchorage, AK",low_growth_low_startup,64,1,29.357798,True
+35,11460,"Ann Arbor, MI",high_growth_high_startup,45,1,20.737327,True
+35,11460,"Ann Arbor, MI",high_growth_low_startup,64,1,29.493088,True
+35,11460,"Ann Arbor, MI",low_growth_high_startup,44,1,20.276498,True
+35,11460,"Ann Arbor, MI",low_growth_low_startup,64,1,29.493088,True
+36,11500,"Anniston-Oxford, AL",high_growth_high_startup,20,1,11.363636,True
+36,11500,"Anniston-Oxford, AL",high_growth_low_startup,40,1,22.727273,True
+36,11500,"Anniston-Oxford, AL",low_growth_high_startup,39,1,22.159091,True
+36,11500,"Anniston-Oxford, AL",low_growth_low_startup,77,1,43.75,True
+37,11540,"Appleton, WI",high_growth_high_startup,11,1,9.1666667,True
+37,11540,"Appleton, WI",high_growth_low_startup,48,1,40,True
+37,11540,"Appleton, WI",low_growth_high_startup,14,1,11.666667,True
+37,11540,"Appleton, WI",low_growth_low_startup,47,1,39.166667,True
+43,11700,"Asheville, NC",high_growth_high_startup,77,1,59.230769,True
+43,11700,"Asheville, NC",high_growth_low_startup,13,1,10,True
+43,11700,"Asheville, NC",low_growth_high_startup,31,1,23.846154,True
+43,11700,"Asheville, NC",low_growth_low_startup,9,1,6.9230769,True
+50,12020,"Athens-Clarke County, GA",high_growth_high_startup,30,1,37.037037,False
+50,12020,"Athens-Clarke County, GA",high_growth_low_startup,16,1,19.753086,False
+50,12020,"Athens-Clarke County, GA",low_growth_high_startup,18,1,22.222222,False
+50,12020,"Athens-Clarke County, GA",low_growth_low_startup,17,1,20.987654,False
+51,12060,"Atlanta-Sandy Springs-Roswell, GA",high_growth_high_startup,43,1,76.785714,False
+51,12060,"Atlanta-Sandy Springs-Roswell, GA",low_growth_high_startup,13,1,23.214286,False
+52,12100,"Atlantic City-Hammonton, NJ",high_growth_high_startup,41,1,20.812183,True
+52,12100,"Atlantic City-Hammonton, NJ",high_growth_low_startup,37,1,18.781726,True
+52,12100,"Atlantic City-Hammonton, NJ",low_growth_high_startup,41,1,20.812183,True
+52,12100,"Atlantic City-Hammonton, NJ",low_growth_low_startup,78,1,39.593909,True
+55,12220,"Auburn-Opelika, AL",high_growth_high_startup,29,1,39.189189,False
+55,12220,"Auburn-Opelika, AL",high_growth_low_startup,14,1,18.918919,False
+55,12220,"Auburn-Opelika, AL",low_growth_high_startup,21,1,28.378378,False
+55,12220,"Auburn-Opelika, AL",low_growth_low_startup,10,1,13.513514,False
+56,12260,"Augusta-Richmond County, GA-SC",high_growth_high_startup,20,1,29.850746,False
+56,12260,"Augusta-Richmond County, GA-SC",high_growth_low_startup,16,1,23.880597,False
+56,12260,"Augusta-Richmond County, GA-SC",low_growth_high_startup,11,1,16.41791,False
+56,12260,"Augusta-Richmond County, GA-SC",low_growth_low_startup,20,1,29.850746,False
+59,12420,"Austin-Round Rock-San Marcos, TX",high_growth_high_startup,178,1,86.829268,True
+59,12420,"Austin-Round Rock-San Marcos, TX",high_growth_low_startup,1,1,0.48780488,True
+59,12420,"Austin-Round Rock-San Marcos, TX",low_growth_high_startup,26,1,12.682927,True
+62,12540,"Bakersfield-Delano, CA",high_growth_high_startup,99,1,41.949153,True
+62,12540,"Bakersfield-Delano, CA",high_growth_low_startup,24,1,10.169492,True
+62,12540,"Bakersfield-Delano, CA",low_growth_high_startup,85,1,36.016949,True
+62,12540,"Bakersfield-Delano, CA",low_growth_low_startup,28,1,11.864407,True
+63,12580,"Baltimore-Columbia-Towson, MD",high_growth_high_startup,44,1,25.581395,True
+63,12580,"Baltimore-Columbia-Towson, MD",high_growth_low_startup,17,1,9.8837209,True
+63,12580,"Baltimore-Columbia-Towson, MD",low_growth_high_startup,69,1,40.116279,True
+63,12580,"Baltimore-Columbia-Towson, MD",low_growth_low_startup,42,1,24.418605,True
+64,12620,"Bangor, ME",high_growth_high_startup,32,1,16.161616,True
+64,12620,"Bangor, ME",high_growth_low_startup,50,1,25.252525,True
+64,12620,"Bangor, ME",low_growth_high_startup,51,1,25.757576,True
+64,12620,"Bangor, ME",low_growth_low_startup,65,1,32.828283,True
+66,12700,"Barnstable Town, MA",high_growth_high_startup,43,1,20.97561,True
+66,12700,"Barnstable Town, MA",high_growth_low_startup,48,1,23.414634,True
+66,12700,"Barnstable Town, MA",low_growth_high_startup,44,1,21.463415,True
+66,12700,"Barnstable Town, MA",low_growth_low_startup,70,1,34.146341,True
+71,12940,"Baton Rouge, LA",high_growth_high_startup,8,1,25,False
+71,12940,"Baton Rouge, LA",high_growth_low_startup,4,1,12.5,False
+71,12940,"Baton Rouge, LA",low_growth_high_startup,13,1,40.625,False
+71,12940,"Baton Rouge, LA",low_growth_low_startup,7,1,21.875,False
+72,12980,"Battle Creek, MI",high_growth_high_startup,11,1,7.8571429,True
+72,12980,"Battle Creek, MI",high_growth_low_startup,44,1,31.428571,True
+72,12980,"Battle Creek, MI",low_growth_high_startup,21,1,15,True
+72,12980,"Battle Creek, MI",low_growth_low_startup,64,1,45.714286,True
+73,13020,"Bay City, MI",high_growth_high_startup,18,1,11.538462,True
+73,13020,"Bay City, MI",high_growth_low_startup,43,1,27.564103,True
+73,13020,"Bay City, MI",low_growth_high_startup,30,1,19.230769,True
+73,13020,"Bay City, MI",low_growth_low_startup,65,1,41.666667,True
+76,13140,"Beaumont-Port Arthur, TX",high_growth_high_startup,33,1,16.176471,True
+76,13140,"Beaumont-Port Arthur, TX",high_growth_low_startup,54,1,26.470588,True
+76,13140,"Beaumont-Port Arthur, TX",low_growth_high_startup,41,1,20.098039,True
+76,13140,"Beaumont-Port Arthur, TX",low_growth_low_startup,76,1,37.254902,True
+78,13220,"Beckley, WV",high_growth_high_startup,37,1,22.155689,True
+78,13220,"Beckley, WV",high_growth_low_startup,30,1,17.964072,True
+78,13220,"Beckley, WV",low_growth_high_startup,32,1,19.161677,True
+78,13220,"Beckley, WV",low_growth_low_startup,68,1,40.718563,True
+82,13380,"Bellingham, WA",high_growth_high_startup,81,1,36.651584,True
+82,13380,"Bellingham, WA",high_growth_low_startup,33,1,14.932127,True
+82,13380,"Bellingham, WA",low_growth_high_startup,72,1,32.579186,True
+82,13380,"Bellingham, WA",low_growth_low_startup,35,1,15.837104,True
+84,13460,"Bend, OR",high_growth_high_startup,108,1,67.080745,True
+84,13460,"Bend, OR",high_growth_low_startup,12,1,7.4534161,True
+84,13460,"Bend, OR",low_growth_high_startup,36,1,22.360248,True
+84,13460,"Bend, OR",low_growth_low_startup,5,1,3.1055901,True
+88,13740,"Billings, MT",high_growth_high_startup,29,1,20.714286,True
+88,13740,"Billings, MT",high_growth_low_startup,34,1,24.285714,True
+88,13740,"Billings, MT",low_growth_high_startup,28,1,20,True
+88,13740,"Billings, MT",low_growth_low_startup,49,1,35,True
+89,13780,"Binghamton, NY",high_growth_high_startup,18,1,11.392405,True
+89,13780,"Binghamton, NY",high_growth_low_startup,24,1,15.189873,True
+89,13780,"Binghamton, NY",low_growth_high_startup,30,1,18.987342,True
+89,13780,"Binghamton, NY",low_growth_low_startup,86,1,54.43038,True
+90,13820,"Birmingham, AL",high_growth_high_startup,19,1,26.388889,False
+90,13820,"Birmingham, AL",high_growth_low_startup,9,1,12.5,False
+90,13820,"Birmingham, AL",low_growth_high_startup,27,1,37.5,False
+90,13820,"Birmingham, AL",low_growth_low_startup,17,1,23.611111,False
+92,13900,"Bismarck, ND",high_growth_high_startup,8,1,25,False
+92,13900,"Bismarck, ND",high_growth_low_startup,5,1,15.625,False
+92,13900,"Bismarck, ND",low_growth_high_startup,6,1,18.75,False
+92,13900,"Bismarck, ND",low_growth_low_startup,13,1,40.625,False
+94,13980,"Blacksburg-Christiansburg-Radford, VA",high_growth_high_startup,6,1,11.111111,False
+94,13980,"Blacksburg-Christiansburg-Radford, VA",high_growth_low_startup,18,1,33.333333,False
+94,13980,"Blacksburg-Christiansburg-Radford, VA",low_growth_high_startup,9,1,16.666667,False
+94,13980,"Blacksburg-Christiansburg-Radford, VA",low_growth_low_startup,21,1,38.888889,False
+95,14010,"Bloomington, IL",high_growth_high_startup,27,1,15.254237,True
+95,14010,"Bloomington, IL",high_growth_low_startup,45,1,25.423729,True
+95,14010,"Bloomington, IL",low_growth_high_startup,31,1,17.514124,True
+95,14010,"Bloomington, IL",low_growth_low_startup,74,1,41.80791,True
+96,14020,"Bloomington, IN",high_growth_high_startup,22,1,19.298246,True
+96,14020,"Bloomington, IN",high_growth_low_startup,33,1,28.947368,True
+96,14020,"Bloomington, IN",low_growth_high_startup,16,1,14.035088,True
+96,14020,"Bloomington, IN",low_growth_low_startup,43,1,37.719298,True
+101,14260,"Boise City, ID",high_growth_high_startup,54,1,84.375,False
+101,14260,"Boise City, ID",low_growth_high_startup,10,1,15.625,False
+105,14460,"Boston-Cambridge-Newton, MA-NH",high_growth_high_startup,66,1,36.464088,True
+105,14460,"Boston-Cambridge-Newton, MA-NH",high_growth_low_startup,33,1,18.232044,True
+105,14460,"Boston-Cambridge-Newton, MA-NH",low_growth_high_startup,56,1,30.939227,True
+105,14460,"Boston-Cambridge-Newton, MA-NH",low_growth_low_startup,26,1,14.364641,True
+106,14500,"Boulder, CO",high_growth_high_startup,122,1,57.009346,True
+106,14500,"Boulder, CO",high_growth_low_startup,16,1,7.4766355,True
+106,14500,"Boulder, CO",low_growth_high_startup,58,1,27.102804,True
+106,14500,"Boulder, CO",low_growth_low_startup,18,1,8.411215,True
+107,14540,"Bowling Green, KY",high_growth_high_startup,5,1,13.513514,False
+107,14540,"Bowling Green, KY",high_growth_low_startup,18,1,48.648649,False
+107,14540,"Bowling Green, KY",low_growth_high_startup,5,1,13.513514,False
+107,14540,"Bowling Green, KY",low_growth_low_startup,9,1,24.324324,False
+108,14580,"Bozeman, MT",high_growth_high_startup,139,1,65.258216,True
+108,14580,"Bozeman, MT",high_growth_low_startup,30,1,14.084507,True
+108,14580,"Bozeman, MT",low_growth_high_startup,34,1,15.962441,True
+108,14580,"Bozeman, MT",low_growth_low_startup,10,1,4.6948357,True
+114,14740,"Bremerton-Silverdale-Port Orchard, WA",high_growth_high_startup,88,1,41.706161,True
+114,14740,"Bremerton-Silverdale-Port Orchard, WA",high_growth_low_startup,27,1,12.796209,True
+114,14740,"Bremerton-Silverdale-Port Orchard, WA",low_growth_high_startup,52,1,24.64455,True
+114,14740,"Bremerton-Silverdale-Port Orchard, WA",low_growth_low_startup,44,1,20.853081,True
+122,15180,"Brownsville-Harlingen, TX",high_growth_high_startup,75,1,34.722222,True
+122,15180,"Brownsville-Harlingen, TX",high_growth_low_startup,37,1,17.12963,True
+122,15180,"Brownsville-Harlingen, TX",low_growth_high_startup,65,1,30.092593,True
+122,15180,"Brownsville-Harlingen, TX",low_growth_low_startup,39,1,18.055556,True
+124,15260,"Brunswick-St. Simons, GA",high_growth_high_startup,21,1,25.925926,False
+124,15260,"Brunswick-St. Simons, GA",high_growth_low_startup,20,1,24.691358,False
+124,15260,"Brunswick-St. Simons, GA",low_growth_high_startup,21,1,25.925926,False
+124,15260,"Brunswick-St. Simons, GA",low_growth_low_startup,19,1,23.45679,False
+126,15380,"Buffalo-Cheektowaga, NY",high_growth_high_startup,29,1,13.679245,True
+126,15380,"Buffalo-Cheektowaga, NY",high_growth_low_startup,38,1,17.924528,True
+126,15380,"Buffalo-Cheektowaga, NY",low_growth_high_startup,65,1,30.660377,True
+126,15380,"Buffalo-Cheektowaga, NY",low_growth_low_startup,80,1,37.735849,True
+129,15500,"Burlington, NC",high_growth_high_startup,58,1,30.051813,True
+129,15500,"Burlington, NC",high_growth_low_startup,49,1,25.388601,True
+129,15500,"Burlington, NC",low_growth_high_startup,52,1,26.943005,True
+129,15500,"Burlington, NC",low_growth_low_startup,34,1,17.61658,True
+130,15540,"Burlington-South Burlington, VT",high_growth_high_startup,9,1,8.7378641,True
+130,15540,"Burlington-South Burlington, VT",high_growth_low_startup,27,1,26.213592,True
+130,15540,"Burlington-South Burlington, VT",low_growth_high_startup,22,1,21.359223,True
+130,15540,"Burlington-South Burlington, VT",low_growth_low_startup,45,1,43.68932,True
+140,15940,"Canton-Massillon, OH",high_growth_high_startup,23,1,12.99435,True
+140,15940,"Canton-Massillon, OH",high_growth_low_startup,53,1,29.943503,True
+140,15940,"Canton-Massillon, OH",low_growth_high_startup,25,1,14.124294,True
+140,15940,"Canton-Massillon, OH",low_growth_low_startup,76,1,42.937853,True
+141,15980,"Cape Coral-Fort Myers, FL",high_growth_high_startup,152,1,71.698113,True
+141,15980,"Cape Coral-Fort Myers, FL",high_growth_low_startup,6,1,2.8301887,True
+141,15980,"Cape Coral-Fort Myers, FL",low_growth_high_startup,50,1,23.584906,True
+141,15980,"Cape Coral-Fort Myers, FL",low_growth_low_startup,4,1,1.8867925,True
+142,16020,"Cape Girardeau, MO-IL",high_growth_high_startup,7,1,14.583333,False
+142,16020,"Cape Girardeau, MO-IL",high_growth_low_startup,17,1,35.416667,False
+142,16020,"Cape Girardeau, MO-IL",low_growth_high_startup,8,1,16.666667,False
+142,16020,"Cape Girardeau, MO-IL",low_growth_low_startup,16,1,33.333333,False
+146,16180,"Carson City, NV",high_growth_high_startup,50,1,30.120482,True
+146,16180,"Carson City, NV",high_growth_low_startup,30,1,18.072289,True
+146,16180,"Carson City, NV",low_growth_high_startup,56,1,33.73494,True
+146,16180,"Carson City, NV",low_growth_low_startup,30,1,18.072289,True
+147,16220,"Casper, WY",high_growth_high_startup,63,1,29.577465,True
+147,16220,"Casper, WY",high_growth_low_startup,42,1,19.71831,True
+147,16220,"Casper, WY",low_growth_high_startup,49,1,23.004695,True
+147,16220,"Casper, WY",low_growth_low_startup,59,1,27.699531,True
+149,16300,"Cedar Rapids, IA",high_growth_high_startup,6,1,4.9586777,True
+149,16300,"Cedar Rapids, IA",high_growth_low_startup,35,1,28.92562,True
+149,16300,"Cedar Rapids, IA",low_growth_high_startup,24,1,19.834711,True
+149,16300,"Cedar Rapids, IA",low_growth_low_startup,56,1,46.280992,True
+154,16540,"Chambersburg, PA",high_growth_high_startup,29,1,14.5,True
+154,16540,"Chambersburg, PA",high_growth_low_startup,54,1,27,True
+154,16540,"Chambersburg, PA",low_growth_high_startup,31,1,15.5,True
+154,16540,"Chambersburg, PA",low_growth_low_startup,86,1,43,True
+155,16580,"Champaign-Urbana, IL",high_growth_high_startup,10,1,8.5470085,True
+155,16580,"Champaign-Urbana, IL",high_growth_low_startup,31,1,26.495726,True
+155,16580,"Champaign-Urbana, IL",low_growth_high_startup,22,1,18.803419,True
+155,16580,"Champaign-Urbana, IL",low_growth_low_startup,54,1,46.153846,True
+156,16620,"Charleston, WV",high_growth_high_startup,2,1,3.7735849,False
+156,16620,"Charleston, WV",high_growth_low_startup,6,1,11.320755,False
+156,16620,"Charleston, WV",low_growth_high_startup,6,1,11.320755,False
+156,16620,"Charleston, WV",low_growth_low_startup,39,1,73.584906,False
+158,16700,"Charleston-North Charleston, SC",high_growth_high_startup,131,1,69.312169,True
+158,16700,"Charleston-North Charleston, SC",high_growth_low_startup,8,1,4.2328042,True
+158,16700,"Charleston-North Charleston, SC",low_growth_high_startup,46,1,24.338624,True
+158,16700,"Charleston-North Charleston, SC",low_growth_low_startup,4,1,2.1164021,True
+159,16740,"Charlotte-Concord-Gastonia, NC-SC",high_growth_high_startup,64,1,77.108434,True
+159,16740,"Charlotte-Concord-Gastonia, NC-SC",high_growth_low_startup,4,1,4.8192771,True
+159,16740,"Charlotte-Concord-Gastonia, NC-SC",low_growth_high_startup,13,1,15.662651,True
+159,16740,"Charlotte-Concord-Gastonia, NC-SC",low_growth_low_startup,2,1,2.4096386,True
+160,16820,"Charlottesville, VA",high_growth_high_startup,22,1,20,True
+160,16820,"Charlottesville, VA",high_growth_low_startup,32,1,29.090909,True
+160,16820,"Charlottesville, VA",low_growth_high_startup,25,1,22.727273,True
+160,16820,"Charlottesville, VA",low_growth_low_startup,31,1,28.181818,True
+161,16860,"Chattanooga, TN-GA",high_growth_high_startup,19,1,44.186047,False
+161,16860,"Chattanooga, TN-GA",high_growth_low_startup,12,1,27.906977,False
+161,16860,"Chattanooga, TN-GA",low_growth_high_startup,4,1,9.3023256,False
+161,16860,"Chattanooga, TN-GA",low_growth_low_startup,8,1,18.604651,False
+162,16940,"Cheyenne, WY",high_growth_high_startup,84,1,39.069767,True
+162,16940,"Cheyenne, WY",high_growth_low_startup,23,1,10.697674,True
+162,16940,"Cheyenne, WY",low_growth_high_startup,86,1,40,True
+162,16940,"Cheyenne, WY",low_growth_low_startup,22,1,10.232558,True
+163,16980,"Chicago-Naperville-Elgin, IL-IN",high_growth_high_startup,22,1,28.571429,False
+163,16980,"Chicago-Naperville-Elgin, IL-IN",high_growth_low_startup,4,1,5.1948052,False
+163,16980,"Chicago-Naperville-Elgin, IL-IN",low_growth_high_startup,32,1,41.558442,False
+163,16980,"Chicago-Naperville-Elgin, IL-IN",low_growth_low_startup,19,1,24.675325,False
+164,17020,"Chico, CA",high_growth_high_startup,59,1,26.576577,True
+164,17020,"Chico, CA",high_growth_low_startup,47,1,21.171171,True
+164,17020,"Chico, CA",low_growth_high_startup,62,1,27.927928,True
+164,17020,"Chico, CA",low_growth_low_startup,54,1,24.324324,True
+166,17140,"Cincinnati, OH-KY-IN",high_growth_high_startup,3,1,23.076923,False
+166,17140,"Cincinnati, OH-KY-IN",low_growth_high_startup,10,1,76.923077,False
+169,17300,"Clarksville, TN-KY",high_growth_high_startup,25,1,31.64557,False
+169,17300,"Clarksville, TN-KY",high_growth_low_startup,24,1,30.379747,False
+169,17300,"Clarksville, TN-KY",low_growth_high_startup,17,1,21.518987,False
+169,17300,"Clarksville, TN-KY",low_growth_low_startup,13,1,16.455696,False
+172,17410,"Cleveland, OH",high_growth_high_startup,13,1,6.8421053,True
+172,17410,"Cleveland, OH",high_growth_low_startup,33,1,17.368421,True
+172,17410,"Cleveland, OH",low_growth_high_startup,45,1,23.684211,True
+172,17410,"Cleveland, OH",low_growth_low_startup,99,1,52.105263,True
+173,17420,"Cleveland, TN",high_growth_high_startup,21,1,23.863636,True
+173,17420,"Cleveland, TN",high_growth_low_startup,23,1,26.136364,True
+173,17420,"Cleveland, TN",low_growth_high_startup,17,1,19.318182,True
+173,17420,"Cleveland, TN",low_growth_low_startup,27,1,30.681818,True
+180,17660,"Coeur d'Alene, ID",high_growth_high_startup,124,1,54.867257,True
+180,17660,"Coeur d'Alene, ID",high_growth_low_startup,19,1,8.4070796,True
+180,17660,"Coeur d'Alene, ID",low_growth_high_startup,72,1,31.858407,True
+180,17660,"Coeur d'Alene, ID",low_growth_low_startup,11,1,4.8672566,True
+182,17780,"College Station-Bryan, TX",high_growth_high_startup,67,1,45.890411,True
+182,17780,"College Station-Bryan, TX",high_growth_low_startup,28,1,19.178082,True
+182,17780,"College Station-Bryan, TX",low_growth_high_startup,35,1,23.972603,True
+182,17780,"College Station-Bryan, TX",low_growth_low_startup,16,1,10.958904,True
+183,17820,"Colorado Springs, CO",high_growth_high_startup,119,1,59.5,True
+183,17820,"Colorado Springs, CO",high_growth_low_startup,10,1,5,True
+183,17820,"Colorado Springs, CO",low_growth_high_startup,62,1,31,True
+183,17820,"Colorado Springs, CO",low_growth_low_startup,9,1,4.5,True
+184,17860,"Columbia, MO",high_growth_high_startup,25,1,33.333333,False
+184,17860,"Columbia, MO",high_growth_low_startup,16,1,21.333333,False
+184,17860,"Columbia, MO",low_growth_high_startup,15,1,20,False
+184,17860,"Columbia, MO",low_growth_low_startup,19,1,25.333333,False
+185,17900,"Columbia, SC",high_growth_high_startup,19,1,29.230769,False
+185,17900,"Columbia, SC",high_growth_low_startup,14,1,21.538462,False
+185,17900,"Columbia, SC",low_growth_high_startup,15,1,23.076923,False
+185,17900,"Columbia, SC",low_growth_low_startup,17,1,26.153846,False
+186,17980,"Columbus, GA-AL",high_growth_high_startup,3,1,27.272727,False
+186,17980,"Columbus, GA-AL",high_growth_low_startup,1,1,9.0909091,False
+186,17980,"Columbus, GA-AL",low_growth_high_startup,6,1,54.545455,False
+186,17980,"Columbus, GA-AL",low_growth_low_startup,1,1,9.0909091,False
+187,18020,"Columbus, IN",high_growth_high_startup,33,1,19.879518,True
+187,18020,"Columbus, IN",high_growth_low_startup,47,1,28.313253,True
+187,18020,"Columbus, IN",low_growth_high_startup,27,1,16.26506,True
+187,18020,"Columbus, IN",low_growth_low_startup,59,1,35.542169,True
+190,18140,"Columbus, OH",high_growth_high_startup,44,1,38.596491,True
+190,18140,"Columbus, OH",high_growth_low_startup,18,1,15.789474,True
+190,18140,"Columbus, OH",low_growth_high_startup,36,1,31.578947,True
+190,18140,"Columbus, OH",low_growth_low_startup,16,1,14.035088,True
+200,18580,"Corpus Christi, TX",high_growth_high_startup,37,1,24.666667,True
+200,18580,"Corpus Christi, TX",high_growth_low_startup,40,1,26.666667,True
+200,18580,"Corpus Christi, TX",low_growth_high_startup,40,1,26.666667,True
+200,18580,"Corpus Christi, TX",low_growth_low_startup,33,1,22,True
+203,18700,"Corvallis, OR",high_growth_high_startup,40,1,25.316456,True
+203,18700,"Corvallis, OR",high_growth_low_startup,37,1,23.417722,True
+203,18700,"Corvallis, OR",low_growth_high_startup,47,1,29.746835,True
+203,18700,"Corvallis, OR",low_growth_low_startup,34,1,21.518987,True
+207,18880,"Crestview-Fort Walton Beach-Destin, FL",high_growth_high_startup,117,1,54.418605,True
+207,18880,"Crestview-Fort Walton Beach-Destin, FL",high_growth_low_startup,12,1,5.5813953,True
+207,18880,"Crestview-Fort Walton Beach-Destin, FL",low_growth_high_startup,78,1,36.27907,True
+207,18880,"Crestview-Fort Walton Beach-Destin, FL",low_growth_low_startup,8,1,3.7209302,True
+211,19100,"Dallas-Fort Worth-Arlington, TX",high_growth_high_startup,145,1,80.110497,True
+211,19100,"Dallas-Fort Worth-Arlington, TX",high_growth_low_startup,1,1,0.55248619,True
+211,19100,"Dallas-Fort Worth-Arlington, TX",low_growth_high_startup,35,1,19.337017,True
+212,19140,"Dalton, GA",high_growth_high_startup,22,1,20.754717,True
+212,19140,"Dalton, GA",high_growth_low_startup,28,1,26.415094,True
+212,19140,"Dalton, GA",low_growth_high_startup,23,1,21.698113,True
+212,19140,"Dalton, GA",low_growth_low_startup,33,1,31.132075,True
+216,19300,"Daphne-Fairhope-Foley, AL",high_growth_high_startup,129,1,59.722222,True
+216,19300,"Daphne-Fairhope-Foley, AL",high_growth_low_startup,18,1,8.3333333,True
+216,19300,"Daphne-Fairhope-Foley, AL",low_growth_high_startup,56,1,25.925926,True
+216,19300,"Daphne-Fairhope-Foley, AL",low_growth_low_startup,13,1,6.0185185,True
+217,19340,"Davenport-Moline-Rock Island, IA-IL",high_growth_high_startup,10,1,7.2992701,True
+217,19340,"Davenport-Moline-Rock Island, IA-IL",high_growth_low_startup,33,1,24.087591,True
+217,19340,"Davenport-Moline-Rock Island, IA-IL",low_growth_high_startup,16,1,11.678832,True
+217,19340,"Davenport-Moline-Rock Island, IA-IL",low_growth_low_startup,78,1,56.934307,True
+218,19430,"Dayton-Kettering-Beavercreek, OH",high_growth_high_startup,10,1,6.0606061,True
+218,19430,"Dayton-Kettering-Beavercreek, OH",high_growth_low_startup,46,1,27.878788,True
+218,19430,"Dayton-Kettering-Beavercreek, OH",low_growth_high_startup,31,1,18.787879,True
+218,19430,"Dayton-Kettering-Beavercreek, OH",low_growth_low_startup,78,1,47.272727,True
+219,19460,"Decatur, AL",high_growth_high_startup,20,1,18.181818,True
+219,19460,"Decatur, AL",high_growth_low_startup,38,1,34.545455,True
+219,19460,"Decatur, AL",low_growth_high_startup,21,1,19.090909,True
+219,19460,"Decatur, AL",low_growth_low_startup,31,1,28.181818,True
+220,19500,"Decatur, IL",high_growth_high_startup,18,1,11.538462,True
+220,19500,"Decatur, IL",high_growth_low_startup,28,1,17.948718,True
+220,19500,"Decatur, IL",low_growth_high_startup,26,1,16.666667,True
+220,19500,"Decatur, IL",low_growth_low_startup,84,1,53.846154,True
+224,19660,"Deltona-Daytona Beach-Ormond Beach, FL",high_growth_high_startup,100,1,53.475936,True
+224,19660,"Deltona-Daytona Beach-Ormond Beach, FL",high_growth_low_startup,5,1,2.6737968,True
+224,19660,"Deltona-Daytona Beach-Ormond Beach, FL",low_growth_high_startup,70,1,37.433155,True
+224,19660,"Deltona-Daytona Beach-Ormond Beach, FL",low_growth_low_startup,12,1,6.4171123,True
+226,19740,"Denver-Aurora-Centennial, CO",high_growth_high_startup,50,1,80.645161,False
+226,19740,"Denver-Aurora-Centennial, CO",low_growth_high_startup,12,1,19.354839,False
+228,19780,"Des Moines-West Des Moines, IA",high_growth_high_startup,49,1,42.241379,True
+228,19780,"Des Moines-West Des Moines, IA",high_growth_low_startup,17,1,14.655172,True
+228,19780,"Des Moines-West Des Moines, IA",low_growth_high_startup,30,1,25.862069,True
+228,19780,"Des Moines-West Des Moines, IA",low_growth_low_startup,20,1,17.241379,True
+230,19820,"Detroit-Warren-Dearborn, MI",high_growth_high_startup,67,1,37.853107,True
+230,19820,"Detroit-Warren-Dearborn, MI",high_growth_low_startup,16,1,9.039548,True
+230,19820,"Detroit-Warren-Dearborn, MI",low_growth_high_startup,70,1,39.548023,True
+230,19820,"Detroit-Warren-Dearborn, MI",low_growth_low_startup,24,1,13.559322,True
+234,20020,"Dothan, AL",high_growth_high_startup,11,1,14.285714,False
+234,20020,"Dothan, AL",high_growth_low_startup,22,1,28.571429,False
+234,20020,"Dothan, AL",low_growth_high_startup,14,1,18.181818,False
+234,20020,"Dothan, AL",low_growth_low_startup,30,1,38.961039,False
+236,20100,"Dover, DE",high_growth_high_startup,72,1,40.449438,True
+236,20100,"Dover, DE",high_growth_low_startup,17,1,9.5505618,True
+236,20100,"Dover, DE",low_growth_high_startup,67,1,37.640449,True
+236,20100,"Dover, DE",low_growth_low_startup,22,1,12.359551,True
+239,20220,"Dubuque, IA",high_growth_high_startup,19,1,10.326087,True
+239,20220,"Dubuque, IA",high_growth_low_startup,49,1,26.630435,True
+239,20220,"Dubuque, IA",low_growth_high_startup,24,1,13.043478,True
+239,20220,"Dubuque, IA",low_growth_low_startup,92,1,50,True
+240,20260,"Duluth, MN-WI",high_growth_high_startup,11,1,6.7073171,True
+240,20260,"Duluth, MN-WI",high_growth_low_startup,55,1,33.536585,True
+240,20260,"Duluth, MN-WI",low_growth_high_startup,9,1,5.4878049,True
+240,20260,"Duluth, MN-WI",low_growth_low_startup,89,1,54.268293,True
+245,20500,"Durham-Chapel Hill, NC",high_growth_high_startup,87,1,46.774194,True
+245,20500,"Durham-Chapel Hill, NC",high_growth_low_startup,20,1,10.752688,True
+245,20500,"Durham-Chapel Hill, NC",low_growth_high_startup,66,1,35.483871,True
+245,20500,"Durham-Chapel Hill, NC",low_growth_low_startup,13,1,6.9892473,True
+247,20580,"Eagle Pass, TX",high_growth_high_startup,39,1,35.454545,True
+247,20580,"Eagle Pass, TX",high_growth_low_startup,16,1,14.545455,True
+247,20580,"Eagle Pass, TX",low_growth_high_startup,14,1,12.727273,True
+247,20580,"Eagle Pass, TX",low_growth_low_startup,41,1,37.272727,True
+250,20740,"Eau Claire, WI",high_growth_high_startup,24,1,14.201183,True
+250,20740,"Eau Claire, WI",high_growth_low_startup,41,1,24.260355,True
+250,20740,"Eau Claire, WI",low_growth_high_startup,34,1,20.118343,True
+250,20740,"Eau Claire, WI",low_growth_low_startup,70,1,41.420118,True
+254,20940,"El Centro, CA",high_growth_high_startup,63,1,32.474227,True
+254,20940,"El Centro, CA",high_growth_low_startup,35,1,18.041237,True
+254,20940,"El Centro, CA",low_growth_high_startup,54,1,27.835052,True
+254,20940,"El Centro, CA",low_growth_low_startup,42,1,21.649485,True
+257,21060,"Elizabethtown, KY",high_growth_high_startup,24,1,20.689655,True
+257,21060,"Elizabethtown, KY",high_growth_low_startup,29,1,25,True
+257,21060,"Elizabethtown, KY",low_growth_high_startup,29,1,25,True
+257,21060,"Elizabethtown, KY",low_growth_low_startup,34,1,29.310345,True
+259,21140,"Elkhart-Goshen, IN",high_growth_high_startup,36,1,19.78022,True
+259,21140,"Elkhart-Goshen, IN",high_growth_low_startup,63,1,34.615385,True
+259,21140,"Elkhart-Goshen, IN",low_growth_high_startup,32,1,17.582418,True
+259,21140,"Elkhart-Goshen, IN",low_growth_low_startup,51,1,28.021978,True
+263,21300,"Elmira, NY",high_growth_high_startup,17,1,11.258278,True
+263,21300,"Elmira, NY",high_growth_low_startup,30,1,19.86755,True
+263,21300,"Elmira, NY",low_growth_high_startup,29,1,19.205298,True
+263,21300,"Elmira, NY",low_growth_low_startup,75,1,49.668874,True
+264,21340,"El Paso, TX",high_growth_high_startup,32,1,72.727273,False
+264,21340,"El Paso, TX",low_growth_high_startup,11,1,25,False
+264,21340,"El Paso, TX",low_growth_low_startup,1,1,2.2727273,False
+266,21420,"Enid, OK",high_growth_high_startup,22,1,14.193548,True
+266,21420,"Enid, OK",high_growth_low_startup,41,1,26.451613,True
+266,21420,"Enid, OK",low_growth_high_startup,22,1,14.193548,True
+266,21420,"Enid, OK",low_growth_low_startup,70,1,45.16129,True
+268,21500,"Erie, PA",high_growth_high_startup,23,1,10.900474,True
+268,21500,"Erie, PA",high_growth_low_startup,52,1,24.64455,True
+268,21500,"Erie, PA",low_growth_high_startup,24,1,11.374408,True
+268,21500,"Erie, PA",low_growth_low_startup,112,1,53.080569,True
+272,21660,"Eugene-Springfield, OR",high_growth_high_startup,74,1,30.962343,True
+272,21660,"Eugene-Springfield, OR",high_growth_low_startup,47,1,19.665272,True
+272,21660,"Eugene-Springfield, OR",low_growth_high_startup,49,1,20.502092,True
+272,21660,"Eugene-Springfield, OR",low_growth_low_startup,69,1,28.870293,True
+275,21780,"Evansville, IN",high_growth_high_startup,16,1,12.403101,True
+275,21780,"Evansville, IN",high_growth_low_startup,35,1,27.131783,True
+275,21780,"Evansville, IN",low_growth_high_startup,14,1,10.852713,True
+275,21780,"Evansville, IN",low_growth_low_startup,64,1,49.612403,True
+276,21820,"Fairbanks-College, AK",high_growth_high_startup,44,1,23.655914,True
+276,21820,"Fairbanks-College, AK",high_growth_low_startup,31,1,16.666667,True
+276,21820,"Fairbanks-College, AK",low_growth_high_startup,51,1,27.419355,True
+276,21820,"Fairbanks-College, AK",low_growth_low_startup,60,1,32.258065,True
+280,22020,"Fargo, ND-MN",high_growth_high_startup,50,1,29.239766,True
+280,22020,"Fargo, ND-MN",high_growth_low_startup,42,1,24.561404,True
+280,22020,"Fargo, ND-MN",low_growth_high_startup,33,1,19.298246,True
+280,22020,"Fargo, ND-MN",low_growth_low_startup,46,1,26.900585,True
+283,22140,"Farmington, NM",high_growth_high_startup,35,1,18.041237,True
+283,22140,"Farmington, NM",high_growth_low_startup,41,1,21.134021,True
+283,22140,"Farmington, NM",low_growth_high_startup,50,1,25.773196,True
+283,22140,"Farmington, NM",low_growth_low_startup,68,1,35.051546,True
+284,22180,"Fayetteville, NC",high_growth_high_startup,40,1,25.806452,True
+284,22180,"Fayetteville, NC",high_growth_low_startup,22,1,14.193548,True
+284,22180,"Fayetteville, NC",low_growth_high_startup,51,1,32.903226,True
+284,22180,"Fayetteville, NC",low_growth_low_startup,42,1,27.096774,True
+286,22220,"Fayetteville-Springdale-Rogers, AR",high_growth_high_startup,77,1,65.254237,True
+286,22220,"Fayetteville-Springdale-Rogers, AR",high_growth_low_startup,10,1,8.4745763,True
+286,22220,"Fayetteville-Springdale-Rogers, AR",low_growth_high_startup,29,1,24.576271,True
+286,22220,"Fayetteville-Springdale-Rogers, AR",low_growth_low_startup,2,1,1.6949153,True
+290,22380,"Flagstaff, AZ",high_growth_high_startup,67,1,31.904762,True
+290,22380,"Flagstaff, AZ",high_growth_low_startup,48,1,22.857143,True
+290,22380,"Flagstaff, AZ",low_growth_high_startup,54,1,25.714286,True
+290,22380,"Flagstaff, AZ",low_growth_low_startup,41,1,19.52381,True
+291,22420,"Flint, MI",high_growth_high_startup,45,1,22.84264,True
+291,22420,"Flint, MI",high_growth_low_startup,45,1,22.84264,True
+291,22420,"Flint, MI",low_growth_high_startup,39,1,19.796954,True
+291,22420,"Flint, MI",low_growth_low_startup,68,1,34.517766,True
+292,22500,"Florence, SC",high_growth_high_startup,38,1,20.652174,True
+292,22500,"Florence, SC",high_growth_low_startup,58,1,31.521739,True
+292,22500,"Florence, SC",low_growth_high_startup,26,1,14.130435,True
+292,22500,"Florence, SC",low_growth_low_startup,62,1,33.695652,True
+293,22520,"Florence-Muscle Shoals, AL",high_growth_high_startup,40,1,23.391813,True
+293,22520,"Florence-Muscle Shoals, AL",high_growth_low_startup,45,1,26.315789,True
+293,22520,"Florence-Muscle Shoals, AL",low_growth_high_startup,28,1,16.374269,True
+293,22520,"Florence-Muscle Shoals, AL",low_growth_low_startup,58,1,33.918129,True
+294,22540,"Fond du Lac, WI",high_growth_high_startup,18,1,10.465116,True
+294,22540,"Fond du Lac, WI",high_growth_low_startup,53,1,30.813953,True
+294,22540,"Fond du Lac, WI",low_growth_high_startup,22,1,12.790698,True
+294,22540,"Fond du Lac, WI",low_growth_low_startup,79,1,45.930233,True
+297,22660,"Fort Collins-Loveland, CO",high_growth_high_startup,143,1,63.274336,True
+297,22660,"Fort Collins-Loveland, CO",high_growth_low_startup,16,1,7.079646,True
+297,22660,"Fort Collins-Loveland, CO",low_growth_high_startup,52,1,23.00885,True
+297,22660,"Fort Collins-Loveland, CO",low_growth_low_startup,15,1,6.6371681,True
+303,22900,"Fort Smith, AR-OK",high_growth_high_startup,27,1,17.088608,True
+303,22900,"Fort Smith, AR-OK",high_growth_low_startup,42,1,26.582278,True
+303,22900,"Fort Smith, AR-OK",low_growth_high_startup,34,1,21.518987,True
+303,22900,"Fort Smith, AR-OK",low_growth_low_startup,55,1,34.810127,True
+304,23060,"Fort Wayne, IN",high_growth_high_startup,12,1,10.169492,True
+304,23060,"Fort Wayne, IN",high_growth_low_startup,48,1,40.677966,True
+304,23060,"Fort Wayne, IN",low_growth_high_startup,15,1,12.711864,True
+304,23060,"Fort Wayne, IN",low_growth_low_startup,43,1,36.440678,True
+312,23420,"Fresno, CA",high_growth_high_startup,107,1,51.690821,True
+312,23420,"Fresno, CA",high_growth_low_startup,23,1,11.111111,True
+312,23420,"Fresno, CA",low_growth_high_startup,53,1,25.603865,True
+312,23420,"Fresno, CA",low_growth_low_startup,24,1,11.594203,True
+313,23460,"Gadsden, AL",high_growth_high_startup,25,1,14.450867,True
+313,23460,"Gadsden, AL",high_growth_low_startup,36,1,20.809249,True
+313,23460,"Gadsden, AL",low_growth_high_startup,46,1,26.589595,True
+313,23460,"Gadsden, AL",low_growth_low_startup,66,1,38.150289,True
+315,23540,"Gainesville, FL",high_growth_high_startup,38,1,35.514019,True
+315,23540,"Gainesville, FL",high_growth_low_startup,14,1,13.084112,True
+315,23540,"Gainesville, FL",low_growth_high_startup,47,1,43.925234,True
+315,23540,"Gainesville, FL",low_growth_low_startup,8,1,7.4766355,True
+316,23580,"Gainesville, GA",high_growth_high_startup,100,1,48.076923,True
+316,23580,"Gainesville, GA",high_growth_low_startup,38,1,18.269231,True
+316,23580,"Gainesville, GA",low_growth_high_startup,46,1,22.115385,True
+316,23580,"Gainesville, GA",low_growth_low_startup,24,1,11.538462,True
+323,23900,"Gettysburg, PA",high_growth_high_startup,31,1,19.496855,True
+323,23900,"Gettysburg, PA",high_growth_low_startup,37,1,23.27044,True
+323,23900,"Gettysburg, PA",low_growth_high_startup,35,1,22.012579,True
+323,23900,"Gettysburg, PA",low_growth_low_startup,56,1,35.220126,True
+326,24020,"Glens Falls, NY",high_growth_high_startup,24,1,16.216216,True
+326,24020,"Glens Falls, NY",high_growth_low_startup,27,1,18.243243,True
+326,24020,"Glens Falls, NY",low_growth_high_startup,41,1,27.702703,True
+326,24020,"Glens Falls, NY",low_growth_low_startup,56,1,37.837838,True
+328,24140,"Goldsboro, NC",high_growth_high_startup,35,1,21.341463,True
+328,24140,"Goldsboro, NC",high_growth_low_startup,45,1,27.439024,True
+328,24140,"Goldsboro, NC",low_growth_high_startup,27,1,16.463415,True
+328,24140,"Goldsboro, NC",low_growth_low_startup,57,1,34.756098,True
+330,24220,"Grand Forks, ND-MN",high_growth_high_startup,24,1,15,True
+330,24220,"Grand Forks, ND-MN",high_growth_low_startup,35,1,21.875,True
+330,24220,"Grand Forks, ND-MN",low_growth_high_startup,28,1,17.5,True
+330,24220,"Grand Forks, ND-MN",low_growth_low_startup,73,1,45.625,True
+331,24260,"Grand Island, NE",high_growth_high_startup,6,1,9.375,False
+331,24260,"Grand Island, NE",high_growth_low_startup,19,1,29.6875,False
+331,24260,"Grand Island, NE",low_growth_high_startup,10,1,15.625,False
+331,24260,"Grand Island, NE",low_growth_low_startup,29,1,45.3125,False
+332,24300,"Grand Junction, CO",high_growth_high_startup,63,1,28.125,True
+332,24300,"Grand Junction, CO",high_growth_low_startup,42,1,18.75,True
+332,24300,"Grand Junction, CO",low_growth_high_startup,72,1,32.142857,True
+332,24300,"Grand Junction, CO",low_growth_low_startup,47,1,20.982143,True
+334,24340,"Grand Rapids-Wyoming-Kentwood, MI",high_growth_high_startup,31,1,24.603175,True
+334,24340,"Grand Rapids-Wyoming-Kentwood, MI",high_growth_low_startup,52,1,41.269841,True
+334,24340,"Grand Rapids-Wyoming-Kentwood, MI",low_growth_high_startup,27,1,21.428571,True
+334,24340,"Grand Rapids-Wyoming-Kentwood, MI",low_growth_low_startup,16,1,12.698413,True
+335,24420,"Grants Pass, OR",high_growth_high_startup,72,1,42.60355,True
+335,24420,"Grants Pass, OR",high_growth_low_startup,24,1,14.201183,True
+335,24420,"Grants Pass, OR",low_growth_high_startup,45,1,26.627219,True
+335,24420,"Grants Pass, OR",low_growth_low_startup,28,1,16.568047,True
+337,24500,"Great Falls, MT",high_growth_high_startup,32,1,16.326531,True
+337,24500,"Great Falls, MT",high_growth_low_startup,40,1,20.408163,True
+337,24500,"Great Falls, MT",low_growth_high_startup,37,1,18.877551,True
+337,24500,"Great Falls, MT",low_growth_low_startup,87,1,44.387755,True
+338,24540,"Greeley, CO",high_growth_high_startup,135,1,59.734513,True
+338,24540,"Greeley, CO",high_growth_low_startup,21,1,9.2920354,True
+338,24540,"Greeley, CO",low_growth_high_startup,59,1,26.106195,True
+338,24540,"Greeley, CO",low_growth_low_startup,11,1,4.8672566,True
+339,24580,"Green Bay, WI",high_growth_high_startup,6,1,6.5217391,True
+339,24580,"Green Bay, WI",high_growth_low_startup,32,1,34.782609,True
+339,24580,"Green Bay, WI",low_growth_high_startup,4,1,4.3478261,True
+339,24580,"Green Bay, WI",low_growth_low_startup,50,1,54.347826,True
+343,24660,"Greensboro-High Point, NC",high_growth_high_startup,52,1,26.943005,True
+343,24660,"Greensboro-High Point, NC",high_growth_low_startup,37,1,19.170984,True
+343,24660,"Greensboro-High Point, NC",low_growth_high_startup,45,1,23.316062,True
+343,24660,"Greensboro-High Point, NC",low_growth_low_startup,59,1,30.569948,True
+346,24780,"Greenville, NC",high_growth_high_startup,56,1,28.717949,True
+346,24780,"Greenville, NC",high_growth_low_startup,52,1,26.666667,True
+346,24780,"Greenville, NC",low_growth_high_startup,41,1,21.025641,True
+346,24780,"Greenville, NC",low_growth_low_startup,46,1,23.589744,True
+348,24860,"Greenville-Anderson-Greer, SC",high_growth_high_startup,80,1,52.287582,True
+348,24860,"Greenville-Anderson-Greer, SC",high_growth_low_startup,16,1,10.457516,True
+348,24860,"Greenville-Anderson-Greer, SC",low_growth_high_startup,38,1,24.836601,True
+348,24860,"Greenville-Anderson-Greer, SC",low_growth_low_startup,19,1,12.418301,True
+353,25060,"Gulfport-Biloxi, MS",high_growth_high_startup,33,1,24.81203,True
+353,25060,"Gulfport-Biloxi, MS",high_growth_low_startup,19,1,14.285714,True
+353,25060,"Gulfport-Biloxi, MS",low_growth_high_startup,35,1,26.315789,True
+353,25060,"Gulfport-Biloxi, MS",low_growth_low_startup,46,1,34.586466,True
+355,25180,"Hagerstown-Martinsburg, MD-WV",high_growth_high_startup,14,1,11.570248,True
+355,25180,"Hagerstown-Martinsburg, MD-WV",high_growth_low_startup,28,1,23.140496,True
+355,25180,"Hagerstown-Martinsburg, MD-WV",low_growth_high_startup,15,1,12.396694,True
+355,25180,"Hagerstown-Martinsburg, MD-WV",low_growth_low_startup,64,1,52.892562,True
+357,25220,"Hammond, LA",high_growth_high_startup,60,1,28.846154,True
+357,25220,"Hammond, LA",high_growth_low_startup,56,1,26.923077,True
+357,25220,"Hammond, LA",low_growth_high_startup,55,1,26.442308,True
+357,25220,"Hammond, LA",low_growth_low_startup,37,1,17.788462,True
+358,25260,"Hanford-Corcoran, CA",high_growth_high_startup,40,1,23.121387,True
+358,25260,"Hanford-Corcoran, CA",high_growth_low_startup,51,1,29.479769,True
+358,25260,"Hanford-Corcoran, CA",low_growth_high_startup,37,1,21.387283,True
+358,25260,"Hanford-Corcoran, CA",low_growth_low_startup,45,1,26.011561,True
+360,25420,"Harrisburg-Carlisle, PA",high_growth_high_startup,12,1,7.1856287,True
+360,25420,"Harrisburg-Carlisle, PA",high_growth_low_startup,52,1,31.137725,True
+360,25420,"Harrisburg-Carlisle, PA",low_growth_high_startup,14,1,8.3832335,True
+360,25420,"Harrisburg-Carlisle, PA",low_growth_low_startup,89,1,53.293413,True
+362,25500,"Harrisonburg, VA",high_growth_high_startup,23,1,14.556962,True
+362,25500,"Harrisonburg, VA",high_growth_low_startup,56,1,35.443038,True
+362,25500,"Harrisonburg, VA",low_growth_high_startup,25,1,15.822785,True
+362,25500,"Harrisonburg, VA",low_growth_low_startup,54,1,34.177215,True
+365,25620,"Hattiesburg, MS",high_growth_high_startup,22,1,24.719101,True
+365,25620,"Hattiesburg, MS",high_growth_low_startup,26,1,29.213483,True
+365,25620,"Hattiesburg, MS",low_growth_high_startup,18,1,20.224719,True
+365,25620,"Hattiesburg, MS",low_growth_low_startup,23,1,25.842697,True
+368,25740,"Helena, MT",high_growth_high_startup,27,1,30,True
+368,25740,"Helena, MT",high_growth_low_startup,17,1,18.888889,True
+368,25740,"Helena, MT",low_growth_high_startup,19,1,21.111111,True
+368,25740,"Helena, MT",low_growth_low_startup,27,1,30,True
+375,25860,"Hickory-Lenoir-Morganton, NC",high_growth_high_startup,17,1,13.28125,True
+375,25860,"Hickory-Lenoir-Morganton, NC",high_growth_low_startup,52,1,40.625,True
+375,25860,"Hickory-Lenoir-Morganton, NC",low_growth_high_startup,16,1,12.5,True
+375,25860,"Hickory-Lenoir-Morganton, NC",low_growth_low_startup,43,1,33.59375,True
+378,25940,"Hilton Head Island-Bluffton-Port Royal, SC",high_growth_high_startup,87,1,48.066298,True
+378,25940,"Hilton Head Island-Bluffton-Port Royal, SC",high_growth_low_startup,25,1,13.812155,True
+378,25940,"Hilton Head Island-Bluffton-Port Royal, SC",low_growth_high_startup,50,1,27.624309,True
+378,25940,"Hilton Head Island-Bluffton-Port Royal, SC",low_growth_low_startup,19,1,10.497238,True
+379,25980,"Hinesville, GA",high_growth_high_startup,7,1,17.948718,False
+379,25980,"Hinesville, GA",high_growth_low_startup,9,1,23.076923,False
+379,25980,"Hinesville, GA",low_growth_high_startup,10,1,25.641026,False
+379,25980,"Hinesville, GA",low_growth_low_startup,13,1,33.333333,False
+382,26140,"Homosassa Springs, FL",high_growth_high_startup,83,1,40.487805,True
+382,26140,"Homosassa Springs, FL",high_growth_low_startup,21,1,10.243902,True
+382,26140,"Homosassa Springs, FL",low_growth_high_startup,79,1,38.536585,True
+382,26140,"Homosassa Springs, FL",low_growth_low_startup,22,1,10.731707,True
+384,26300,"Hot Springs, AR",high_growth_high_startup,51,1,25.888325,True
+384,26300,"Hot Springs, AR",high_growth_low_startup,30,1,15.228426,True
+384,26300,"Hot Springs, AR",low_growth_high_startup,63,1,31.979695,True
+384,26300,"Hot Springs, AR",low_growth_low_startup,53,1,26.903553,True
+386,26380,"Houma-Bayou Cane-Thibodaux, LA",high_growth_high_startup,37,1,17.12963,True
+386,26380,"Houma-Bayou Cane-Thibodaux, LA",high_growth_low_startup,51,1,23.611111,True
+386,26380,"Houma-Bayou Cane-Thibodaux, LA",low_growth_high_startup,34,1,15.740741,True
+386,26380,"Houma-Bayou Cane-Thibodaux, LA",low_growth_low_startup,94,1,43.518519,True
+387,26420,"Houston-Pasadena-The Woodlands, TX",high_growth_high_startup,75,1,75,True
+387,26420,"Houston-Pasadena-The Woodlands, TX",low_growth_high_startup,25,1,25,True
+391,26580,"Huntington-Ashland, WV-KY-OH",high_growth_high_startup,1,1,1.7241379,False
+391,26580,"Huntington-Ashland, WV-KY-OH",high_growth_low_startup,14,1,24.137931,False
+391,26580,"Huntington-Ashland, WV-KY-OH",low_growth_high_startup,4,1,6.8965517,False
+391,26580,"Huntington-Ashland, WV-KY-OH",low_growth_low_startup,39,1,67.241379,False
+392,26620,"Huntsville, AL",high_growth_high_startup,64,1,34.224599,True
+392,26620,"Huntsville, AL",high_growth_low_startup,44,1,23.529412,True
+392,26620,"Huntsville, AL",low_growth_high_startup,44,1,23.529412,True
+392,26620,"Huntsville, AL",low_growth_low_startup,35,1,18.716578,True
+397,26820,"Idaho Falls, ID",high_growth_high_startup,29,1,43.283582,False
+397,26820,"Idaho Falls, ID",high_growth_low_startup,17,1,25.373134,False
+397,26820,"Idaho Falls, ID",low_growth_high_startup,12,1,17.910448,False
+397,26820,"Idaho Falls, ID",low_growth_low_startup,9,1,13.432836,False
+399,26900,"Indianapolis-Carmel-Greenwood, IN",high_growth_high_startup,33,1,43.421053,True
+399,26900,"Indianapolis-Carmel-Greenwood, IN",high_growth_low_startup,12,1,15.789474,True
+399,26900,"Indianapolis-Carmel-Greenwood, IN",low_growth_high_startup,26,1,34.210526,True
+399,26900,"Indianapolis-Carmel-Greenwood, IN",low_growth_low_startup,5,1,6.5789474,True
+400,26980,"Iowa City, IA",high_growth_high_startup,35,1,20.348837,True
+400,26980,"Iowa City, IA",high_growth_low_startup,46,1,26.744186,True
+400,26980,"Iowa City, IA",low_growth_high_startup,37,1,21.511628,True
+400,26980,"Iowa City, IA",low_growth_low_startup,54,1,31.395349,True
+402,27060,"Ithaca, NY",high_growth_high_startup,32,1,19.631902,True
+402,27060,"Ithaca, NY",high_growth_low_startup,34,1,20.858896,True
+402,27060,"Ithaca, NY",low_growth_high_startup,43,1,26.380368,True
+402,27060,"Ithaca, NY",low_growth_low_startup,54,1,33.128834,True
+403,27100,"Jackson, MI",high_growth_high_startup,29,1,16.384181,True
+403,27100,"Jackson, MI",high_growth_low_startup,46,1,25.988701,True
+403,27100,"Jackson, MI",low_growth_high_startup,32,1,18.079096,True
+403,27100,"Jackson, MI",low_growth_low_startup,70,1,39.548023,True
+404,27140,"Jackson, MS",high_growth_high_startup,7,1,8.3333333,False
+404,27140,"Jackson, MS",high_growth_low_startup,18,1,21.428571,False
+404,27140,"Jackson, MS",low_growth_high_startup,22,1,26.190476,False
+404,27140,"Jackson, MS",low_growth_low_startup,37,1,44.047619,False
+405,27180,"Jackson, TN",high_growth_high_startup,8,1,12.307692,False
+405,27180,"Jackson, TN",high_growth_low_startup,30,1,46.153846,False
+405,27180,"Jackson, TN",low_growth_high_startup,10,1,15.384615,False
+405,27180,"Jackson, TN",low_growth_low_startup,17,1,26.153846,False
+407,27260,"Jacksonville, FL",high_growth_high_startup,100,1,69.444444,True
+407,27260,"Jacksonville, FL",low_growth_high_startup,44,1,30.555556,True
+409,27340,"Jacksonville, NC",high_growth_high_startup,54,1,29.032258,True
+409,27340,"Jacksonville, NC",high_growth_low_startup,40,1,21.505376,True
+409,27340,"Jacksonville, NC",low_growth_high_startup,57,1,30.645161,True
+409,27340,"Jacksonville, NC",low_growth_low_startup,35,1,18.817204,True
+413,27500,"Janesville-Beloit, WI",high_growth_high_startup,35,1,19.337017,True
+413,27500,"Janesville-Beloit, WI",high_growth_low_startup,59,1,32.596685,True
+413,27500,"Janesville-Beloit, WI",low_growth_high_startup,25,1,13.812155,True
+413,27500,"Janesville-Beloit, WI",low_growth_low_startup,62,1,34.254144,True
+416,27620,"Jefferson City, MO",high_growth_high_startup,5,1,8.9285714,False
+416,27620,"Jefferson City, MO",high_growth_low_startup,24,1,42.857143,False
+416,27620,"Jefferson City, MO",low_growth_high_startup,7,1,12.5,False
+416,27620,"Jefferson City, MO",low_growth_low_startup,20,1,35.714286,False
+418,27740,"Johnson City, TN",high_growth_high_startup,19,1,18.627451,True
+418,27740,"Johnson City, TN",high_growth_low_startup,27,1,26.470588,True
+418,27740,"Johnson City, TN",low_growth_high_startup,17,1,16.666667,True
+418,27740,"Johnson City, TN",low_growth_low_startup,39,1,38.235294,True
+419,27780,"Johnstown, PA",high_growth_high_startup,21,1,11.351351,True
+419,27780,"Johnstown, PA",high_growth_low_startup,35,1,18.918919,True
+419,27780,"Johnstown, PA",low_growth_high_startup,26,1,14.054054,True
+419,27780,"Johnstown, PA",low_growth_low_startup,103,1,55.675676,True
+420,27860,"Jonesboro, AR",high_growth_high_startup,47,1,35.338346,True
+420,27860,"Jonesboro, AR",high_growth_low_startup,35,1,26.315789,True
+420,27860,"Jonesboro, AR",low_growth_high_startup,25,1,18.796992,True
+420,27860,"Jonesboro, AR",low_growth_low_startup,26,1,19.548872,True
+421,27900,"Joplin, MO-KS",high_growth_high_startup,15,1,11.538462,True
+421,27900,"Joplin, MO-KS",high_growth_low_startup,28,1,21.538462,True
+421,27900,"Joplin, MO-KS",low_growth_high_startup,33,1,25.384615,True
+421,27900,"Joplin, MO-KS",low_growth_low_startup,54,1,41.538462,True
+424,28020,"Kalamazoo-Portage, MI",high_growth_high_startup,21,1,10.606061,True
+424,28020,"Kalamazoo-Portage, MI",high_growth_low_startup,74,1,37.373737,True
+424,28020,"Kalamazoo-Portage, MI",low_growth_high_startup,22,1,11.111111,True
+424,28020,"Kalamazoo-Portage, MI",low_growth_low_startup,81,1,40.909091,True
+426,28100,"Kankakee, IL",high_growth_high_startup,17,1,11.258278,True
+426,28100,"Kankakee, IL",high_growth_low_startup,40,1,26.490066,True
+426,28100,"Kankakee, IL",low_growth_high_startup,28,1,18.543046,True
+426,28100,"Kankakee, IL",low_growth_low_startup,66,1,43.708609,True
+427,28140,"Kansas City, MO-KS",high_growth_high_startup,25,1,52.083333,False
+427,28140,"Kansas City, MO-KS",high_growth_low_startup,2,1,4.1666667,False
+427,28140,"Kansas City, MO-KS",low_growth_high_startup,13,1,27.083333,False
+427,28140,"Kansas City, MO-KS",low_growth_low_startup,8,1,16.666667,False
+433,28420,"Kennewick-Richland, WA",high_growth_high_startup,74,1,42.045455,True
+433,28420,"Kennewick-Richland, WA",high_growth_low_startup,32,1,18.181818,True
+433,28420,"Kennewick-Richland, WA",low_growth_high_startup,48,1,27.272727,True
+433,28420,"Kennewick-Richland, WA",low_growth_low_startup,22,1,12.5,True
+434,28450,"Kenosha, WI",high_growth_high_startup,45,1,25.862069,True
+434,28450,"Kenosha, WI",high_growth_low_startup,55,1,31.609195,True
+434,28450,"Kenosha, WI",low_growth_high_startup,27,1,15.517241,True
+434,28450,"Kenosha, WI",low_growth_low_startup,47,1,27.011494,True
+439,28660,"Killeen-Temple, TX",high_growth_high_startup,49,1,39.2,True
+439,28660,"Killeen-Temple, TX",high_growth_low_startup,16,1,12.8,True
+439,28660,"Killeen-Temple, TX",low_growth_high_startup,42,1,33.6,True
+439,28660,"Killeen-Temple, TX",low_growth_low_startup,18,1,14.4,True
+441,28700,"Kingsport-Bristol, TN-VA",high_growth_high_startup,2,1,2.9850746,False
+441,28700,"Kingsport-Bristol, TN-VA",high_growth_low_startup,27,1,40.298507,False
+441,28700,"Kingsport-Bristol, TN-VA",low_growth_high_startup,8,1,11.940299,False
+441,28700,"Kingsport-Bristol, TN-VA",low_growth_low_startup,30,1,44.776119,False
+442,28740,"Kingston, NY",high_growth_high_startup,41,1,20.39801,True
+442,28740,"Kingston, NY",high_growth_low_startup,39,1,19.402985,True
+442,28740,"Kingston, NY",low_growth_high_startup,71,1,35.323383,True
+442,28740,"Kingston, NY",low_growth_low_startup,50,1,24.875622,True
+446,28880,"Kiryas Joel-Poughkeepsie-Newburgh, NY",high_growth_high_startup,81,1,39.512195,True
+446,28880,"Kiryas Joel-Poughkeepsie-Newburgh, NY",high_growth_low_startup,24,1,11.707317,True
+446,28880,"Kiryas Joel-Poughkeepsie-Newburgh, NY",low_growth_high_startup,62,1,30.243902,True
+446,28880,"Kiryas Joel-Poughkeepsie-Newburgh, NY",low_growth_low_startup,38,1,18.536585,True
+448,28940,"Knoxville, TN",high_growth_high_startup,17,1,44.736842,False
+448,28940,"Knoxville, TN",high_growth_low_startup,10,1,26.315789,False
+448,28940,"Knoxville, TN",low_growth_high_startup,8,1,21.052632,False
+448,28940,"Knoxville, TN",low_growth_low_startup,3,1,7.8947368,False
+449,29020,"Kokomo, IN",high_growth_high_startup,23,1,14.197531,True
+449,29020,"Kokomo, IN",high_growth_low_startup,46,1,28.395062,True
+449,29020,"Kokomo, IN",low_growth_high_startup,38,1,23.45679,True
+449,29020,"Kokomo, IN",low_growth_low_startup,55,1,33.950617,True
+451,29100,"La Crosse-Onalaska, WI-MN",high_growth_high_startup,7,1,6.25,True
+451,29100,"La Crosse-Onalaska, WI-MN",high_growth_low_startup,42,1,37.5,True
+451,29100,"La Crosse-Onalaska, WI-MN",low_growth_high_startup,11,1,9.8214286,True
+451,29100,"La Crosse-Onalaska, WI-MN",low_growth_low_startup,52,1,46.428571,True
+452,29180,"Lafayette, LA",high_growth_high_startup,47,1,24.226804,True
+452,29180,"Lafayette, LA",high_growth_low_startup,42,1,21.649485,True
+452,29180,"Lafayette, LA",low_growth_high_startup,65,1,33.505155,True
+452,29180,"Lafayette, LA",low_growth_low_startup,40,1,20.618557,True
+453,29200,"Lafayette-West Lafayette, IN",high_growth_high_startup,11,1,24.444444,False
+453,29200,"Lafayette-West Lafayette, IN",high_growth_low_startup,11,1,24.444444,False
+453,29200,"Lafayette-West Lafayette, IN",low_growth_high_startup,8,1,17.777778,False
+453,29200,"Lafayette-West Lafayette, IN",low_growth_low_startup,15,1,33.333333,False
+456,29340,"Lake Charles, LA",high_growth_high_startup,16,1,17.391304,True
+456,29340,"Lake Charles, LA",high_growth_low_startup,20,1,21.73913,True
+456,29340,"Lake Charles, LA",low_growth_high_startup,19,1,20.652174,True
+456,29340,"Lake Charles, LA",low_growth_low_startup,37,1,40.217391,True
+458,29420,"Lake Havasu City-Kingman, AZ",high_growth_high_startup,80,1,39.800995,True
+458,29420,"Lake Havasu City-Kingman, AZ",high_growth_low_startup,32,1,15.920398,True
+458,29420,"Lake Havasu City-Kingman, AZ",low_growth_high_startup,64,1,31.840796,True
+458,29420,"Lake Havasu City-Kingman, AZ",low_growth_low_startup,25,1,12.437811,True
+459,29460,"Lakeland-Winter Haven, FL",high_growth_high_startup,136,1,59.649123,True
+459,29460,"Lakeland-Winter Haven, FL",high_growth_low_startup,10,1,4.3859649,True
+459,29460,"Lakeland-Winter Haven, FL",low_growth_high_startup,76,1,33.333333,True
+459,29460,"Lakeland-Winter Haven, FL",low_growth_low_startup,6,1,2.6315789,True
+461,29540,"Lancaster, PA",high_growth_high_startup,46,1,19.65812,True
+461,29540,"Lancaster, PA",high_growth_low_startup,66,1,28.205128,True
+461,29540,"Lancaster, PA",low_growth_high_startup,38,1,16.239316,True
+461,29540,"Lancaster, PA",low_growth_low_startup,84,1,35.897436,True
+462,29620,"Lansing-East Lansing, MI",high_growth_high_startup,40,1,23.391813,True
+462,29620,"Lansing-East Lansing, MI",high_growth_low_startup,39,1,22.807018,True
+462,29620,"Lansing-East Lansing, MI",low_growth_high_startup,30,1,17.54386,True
+462,29620,"Lansing-East Lansing, MI",low_growth_low_startup,62,1,36.25731,True
+464,29700,"Laredo, TX",high_growth_high_startup,99,1,45.833333,True
+464,29700,"Laredo, TX",high_growth_low_startup,22,1,10.185185,True
+464,29700,"Laredo, TX",low_growth_high_startup,60,1,27.777778,True
+464,29700,"Laredo, TX",low_growth_low_startup,35,1,16.203704,True
+466,29740,"Las Cruces, NM",high_growth_high_startup,63,1,30.582524,True
+466,29740,"Las Cruces, NM",high_growth_low_startup,43,1,20.873786,True
+466,29740,"Las Cruces, NM",low_growth_high_startup,50,1,24.271845,True
+466,29740,"Las Cruces, NM",low_growth_low_startup,50,1,24.271845,True
+468,29820,"Las Vegas-Henderson-North Las Vegas, NV",high_growth_high_startup,180,1,77.922078,True
+468,29820,"Las Vegas-Henderson-North Las Vegas, NV",high_growth_low_startup,2,1,0.86580087,True
+468,29820,"Las Vegas-Henderson-North Las Vegas, NV",low_growth_high_startup,49,1,21.212121,True
+471,29940,"Lawrence, KS",high_growth_high_startup,47,1,24.736842,True
+471,29940,"Lawrence, KS",high_growth_low_startup,38,1,20,True
+471,29940,"Lawrence, KS",low_growth_high_startup,54,1,28.421053,True
+471,29940,"Lawrence, KS",low_growth_low_startup,51,1,26.842105,True
+473,30020,"Lawton, OK",high_growth_high_startup,12,1,16.666667,False
+473,30020,"Lawton, OK",high_growth_low_startup,14,1,19.444444,False
+473,30020,"Lawton, OK",low_growth_high_startup,16,1,22.222222,False
+473,30020,"Lawton, OK",low_growth_low_startup,30,1,41.666667,False
+475,30140,"Lebanon, PA",high_growth_high_startup,20,1,12.345679,True
+475,30140,"Lebanon, PA",high_growth_low_startup,56,1,34.567901,True
+475,30140,"Lebanon, PA",low_growth_high_startup,13,1,8.0246914,True
+475,30140,"Lebanon, PA",low_growth_low_startup,73,1,45.061728,True
+480,30300,"Lewiston, ID-WA",high_growth_high_startup,19,1,19.587629,True
+480,30300,"Lewiston, ID-WA",high_growth_low_startup,23,1,23.71134,True
+480,30300,"Lewiston, ID-WA",low_growth_high_startup,13,1,13.402062,True
+480,30300,"Lewiston, ID-WA",low_growth_low_startup,42,1,43.298969,True
+481,30340,"Lewiston-Auburn, ME",high_growth_high_startup,33,1,18.435754,True
+481,30340,"Lewiston-Auburn, ME",high_growth_low_startup,38,1,21.22905,True
+481,30340,"Lewiston-Auburn, ME",low_growth_high_startup,41,1,22.905028,True
+481,30340,"Lewiston-Auburn, ME",low_growth_low_startup,67,1,37.430168,True
+484,30460,"Lexington-Fayette, KY",high_growth_high_startup,30,1,25.210084,True
+484,30460,"Lexington-Fayette, KY",high_growth_low_startup,32,1,26.890756,True
+484,30460,"Lexington-Fayette, KY",low_growth_high_startup,30,1,25.210084,True
+484,30460,"Lexington-Fayette, KY",low_growth_low_startup,27,1,22.689076,True
+485,30500,"Lexington Park, MD",high_growth_high_startup,22,1,17.886179,True
+485,30500,"Lexington Park, MD",high_growth_low_startup,30,1,24.390244,True
+485,30500,"Lexington Park, MD",low_growth_high_startup,26,1,21.138211,True
+485,30500,"Lexington Park, MD",low_growth_low_startup,45,1,36.585366,True
+487,30620,"Lima, OH",high_growth_high_startup,16,1,10,True
+487,30620,"Lima, OH",high_growth_low_startup,36,1,22.5,True
+487,30620,"Lima, OH",low_growth_high_startup,21,1,13.125,True
+487,30620,"Lima, OH",low_growth_low_startup,87,1,54.375,True
+489,30700,"Lincoln, NE",high_growth_high_startup,33,1,22.297297,True
+489,30700,"Lincoln, NE",high_growth_low_startup,33,1,22.297297,True
+489,30700,"Lincoln, NE",low_growth_high_startup,28,1,18.918919,True
+489,30700,"Lincoln, NE",low_growth_low_startup,54,1,36.486486,True
+490,30780,"Little Rock-North Little Rock-Conway, AR",high_growth_high_startup,18,1,24.324324,False
+490,30780,"Little Rock-North Little Rock-Conway, AR",high_growth_low_startup,14,1,18.918919,False
+490,30780,"Little Rock-North Little Rock-Conway, AR",low_growth_high_startup,25,1,33.783784,False
+490,30780,"Little Rock-North Little Rock-Conway, AR",low_growth_low_startup,17,1,22.972973,False
+492,30860,"Logan, UT-ID",high_growth_high_startup,66,1,44.295302,True
+492,30860,"Logan, UT-ID",high_growth_low_startup,16,1,10.738255,True
+492,30860,"Logan, UT-ID",low_growth_high_startup,46,1,30.872483,True
+492,30860,"Logan, UT-ID",low_growth_low_startup,21,1,14.09396,True
+494,30980,"Longview, TX",high_growth_high_startup,35,1,21.73913,True
+494,30980,"Longview, TX",high_growth_low_startup,32,1,19.875776,True
+494,30980,"Longview, TX",low_growth_high_startup,50,1,31.055901,True
+494,30980,"Longview, TX",low_growth_low_startup,44,1,27.329193,True
+495,31020,"Longview-Kelso, WA",high_growth_high_startup,60,1,31.413613,True
+495,31020,"Longview-Kelso, WA",high_growth_low_startup,47,1,24.60733,True
+495,31020,"Longview-Kelso, WA",low_growth_high_startup,44,1,23.036649,True
+495,31020,"Longview-Kelso, WA",low_growth_low_startup,40,1,20.942408,True
+497,31080,"Los Angeles-Long Beach-Anaheim, CA",high_growth_high_startup,129,1,52.439024,True
+497,31080,"Los Angeles-Long Beach-Anaheim, CA",low_growth_high_startup,117,1,47.560976,True
+498,31140,"Louisville/Jefferson County, KY-IN",high_growth_high_startup,12,1,30,False
+498,31140,"Louisville/Jefferson County, KY-IN",high_growth_low_startup,6,1,15,False
+498,31140,"Louisville/Jefferson County, KY-IN",low_growth_high_startup,11,1,27.5,False
+498,31140,"Louisville/Jefferson County, KY-IN",low_growth_low_startup,11,1,27.5,False
+499,31180,"Lubbock, TX",high_growth_high_startup,10,1,55.555556,False
+499,31180,"Lubbock, TX",high_growth_low_startup,2,1,11.111111,False
+499,31180,"Lubbock, TX",low_growth_high_startup,6,1,33.333333,False
+503,31340,"Lynchburg, VA",high_growth_high_startup,15,1,15.789474,True
+503,31340,"Lynchburg, VA",high_growth_low_startup,19,1,20,True
+503,31340,"Lynchburg, VA",low_growth_high_startup,21,1,22.105263,True
+503,31340,"Lynchburg, VA",low_growth_low_startup,40,1,42.105263,True
+505,31420,"Macon-Bibb County, GA",high_growth_high_startup,3,1,18.75,False
+505,31420,"Macon-Bibb County, GA",high_growth_low_startup,6,1,37.5,False
+505,31420,"Macon-Bibb County, GA",low_growth_high_startup,1,1,6.25,False
+505,31420,"Macon-Bibb County, GA",low_growth_low_startup,6,1,37.5,False
+507,31540,"Madison, WI",high_growth_high_startup,14,1,10.606061,True
+507,31540,"Madison, WI",high_growth_low_startup,51,1,38.636364,True
+507,31540,"Madison, WI",low_growth_high_startup,13,1,9.8484848,True
+507,31540,"Madison, WI",low_growth_low_startup,54,1,40.909091,True
+511,31700,"Manchester-Nashua, NH",high_growth_high_startup,57,1,25.446429,True
+511,31700,"Manchester-Nashua, NH",high_growth_low_startup,52,1,23.214286,True
+511,31700,"Manchester-Nashua, NH",low_growth_high_startup,37,1,16.517857,True
+511,31700,"Manchester-Nashua, NH",low_growth_low_startup,78,1,34.821429,True
+512,31740,"Manhattan, KS",high_growth_high_startup,16,1,14.545455,True
+512,31740,"Manhattan, KS",high_growth_low_startup,29,1,26.363636,True
+512,31740,"Manhattan, KS",low_growth_high_startup,19,1,17.272727,True
+512,31740,"Manhattan, KS",low_growth_low_startup,46,1,41.818182,True
+514,31860,"Mankato, MN",high_growth_high_startup,7,1,6.1946903,True
+514,31860,"Mankato, MN",high_growth_low_startup,50,1,44.247788,True
+514,31860,"Mankato, MN",low_growth_high_startup,11,1,9.7345133,True
+514,31860,"Mankato, MN",low_growth_low_startup,45,1,39.823009,True
+515,31900,"Mansfield, OH",high_growth_high_startup,17,1,10.30303,True
+515,31900,"Mansfield, OH",high_growth_low_startup,34,1,20.606061,True
+515,31900,"Mansfield, OH",low_growth_high_startup,19,1,11.515152,True
+515,31900,"Mansfield, OH",low_growth_low_startup,95,1,57.575758,True
+534,32580,"McAllen-Edinburg-Mission, TX",high_growth_high_startup,137,1,61.434978,True
+534,32580,"McAllen-Edinburg-Mission, TX",high_growth_low_startup,12,1,5.3811659,True
+534,32580,"McAllen-Edinburg-Mission, TX",low_growth_high_startup,64,1,28.699552,True
+534,32580,"McAllen-Edinburg-Mission, TX",low_growth_low_startup,10,1,4.4843049,True
+539,32780,"Medford, OR",high_growth_high_startup,91,1,41.743119,True
+539,32780,"Medford, OR",high_growth_low_startup,38,1,17.431193,True
+539,32780,"Medford, OR",low_growth_high_startup,51,1,23.394495,True
+539,32780,"Medford, OR",low_growth_low_startup,38,1,17.431193,True
+540,32820,"Memphis, TN-MS-AR",high_growth_high_startup,3,1,10.714286,False
+540,32820,"Memphis, TN-MS-AR",high_growth_low_startup,8,1,28.571429,False
+540,32820,"Memphis, TN-MS-AR",low_growth_high_startup,4,1,14.285714,False
+540,32820,"Memphis, TN-MS-AR",low_growth_low_startup,13,1,46.428571,False
+542,32900,"Merced, CA",high_growth_high_startup,57,1,32.571429,True
+542,32900,"Merced, CA",high_growth_low_startup,49,1,28,True
+542,32900,"Merced, CA",low_growth_high_startup,37,1,21.142857,True
+542,32900,"Merced, CA",low_growth_low_startup,32,1,18.285714,True
+546,33100,"Miami-Fort Lauderdale-West Palm Beach, FL",high_growth_high_startup,170,1,69.105691,True
+546,33100,"Miami-Fort Lauderdale-West Palm Beach, FL",low_growth_high_startup,76,1,30.894309,True
+547,33140,"Michigan City-La Porte, IN",high_growth_high_startup,16,1,10.38961,True
+547,33140,"Michigan City-La Porte, IN",high_growth_low_startup,39,1,25.324675,True
+547,33140,"Michigan City-La Porte, IN",low_growth_high_startup,18,1,11.688312,True
+547,33140,"Michigan City-La Porte, IN",low_growth_low_startup,81,1,52.597403,True
+549,33220,"Midland, MI",high_growth_high_startup,32,1,21.768707,True
+549,33220,"Midland, MI",high_growth_low_startup,30,1,20.408163,True
+549,33220,"Midland, MI",low_growth_high_startup,40,1,27.210884,True
+549,33220,"Midland, MI",low_growth_low_startup,45,1,30.612245,True
+550,33260,"Midland, TX",high_growth_high_startup,43,1,45.744681,True
+550,33260,"Midland, TX",high_growth_low_startup,15,1,15.957447,True
+550,33260,"Midland, TX",low_growth_high_startup,21,1,22.340426,True
+550,33260,"Midland, TX",low_growth_low_startup,15,1,15.957447,True
+552,33340,"Milwaukee-Waukesha, WI",high_growth_high_startup,27,1,14.438503,True
+552,33340,"Milwaukee-Waukesha, WI",high_growth_low_startup,39,1,20.855615,True
+552,33340,"Milwaukee-Waukesha, WI",low_growth_high_startup,39,1,20.855615,True
+552,33340,"Milwaukee-Waukesha, WI",low_growth_low_startup,82,1,43.850267,True
+555,33460,"Minneapolis-St. Paul-Bloomington, MN-WI",high_growth_high_startup,43,1,38.053097,True
+555,33460,"Minneapolis-St. Paul-Bloomington, MN-WI",high_growth_low_startup,15,1,13.274336,True
+555,33460,"Minneapolis-St. Paul-Bloomington, MN-WI",low_growth_high_startup,38,1,33.628319,True
+555,33460,"Minneapolis-St. Paul-Bloomington, MN-WI",low_growth_low_startup,17,1,15.044248,True
+556,33500,"Minot, ND",high_growth_high_startup,5,1,10.416667,False
+556,33500,"Minot, ND",high_growth_low_startup,13,1,27.083333,False
+556,33500,"Minot, ND",low_growth_high_startup,14,1,29.166667,False
+556,33500,"Minot, ND",low_growth_low_startup,16,1,33.333333,False
+557,33540,"Missoula, MT",high_growth_high_startup,21,1,23.076923,True
+557,33540,"Missoula, MT",high_growth_low_startup,24,1,26.373626,True
+557,33540,"Missoula, MT",low_growth_high_startup,20,1,21.978022,True
+557,33540,"Missoula, MT",low_growth_low_startup,26,1,28.571429,True
+560,33660,"Mobile, AL",high_growth_high_startup,40,1,17.857143,True
+560,33660,"Mobile, AL",high_growth_low_startup,39,1,17.410714,True
+560,33660,"Mobile, AL",low_growth_high_startup,54,1,24.107143,True
+560,33660,"Mobile, AL",low_growth_low_startup,91,1,40.625,True
+561,33700,"Modesto, CA",high_growth_high_startup,74,1,36.27451,True
+561,33700,"Modesto, CA",high_growth_low_startup,35,1,17.156863,True
+561,33700,"Modesto, CA",low_growth_high_startup,61,1,29.901961,True
+561,33700,"Modesto, CA",low_growth_low_startup,34,1,16.666667,True
+562,33740,"Monroe, LA",high_growth_high_startup,13,1,12.745098,True
+562,33740,"Monroe, LA",high_growth_low_startup,23,1,22.54902,True
+562,33740,"Monroe, LA",low_growth_high_startup,19,1,18.627451,True
+562,33740,"Monroe, LA",low_growth_low_startup,47,1,46.078431,True
+563,33780,"Monroe, MI",high_growth_high_startup,15,1,10.791367,True
+563,33780,"Monroe, MI",high_growth_low_startup,41,1,29.496403,True
+563,33780,"Monroe, MI",low_growth_high_startup,15,1,10.791367,True
+563,33780,"Monroe, MI",low_growth_low_startup,68,1,48.920863,True
+564,33860,"Montgomery, AL",high_growth_high_startup,6,1,8.3333333,False
+564,33860,"Montgomery, AL",high_growth_low_startup,19,1,26.388889,False
+564,33860,"Montgomery, AL",low_growth_high_startup,17,1,23.611111,False
+564,33860,"Montgomery, AL",low_growth_low_startup,30,1,41.666667,False
+570,34060,"Morgantown, WV",high_growth_high_startup,31,1,22.302158,True
+570,34060,"Morgantown, WV",high_growth_low_startup,36,1,25.899281,True
+570,34060,"Morgantown, WV",low_growth_high_startup,32,1,23.021583,True
+570,34060,"Morgantown, WV",low_growth_low_startup,40,1,28.776978,True
+571,34100,"Morristown, TN",high_growth_high_startup,19,1,18.811881,True
+571,34100,"Morristown, TN",high_growth_low_startup,38,1,37.623762,True
+571,34100,"Morristown, TN",low_growth_high_startup,12,1,11.881188,True
+571,34100,"Morristown, TN",low_growth_low_startup,32,1,31.683168,True
+583,34580,"Mount Vernon-Anacortes, WA",high_growth_high_startup,55,1,26.570048,True
+583,34580,"Mount Vernon-Anacortes, WA",high_growth_low_startup,46,1,22.222222,True
+583,34580,"Mount Vernon-Anacortes, WA",low_growth_high_startup,55,1,26.570048,True
+583,34580,"Mount Vernon-Anacortes, WA",low_growth_low_startup,51,1,24.637681,True
+584,34620,"Muncie, IN",high_growth_high_startup,26,1,15.95092,True
+584,34620,"Muncie, IN",high_growth_low_startup,43,1,26.380368,True
+584,34620,"Muncie, IN",low_growth_high_startup,26,1,15.95092,True
+584,34620,"Muncie, IN",low_growth_low_startup,68,1,41.717791,True
+588,34740,"Muskegon-Norton Shores, MI",high_growth_high_startup,21,1,13.375796,True
+588,34740,"Muskegon-Norton Shores, MI",high_growth_low_startup,55,1,35.031847,True
+588,34740,"Muskegon-Norton Shores, MI",low_growth_high_startup,17,1,10.828025,True
+588,34740,"Muskegon-Norton Shores, MI",low_growth_low_startup,64,1,40.764331,True
+590,34820,"Myrtle Beach-Conway-North Myrtle Beach, SC",high_growth_high_startup,115,1,52.995392,True
+590,34820,"Myrtle Beach-Conway-North Myrtle Beach, SC",high_growth_low_startup,14,1,6.4516129,True
+590,34820,"Myrtle Beach-Conway-North Myrtle Beach, SC",low_growth_high_startup,70,1,32.258065,True
+590,34820,"Myrtle Beach-Conway-North Myrtle Beach, SC",low_growth_low_startup,18,1,8.2949309,True
+593,34900,"Napa, CA",high_growth_high_startup,57,1,28.5,True
+593,34900,"Napa, CA",high_growth_low_startup,42,1,21,True
+593,34900,"Napa, CA",low_growth_high_startup,47,1,23.5,True
+593,34900,"Napa, CA",low_growth_low_startup,54,1,27,True
+594,34940,"Naples-Marco Island, FL",high_growth_high_startup,144,1,65.454545,True
+594,34940,"Naples-Marco Island, FL",high_growth_low_startup,6,1,2.7272727,True
+594,34940,"Naples-Marco Island, FL",low_growth_high_startup,63,1,28.636364,True
+594,34940,"Naples-Marco Island, FL",low_growth_low_startup,7,1,3.1818182,True
+595,34980,"Nashville-Davidson--Murfreesboro--Franklin, TN",high_growth_high_startup,39,1,79.591837,False
+595,34980,"Nashville-Davidson--Murfreesboro--Franklin, TN",high_growth_low_startup,1,1,2.0408163,False
+595,34980,"Nashville-Davidson--Murfreesboro--Franklin, TN",low_growth_high_startup,7,1,14.285714,False
+595,34980,"Nashville-Davidson--Murfreesboro--Franklin, TN",low_growth_low_startup,2,1,4.0816327,False
+603,35380,"New Orleans-Metairie, LA",high_growth_high_startup,18,1,16.981132,True
+603,35380,"New Orleans-Metairie, LA",high_growth_low_startup,21,1,19.811321,True
+603,35380,"New Orleans-Metairie, LA",low_growth_high_startup,26,1,24.528302,True
+603,35380,"New Orleans-Metairie, LA",low_growth_low_startup,41,1,38.679245,True
+608,35620,"New York-Newark-Jersey City, NY-NJ",high_growth_high_startup,87,1,55.414013,True
+608,35620,"New York-Newark-Jersey City, NY-NJ",high_growth_low_startup,4,1,2.5477707,True
+608,35620,"New York-Newark-Jersey City, NY-NJ",low_growth_high_startup,54,1,34.394904,True
+608,35620,"New York-Newark-Jersey City, NY-NJ",low_growth_low_startup,12,1,7.6433121,True
+609,35660,"Niles, MI",high_growth_high_startup,26,1,14.52514,True
+609,35660,"Niles, MI",high_growth_low_startup,59,1,32.960894,True
+609,35660,"Niles, MI",low_growth_high_startup,27,1,15.083799,True
+609,35660,"Niles, MI",low_growth_low_startup,67,1,37.430168,True
+613,35840,"North Port-Bradenton-Sarasota, FL",high_growth_high_startup,159,1,74.647887,True
+613,35840,"North Port-Bradenton-Sarasota, FL",high_growth_low_startup,5,1,2.3474178,True
+613,35840,"North Port-Bradenton-Sarasota, FL",low_growth_high_startup,48,1,22.535211,True
+613,35840,"North Port-Bradenton-Sarasota, FL",low_growth_low_startup,1,1,0.46948357,True
+618,36100,"Ocala, FL",high_growth_high_startup,122,1,52.586207,True
+618,36100,"Ocala, FL",high_growth_low_startup,12,1,5.1724138,True
+618,36100,"Ocala, FL",low_growth_high_startup,85,1,36.637931,True
+618,36100,"Ocala, FL",low_growth_low_startup,13,1,5.6034483,True
+620,36220,"Odessa, TX",high_growth_high_startup,83,1,40.096618,True
+620,36220,"Odessa, TX",high_growth_low_startup,35,1,16.908213,True
+620,36220,"Odessa, TX",low_growth_high_startup,50,1,24.154589,True
+620,36220,"Odessa, TX",low_growth_low_startup,39,1,18.84058,True
+621,36260,"Ogden, UT",high_growth_high_startup,98,1,62.420382,True
+621,36260,"Ogden, UT",high_growth_low_startup,16,1,10.191083,True
+621,36260,"Ogden, UT",low_growth_high_startup,39,1,24.840764,True
+621,36260,"Ogden, UT",low_growth_low_startup,4,1,2.5477707,True
+624,36420,"Oklahoma City, OK",high_growth_high_startup,56,1,54.368932,True
+624,36420,"Oklahoma City, OK",high_growth_low_startup,4,1,3.8834951,True
+624,36420,"Oklahoma City, OK",low_growth_high_startup,39,1,37.864078,True
+624,36420,"Oklahoma City, OK",low_growth_low_startup,4,1,3.8834951,True
+626,36500,"Olympia-Lacey-Tumwater, WA",high_growth_high_startup,88,1,40,True
+626,36500,"Olympia-Lacey-Tumwater, WA",high_growth_low_startup,46,1,20.909091,True
+626,36500,"Olympia-Lacey-Tumwater, WA",low_growth_high_startup,51,1,23.181818,True
+626,36500,"Olympia-Lacey-Tumwater, WA",low_growth_low_startup,35,1,15.909091,True
+627,36540,"Omaha, NE-IA",high_growth_high_startup,30,1,30.612245,True
+627,36540,"Omaha, NE-IA",high_growth_low_startup,19,1,19.387755,True
+627,36540,"Omaha, NE-IA",low_growth_high_startup,33,1,33.673469,True
+627,36540,"Omaha, NE-IA",low_growth_low_startup,16,1,16.326531,True
+632,36740,"Orlando-Kissimmee-Sanford, FL",high_growth_high_startup,169,1,74.122807,True
+632,36740,"Orlando-Kissimmee-Sanford, FL",low_growth_high_startup,59,1,25.877193,True
+633,36780,"Oshkosh-Neenah, WI",high_growth_high_startup,20,1,11.428571,True
+633,36780,"Oshkosh-Neenah, WI",high_growth_low_startup,56,1,32,True
+633,36780,"Oshkosh-Neenah, WI",low_growth_high_startup,22,1,12.571429,True
+633,36780,"Oshkosh-Neenah, WI",low_growth_low_startup,77,1,44,True
+640,36980,"Owensboro, KY",high_growth_high_startup,7,1,10.606061,False
+640,36980,"Owensboro, KY",high_growth_low_startup,18,1,27.272727,False
+640,36980,"Owensboro, KY",low_growth_high_startup,14,1,21.212121,False
+640,36980,"Owensboro, KY",low_growth_low_startup,27,1,40.909091,False
+643,37100,"Oxnard-Thousand Oaks-Ventura, CA",high_growth_high_startup,96,1,42.666667,True
+643,37100,"Oxnard-Thousand Oaks-Ventura, CA",high_growth_low_startup,11,1,4.8888889,True
+643,37100,"Oxnard-Thousand Oaks-Ventura, CA",low_growth_high_startup,101,1,44.888889,True
+643,37100,"Oxnard-Thousand Oaks-Ventura, CA",low_growth_low_startup,17,1,7.5555556,True
+645,37140,"Paducah, KY-IL",high_growth_high_startup,4,1,12.121212,False
+645,37140,"Paducah, KY-IL",high_growth_low_startup,7,1,21.212121,False
+645,37140,"Paducah, KY-IL",low_growth_high_startup,9,1,27.272727,False
+645,37140,"Paducah, KY-IL",low_growth_low_startup,13,1,39.393939,False
+649,37340,"Palm Bay-Melbourne-Titusville, FL",high_growth_high_startup,131,1,59.817352,True
+649,37340,"Palm Bay-Melbourne-Titusville, FL",high_growth_low_startup,5,1,2.283105,True
+649,37340,"Palm Bay-Melbourne-Titusville, FL",low_growth_high_startup,77,1,35.159817,True
+649,37340,"Palm Bay-Melbourne-Titusville, FL",low_growth_low_startup,6,1,2.739726,True
+651,37460,"Panama City-Panama City Beach, FL",high_growth_high_startup,41,1,42.708333,True
+651,37460,"Panama City-Panama City Beach, FL",high_growth_low_startup,7,1,7.2916667,True
+651,37460,"Panama City-Panama City Beach, FL",low_growth_high_startup,35,1,36.458333,True
+651,37460,"Panama City-Panama City Beach, FL",low_growth_low_startup,13,1,13.541667,True
+655,37620,"Parkersburg-Vienna, WV",high_growth_high_startup,2,1,4,False
+655,37620,"Parkersburg-Vienna, WV",high_growth_low_startup,14,1,28,False
+655,37620,"Parkersburg-Vienna, WV",low_growth_high_startup,6,1,12,False
+655,37620,"Parkersburg-Vienna, WV",low_growth_low_startup,28,1,56,False
+658,37860,"Pensacola-Ferry Pass-Brent, FL",high_growth_high_startup,100,1,47.393365,True
+658,37860,"Pensacola-Ferry Pass-Brent, FL",high_growth_low_startup,18,1,8.5308057,True
+658,37860,"Pensacola-Ferry Pass-Brent, FL",low_growth_high_startup,76,1,36.018957,True
+658,37860,"Pensacola-Ferry Pass-Brent, FL",low_growth_low_startup,17,1,8.056872,True
+659,37900,"Peoria, IL",high_growth_high_startup,4,1,6.1538462,False
+659,37900,"Peoria, IL",high_growth_low_startup,19,1,29.230769,False
+659,37900,"Peoria, IL",low_growth_high_startup,2,1,3.0769231,False
+659,37900,"Peoria, IL",low_growth_low_startup,40,1,61.538462,False
+662,37980,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",high_growth_high_startup,65,1,43.046358,True
+662,37980,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",high_growth_low_startup,8,1,5.2980132,True
+662,37980,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",low_growth_high_startup,62,1,41.059603,True
+662,37980,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",low_growth_low_startup,16,1,10.596026,True
+663,38060,"Phoenix-Mesa-Chandler, AZ",high_growth_high_startup,165,1,69.620253,True
+663,38060,"Phoenix-Mesa-Chandler, AZ",high_growth_low_startup,1,1,0.42194093,True
+663,38060,"Phoenix-Mesa-Chandler, AZ",low_growth_high_startup,70,1,29.535865,True
+663,38060,"Phoenix-Mesa-Chandler, AZ",low_growth_low_startup,1,1,0.42194093,True
+668,38240,"Pinehurst-Southern Pines, NC",high_growth_high_startup,53,1,35.333333,True
+668,38240,"Pinehurst-Southern Pines, NC",high_growth_low_startup,39,1,26,True
+668,38240,"Pinehurst-Southern Pines, NC",low_growth_high_startup,34,1,22.666667,True
+668,38240,"Pinehurst-Southern Pines, NC",low_growth_low_startup,24,1,16,True
+670,38300,"Pittsburgh, PA",high_growth_high_startup,30,1,12.875536,True
+670,38300,"Pittsburgh, PA",high_growth_low_startup,47,1,20.171674,True
+670,38300,"Pittsburgh, PA",low_growth_high_startup,29,1,12.446352,True
+670,38300,"Pittsburgh, PA",low_growth_low_startup,127,1,54.506438,True
+671,38340,"Pittsfield, MA",high_growth_high_startup,32,1,16,True
+671,38340,"Pittsfield, MA",high_growth_low_startup,43,1,21.5,True
+671,38340,"Pittsfield, MA",low_growth_high_startup,41,1,20.5,True
+671,38340,"Pittsfield, MA",low_growth_low_startup,84,1,42,True
+676,38540,"Pocatello, ID",high_growth_high_startup,56,1,34.146341,True
+676,38540,"Pocatello, ID",high_growth_low_startup,34,1,20.731707,True
+676,38540,"Pocatello, ID",low_growth_high_startup,39,1,23.780488,True
+676,38540,"Pocatello, ID",low_growth_low_startup,35,1,21.341463,True
+682,38860,"Portland-South Portland, ME",high_growth_high_startup,35,1,20.467836,True
+682,38860,"Portland-South Portland, ME",high_growth_low_startup,45,1,26.315789,True
+682,38860,"Portland-South Portland, ME",low_growth_high_startup,37,1,21.637427,True
+682,38860,"Portland-South Portland, ME",low_growth_low_startup,54,1,31.578947,True
+683,38900,"Portland-Vancouver-Hillsboro, OR-WA",high_growth_high_startup,64,1,57.142857,True
+683,38900,"Portland-Vancouver-Hillsboro, OR-WA",high_growth_low_startup,4,1,3.5714286,True
+683,38900,"Portland-Vancouver-Hillsboro, OR-WA",low_growth_high_startup,42,1,37.5,True
+683,38900,"Portland-Vancouver-Hillsboro, OR-WA",low_growth_low_startup,2,1,1.7857143,True
+685,38940,"Port St. Lucie, FL",high_growth_high_startup,124,1,66.666667,True
+685,38940,"Port St. Lucie, FL",high_growth_low_startup,9,1,4.8387097,True
+685,38940,"Port St. Lucie, FL",low_growth_high_startup,49,1,26.344086,True
+685,38940,"Port St. Lucie, FL",low_growth_low_startup,4,1,2.1505376,True
+689,39150,"Prescott Valley-Prescott, AZ",high_growth_high_startup,91,1,41.743119,True
+689,39150,"Prescott Valley-Prescott, AZ",high_growth_low_startup,37,1,16.972477,True
+689,39150,"Prescott Valley-Prescott, AZ",low_growth_high_startup,70,1,32.110092,True
+689,39150,"Prescott Valley-Prescott, AZ",low_growth_low_startup,20,1,9.1743119,True
+691,39300,"Providence-Warwick, RI-MA",high_growth_high_startup,28,1,17.391304,True
+691,39300,"Providence-Warwick, RI-MA",high_growth_low_startup,40,1,24.84472,True
+691,39300,"Providence-Warwick, RI-MA",low_growth_high_startup,39,1,24.223602,True
+691,39300,"Providence-Warwick, RI-MA",low_growth_low_startup,54,1,33.540373,True
+692,39340,"Provo-Orem-Lehi, UT",high_growth_high_startup,85,1,78.703704,True
+692,39340,"Provo-Orem-Lehi, UT",low_growth_high_startup,23,1,21.296296,True
+693,39380,"Pueblo, CO",high_growth_high_startup,53,1,26.903553,True
+693,39380,"Pueblo, CO",high_growth_low_startup,42,1,21.319797,True
+693,39380,"Pueblo, CO",low_growth_high_startup,52,1,26.395939,True
+693,39380,"Pueblo, CO",low_growth_low_startup,50,1,25.380711,True
+695,39460,"Punta Gorda, FL",high_growth_high_startup,108,1,51.923077,True
+695,39460,"Punta Gorda, FL",high_growth_low_startup,11,1,5.2884615,True
+695,39460,"Punta Gorda, FL",low_growth_high_startup,71,1,34.134615,True
+695,39460,"Punta Gorda, FL",low_growth_low_startup,18,1,8.6538462,True
+698,39540,"Racine-Mount Pleasant, WI",high_growth_high_startup,32,1,17.582418,True
+698,39540,"Racine-Mount Pleasant, WI",high_growth_low_startup,42,1,23.076923,True
+698,39540,"Racine-Mount Pleasant, WI",low_growth_high_startup,33,1,18.131868,True
+698,39540,"Racine-Mount Pleasant, WI",low_growth_low_startup,75,1,41.208791,True
+699,39580,"Raleigh-Cary, NC",high_growth_high_startup,133,1,78.698225,True
+699,39580,"Raleigh-Cary, NC",high_growth_low_startup,3,1,1.7751479,True
+699,39580,"Raleigh-Cary, NC",low_growth_high_startup,33,1,19.526627,True
+700,39660,"Rapid City, SD",high_growth_high_startup,35,1,24.822695,True
+700,39660,"Rapid City, SD",high_growth_low_startup,33,1,23.404255,True
+700,39660,"Rapid City, SD",low_growth_high_startup,37,1,26.241135,True
+700,39660,"Rapid City, SD",low_growth_low_startup,36,1,25.531915,True
+702,39740,"Reading, PA",high_growth_high_startup,26,1,11.607143,True
+702,39740,"Reading, PA",high_growth_low_startup,67,1,29.910714,True
+702,39740,"Reading, PA",low_growth_high_startup,33,1,14.732143,True
+702,39740,"Reading, PA",low_growth_low_startup,98,1,43.75,True
+704,39820,"Redding, CA",high_growth_high_startup,59,1,29.064039,True
+704,39820,"Redding, CA",high_growth_low_startup,47,1,23.152709,True
+704,39820,"Redding, CA",low_growth_high_startup,61,1,30.049261,True
+704,39820,"Redding, CA",low_growth_low_startup,36,1,17.73399,True
+706,39900,"Reno, NV",high_growth_high_startup,43,1,45.263158,True
+706,39900,"Reno, NV",high_growth_low_startup,16,1,16.842105,True
+706,39900,"Reno, NV",low_growth_high_startup,30,1,31.578947,True
+706,39900,"Reno, NV",low_growth_low_startup,6,1,6.3157895,True
+710,40060,"Richmond, VA",high_growth_high_startup,5,1,33.333333,False
+710,40060,"Richmond, VA",high_growth_low_startup,1,1,6.6666667,False
+710,40060,"Richmond, VA",low_growth_high_startup,7,1,46.666667,False
+710,40060,"Richmond, VA",low_growth_low_startup,2,1,13.333333,False
+714,40140,"Riverside-San Bernardino-Ontario, CA",high_growth_high_startup,154,1,66.956522,True
+714,40140,"Riverside-San Bernardino-Ontario, CA",low_growth_high_startup,75,1,32.608696,True
+714,40140,"Riverside-San Bernardino-Ontario, CA",low_growth_low_startup,1,1,0.43478261,True
+716,40220,"Roanoke, VA",high_growth_high_startup,1,1,2.3809524,False
+716,40220,"Roanoke, VA",high_growth_low_startup,8,1,19.047619,False
+716,40220,"Roanoke, VA",low_growth_high_startup,8,1,19.047619,False
+716,40220,"Roanoke, VA",low_growth_low_startup,25,1,59.52381,False
+719,40340,"Rochester, MN",high_growth_high_startup,17,1,14.049587,True
+719,40340,"Rochester, MN",high_growth_low_startup,30,1,24.793388,True
+719,40340,"Rochester, MN",low_growth_high_startup,16,1,13.22314,True
+719,40340,"Rochester, MN",low_growth_low_startup,58,1,47.933884,True
+720,40380,"Rochester, NY",high_growth_high_startup,24,1,16.107383,True
+720,40380,"Rochester, NY",high_growth_low_startup,28,1,18.791946,True
+720,40380,"Rochester, NY",low_growth_high_startup,49,1,32.885906,True
+720,40380,"Rochester, NY",low_growth_low_startup,48,1,32.214765,True
+721,40420,"Rockford, IL",high_growth_high_startup,17,1,9.7142857,True
+721,40420,"Rockford, IL",high_growth_low_startup,39,1,22.285714,True
+721,40420,"Rockford, IL",low_growth_high_startup,28,1,16,True
+721,40420,"Rockford, IL",low_growth_low_startup,91,1,52,True
+724,40580,"Rocky Mount, NC",high_growth_high_startup,12,1,9.2307692,True
+724,40580,"Rocky Mount, NC",high_growth_low_startup,32,1,24.615385,True
+724,40580,"Rocky Mount, NC",low_growth_high_startup,32,1,24.615385,True
+724,40580,"Rocky Mount, NC",low_growth_low_startup,54,1,41.538462,True
+726,40660,"Rome, GA",high_growth_high_startup,39,1,26.174497,True
+726,40660,"Rome, GA",high_growth_low_startup,26,1,17.449664,True
+726,40660,"Rome, GA",low_growth_high_startup,34,1,22.818792,True
+726,40660,"Rome, GA",low_growth_low_startup,50,1,33.557047,True
+734,40900,"Sacramento-Roseville-Folsom, CA",high_growth_high_startup,116,1,61.052632,True
+734,40900,"Sacramento-Roseville-Folsom, CA",high_growth_low_startup,4,1,2.1052632,True
+734,40900,"Sacramento-Roseville-Folsom, CA",low_growth_high_startup,68,1,35.789474,True
+734,40900,"Sacramento-Roseville-Folsom, CA",low_growth_low_startup,2,1,1.0526316,True
+736,40980,"Saginaw, MI",high_growth_high_startup,16,1,9.1954023,True
+736,40980,"Saginaw, MI",high_growth_low_startup,49,1,28.16092,True
+736,40980,"Saginaw, MI",low_growth_high_startup,26,1,14.942529,True
+736,40980,"Saginaw, MI",low_growth_low_startup,83,1,47.701149,True
+737,41060,"St. Cloud, MN",high_growth_high_startup,12,1,7.3170732,True
+737,41060,"St. Cloud, MN",high_growth_low_startup,65,1,39.634146,True
+737,41060,"St. Cloud, MN",low_growth_high_startup,15,1,9.1463415,True
+737,41060,"St. Cloud, MN",low_growth_low_startup,72,1,43.902439,True
+738,41100,"St. George, UT",high_growth_high_startup,156,1,73.239437,True
+738,41100,"St. George, UT",high_growth_low_startup,8,1,3.7558685,True
+738,41100,"St. George, UT",low_growth_high_startup,41,1,19.248826,True
+738,41100,"St. George, UT",low_growth_low_startup,8,1,3.7558685,True
+739,41140,"St. Joseph, MO-KS",high_growth_high_startup,3,1,4.4117647,False
+739,41140,"St. Joseph, MO-KS",high_growth_low_startup,17,1,25,False
+739,41140,"St. Joseph, MO-KS",low_growth_high_startup,6,1,8.8235294,False
+739,41140,"St. Joseph, MO-KS",low_growth_low_startup,42,1,61.764706,False
+740,41180,"St. Louis, MO-IL",high_growth_high_startup,5,1,15.625,False
+740,41180,"St. Louis, MO-IL",high_growth_low_startup,1,1,3.125,False
+740,41180,"St. Louis, MO-IL",low_growth_high_startup,19,1,59.375,False
+740,41180,"St. Louis, MO-IL",low_growth_low_startup,7,1,21.875,False
+743,41420,"Salem, OR",high_growth_high_startup,72,1,38.918919,True
+743,41420,"Salem, OR",high_growth_low_startup,31,1,16.756757,True
+743,41420,"Salem, OR",low_growth_high_startup,48,1,25.945946,True
+743,41420,"Salem, OR",low_growth_low_startup,34,1,18.378378,True
+745,41500,"Salinas, CA",high_growth_high_startup,61,1,25.630252,True
+745,41500,"Salinas, CA",high_growth_low_startup,56,1,23.529412,True
+745,41500,"Salinas, CA",low_growth_high_startup,62,1,26.05042,True
+745,41500,"Salinas, CA",low_growth_low_startup,59,1,24.789916,True
+746,41540,"Salisbury, MD",high_growth_high_startup,9,1,7.2,True
+746,41540,"Salisbury, MD",high_growth_low_startup,36,1,28.8,True
+746,41540,"Salisbury, MD",low_growth_high_startup,18,1,14.4,True
+746,41540,"Salisbury, MD",low_growth_low_startup,62,1,49.6,True
+747,41620,"Salt Lake City-Murray, UT",high_growth_high_startup,130,1,71.038251,True
+747,41620,"Salt Lake City-Murray, UT",high_growth_low_startup,6,1,3.2786885,True
+747,41620,"Salt Lake City-Murray, UT",low_growth_high_startup,42,1,22.95082,True
+747,41620,"Salt Lake City-Murray, UT",low_growth_low_startup,5,1,2.7322404,True
+748,41660,"San Angelo, TX",high_growth_high_startup,16,1,27.118644,False
+748,41660,"San Angelo, TX",high_growth_low_startup,15,1,25.423729,False
+748,41660,"San Angelo, TX",low_growth_high_startup,10,1,16.949153,False
+748,41660,"San Angelo, TX",low_growth_low_startup,18,1,30.508475,False
+749,41700,"San Antonio-New Braunfels, TX",high_growth_high_startup,89,1,69.53125,True
+749,41700,"San Antonio-New Braunfels, TX",high_growth_low_startup,1,1,0.78125,True
+749,41700,"San Antonio-New Braunfels, TX",low_growth_high_startup,38,1,29.6875,True
+750,41740,"San Diego-Chula Vista-Carlsbad, CA",high_growth_high_startup,136,1,58.369099,True
+750,41740,"San Diego-Chula Vista-Carlsbad, CA",high_growth_low_startup,2,1,0.8583691,True
+750,41740,"San Diego-Chula Vista-Carlsbad, CA",low_growth_high_startup,94,1,40.343348,True
+750,41740,"San Diego-Chula Vista-Carlsbad, CA",low_growth_low_startup,1,1,0.42918455,True
+752,41780,"Sandusky, OH",high_growth_high_startup,8,1,6.3492063,True
+752,41780,"Sandusky, OH",high_growth_low_startup,40,1,31.746032,True
+752,41780,"Sandusky, OH",low_growth_high_startup,11,1,8.7301587,True
+752,41780,"Sandusky, OH",low_growth_low_startup,67,1,53.174603,True
+754,41860,"San Francisco-Oakland-Fremont, CA",high_growth_high_startup,106,1,56.084656,True
+754,41860,"San Francisco-Oakland-Fremont, CA",high_growth_low_startup,9,1,4.7619048,True
+754,41860,"San Francisco-Oakland-Fremont, CA",low_growth_high_startup,64,1,33.862434,True
+754,41860,"San Francisco-Oakland-Fremont, CA",low_growth_low_startup,10,1,5.2910053,True
+755,41940,"San Jose-Sunnyvale-Santa Clara, CA",high_growth_high_startup,97,1,57.39645,True
+755,41940,"San Jose-Sunnyvale-Santa Clara, CA",high_growth_low_startup,11,1,6.5088757,True
+755,41940,"San Jose-Sunnyvale-Santa Clara, CA",low_growth_high_startup,53,1,31.360947,True
+755,41940,"San Jose-Sunnyvale-Santa Clara, CA",low_growth_low_startup,8,1,4.7337278,True
+757,42020,"San Luis Obispo-Paso Robles, CA",high_growth_high_startup,77,1,35,True
+757,42020,"San Luis Obispo-Paso Robles, CA",high_growth_low_startup,41,1,18.636364,True
+757,42020,"San Luis Obispo-Paso Robles, CA",low_growth_high_startup,65,1,29.545455,True
+757,42020,"San Luis Obispo-Paso Robles, CA",low_growth_low_startup,37,1,16.818182,True
+758,42100,"Santa Cruz-Watsonville, CA",high_growth_high_startup,51,1,25.373134,True
+758,42100,"Santa Cruz-Watsonville, CA",high_growth_low_startup,50,1,24.875622,True
+758,42100,"Santa Cruz-Watsonville, CA",low_growth_high_startup,58,1,28.855721,True
+758,42100,"Santa Cruz-Watsonville, CA",low_growth_low_startup,42,1,20.895522,True
+759,42140,"Santa Fe, NM",high_growth_high_startup,51,1,23.076923,True
+759,42140,"Santa Fe, NM",high_growth_low_startup,50,1,22.624434,True
+759,42140,"Santa Fe, NM",low_growth_high_startup,61,1,27.60181,True
+759,42140,"Santa Fe, NM",low_growth_low_startup,59,1,26.696833,True
+760,42200,"Santa Maria-Santa Barbara, CA",high_growth_high_startup,68,1,29.437229,True
+760,42200,"Santa Maria-Santa Barbara, CA",high_growth_low_startup,55,1,23.809524,True
+760,42200,"Santa Maria-Santa Barbara, CA",low_growth_high_startup,65,1,28.138528,True
+760,42200,"Santa Maria-Santa Barbara, CA",low_growth_low_startup,43,1,18.614719,True
+761,42220,"Santa Rosa-Petaluma, CA",high_growth_high_startup,80,1,35.39823,True
+761,42220,"Santa Rosa-Petaluma, CA",high_growth_low_startup,39,1,17.256637,True
+761,42220,"Santa Rosa-Petaluma, CA",low_growth_high_startup,68,1,30.088496,True
+761,42220,"Santa Rosa-Petaluma, CA",low_growth_low_startup,39,1,17.256637,True
+763,42340,"Savannah, GA",high_growth_high_startup,51,1,47.663551,True
+763,42340,"Savannah, GA",high_growth_low_startup,18,1,16.82243,True
+763,42340,"Savannah, GA",low_growth_high_startup,25,1,23.364486,True
+763,42340,"Savannah, GA",low_growth_low_startup,13,1,12.149533,True
+767,42540,"Scranton--Wilkes-Barre, PA",high_growth_high_startup,11,1,6.4327485,True
+767,42540,"Scranton--Wilkes-Barre, PA",high_growth_low_startup,55,1,32.163743,True
+767,42540,"Scranton--Wilkes-Barre, PA",low_growth_high_startup,19,1,11.111111,True
+767,42540,"Scranton--Wilkes-Barre, PA",low_growth_low_startup,86,1,50.292398,True
+770,42660,"Seattle-Tacoma-Bellevue, WA",high_growth_high_startup,143,1,61.373391,True
+770,42660,"Seattle-Tacoma-Bellevue, WA",high_growth_low_startup,6,1,2.5751073,True
+770,42660,"Seattle-Tacoma-Bellevue, WA",low_growth_high_startup,75,1,32.188841,True
+770,42660,"Seattle-Tacoma-Bellevue, WA",low_growth_low_startup,9,1,3.8626609,True
+771,42680,"Sebastian-Vero Beach-West Vero Corridor, FL",high_growth_high_startup,108,1,53.20197,True
+771,42680,"Sebastian-Vero Beach-West Vero Corridor, FL",high_growth_low_startup,21,1,10.344828,True
+771,42680,"Sebastian-Vero Beach-West Vero Corridor, FL",low_growth_high_startup,57,1,28.078818,True
+771,42680,"Sebastian-Vero Beach-West Vero Corridor, FL",low_growth_low_startup,17,1,8.3743842,True
+772,42700,"Sebring, FL",high_growth_high_startup,68,1,36.956522,True
+772,42700,"Sebring, FL",high_growth_low_startup,35,1,19.021739,True
+772,42700,"Sebring, FL",low_growth_high_startup,48,1,26.086957,True
+772,42700,"Sebring, FL",low_growth_low_startup,33,1,17.934783,True
+782,43100,"Sheboygan, WI",high_growth_high_startup,15,1,9.2592593,True
+782,43100,"Sheboygan, WI",high_growth_low_startup,56,1,34.567901,True
+782,43100,"Sheboygan, WI",low_growth_high_startup,27,1,16.666667,True
+782,43100,"Sheboygan, WI",low_growth_low_startup,64,1,39.506173,True
+787,43300,"Sherman-Denison, TX",high_growth_high_startup,75,1,36.585366,True
+787,43300,"Sherman-Denison, TX",high_growth_low_startup,30,1,14.634146,True
+787,43300,"Sherman-Denison, TX",low_growth_high_startup,66,1,32.195122,True
+787,43300,"Sherman-Denison, TX",low_growth_low_startup,34,1,16.585366,True
+789,43340,"Shreveport-Bossier City, LA",high_growth_high_startup,28,1,14.973262,True
+789,43340,"Shreveport-Bossier City, LA",high_growth_low_startup,29,1,15.508021,True
+789,43340,"Shreveport-Bossier City, LA",low_growth_high_startup,58,1,31.016043,True
+789,43340,"Shreveport-Bossier City, LA",low_growth_low_startup,72,1,38.502674,True
+791,43420,"Sierra Vista-Douglas, AZ",high_growth_high_startup,39,1,20.207254,True
+791,43420,"Sierra Vista-Douglas, AZ",high_growth_low_startup,39,1,20.207254,True
+791,43420,"Sierra Vista-Douglas, AZ",low_growth_high_startup,59,1,30.569948,True
+791,43420,"Sierra Vista-Douglas, AZ",low_growth_low_startup,56,1,29.015544,True
+794,43580,"Sioux City, IA-NE-SD",high_growth_high_startup,8,1,6.2015504,True
+794,43580,"Sioux City, IA-NE-SD",high_growth_low_startup,32,1,24.806202,True
+794,43580,"Sioux City, IA-NE-SD",low_growth_high_startup,17,1,13.178295,True
+794,43580,"Sioux City, IA-NE-SD",low_growth_low_startup,72,1,55.813953,True
+795,43620,"Sioux Falls, SD-MN",high_growth_high_startup,16,1,23.529412,False
+795,43620,"Sioux Falls, SD-MN",high_growth_low_startup,33,1,48.529412,False
+795,43620,"Sioux Falls, SD-MN",low_growth_high_startup,6,1,8.8235294,False
+795,43620,"Sioux Falls, SD-MN",low_growth_low_startup,13,1,19.117647,False
+796,43640,"Slidell-Mandeville-Covington, LA",high_growth_high_startup,115,1,52.036199,True
+796,43640,"Slidell-Mandeville-Covington, LA",high_growth_low_startup,28,1,12.669683,True
+796,43640,"Slidell-Mandeville-Covington, LA",low_growth_high_startup,59,1,26.696833,True
+796,43640,"Slidell-Mandeville-Covington, LA",low_growth_low_startup,19,1,8.5972851,True
+801,43780,"South Bend-Mishawaka, IN-MI",high_growth_high_startup,14,1,9.2715232,True
+801,43780,"South Bend-Mishawaka, IN-MI",high_growth_low_startup,59,1,39.072848,True
+801,43780,"South Bend-Mishawaka, IN-MI",low_growth_high_startup,17,1,11.258278,True
+801,43780,"South Bend-Mishawaka, IN-MI",low_growth_low_startup,61,1,40.397351,True
+803,43900,"Spartanburg, SC",high_growth_high_startup,30,1,22.38806,True
+803,43900,"Spartanburg, SC",high_growth_low_startup,49,1,36.567164,True
+803,43900,"Spartanburg, SC",low_growth_high_startup,23,1,17.164179,True
+803,43900,"Spartanburg, SC",low_growth_low_startup,32,1,23.880597,True
+807,44060,"Spokane-Spokane Valley, WA",high_growth_high_startup,67,1,38.728324,True
+807,44060,"Spokane-Spokane Valley, WA",high_growth_low_startup,27,1,15.606936,True
+807,44060,"Spokane-Spokane Valley, WA",low_growth_high_startup,50,1,28.901734,True
+807,44060,"Spokane-Spokane Valley, WA",low_growth_low_startup,29,1,16.763006,True
+808,44100,"Springfield, IL",high_growth_high_startup,8,1,6.3492063,True
+808,44100,"Springfield, IL",high_growth_low_startup,39,1,30.952381,True
+808,44100,"Springfield, IL",low_growth_high_startup,14,1,11.111111,True
+808,44100,"Springfield, IL",low_growth_low_startup,65,1,51.587302,True
+809,44140,"Springfield, MA",high_growth_high_startup,22,1,10.42654,True
+809,44140,"Springfield, MA",high_growth_low_startup,52,1,24.64455,True
+809,44140,"Springfield, MA",low_growth_high_startup,31,1,14.691943,True
+809,44140,"Springfield, MA",low_growth_low_startup,106,1,50.236967,True
+810,44180,"Springfield, MO",high_growth_high_startup,55,1,59.782609,True
+810,44180,"Springfield, MO",high_growth_low_startup,6,1,6.5217391,True
+810,44180,"Springfield, MO",low_growth_high_startup,24,1,26.086957,True
+810,44180,"Springfield, MO",low_growth_low_startup,7,1,7.6086957,True
+811,44220,"Springfield, OH",high_growth_high_startup,26,1,15.47619,True
+811,44220,"Springfield, OH",high_growth_low_startup,34,1,20.238095,True
+811,44220,"Springfield, OH",low_growth_high_startup,29,1,17.261905,True
+811,44220,"Springfield, OH",low_growth_low_startup,79,1,47.02381,True
+813,44300,"State College, PA",high_growth_high_startup,36,1,17.910448,True
+813,44300,"State College, PA",high_growth_low_startup,47,1,23.383085,True
+813,44300,"State College, PA",low_growth_high_startup,40,1,19.900498,True
+813,44300,"State College, PA",low_growth_low_startup,78,1,38.80597,True
+815,44420,"Staunton-Stuarts Draft, VA",high_growth_high_startup,20,1,16.806723,True
+815,44420,"Staunton-Stuarts Draft, VA",high_growth_low_startup,34,1,28.571429,True
+815,44420,"Staunton-Stuarts Draft, VA",low_growth_high_startup,22,1,18.487395,True
+815,44420,"Staunton-Stuarts Draft, VA",low_growth_low_startup,43,1,36.134454,True
+822,44700,"Stockton-Lodi, CA",high_growth_high_startup,102,1,44.736842,True
+822,44700,"Stockton-Lodi, CA",high_growth_low_startup,37,1,16.22807,True
+822,44700,"Stockton-Lodi, CA",low_growth_high_startup,61,1,26.754386,True
+822,44700,"Stockton-Lodi, CA",low_growth_low_startup,28,1,12.280702,True
+827,44940,"Sumter, SC",high_growth_high_startup,34,1,19.767442,True
+827,44940,"Sumter, SC",high_growth_low_startup,48,1,27.906977,True
+827,44940,"Sumter, SC",low_growth_high_startup,39,1,22.674419,True
+827,44940,"Sumter, SC",low_growth_low_startup,51,1,29.651163,True
+831,45060,"Syracuse, NY",high_growth_high_startup,14,1,8.5365854,True
+831,45060,"Syracuse, NY",high_growth_low_startup,30,1,18.292683,True
+831,45060,"Syracuse, NY",low_growth_high_startup,32,1,19.512195,True
+831,45060,"Syracuse, NY",low_growth_low_startup,88,1,53.658537,True
+834,45220,"Tallahassee, FL",high_growth_high_startup,49,1,43.75,True
+834,45220,"Tallahassee, FL",high_growth_low_startup,19,1,16.964286,True
+834,45220,"Tallahassee, FL",low_growth_high_startup,36,1,32.142857,True
+834,45220,"Tallahassee, FL",low_growth_low_startup,8,1,7.1428571,True
+835,45300,"Tampa-St. Petersburg-Clearwater, FL",high_growth_high_startup,160,1,73.394495,True
+835,45300,"Tampa-St. Petersburg-Clearwater, FL",low_growth_high_startup,57,1,26.146789,True
+835,45300,"Tampa-St. Petersburg-Clearwater, FL",low_growth_low_startup,1,1,0.4587156,True
+838,45460,"Terre Haute, IN",high_growth_high_startup,5,1,6.5789474,False
+838,45460,"Terre Haute, IN",high_growth_low_startup,24,1,31.578947,False
+838,45460,"Terre Haute, IN",low_growth_high_startup,7,1,9.2105263,False
+838,45460,"Terre Haute, IN",low_growth_low_startup,40,1,52.631579,False
+839,45500,"Texarkana, TX-AR",high_growth_high_startup,9,1,11.392405,False
+839,45500,"Texarkana, TX-AR",high_growth_low_startup,17,1,21.518987,False
+839,45500,"Texarkana, TX-AR",low_growth_high_startup,18,1,22.78481,False
+839,45500,"Texarkana, TX-AR",low_growth_low_startup,35,1,44.303797,False
+846,45780,"Toledo, OH",high_growth_high_startup,3,1,2.0979021,True
+846,45780,"Toledo, OH",high_growth_low_startup,53,1,37.062937,True
+846,45780,"Toledo, OH",low_growth_high_startup,15,1,10.48951,True
+846,45780,"Toledo, OH",low_growth_low_startup,72,1,50.34965,True
+847,45820,"Topeka, KS",high_growth_low_startup,18,1,40.909091,False
+847,45820,"Topeka, KS",low_growth_high_startup,3,1,6.8181818,False
+847,45820,"Topeka, KS",low_growth_low_startup,23,1,52.272727,False
+850,45900,"Traverse City, MI",high_growth_high_startup,31,1,24.8,True
+850,45900,"Traverse City, MI",high_growth_low_startup,45,1,36,True
+850,45900,"Traverse City, MI",low_growth_high_startup,19,1,15.2,True
+850,45900,"Traverse City, MI",low_growth_low_startup,30,1,24,True
+851,45940,"Trenton-Princeton, NJ",high_growth_high_startup,62,1,28.837209,True
+851,45940,"Trenton-Princeton, NJ",high_growth_low_startup,37,1,17.209302,True
+851,45940,"Trenton-Princeton, NJ",low_growth_high_startup,67,1,31.162791,True
+851,45940,"Trenton-Princeton, NJ",low_growth_low_startup,49,1,22.790698,True
+854,46060,"Tucson, AZ",high_growth_high_startup,72,1,33.179724,True
+854,46060,"Tucson, AZ",high_growth_low_startup,29,1,13.364055,True
+854,46060,"Tucson, AZ",low_growth_high_startup,82,1,37.788018,True
+854,46060,"Tucson, AZ",low_growth_low_startup,34,1,15.668203,True
+856,46140,"Tulsa, OK",high_growth_high_startup,16,1,27.118644,False
+856,46140,"Tulsa, OK",high_growth_low_startup,12,1,20.338983,False
+856,46140,"Tulsa, OK",low_growth_high_startup,22,1,37.288136,False
+856,46140,"Tulsa, OK",low_growth_low_startup,9,1,15.254237,False
+858,46220,"Tuscaloosa, AL",high_growth_high_startup,11,1,18.644068,False
+858,46220,"Tuscaloosa, AL",high_growth_low_startup,22,1,37.288136,False
+858,46220,"Tuscaloosa, AL",low_growth_high_startup,9,1,15.254237,False
+858,46220,"Tuscaloosa, AL",low_growth_low_startup,17,1,28.813559,False
+859,46300,"Twin Falls, ID",high_growth_high_startup,47,1,32.867133,True
+859,46300,"Twin Falls, ID",high_growth_low_startup,32,1,22.377622,True
+859,46300,"Twin Falls, ID",low_growth_high_startup,43,1,30.06993,True
+859,46300,"Twin Falls, ID",low_growth_low_startup,21,1,14.685315,True
+860,46340,"Tyler, TX",high_growth_high_startup,75,1,33.783784,True
+860,46340,"Tyler, TX",high_growth_low_startup,35,1,15.765766,True
+860,46340,"Tyler, TX",low_growth_high_startup,78,1,35.135135,True
+860,46340,"Tyler, TX",low_growth_low_startup,34,1,15.315315,True
+864,46520,"Urban Honolulu, HI",high_growth_high_startup,45,1,20,True
+864,46520,"Urban Honolulu, HI",high_growth_low_startup,46,1,20.444444,True
+864,46520,"Urban Honolulu, HI",low_growth_high_startup,48,1,21.333333,True
+864,46520,"Urban Honolulu, HI",low_growth_low_startup,86,1,38.222222,True
+865,46540,"Utica-Rome, NY",high_growth_high_startup,21,1,9.8130841,True
+865,46540,"Utica-Rome, NY",high_growth_low_startup,35,1,16.35514,True
+865,46540,"Utica-Rome, NY",low_growth_high_startup,54,1,25.233645,True
+865,46540,"Utica-Rome, NY",low_growth_low_startup,104,1,48.598131,True
+868,46660,"Valdosta, GA",high_growth_low_startup,2,1,40,False
+868,46660,"Valdosta, GA",low_growth_high_startup,1,1,20,False
+868,46660,"Valdosta, GA",low_growth_low_startup,2,1,40,False
+869,46700,"Vallejo, CA",high_growth_high_startup,71,1,31.981982,True
+869,46700,"Vallejo, CA",high_growth_low_startup,48,1,21.621622,True
+869,46700,"Vallejo, CA",low_growth_high_startup,74,1,33.333333,True
+869,46700,"Vallejo, CA",low_growth_low_startup,29,1,13.063063,True
+875,47020,"Victoria, TX",high_growth_high_startup,18,1,24.324324,False
+875,47020,"Victoria, TX",high_growth_low_startup,19,1,25.675676,False
+875,47020,"Victoria, TX",low_growth_high_startup,13,1,17.567568,False
+875,47020,"Victoria, TX",low_growth_low_startup,24,1,32.432432,False
+878,47220,"Vineland, NJ",high_growth_high_startup,31,1,19.018405,True
+878,47220,"Vineland, NJ",high_growth_low_startup,36,1,22.08589,True
+878,47220,"Vineland, NJ",low_growth_high_startup,41,1,25.153374,True
+878,47220,"Vineland, NJ",low_growth_low_startup,55,1,33.742331,True
+880,47260,"Virginia Beach-Chesapeake-Norfolk, VA-NC",high_growth_high_startup,4,1,19.047619,False
+880,47260,"Virginia Beach-Chesapeake-Norfolk, VA-NC",low_growth_high_startup,17,1,80.952381,False
+881,47300,"Visalia, CA",high_growth_high_startup,69,1,32.394366,True
+881,47300,"Visalia, CA",high_growth_low_startup,47,1,22.065728,True
+881,47300,"Visalia, CA",low_growth_high_startup,64,1,30.046948,True
+881,47300,"Visalia, CA",low_growth_low_startup,33,1,15.492958,True
+883,47380,"Waco, TX",high_growth_high_startup,31,1,33.695652,True
+883,47380,"Waco, TX",high_growth_low_startup,22,1,23.913043,True
+883,47380,"Waco, TX",low_growth_high_startup,20,1,21.73913,True
+883,47380,"Waco, TX",low_growth_low_startup,19,1,20.652174,True
+885,47460,"Walla Walla, WA",high_growth_high_startup,29,1,20.714286,True
+885,47460,"Walla Walla, WA",high_growth_low_startup,30,1,21.428571,True
+885,47460,"Walla Walla, WA",low_growth_high_startup,30,1,21.428571,True
+885,47460,"Walla Walla, WA",low_growth_low_startup,51,1,36.428571,True
+887,47580,"Warner Robins, GA",high_growth_high_startup,51,1,34.931507,True
+887,47580,"Warner Robins, GA",high_growth_low_startup,27,1,18.493151,True
+887,47580,"Warner Robins, GA",low_growth_high_startup,41,1,28.082192,True
+887,47580,"Warner Robins, GA",low_growth_low_startup,27,1,18.493151,True
+893,47900,"Washington-Arlington-Alexandria, DC-VA-MD-WV",high_growth_high_startup,10,1,34.482759,False
+893,47900,"Washington-Arlington-Alexandria, DC-VA-MD-WV",low_growth_high_startup,19,1,65.517241,False
+896,47940,"Waterloo-Cedar Falls, IA",high_growth_high_startup,8,1,8.0808081,True
+896,47940,"Waterloo-Cedar Falls, IA",high_growth_low_startup,26,1,26.262626,True
+896,47940,"Waterloo-Cedar Falls, IA",low_growth_high_startup,3,1,3.030303,True
+896,47940,"Waterloo-Cedar Falls, IA",low_growth_low_startup,62,1,62.626263,True
+899,48060,"Watertown-Fort Drum, NY",high_growth_high_startup,41,1,21.354167,True
+899,48060,"Watertown-Fort Drum, NY",high_growth_low_startup,38,1,19.791667,True
+899,48060,"Watertown-Fort Drum, NY",low_growth_high_startup,52,1,27.083333,True
+899,48060,"Watertown-Fort Drum, NY",low_growth_low_startup,61,1,31.770833,True
+900,48140,"Wausau, WI",high_growth_high_startup,26,1,14.606742,True
+900,48140,"Wausau, WI",high_growth_low_startup,48,1,26.966292,True
+900,48140,"Wausau, WI",low_growth_high_startup,26,1,14.606742,True
+900,48140,"Wausau, WI",low_growth_low_startup,78,1,43.820225,True
+904,48260,"Weirton-Steubenville, WV-OH",high_growth_high_startup,3,1,4.1666667,False
+904,48260,"Weirton-Steubenville, WV-OH",high_growth_low_startup,10,1,13.888889,False
+904,48260,"Weirton-Steubenville, WV-OH",low_growth_high_startup,13,1,18.055556,False
+904,48260,"Weirton-Steubenville, WV-OH",low_growth_low_startup,46,1,63.888889,False
+905,48300,"Wenatchee-East Wenatchee, WA",high_growth_high_startup,65,1,38.690476,True
+905,48300,"Wenatchee-East Wenatchee, WA",high_growth_low_startup,32,1,19.047619,True
+905,48300,"Wenatchee-East Wenatchee, WA",low_growth_high_startup,32,1,19.047619,True
+905,48300,"Wenatchee-East Wenatchee, WA",low_growth_low_startup,39,1,23.214286,True
+907,48540,"Wheeling, WV-OH",high_growth_high_startup,3,1,3.030303,True
+907,48540,"Wheeling, WV-OH",high_growth_low_startup,21,1,21.212121,True
+907,48540,"Wheeling, WV-OH",low_growth_high_startup,11,1,11.111111,True
+907,48540,"Wheeling, WV-OH",low_growth_low_startup,64,1,64.646465,True
+909,48620,"Wichita, KS",high_growth_high_startup,32,1,23.703704,True
+909,48620,"Wichita, KS",high_growth_low_startup,24,1,17.777778,True
+909,48620,"Wichita, KS",low_growth_high_startup,34,1,25.185185,True
+909,48620,"Wichita, KS",low_growth_low_startup,45,1,33.333333,True
+910,48660,"Wichita Falls, TX",high_growth_high_startup,11,1,14.285714,False
+910,48660,"Wichita Falls, TX",high_growth_low_startup,13,1,16.883117,False
+910,48660,"Wichita Falls, TX",low_growth_high_startup,20,1,25.974026,False
+910,48660,"Wichita Falls, TX",low_growth_low_startup,33,1,42.857143,False
+911,48680,"Wildwood-The Villages, FL",high_growth_high_startup,101,1,59.411765,True
+911,48680,"Wildwood-The Villages, FL",high_growth_low_startup,28,1,16.470588,True
+911,48680,"Wildwood-The Villages, FL",low_growth_high_startup,29,1,17.058824,True
+911,48680,"Wildwood-The Villages, FL",low_growth_low_startup,12,1,7.0588235,True
+912,48700,"Williamsport, PA",high_growth_high_startup,29,1,15.76087,True
+912,48700,"Williamsport, PA",high_growth_low_startup,45,1,24.456522,True
+912,48700,"Williamsport, PA",low_growth_high_startup,23,1,12.5,True
+912,48700,"Williamsport, PA",low_growth_low_startup,87,1,47.282609,True
+915,48900,"Wilmington, NC",high_growth_high_startup,97,1,62.580645,True
+915,48900,"Wilmington, NC",high_growth_low_startup,16,1,10.322581,True
+915,48900,"Wilmington, NC",low_growth_high_startup,33,1,21.290323,True
+915,48900,"Wilmington, NC",low_growth_low_startup,9,1,5.8064516,True
+919,49020,"Winchester, VA-WV",high_growth_high_startup,13,1,20.967742,False
+919,49020,"Winchester, VA-WV",high_growth_low_startup,21,1,33.870968,False
+919,49020,"Winchester, VA-WV",low_growth_high_startup,18,1,29.032258,False
+919,49020,"Winchester, VA-WV",low_growth_low_startup,10,1,16.129032,False
+922,49180,"Winston-Salem, NC",high_growth_high_startup,30,1,26.086957,True
+922,49180,"Winston-Salem, NC",high_growth_low_startup,28,1,24.347826,True
+922,49180,"Winston-Salem, NC",low_growth_high_startup,29,1,25.217391,True
+922,49180,"Winston-Salem, NC",low_growth_low_startup,28,1,24.347826,True
+926,49340,"Worcester, MA",high_growth_high_startup,59,1,25.652174,True
+926,49340,"Worcester, MA",high_growth_low_startup,46,1,20,True
+926,49340,"Worcester, MA",low_growth_high_startup,52,1,22.608696,True
+926,49340,"Worcester, MA",low_growth_low_startup,73,1,31.73913,True
+928,49420,"Yakima, WA",high_growth_high_startup,54,1,24.324324,True
+928,49420,"Yakima, WA",high_growth_low_startup,59,1,26.576577,True
+928,49420,"Yakima, WA",low_growth_high_startup,59,1,26.576577,True
+928,49420,"Yakima, WA",low_growth_low_startup,50,1,22.522523,True
+930,49620,"York-Hanover, PA",high_growth_high_startup,28,1,12.844037,True
+930,49620,"York-Hanover, PA",high_growth_low_startup,60,1,27.522936,True
+930,49620,"York-Hanover, PA",low_growth_high_startup,35,1,16.055046,True
+930,49620,"York-Hanover, PA",low_growth_low_startup,95,1,43.577982,True
+931,49660,"Youngstown-Warren, OH",high_growth_high_startup,13,1,6.2200957,True
+931,49660,"Youngstown-Warren, OH",high_growth_low_startup,45,1,21.5311,True
+931,49660,"Youngstown-Warren, OH",low_growth_high_startup,31,1,14.832536,True
+931,49660,"Youngstown-Warren, OH",low_growth_low_startup,120,1,57.416268,True
+932,49700,"Yuba City, CA",high_growth_high_startup,53,1,35.099338,True
+932,49700,"Yuba City, CA",high_growth_low_startup,28,1,18.543046,True
+932,49700,"Yuba City, CA",low_growth_high_startup,39,1,25.827815,True
+932,49700,"Yuba City, CA",low_growth_low_startup,31,1,20.529801,True
+933,49740,"Yuma, AZ",high_growth_high_startup,56,1,27.45098,True
+933,49740,"Yuma, AZ",high_growth_low_startup,56,1,27.45098,True
+933,49740,"Yuma, AZ",low_growth_high_startup,55,1,26.960784,True
+933,49740,"Yuma, AZ",low_growth_low_startup,37,1,18.137255,True
