@@ -1,0 +1,61 @@
+variable,grouping,group_value,group_n,missing_count,missing_pct,median_group_missing_pct
+startup_rate_lag1,sector,11,1206,510,42.288557,14.467983
+startup_rate_lag1,sector,21,1443,407,28.205128,14.467983
+startup_rate_lag1,sector,51,2891,805,27.845036,14.467983
+startup_rate_lag1,sector,55,2006,518,25.822532,14.467983
+startup_rate_lag1,sector,22,1690,435,25.739645,14.467983
+startup_rate_lag1,msa,"Eagle Pass, TX",122,39,31.967213,12.5
+startup_rate_lag1,msa,"Lewiston, ID-WA",112,33,29.464286,12.5
+startup_rate_lag1,msa,"Weirton-Steubenville, WV-OH",83,24,28.915663,12.5
+startup_rate_lag1,msa,"Elmira, NY",162,46,28.395062,12.5
+startup_rate_lag1,msa,"Walla Walla, WA",157,42,26.751592,12.5
+employment_growth,sector,11,1206,174,14.427861,10.473373
+employment_growth,sector,54,3643,493,13.532803,10.473373
+employment_growth,sector,56,3762,455,12.094631,10.473373
+employment_growth,sector,42,3053,365,11.955454,10.473373
+employment_growth,sector,48-49,2916,341,11.694102,10.473373
+employment_growth,msa,"Knoxville, TN",58,20,34.482759,9.4879733
+employment_growth,msa,"Chattanooga, TN-GA",65,22,33.846154,9.4879733
+employment_growth,msa,"Tulsa, OK",84,25,29.761905,9.4879733
+employment_growth,msa,"Louisville/Jefferson County, KY-IN",56,16,28.571429,9.4879733
+employment_growth,msa,"Denver-Aurora-Centennial, CO",86,24,27.906977,9.4879733
+acs_population_growth,sector,11,1206,165,13.681592,12.700792
+acs_population_growth,sector,62,3448,471,13.660093,12.700792
+acs_population_growth,sector,54,3643,485,13.313203,12.700792
+acs_population_growth,sector,72,4273,568,13.292769,12.700792
+acs_population_growth,sector,51,2891,379,13.109651,12.700792
+acs_population_growth,msa,"Amherst Town-Northampton, MA",233,233,100,7.1771875
+acs_population_growth,msa,"Bozeman, MT",236,236,100,7.1771875
+acs_population_growth,msa,"Cleveland, OH",207,207,100,7.1771875
+acs_population_growth,msa,"Eagle Pass, TX",122,122,100,7.1771875
+acs_population_growth,msa,"Helena, MT",110,110,100,7.1771875
+median_household_income,sector,62,3448,235,6.8155452,5.5821372
+median_household_income,sector,11,1206,79,6.5505804,5.5821372
+median_household_income,sector,55,2006,122,6.0817547,5.5821372
+median_household_income,sector,72,4273,255,5.9677042,5.5821372
+median_household_income,sector,51,2891,171,5.9149083,5.5821372
+median_household_income,msa,"Amherst Town-Northampton, MA",233,218,93.562232,0
+median_household_income,msa,"Bozeman, MT",236,220,93.220339,0
+median_household_income,msa,"Kiryas Joel-Poughkeepsie-Newburgh, NY",221,206,93.21267,0
+median_household_income,msa,"Minot, ND",58,54,93.103448,0
+median_household_income,msa,"Traverse City, MI",143,133,93.006993,0
+cbp_employment,sector,22,1690,540,31.952663,7.5008189
+cbp_employment,sector,11,1206,361,29.933665,7.5008189
+cbp_employment,sector,21,1443,320,22.176022,7.5008189
+cbp_employment,sector,55,2006,378,18.84347,7.5008189
+cbp_employment,sector,51,2891,423,14.631615,7.5008189
+cbp_employment,msa,"El Paso, TX",53,29,54.716981,7.6388889
+cbp_employment,msa,"Idaho Falls, ID",87,38,43.678161,7.6388889
+cbp_employment,msa,"Cape Girardeau, MO-IL",59,25,42.372881,7.6388889
+cbp_employment,msa,"Minot, ND",58,24,41.37931,7.6388889
+cbp_employment,msa,"Parkersburg-Vienna, WV",68,26,38.235294,7.6388889
+cbp_establishments,sector,22,1690,540,31.952663,7.5008189
+cbp_establishments,sector,11,1206,361,29.933665,7.5008189
+cbp_establishments,sector,21,1443,320,22.176022,7.5008189
+cbp_establishments,sector,55,2006,378,18.84347,7.5008189
+cbp_establishments,sector,51,2891,423,14.631615,7.5008189
+cbp_establishments,msa,"El Paso, TX",53,29,54.716981,7.6388889
+cbp_establishments,msa,"Idaho Falls, ID",87,38,43.678161,7.6388889
+cbp_establishments,msa,"Cape Girardeau, MO-IL",59,25,42.372881,7.6388889
+cbp_establishments,msa,"Minot, ND",58,24,41.37931,7.6388889
+cbp_establishments,msa,"Parkersburg-Vienna, WV",68,26,38.235294,7.6388889

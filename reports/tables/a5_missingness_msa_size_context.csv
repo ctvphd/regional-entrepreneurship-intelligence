@@ -1,0 +1,7 @@
+variable,msa_count,spearman_population_missingness,lower_population_tercile_missing_pct,middle_population_tercile_missing_pct,upper_population_tercile_missing_pct,notes
+startup_rate_lag1,366,-0.78141106,18.534808,12.735992,9.4583748,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows
+employment_growth,366,0.080947815,11.109196,11.200989,11.821089,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows
+acs_population_growth,366,-0.12276779,17.403022,10.638522,9.7270913,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows
+median_household_income,366,-0.23273041,10.179407,3.496011,2.5571391,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows
+cbp_employment,366,0.073852667,10.283979,9.9966026,11.73367,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows
+cbp_establishments,366,0.073852667,10.283979,9.9966026,11.73367,MSA-level descriptive check; only MSAs with observed ACS population and at least 50 panel rows

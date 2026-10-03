@@ -1,0 +1,25 @@
+variable,rule,flagged_count,notes
+firm_startups,negative_value,0,Nonnegative level/count expected; review source and definition
+establishment_entry,negative_value,0,Nonnegative level/count expected; review source and definition
+startup_job_creation,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_employment,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_establishments,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_payroll,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_average_wage,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_total_annual_wages_nominal,negative_value,0,Nonnegative level/count expected; review source and definition
+qcew_average_annual_pay_nominal,negative_value,0,Nonnegative level/count expected; review source and definition
+acs_population,negative_value,0,Nonnegative level/count expected; review source and definition
+median_household_income,negative_value,0,Nonnegative level/count expected; review source and definition
+cbp_establishments,negative_value,0,Nonnegative level/count expected; review source and definition
+cbp_employment,negative_value,0,Nonnegative level/count expected; review source and definition
+cbp_annual_payroll,negative_value,0,Nonnegative level/count expected; review source and definition
+cbp_first_quarter_payroll,negative_value,0,Nonnegative level/count expected; review source and definition
+startup_rate,outside_0_100,0,Rate outside 0 to 100; review source definition and denominator before calling invalid
+educational_attainment_pct,outside_0_100,0,Rate outside 0 to 100; review source definition and denominator before calling invalid
+labor_force_participation_pct,outside_0_100,0,Rate outside 0 to 100; review source definition and denominator before calling invalid
+unemployment_rate,outside_0_100,0,Rate outside 0 to 100; review source definition and denominator before calling invalid
+establishment_entry_rate,outside_0_100,2,Rate outside 0 to 100; review source definition and denominator before calling invalid
+employment_growth,nonfinite_growth,0,Infinite/NaN numeric growth values require review; large finite values are not automatically invalid
+establishment_growth,nonfinite_growth,0,Infinite/NaN numeric growth values require review; large finite values are not automatically invalid
+payroll_growth,nonfinite_growth,0,Infinite/NaN numeric growth values require review; large finite values are not automatically invalid
+wage_growth,nonfinite_growth,0,Infinite/NaN numeric growth values require review; large finite values are not automatically invalid

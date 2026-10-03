@@ -260,3 +260,24 @@ retired compatibility columns were not mistaken for active analysis fields.
 The schema, test suite, docs, and read-only production checks were reviewed
 against the repository's existing A4 definitions. No unsupported correction
 or rejected suggestion is claimed.
+
+## Assignment 5.2 Descriptive Statistics And Missingness
+
+AI assistance implemented reusable non-destructive numeric, percentile,
+missingness, structural-lag, distribution, outlier, and plausibility summaries;
+added a reproducible runner and limited Matplotlib diagnostics; and drafted
+the A5.2 report from the production panel. The student-directed choices were
+to follow the existing A5.1 variable tiers; preserve source values and
+classify missingness only where panel structure or source flags support a
+reason; treat extreme growth as a review signal rather than an error; keep
+CBP supporting; limit visuals to four; and stop before A5.3/A5.4 or any
+target/model work. Matplotlib was added as a project dependency because the
+requested figures must be reproducible.
+
+Review corrected two implementation assumptions before final outputs: ACS
+lag availability is checked at MSA-year rather than MSA-industry-year grain,
+and a NULL CBP coverage flag remains unknown instead of being treated as
+incomplete. A denominator alias mismatch and a Matplotlib API change were
+also caught by the first workflow run and corrected. Unit tests and the
+rerun verified the corrections; no raw or analytical source values were
+modified.

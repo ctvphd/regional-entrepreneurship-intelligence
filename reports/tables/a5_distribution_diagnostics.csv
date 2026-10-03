@@ -1,0 +1,11 @@
+variable,count,missing_count,skewness,excess_kurtosis,min,p01,p99,max,iqr_outlier_count,three_sd_count,zero_count,negative_count,nonfinite_count,notes
+startup_rate,63577,0,1.1786751,9.6689313,0,0,16.981132,80,1025,479,6475,0,0,moderately skewed; heavy-tailed screening signal; zero-concentrated; bounded percentage/rate; observed within 0-100 review range
+employment_growth,57109,6468,4.7715861,120.07082,-0.84995252,-0.23474041,0.25461303,3.4482759,5000,910,315,19973,0,highly skewed; heavy-tailed screening signal; includes negative values; interpretation depends on measure
+establishment_growth,57109,6468,45.419429,3771.1716,-0.95288086,-0.12903226,0.21320314,15.950207,4039,185,3649,18217,0,highly skewed; heavy-tailed screening signal; zero-concentrated; includes negative values; interpretation depends on measure
+payroll_growth,57109,6468,31.007777,3116.7993,-0.82431015,-0.22494938,0.36367072,14.933861,4792,571,0,10896,0,highly skewed; heavy-tailed screening signal; includes negative values; interpretation depends on measure
+wage_growth,57109,6468,26.96265,2202.1789,-0.72800694,-0.11278317,0.21547645,6.5782947,4022,600,16,8626,0,highly skewed; heavy-tailed screening signal; includes negative values; interpretation depends on measure
+acs_population_growth,55515,8062,20.058451,858.64726,-0.69476897,-0.058297712,0.10061856,2.0168738,2685,627,0,12676,0,highly skewed; heavy-tailed screening signal; includes negative values; interpretation depends on measure
+median_household_income,60039,3538,1.352656,3.3847113,31264,37665,98180,157444,1825,749,0,0,0,moderately skewed; heavy-tailed screening signal
+unemployment_rate,60039,3538,0.90831704,0.77906277,2.1,3,14.9,18.5,1149,573,0,0,0,roughly symmetric by skewness; bounded percentage/rate; observed within 0-100 review range
+educational_attainment_pct,60039,3538,0.79590609,0.61799006,11.8,13.3,52.8,63.9,1074,431,0,0,0,roughly symmetric by skewness; bounded percentage/rate; observed within 0-100 review range
+labor_force_participation_pct,60039,3538,-0.74922047,1.9738412,25.1,45,72.9,75.9,1490,736,0,0,0,roughly symmetric by skewness; bounded percentage/rate; observed within 0-100 review range

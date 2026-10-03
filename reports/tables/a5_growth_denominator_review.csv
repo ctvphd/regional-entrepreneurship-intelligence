@@ -1,0 +1,5 @@
+growth_variable,finite_observation_count,absolute_growth_p99,top_one_pct_count,top_one_pct_missing_prior_denominator,prior_denominator_p10_all_positive,top_one_pct_prior_denominator_median,top_one_pct_share_bottom_decile_denominator,top_one_pct_nonpositive_prior_denominator,missing_growth_count,missing_growth_prior_denominator_zero,missing_growth_prior_denominator_negative,missing_growth_prior_denominator_unavailable
+employment_growth,57109,0.32967096,572,0,524,656,0.46678322,0,6468,0,0,6468
+establishment_growth,57109,0.25,582,0,49,52,0.48969072,0,6468,0,0,6468
+payroll_growth,57109,0.40470223,572,0,20152068,34545042,0.4020979,0,6468,0,0,6468
+wage_growth,57109,0.23606742,572,0,21959.8,51219,0.097902098,0,6468,0,0,6468

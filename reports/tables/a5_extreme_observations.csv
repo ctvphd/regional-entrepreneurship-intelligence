@@ -1,0 +1,61 @@
+variable,tail,value,cbsa_code,cbsa_name,sector_code,sector_title,year
+startup_rate,lowest,0,10180,"Abilene, TX",11,"Agriculture, Forestry, Fishing and Hunting",2010
+startup_rate,lowest,0,10180,"Abilene, TX",11,"Agriculture, Forestry, Fishing and Hunting",2011
+startup_rate,lowest,0,10180,"Abilene, TX",11,"Agriculture, Forestry, Fishing and Hunting",2012
+startup_rate,highest,80,13020,"Bay City, MI",11,"Agriculture, Forestry, Fishing and Hunting",2015
+startup_rate,highest,75,21820,"Fairbanks-College, AK",11,"Agriculture, Forestry, Fishing and Hunting",2020
+startup_rate,highest,62.903226,33220,"Midland, MI",51,Information,2014
+employment_growth,lowest,-0.84995252,48680,"Wildwood-The Villages, FL",71,"Arts, Entertainment, and Recreation",2012
+employment_growth,lowest,-0.82985628,15500,"Burlington, NC",55,Management of Companies and Enterprises,2013
+employment_growth,lowest,-0.81054166,20940,"El Centro, CA",81,Other Services (except Public Administration),2013
+employment_growth,highest,3.4482759,30340,"Lewiston-Auburn, ME",55,Management of Companies and Enterprises,2014
+employment_growth,highest,2.64,48680,"Wildwood-The Villages, FL",71,"Arts, Entertainment, and Recreation",2021
+employment_growth,highest,2.4524496,42020,"San Luis Obispo-Paso Robles, CA",61,Educational Services,2018
+establishment_growth,lowest,-0.95288086,20940,"El Centro, CA",81,Other Services (except Public Administration),2013
+establishment_growth,lowest,-0.91008689,32900,"Merced, CA",81,Other Services (except Public Administration),2013
+establishment_growth,lowest,-0.90965251,25260,"Hanford-Corcoran, CA",81,Other Services (except Public Administration),2013
+establishment_growth,highest,15.950207,20940,"El Centro, CA",62,Health Care and Social Assistance,2013
+establishment_growth,highest,7.9505376,49420,"Yakima, WA",62,Health Care and Social Assistance,2013
+establishment_growth,highest,5.917168,23420,"Fresno, CA",62,Health Care and Social Assistance,2013
+payroll_growth,lowest,-0.82431015,24500,"Great Falls, MT",21,"Mining, Quarrying, and Oil and Gas Extraction",2018
+payroll_growth,lowest,-0.77510144,30140,"Lebanon, PA",51,Information,2020
+payroll_growth,lowest,-0.76704106,26380,"Houma-Bayou Cane-Thibodaux, LA",55,Management of Companies and Enterprises,2015
+payroll_growth,highest,14.933861,26140,"Homosassa Springs, FL",55,Management of Companies and Enterprises,2021
+payroll_growth,highest,5.0668462,43420,"Sierra Vista-Douglas, AZ",55,Management of Companies and Enterprises,2020
+payroll_growth,highest,4.5561848,37100,"Oxnard-Thousand Oaks-Ventura, CA",55,Management of Companies and Enterprises,2018
+wage_growth,lowest,-0.72800694,29940,"Lawrence, KS",55,Management of Companies and Enterprises,2020
+wage_growth,lowest,-0.65403627,39460,"Punta Gorda, FL",51,Information,2022
+wage_growth,lowest,-0.62020244,30140,"Lebanon, PA",55,Management of Companies and Enterprises,2022
+wage_growth,highest,6.5782947,26140,"Homosassa Springs, FL",55,Management of Companies and Enterprises,2021
+wage_growth,highest,6.3440768,43420,"Sierra Vista-Douglas, AZ",55,Management of Companies and Enterprises,2020
+wage_growth,highest,2.6930423,39460,"Punta Gorda, FL",51,Information,2021
+acs_population_growth,lowest,-0.69476897,41540,"Salisbury, MD",23,Construction,2023
+acs_population_growth,lowest,-0.69476897,41540,"Salisbury, MD",31-33,Manufacturing,2023
+acs_population_growth,lowest,-0.69476897,41540,"Salisbury, MD",44-45,Retail Trade,2023
+acs_population_growth,highest,2.0168738,41540,"Salisbury, MD",23,Construction,2013
+acs_population_growth,highest,2.0168738,41540,"Salisbury, MD",31-33,Manufacturing,2013
+acs_population_growth,highest,2.0168738,41540,"Salisbury, MD",42,Wholesale Trade,2013
+median_household_income,lowest,31264,15180,"Brownsville-Harlingen, TX",11,"Agriculture, Forestry, Fishing and Hunting",2010
+median_household_income,lowest,31264,15180,"Brownsville-Harlingen, TX",22,Utilities,2010
+median_household_income,lowest,31264,15180,"Brownsville-Harlingen, TX",23,Construction,2010
+median_household_income,highest,157444,41940,"San Jose-Sunnyvale-Santa Clara, CA",23,Construction,2023
+median_household_income,highest,157444,41940,"San Jose-Sunnyvale-Santa Clara, CA",31-33,Manufacturing,2023
+median_household_income,highest,157444,41940,"San Jose-Sunnyvale-Santa Clara, CA",44-45,Retail Trade,2023
+unemployment_rate,lowest,2.1,13900,"Bismarck, ND",23,Construction,2019
+unemployment_rate,lowest,2.1,13900,"Bismarck, ND",42,Wholesale Trade,2019
+unemployment_rate,lowest,2.1,43620,"Sioux Falls, SD-MN",23,Construction,2022
+unemployment_rate,highest,18.5,20940,"El Centro, CA",22,Utilities,2013
+unemployment_rate,highest,18.5,20940,"El Centro, CA",23,Construction,2013
+unemployment_rate,highest,18.5,20940,"El Centro, CA",42,Wholesale Trade,2013
+educational_attainment_pct,lowest,11.8,25260,"Hanford-Corcoran, CA",22,Utilities,2010
+educational_attainment_pct,lowest,11.8,25260,"Hanford-Corcoran, CA",23,Construction,2010
+educational_attainment_pct,lowest,11.8,25260,"Hanford-Corcoran, CA",31-33,Manufacturing,2010
+educational_attainment_pct,highest,63.9,14500,"Boulder, CO",23,Construction,2023
+educational_attainment_pct,highest,63.9,14500,"Boulder, CO",31-33,Manufacturing,2023
+educational_attainment_pct,highest,63.9,14500,"Boulder, CO",42,Wholesale Trade,2023
+labor_force_participation_pct,lowest,25.1,48680,"Wildwood-The Villages, FL",22,Utilities,2023
+labor_force_participation_pct,lowest,25.1,48680,"Wildwood-The Villages, FL",23,Construction,2023
+labor_force_participation_pct,lowest,25.1,48680,"Wildwood-The Villages, FL",31-33,Manufacturing,2023
+labor_force_participation_pct,highest,75.9,22020,"Fargo, ND-MN",23,Construction,2012
+labor_force_participation_pct,highest,75.9,22020,"Fargo, ND-MN",31-33,Manufacturing,2012
+labor_force_participation_pct,highest,75.9,22020,"Fargo, ND-MN",42,Wholesale Trade,2012

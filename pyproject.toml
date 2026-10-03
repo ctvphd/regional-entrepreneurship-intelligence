@@ -5,6 +5,7 @@ description = "Predictive business analytics foundation for regional entrepreneu
 requires-python = ">=3.10"
 dependencies = [
     "jupyter>=1.1.1",
+    "matplotlib>=3.10.9",
     "numpy>=2.2.6",
     "pandas>=2.3.3",
     "requests>=2.34.2",
