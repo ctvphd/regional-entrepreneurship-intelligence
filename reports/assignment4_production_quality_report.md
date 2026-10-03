@@ -1,10 +1,10 @@
 # Assignment 4.11 Production Quality Report
 
-Status: **A4.11 production work complete; A4.12 integration is not started.** The
+Status: **A4.11 production and A4.12 integrated panel are complete.** The
 ignored production database contains four source-specific national pipelines
-for 2010-2023. No measures were joined across sources, and
-`analytics_msa_industry_year` remains empty. Expected entrepreneurship,
-alignment residuals, and entrepreneurial-gap targets were not created.
+for 2010-2023 and the integrated metropolitan panel. Expected entrepreneurship,
+alignment residuals, future leads, and entrepreneurial-gap targets were not
+created.
 
 The local database and full source files are Git-ignored; committed samples
 remain unchanged. The report's counts describe the local production database.
@@ -84,7 +84,9 @@ strategy are documented in `docs/ACS_VARIABLE_REGISTRY.md` and
 `docs/NAICS_VERSION_STRATEGY.md`. Source-specific instructions and quality
 rules are in each source's profile and transformation document.
 
-The full offline test suite passed **30 tests** with no failures or skips.
+At the A4.11 boundary, the full offline suite passed 30 tests. After A4.12
+integration coverage was added, the full offline suite passed **34 tests** with
+no failures, errors, or skips.
 The four intermediate tables have zero duplicate keys at their declared
 grains. The production analytics table has zero rows. Production runner
 idempotency was verified for ACS and BDS; CBP raw acquisition and transformation
@@ -93,5 +95,59 @@ and focused synthetic idempotency tests; a second full national QCEW rebuild
 was not run because it takes about 13 minutes.
 
 The production SQLite database is approximately 4.72 GB locally and remains
-ignored. The regenerated final README and all A4.12 joining/target work are
-intentionally deferred.
+ignored. Expected entrepreneurship, alignment/gap targets, future leads, and
+the regenerated final README are intentionally deferred.
+
+## A4.12 Integration Results
+
+The canonical panel is `geography_id x industry_id x year` (MSA x 2022 NAICS
+broad sector x year), 2010-2023. BDS is the primary entrepreneurship source;
+QCEW is the growth source; ACS controls join at MSA-year; CBP supplies
+source-labeled business-structure support. The inner BDS-QCEW core contains
+63,577 rows from 88,562 metropolitan BDS keys and 71,800 metropolitan QCEW
+keys: 24,985 BDS-only and 8,223 QCEW-only keys were not retained. The BDS
+match rate is 71.79%; the QCEW match rate is 88.55%. Left-joined ACS matches
+60,039 core rows (94.44%), and CBP matches 58,236 (91.60%); neither support
+join reduces the core row count.
+
+The resulting panel contains 63,577 rows, 381 MSAs, all 19 common sectors, and
+all 14 study years. It has 5,887 MSA-sector panels: 2,830 balanced across all
+14 years and 3,057 unbalanced. Average observations per panel are 10.80.
+Duplicate primary keys: zero. The source-key audit also found zero duplicates
+in BDS (178,382 rows), QCEW (179,731), ACS (5,194), and CBP (189,474).
+
+| Availability / missingness | Count | Share of final rows |
+| --- | ---: | ---: |
+| Startup rate missing | 0 | 0.00% |
+| Startup-rate lag 1 / 2 / 3 missing | 8,683 / 12,978 / 17,171 | 13.66% / 20.41% / 27.01% |
+| QCEW employment missing | 0 | 0.00% |
+| QCEW employment growth missing | 6,468 | 10.17% |
+| ACS row unmatched; primary controls missing | 3,538 | 5.56% |
+| ACS one-year controls/lags missing | 8,062 | 12.68% |
+| CBP measures unavailable | 5,341 | 8.40% |
+| CBP incomplete mapped staging groups | 5,331 | 8.39% |
+| CBP suppression flag carried from staging | 4,877 | 7.67% |
+
+The QCEW-CBP validation uses 58,236 matched rows. Correlations are 0.9932 for
+employment, 0.7858 for establishments, and 0.9834 for payroll. Median CBP/QCEW
+ratios are 1.0275, 0.9773, and 0.9903, respectively. CBP payroll was scaled
+from $1,000 to dollars for this diagnostic only; source-native stored values
+are unchanged. Differences over 100% occur in 1,075 employment, 134
+establishment, and 1,082 payroll observations. Year/sector/MSA detail is in
+`reports/assignment4_merge_audit.md` and the ignored generated JSON audit.
+These discrepancies are validation signals, not grounds to automatically
+reject either source.
+
+CBP support is unavailable for 5,341 core rows. Of those, 5,331 have a mapped
+staging group that failed to produce an accepted complete intermediate; 4,877
+rows carry a staging suppression flag. Ten unmatched rows have no corresponding
+mapped staging group. These distinctions are carried by CBP match,
+suppression, and completeness flags plus `source_quality_notes`.
+
+Two final production panel builds (runs `d1625537-e26f-4c2b-b0aa-d213fcd6640d` and
+`c55846fe-78ca-4814-9ebe-e300d652e600`) produced identical panel payloads,
+merge counts, and all 76 run-scoped quality metric values. The 10.5 MB gzip
+export remains ignored. No target or future-lead columns are present. Historical
+CBSA code matches do not establish historical boundary equivalence; BDS
+suppressed/missing startup outcomes remain excluded upstream from its
+intermediate, and source coverage differs by year and sector.

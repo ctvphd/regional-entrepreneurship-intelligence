@@ -439,3 +439,38 @@ The ignored production database is documented in the production quality report.
 - `quality_table_metric` entries with `bds_a411b`, `qcew_version_audit`,
   `cbp_version_audit`, and `a411b_cross_source` scopes retain production
   audit counts; source rows are not altered by audit scripts.
+
+## A4.12 Analytics Fields
+
+The production analytics table is uniquely keyed by `geography_id`,
+`industry_id`, and `year`, filtered to metropolitan geographies and 2010-2023.
+These source-labeled field groups are populated from the corresponding
+intermediate rows:
+
+| Source | Fields | Meaning / unit |
+| --- | --- | --- |
+| BDS | `firm_startups`, `startup_rate`, `startup_rate_lag1`, `startup_rate_lag2`, `startup_rate_lag3`, `establishment_entry`, `establishment_entry_rate`, `startup_job_creation` | Census business-demography measures; lags require actual prior calendar years. The BDS intermediate includes usable startup-rate rows only; withheld/missing cases remain in staging and upstream quality audits. |
+| QCEW | `qcew_employment`, `qcew_establishments`, `qcew_payroll`, `qcew_average_wage`, `qcew_total_annual_wages_nominal`, `qcew_average_annual_pay_nominal`, `employment_growth`, `establishment_growth`, `payroll_growth`, `wage_growth`, `employment_growth_lag1` through `employment_growth_lag3`, `establishment_growth_lag1` through `establishment_growth_lag3`, `payroll_growth_lag1`, `average_pay_growth_lag1` | QCEW levels, nominal dollar payroll/pay, growth and calendar-consistent lags. No deflation is done by integration. |
+| ACS | `acs_population`, `acs_population_growth`, `acs_population_growth_lag1`, `median_household_income`, `median_household_income_lag1`, `educational_attainment_pct`, `educational_attainment_pct_lag1`, `labor_force_participation_pct`, `labor_force_participation_pct_lag1`, `unemployment_rate`, `unemployment_rate_lag1` | MSA-year controls repeated across supported industries. Income remains in each ACS release's adjusted dollars; controls are not forward-filled. |
+| CBP | `cbp_establishments`, `cbp_employment`, `cbp_annual_payroll`, `cbp_first_quarter_payroll` | Complete-coverage CBP measures. Payroll values remain in CBP native $1,000 and are not conflated with QCEW fields. |
+
+Quality fields are `bds_has_suppression`, `bds_startup_available`,
+`qcew_has_suppression`, `qcew_is_complete_county_coverage`,
+`qcew_is_real_adjusted`, `acs_matched`, `acs_has_suppression`,
+`acs_has_missing_controls`, `cbp_matched`, `cbp_has_suppression`,
+`cbp_is_complete_county_coverage`, `has_suppression`, and
+`source_quality_notes`. These are transparent indicators, not a composite
+score. A CBP staging group that fails to produce an accepted intermediate is
+marked incomplete; staged suppression is preserved even without an accepted
+CBP measure row. Where there is no matching mapped staging group, completeness
+remains unknown (`NULL`) rather than falsely marked incomplete.
+`v_analytics_msa_industry_year` adds `cbsa_code`, `cbsa_name`,
+`sector_code`, and `sector_title` without duplicating labels in the normalized
+table. The original generic A4.2 measure columns remain as unused compatibility
+columns in the existing production database; use the source-prefixed columns
+above instead.
+
+The generated analytical CSV is gzip-compressed and Git-ignored. Rebuild it,
+the table, and run-scoped `quality_table_metric` records with
+`etl.build_analytics_panel`. Expected entrepreneurship, residual alignment,
+gap labels, future leads, and predictive targets are absent by design.

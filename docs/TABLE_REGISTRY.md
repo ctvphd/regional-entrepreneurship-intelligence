@@ -26,7 +26,7 @@ Assignment 4.3 populated only verified deterministic reference records: `ref_yea
 | `int_industry_growth` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | QCEW-derived | Yes | Generated in SQLite by A4.8 | Holds nominal QCEW industry levels, growth measures, selected growth lags, coverage flags, and nominal/real-adjustment flag. |
 | `int_regional_controls` | Intermediate | MSA x year | `(geography_id, year)` | `geography_id`, `year`, `source_manifest_id`, `pipeline_run_id` | ACS-derived | Yes | Generated in SQLite by A4.9 | Holds ACS regional controls, population growth, and selected one-year regional-control lags. |
 | `int_business_structure` | Intermediate | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `source_manifest_id`, `pipeline_run_id` | CBP-derived | Yes | Generated in SQLite by A4.10 | Holds complete-coverage CBP business-structure measures used for validation/context. |
-| `analytics_msa_industry_year` | Analytics | MSA x 2-digit NAICS x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `pipeline_run_id` | Integrated analytical panel | Yes | Generated in SQLite | Canonical clean analytical table. It intentionally excludes global expected entrepreneurship, residual alignment, and final gap target fields. |
+| `analytics_msa_industry_year` | Analytics | MSA x 2022 NAICS broad sector x year | `(geography_id, industry_id, year)` | `geography_id`, `industry_id`, `year`, `pipeline_run_id` | BDS + QCEW core; ACS/CBP support | Yes | Built in A4.12 production DB | Inner BDS-QCEW core with left ACS and CBP support; carries source-prefixed levels, controls, lags, and transparent source-quality flags. No target fields. |
 | `quality_rejected_record` | Quality | One rejected or explicitly reviewed record | `rejection_id` | `pipeline_run_id`, `source_id` | Pipeline quality | Yes | Generated in SQLite | Records bad-record handling and reason codes without silently discarding records. |
 | `quality_table_metric` | Quality | One quality metric per table/run/scope | `metric_id` | `pipeline_run_id` | Pipeline quality | Yes | Generated in SQLite | Supports row counts, missingness, duplicates, rejected records, and merge-rate metrics. |
 
@@ -155,5 +155,17 @@ intermediate tables are populated for BDS, QCEW, ACS, and CBP for 2010-2023.
 Production counts, historical-definition decisions, and readiness limitations
 are documented in `reports/assignment4_production_quality_report.md`. The
 committed sample files and tests remain independent. A4.11 does not populate
-`analytics_msa_industry_year` or create expected entrepreneurship, alignment,
-or entrepreneurial-gap targets.
+target fields. A4.12 populates `analytics_msa_industry_year` only in this
+ignored instance; the final analytical table contains no expected
+entrepreneurship, alignment, or entrepreneurial-gap targets.
+
+## A4.12 Integrated Analytical Panel
+
+`etl.build_analytics_panel` validates source intermediate key uniqueness and
+the authoritative common 19-sector set, filters to MSAs and 2010-2023, then
+inner-joins BDS to QCEW and left-joins ACS at MSA-year and CBP at MSA-sector-year.
+The production panel has 63,577 unique rows across 381 MSAs, 19 sectors, and
+14 years. A read-only `v_analytics_msa_industry_year` adds CBSA and sector
+labels for research exports. The ignored compressed CSV is regenerated from
+that view; see `docs/ANALYTICAL_PANEL.md` and
+`reports/assignment4_merge_audit.md`.

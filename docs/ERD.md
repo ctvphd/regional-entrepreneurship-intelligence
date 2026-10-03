@@ -136,3 +136,17 @@ No relationship to CBP, `analytics_msa_industry_year`, or model-ready target tab
 Assignment 4.10 expands `raw_cbp`, `stg_cbp`, and `int_business_structure` while preserving the same ERD relationships. `raw_cbp` stores source-native county, 2017 NAICS sector, legal-form, employment-size, measure, flag, and payload fields. `stg_cbp` keeps county-level rows with July 2023 CBSA mapping status and 2022 sector comparability status. `int_business_structure` stores complete-coverage CBSA-sector-year establishment, employment, annual payroll, and first-quarter payroll measures with county coverage indicators and source lineage.
 
 No relationship to `analytics_msa_industry_year` or model-ready target tables is introduced in A4.10.
+
+## A4.12 Integrated Analytical Panel
+
+The canonical analytics table is populated from the four source-specific
+intermediates without adding raw/intermediate foreign keys that would violate
+their independent source grains. Integration keys are the shared geography,
+industry, and year references: an inner BDS-QCEW join defines the core; ACS is
+left-joined at geography-year; CBP is left-joined at geography-industry-year.
+The metropolitan geography filter and 2010-2023 period are explicit. The
+analytics table stores source-labeled measures, selected lags, and match /
+completeness / suppression flags. `v_analytics_msa_industry_year` provides
+CBSA and sector labels for downstream use. No target, residual, or future-lead
+relationship is introduced. See `docs/ANALYTICAL_PANEL.md` for the measured
+merge audit and quality rules.

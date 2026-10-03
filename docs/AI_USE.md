@@ -206,3 +206,21 @@ and report claims were checked against official source metadata and local
 tests. A matching historical CBSA code is not treated as proof of unchanged
 boundaries. No approximate ACS education variable or unverified detailed
 NAICS mapping was silently substituted.
+
+## Assignment 4.12 Integration Review
+
+AI assistance designed and implemented the reproducible panel builder,
+pre-merge key checks, merge statistics, missingness and coverage audits,
+quality metrics, export, and QCEW-CBP consistency diagnostics. The student-
+directed choices were to use the metropolitan-only panel, make usable BDS
+entrepreneurship plus QCEW industry growth the inner-joined core, retain that
+core when ACS or CBP support is missing, keep CBP values source-labeled, and
+defer all leakage-prone targets and future leads until later modeling logic.
+
+The first generated payroll-comparison diagnostic incorrectly compared QCEW
+dollars directly with CBP $1,000 values. This was corrected after checking the
+repository's source transformation documentation: CBP is scaled to dollars
+for comparison statistics only, while both stored source series retain their
+native units. Neither source is automatically treated as ground truth based
+on a discrepancy. All integration decisions and production counts are
+covered by tests and the generated merge audit.

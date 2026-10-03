@@ -461,23 +461,59 @@ SCHEMA_STATEMENTS: tuple[str, ...] = (
         geography_id INTEGER NOT NULL REFERENCES ref_geography(geography_id),
         industry_id INTEGER NOT NULL REFERENCES ref_industry(industry_id),
         year INTEGER NOT NULL REFERENCES ref_year(year),
+        firm_startups REAL,
         startup_rate REAL,
+        startup_rate_lag1 REAL,
+        startup_rate_lag2 REAL,
+        startup_rate_lag3 REAL,
         lagged_startup_rate REAL,
-        employment REAL,
-        establishments REAL,
-        payroll REAL,
-        average_wage REAL,
+        establishment_entry REAL,
+        establishment_entry_rate REAL,
+        startup_job_creation REAL,
+        qcew_employment REAL,
+        qcew_establishments REAL,
+        qcew_payroll REAL,
+        qcew_average_wage REAL,
+        qcew_total_annual_wages_nominal REAL,
+        qcew_average_annual_pay_nominal REAL,
         employment_growth REAL,
         establishment_growth REAL,
         payroll_growth REAL,
         wage_growth REAL,
-        population REAL,
+        employment_growth_lag1 REAL,
+        employment_growth_lag2 REAL,
+        employment_growth_lag3 REAL,
+        establishment_growth_lag1 REAL,
+        establishment_growth_lag2 REAL,
+        establishment_growth_lag3 REAL,
+        payroll_growth_lag1 REAL,
+        average_pay_growth_lag1 REAL,
+        acs_population REAL,
+        acs_population_growth REAL,
+        acs_population_growth_lag1 REAL,
         median_household_income REAL,
         educational_attainment_pct REAL,
         labor_force_participation_pct REAL,
         unemployment_rate REAL,
-        business_structure_establishments REAL,
-        business_structure_employment REAL,
+        median_household_income_lag1 REAL,
+        educational_attainment_pct_lag1 REAL,
+        labor_force_participation_pct_lag1 REAL,
+        unemployment_rate_lag1 REAL,
+        cbp_establishments REAL,
+        cbp_employment REAL,
+        cbp_annual_payroll REAL,
+        cbp_first_quarter_payroll REAL,
+        bds_has_suppression INTEGER NOT NULL DEFAULT 0 CHECK (bds_has_suppression IN (0, 1)),
+        bds_startup_available INTEGER NOT NULL DEFAULT 0 CHECK (bds_startup_available IN (0, 1)),
+        qcew_has_suppression INTEGER NOT NULL DEFAULT 0 CHECK (qcew_has_suppression IN (0, 1)),
+        qcew_is_complete_county_coverage INTEGER CHECK (qcew_is_complete_county_coverage IS NULL OR qcew_is_complete_county_coverage IN (0, 1)),
+        qcew_is_real_adjusted INTEGER NOT NULL DEFAULT 0 CHECK (qcew_is_real_adjusted IN (0, 1)),
+        acs_matched INTEGER NOT NULL DEFAULT 0 CHECK (acs_matched IN (0, 1)),
+        acs_has_suppression INTEGER NOT NULL DEFAULT 0 CHECK (acs_has_suppression IN (0, 1)),
+        acs_has_missing_controls INTEGER NOT NULL DEFAULT 1 CHECK (acs_has_missing_controls IN (0, 1)),
+        cbp_matched INTEGER NOT NULL DEFAULT 0 CHECK (cbp_matched IN (0, 1)),
+        cbp_has_suppression INTEGER NOT NULL DEFAULT 0 CHECK (cbp_has_suppression IN (0, 1)),
+        cbp_is_complete_county_coverage INTEGER CHECK (cbp_is_complete_county_coverage IS NULL OR cbp_is_complete_county_coverage IN (0, 1)),
         has_suppression INTEGER NOT NULL DEFAULT 0 CHECK (has_suppression IN (0, 1)),
         source_quality_notes TEXT,
         pipeline_run_id TEXT REFERENCES metadata_pipeline_run(pipeline_run_id),
@@ -568,7 +604,63 @@ VIEW_STATEMENTS: tuple[str, ...] = (
        SELECT e.* FROM int_entrepreneurship AS e
        JOIN ref_geography AS g ON g.geography_id = e.geography_id
        WHERE g.geography_type = 'MSA';""",
+    """CREATE VIEW IF NOT EXISTS v_analytics_msa_industry_year AS
+       SELECT a.geography_id, a.industry_id, a.year, a.firm_startups, a.startup_rate,
+              a.startup_rate_lag1, a.startup_rate_lag2, a.startup_rate_lag3,
+              a.establishment_entry, a.establishment_entry_rate, a.startup_job_creation,
+              a.qcew_employment, a.qcew_establishments, a.qcew_payroll, a.qcew_average_wage,
+              a.qcew_total_annual_wages_nominal, a.qcew_average_annual_pay_nominal,
+              a.employment_growth, a.establishment_growth, a.payroll_growth, a.wage_growth,
+              a.employment_growth_lag1, a.employment_growth_lag2, a.employment_growth_lag3,
+              a.establishment_growth_lag1, a.establishment_growth_lag2, a.establishment_growth_lag3,
+              a.payroll_growth_lag1, a.average_pay_growth_lag1,
+              a.acs_population, a.acs_population_growth, a.acs_population_growth_lag1,
+              a.median_household_income, a.median_household_income_lag1,
+              a.educational_attainment_pct, a.educational_attainment_pct_lag1,
+              a.labor_force_participation_pct, a.labor_force_participation_pct_lag1,
+              a.unemployment_rate, a.unemployment_rate_lag1,
+              a.cbp_establishments, a.cbp_employment, a.cbp_annual_payroll,
+              a.cbp_first_quarter_payroll, a.bds_has_suppression, a.bds_startup_available,
+              a.qcew_has_suppression, a.qcew_is_complete_county_coverage,
+              a.qcew_is_real_adjusted, a.acs_matched, a.acs_has_suppression,
+              a.acs_has_missing_controls, a.cbp_matched, a.cbp_has_suppression,
+              a.cbp_is_complete_county_coverage, a.has_suppression, a.source_quality_notes,
+              g.cbsa_code, g.cbsa_name, i.naics_code AS sector_code,
+              i.naics_title AS sector_title
+       FROM analytics_msa_industry_year AS a
+       JOIN ref_geography AS g ON g.geography_id = a.geography_id
+       JOIN ref_industry AS i ON i.industry_id = a.industry_id;""",
 )
+
+
+ANALYTICS_MIGRATION_COLUMNS: dict[str, str] = {
+    "firm_startups": "REAL", "startup_rate_lag1": "REAL", "startup_rate_lag2": "REAL",
+    "startup_rate_lag3": "REAL", "establishment_entry": "REAL",
+    "establishment_entry_rate": "REAL", "startup_job_creation": "REAL",
+    "qcew_employment": "REAL", "qcew_establishments": "REAL", "qcew_payroll": "REAL",
+    "qcew_average_wage": "REAL", "qcew_total_annual_wages_nominal": "REAL",
+    "qcew_average_annual_pay_nominal": "REAL", "employment_growth_lag1": "REAL",
+    "employment_growth_lag2": "REAL", "employment_growth_lag3": "REAL",
+    "establishment_growth_lag1": "REAL", "establishment_growth_lag2": "REAL",
+    "establishment_growth_lag3": "REAL", "payroll_growth_lag1": "REAL",
+    "average_pay_growth_lag1": "REAL", "acs_population": "REAL",
+    "acs_population_growth": "REAL", "acs_population_growth_lag1": "REAL",
+    "median_household_income_lag1": "REAL", "educational_attainment_pct_lag1": "REAL",
+    "labor_force_participation_pct_lag1": "REAL", "unemployment_rate_lag1": "REAL",
+    "cbp_establishments": "REAL", "cbp_employment": "REAL", "cbp_annual_payroll": "REAL",
+    "cbp_first_quarter_payroll": "REAL",
+    "bds_has_suppression": "INTEGER NOT NULL DEFAULT 0 CHECK (bds_has_suppression IN (0, 1))",
+    "bds_startup_available": "INTEGER NOT NULL DEFAULT 0 CHECK (bds_startup_available IN (0, 1))",
+    "qcew_has_suppression": "INTEGER NOT NULL DEFAULT 0 CHECK (qcew_has_suppression IN (0, 1))",
+    "qcew_is_complete_county_coverage": "INTEGER CHECK (qcew_is_complete_county_coverage IS NULL OR qcew_is_complete_county_coverage IN (0, 1))",
+    "qcew_is_real_adjusted": "INTEGER NOT NULL DEFAULT 0 CHECK (qcew_is_real_adjusted IN (0, 1))",
+    "acs_matched": "INTEGER NOT NULL DEFAULT 0 CHECK (acs_matched IN (0, 1))",
+    "acs_has_suppression": "INTEGER NOT NULL DEFAULT 0 CHECK (acs_has_suppression IN (0, 1))",
+    "acs_has_missing_controls": "INTEGER NOT NULL DEFAULT 1 CHECK (acs_has_missing_controls IN (0, 1))",
+    "cbp_matched": "INTEGER NOT NULL DEFAULT 0 CHECK (cbp_matched IN (0, 1))",
+    "cbp_has_suppression": "INTEGER NOT NULL DEFAULT 0 CHECK (cbp_has_suppression IN (0, 1))",
+    "cbp_is_complete_county_coverage": "INTEGER CHECK (cbp_is_complete_county_coverage IS NULL OR cbp_is_complete_county_coverage IN (0, 1))",
+}
 
 
 PRIMARY_STUDY_YEARS = tuple(range(2010, 2024))
@@ -585,6 +677,14 @@ def create_schema(connection: sqlite3.Connection, *, seed_years: bool = True) ->
             connection.execute(statement)
         for statement in INDEX_STATEMENTS:
             connection.execute(statement)
+        existing_columns = {
+            row[1] for row in connection.execute("PRAGMA table_info(analytics_msa_industry_year)")
+        }
+        for column, definition in ANALYTICS_MIGRATION_COLUMNS.items():
+            if column not in existing_columns:
+                connection.execute(
+                    f"ALTER TABLE analytics_msa_industry_year ADD COLUMN {column} {definition}"
+                )
         for statement in VIEW_STATEMENTS:
             connection.execute(statement)
         if seed_years:

@@ -530,8 +530,26 @@ A4.11B resolves the historical source definitions in explicit registries.
 Official Census 2007-to-2012, 2012-to-2017, and 2017-to-2022 concordances
 support conservative broad-sector comparison. The ACS concept-year registry
 corrects the 2019 bachelor's-degree variable-ID shift. Each source remains in
-its own raw, staging, and intermediate tables; no four-source integration table
-has been populated. `v_bds_metropolitan_eligible` selects only metropolitan
-BDS intermediate rows, leaving micropolitan source records intact. See
+its own raw, staging, and intermediate tables. At the A4.11 boundary, no
+four-source integration table had been populated. `v_bds_metropolitan_eligible`
+selects only metropolitan BDS intermediate rows, leaving micropolitan source
+records intact. See
 `docs/NAICS_VERSION_STRATEGY.md`, `docs/ACS_VARIABLE_REGISTRY.md`, and the
 production quality report for measured readiness.
+
+## A4.12 Integrated Analytics Status
+
+`analytics_msa_industry_year` is now built from the existing production
+intermediates at MSA x 2022 NAICS broad sector x year grain for 2010-2023.
+The core is the intersection of usable BDS entrepreneurship and QCEW industry
+growth rows (inner join); ACS MSA-year controls and CBP business structure are
+left-joined so support gaps do not discard core observations. Source variables
+retain separate names and source-quality flags. The production panel has
+63,577 rows, 381 MSAs, 19 sectors, and zero duplicate keys. A view supplies
+human-readable labels and a compressed export is reproducible from the local
+ignored production database. See `docs/ANALYTICAL_PANEL.md` and
+`reports/assignment4_merge_audit.md`.
+
+No expected entrepreneurship, residual alignment, entrepreneurial-gap label,
+future lead, or predictive model is created in Assignment 4. The final README
+rewrite is deferred to the final Assignment 4 QA step.

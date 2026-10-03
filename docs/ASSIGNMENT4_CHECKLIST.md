@@ -182,9 +182,21 @@ A4.10 completes CBP raw acquisition, county-to-CBSA business-structure construct
 - [x] BDS startup missingness, cross-source coverage, and source-version audits generated.
 - [x] Full offline suite passed: 30 tests.
 - [x] A4.11 production quality report updated: `reports/assignment4_production_quality_report.md`.
-- [ ] A4.12 integration, analytical panel construction, and targets; intentionally deferred.
+- [x] A4.12 metropolitan BDS-QCEW core panel built with left-joined ACS and CBP support.
+- [x] A4.12 merge audits, coverage/missingness diagnostics, cross-source checks, metrics, export, and idempotency verified.
+- [x] A4.12 full suite passed: 34 tests, zero failures/errors/skips; integration documentation complete; leakage-prone targets remain absent.
 
-A4.11 stops before any cross-source measure join. The code overlap is not a
-historical boundary-equivalence assertion; the production report records 381
-common metropolitan codes and the remaining geography caveat. The final README
-rewrite is also deferred.
+A4.11 itself stopped before cross-source joins. A4.12 now builds the canonical
+panel; its code overlap is not a historical boundary-equivalence assertion.
+Expected entrepreneurship, alignment residuals, gap labels, future leads, and
+modeling remain deferred. The final README rewrite is also deferred.
+
+## A4.12 Integrated Panel Status
+
+- [x] Verified clean `main` at `1602760`; 30 pre-integration tests passed and production intermediates were present.
+- [x] Audited source keys, metropolitan scope, and common authoritative sectors before merge.
+- [x] Inner BDS-QCEW core and left ACS/CBP support joins; row losses and match rates reported.
+- [x] Populated `analytics_msa_industry_year` at unique MSA-sector-year grain (63,577 rows).
+- [x] Persisted quality metrics, generated merge audit, and wrote ignored compressed CSV export.
+- [x] Two production builds returned identical row counts, merge stats, and quality metric values.
+- [ ] Expected entrepreneurship, alignment residuals, gap targets, leads, and Assignment 5 modeling: intentionally deferred.
