@@ -242,3 +242,21 @@ quality report now documents them as separate categories rather than claiming
 one aggregate bad-row total. Prior corrections documented above include the
 ACS MSA-year grain and CBP payroll unit scaling; no invented AI correction
 example is added.
+
+## Assignment 5.1 EDA Plan And Question Mapping
+
+AI assistance reviewed the committed Assignment 4 analytical schema and
+production database, mapped exploratory questions to the research question
+and hypotheses, drafted the field inventory and variable priorities, and
+created a read-only reusable panel loader with schema/scope/leakage checks and
+lightweight tests. The student-directed decisions were to keep A5.1 planning-
+only; retain the MSA x 2-digit NAICS x year grain and 2010-2023 period; use
+startup rate as the primary descriptive entrepreneurship measure and QCEW
+employment growth as the primary industry-growth measure; keep CBP supporting;
+avoid imputation, irreversible outlier treatment, causal claims, target
+construction, and modeling; and explicitly distinguish the production
+database from the empty legacy development database. The physical table's
+retired compatibility columns were not mistaken for active analysis fields.
+The schema, test suite, docs, and read-only production checks were reviewed
+against the repository's existing A4 definitions. No unsupported correction
+or rejected suggestion is claimed.
