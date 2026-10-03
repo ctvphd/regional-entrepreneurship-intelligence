@@ -85,7 +85,11 @@ A4.10 does not merge CBP with BDS, QCEW, or ACS; does not build `analytics_msa_i
 
 The official CBP API variable metadata identifies `NAICS2007` for 2010-2011,
 `NAICS2012` for 2012-2016, and `NAICS2017` for 2017-2023. The existing A4.10
-loader and transformation were built for the 2017 source field; the current
-reference bundle has no 2007 concordance. National CBP ingestion is paused
-until source-year field handling and the 2007 mapping are resolved. The 2022-2023
-sample remains valid.
+production runner requests the matching field for each year and retains its
+native version. Census's official 2007-to-2012 concordance is now in the
+reference bundle; the sector-level comparison follows
+`docs/NAICS_VERSION_STRATEGY.md`. The national API acquisition requests one
+county broad sector at a time, with `LFO=001` and `EMPSZES=001`.
+Source disclosure flags are separate from `EMP_N`, `PAYANN_N`, and
+`PAYQTR1_N` noise indicators, which are retained in the raw response for
+2012 onward and do not automatically mark a valid measure suppressed.

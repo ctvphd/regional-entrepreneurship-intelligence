@@ -164,3 +164,12 @@ and 404,097,490 bytes. The study-window extracts retain 246,050 backbone rows
 and 246,050 age-0 firm rows across 2010-2023. Original-file and extract
 checksums are separately recorded in the production SQLite manifest. The
 production command is documented in the quality report.
+
+## A4.11B Primary Geography Scope
+
+The national BDS bulk files include both metropolitan and micropolitan CBSAs.
+Both remain in raw, staging, and intermediate storage. The primary A4.12
+eligibility rule is `ref_geography.geography_type = 'MSA'`, exposed as
+`v_bds_metropolitan_eligible`; no source row is deleted. The local production
+audit also preserves missing-startup reasons by year, sector, scope, MSA, and
+suppression status in an ignored JSON artifact and quality metrics in SQLite.

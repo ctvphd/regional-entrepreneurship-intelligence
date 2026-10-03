@@ -423,3 +423,19 @@ startup-rate numerator or denominator; suppression of unrelated BDS measures
 does not erase a numeric startup rate. The source-wide suppression indicator
 and all original values remain in `raw_bds` and `raw_bds_firm_age`.
 The ignored production database is documented in the production quality report.
+
+## A4.11B Historical Definitions
+
+- `raw_qcew.source_naics_version` and `raw_cbp.source_naics_version`: the
+  source-year native classification, validated against the explicit registry.
+- `stg_qcew.industry_mapping_status` and
+  `stg_cbp.industry_mapping_status`: `directly_comparable`,
+  `official_mapping_required`, or `unresolved` after the conservative
+  six-digit-concordance sector audit.
+- `raw_acs.source_variable_id` and `source_moe_variable_id`: exact
+  concept-year estimate/MOE pair from the version-controlled ACS registry.
+- `v_bds_metropolitan_eligible`: read-only primary-scope selection of
+  `int_entrepreneurship` where the reference geography type is `MSA`.
+- `quality_table_metric` entries with `bds_a411b`, `qcew_version_audit`,
+  `cbp_version_audit`, and `a411b_cross_source` scopes retain production
+  audit counts; source rows are not altered by audit scripts.

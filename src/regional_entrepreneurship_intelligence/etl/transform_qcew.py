@@ -24,6 +24,9 @@ from regional_entrepreneurship_intelligence.database.reference import (
     NAICS_ANALYTICAL_VERSION,
     load_authoritative_reference_data,
 )
+from regional_entrepreneurship_intelligence.database.naics_versions import (
+    classify_sector, source_year_naics,
+)
 from regional_entrepreneurship_intelligence.database.schema import create_schema
 from regional_entrepreneurship_intelligence.etl.extract_qcew import (
     QCEW_SAMPLE_PATH,
@@ -234,13 +237,17 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
     groups: dict[tuple[int, int, int], list[dict[str, Any]]] = {}
     for raw in selected_rows:
         geography = geographies.get(raw["source_geography_id"])
-        industry = industries.get(raw["source_industry_id"])
+        status, target = classify_sector(
+            source_year_naics("QCEW", raw["source_year"]).native_version,
+            raw["source_industry_id"],
+        )
+        industry = industries.get(target)
         if not geography or not industry:
             continue
         groups.setdefault(
             (geography["geography_id"], industry["industry_id"], raw["source_year"]),
             [],
-        ).append(raw | {"geography": geography, "industry": industry})
+        ).append(raw | {"geography": geography, "industry": industry, "industry_status": status})
 
     expected_counties = _expected_counties_by_cbsa(connection)
     for (geography_id, industry_id, year), rows in sorted(groups.items()):
@@ -316,7 +323,7 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
                 first["geography"]["cbsa_name"],
                 first["industry"]["naics_code"],
                 VALID_GEOGRAPHY_STATUS,
-                VALID_INDUSTRY_STATUS,
+                first["industry_status"],
                 employment,
                 establishments,
                 payroll,
@@ -365,11 +372,11 @@ def _insert_intermediate_rows(connection: sqlite3.Connection, pipeline_run_id: s
                manifest_id
         FROM stg_qcew
         WHERE geography_mapping_status = ?
-          AND industry_mapping_status = ?
+          AND industry_mapping_status IN ('directly_comparable', 'official_mapping_required')
           AND is_complete_county_coverage = 1
           AND is_missing = 0;
         """,
-        (VALID_GEOGRAPHY_STATUS, VALID_INDUSTRY_STATUS),
+        (VALID_GEOGRAPHY_STATUS,),
     ).fetchall()
     for row in staged:
         connection.execute(
@@ -552,23 +559,35 @@ def _record_exclusions(connection: sqlite3.Connection, pipeline_run_id: str) -> 
                year,
                counties_expected,
                counties_observed,
-               counties_suppressed
+               counties_suppressed,
+               is_missing
         FROM stg_qcew
         WHERE is_complete_county_coverage = 0;
         """
     ).fetchall():
+        reason = (
+            "suppressed_value" if row[5]
+            else "missing_required_measure" if row[6]
+            else "incomplete_aggregation"
+        )
+        detail = {
+            "suppressed_value": "County QCEW annual measures include source-suppressed values.",
+            "missing_required_measure": "At least one county QCEW annual measure is missing or nonnumeric.",
+            "incomplete_aggregation": "The observed county set does not cover the complete CBSA.",
+        }[reason]
         insert_rejected_record(
             connection,
             pipeline_run_id=pipeline_run_id,
             table_name="stg_qcew",
             stage="qcew_standardization",
-            reason_code="incomplete_aggregation",
+            reason_code=reason,
             source_row_identifier=f"cbsa={row[0]}|sector={row[1]}|year={row[2]}",
-            reason_detail="Aggregated row retained in staging but excluded from int_industry_growth.",
+            reason_detail=detail,
             serialized_record={
                 "counties_expected": row[3],
                 "counties_observed": row[4],
                 "counties_suppressed": row[5],
+                "is_missing": row[6],
             },
         )
         count += 1
@@ -740,9 +759,11 @@ def _selected_raw_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
             continue
         if row["source_geography_id"] not in geographies:
             continue
-        if row["source_industry_id"] not in industries:
-            continue
-        if any(value is None for value in _parsed_measures(row)):
+        status, target = classify_sector(
+            source_year_naics("QCEW", row["source_year"]).native_version,
+            row["source_industry_id"],
+        )
+        if status == "unresolved" or target not in industries:
             continue
         selected.append(row)
     return selected

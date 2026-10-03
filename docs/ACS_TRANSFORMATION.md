@@ -103,3 +103,11 @@ MSA/CBSA x year
 ```
 
 ACS is intentionally not duplicated by industry in A4.9.
+
+A4.11B's national registry-driven pass yielded 27,075 raw concept rows,
+5,415 source MSA-year staging rows, and 5,194 complete regional-control rows
+across 2010-2023. The 221 exclusions remain in staging and run-specific
+rejection metadata; 700 raw concept rows have source CBSA codes absent from
+the fixed July 2023 reference. A second run reproduced the same three table
+counts. The 2019 education-ID shift is resolved by concept, not by reusing a
+single variable ID across vintages.

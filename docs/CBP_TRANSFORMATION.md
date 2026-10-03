@@ -89,3 +89,11 @@ MSA/CBSA x 2022 NAICS 2-digit sector x year
 ```
 
 The A4.10 sample creates 6 intermediate rows for CBSA `10180`, sectors `23`, `31-33`, and `44-45`, and years 2022-2023.
+
+A4.11B's national runner requests `NAICS2007`, `NAICS2012`, or `NAICS2017`
+according to the source year. The transform compares each native broad sector
+to 2022 through official concordance evidence and keeps incomplete county
+aggregates out of `int_business_structure`. Source `_F` disclosure flags can
+invalidate a measure; `_N` noise-range indicators are retained in raw API
+responses but do not by themselves imply suppression. No missing county is
+filled with zero. See `docs/NAICS_VERSION_STRATEGY.md`.

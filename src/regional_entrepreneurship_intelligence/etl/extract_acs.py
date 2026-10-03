@@ -112,24 +112,22 @@ def load_acs_raw(
         official_source_url=official_source_url,
         source_version=source_version,
         row_count=len(rows),
+        source_year=int(rows[0]["source_year"]) if len({row["source_year"] for row in rows}) == 1 else None,
     )
     run_id = start_pipeline_run(connection, stage="raw_acs_ingestion")
     inserted = 0
     skipped = 0
+    existing_rows = {
+        row[0] for row in connection.execute(
+            "SELECT source_row_identifier FROM raw_acs WHERE raw_source_filename = ?;",
+            (path.name,),
+        )
+    }
     try:
         with connection:
             for row in rows:
                 source_row_identifier = acs_source_row_identifier(row)
-                existing = connection.execute(
-                    """
-                    SELECT raw_acs_id
-                    FROM raw_acs
-                    WHERE raw_source_filename = ?
-                      AND source_row_identifier = ?;
-                    """,
-                    (path.name, source_row_identifier),
-                ).fetchone()
-                if existing:
+                if source_row_identifier in existing_rows:
                     skipped += 1
                     continue
                 connection.execute(
@@ -175,6 +173,7 @@ def load_acs_raw(
                     ),
                 )
                 inserted += 1
+                existing_rows.add(source_row_identifier)
         finish_pipeline_run(
             connection,
             run_id,
@@ -229,6 +228,7 @@ def _ensure_acs_manifest(
     official_source_url: str,
     source_version: str,
     row_count: int,
+    source_year: int | None,
 ) -> int:
     checksum = _sha256(csv_path)
     existing = connection.execute(
@@ -259,14 +259,14 @@ def _ensure_acs_manifest(
         dataset_name=ACS_PRODUCT,
         access_method="official Census API",
         source_url_or_endpoint=official_source_url,
-        source_year=2023,
+        source_year=source_year,
         source_version=source_version,
         raw_filename=csv_path.name,
         file_checksum=checksum,
         row_count=row_count,
         notes=(
-            "A4.9 committed sample derived from official ACS 5-year profile API "
-            "responses for selected CBSAs, years, variables, and MOE fields. "
+            "ACS 5-year profile API responses for selected CBSAs, years, "
+            "variables, and MOE fields. "
             "The API key is not stored in the raw file or manifest."
         ),
     )

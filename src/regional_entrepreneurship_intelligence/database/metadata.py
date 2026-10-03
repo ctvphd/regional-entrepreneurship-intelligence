@@ -242,32 +242,17 @@ def insert_quality_metric(
     _require_text(table_name, "table_name")
     _require_text(metric_name, "metric_name")
 
-    with connection:
-        cursor = connection.execute(
-            """
-            INSERT INTO quality_table_metric (
-                pipeline_run_id,
-                table_name,
-                metric_name,
-                metric_value,
-                year,
-                scope,
-                notes,
-                created_timestamp
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-            """,
-            (
-                pipeline_run_id,
-                table_name,
-                metric_name,
-                metric_value,
-                year,
-                scope,
-                notes,
-                utc_timestamp(),
-            ),
-        )
+    statement = """
+        INSERT INTO quality_table_metric (
+            pipeline_run_id, table_name, metric_name, metric_value,
+            year, scope, notes, created_timestamp
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    """
+    parameters = (
+        pipeline_run_id, table_name, metric_name, metric_value,
+        year, scope, notes, utc_timestamp(),
+    )
+    cursor = _write_in_current_transaction(connection, statement, parameters)
     return int(cursor.lastrowid)
 
 
@@ -290,34 +275,27 @@ def insert_rejected_record(
     if reason_code not in REJECTION_REASON_CODES:
         raise ValueError(f"Unsupported rejection reason_code: {reason_code}")
 
-    with connection:
-        cursor = connection.execute(
-            """
-            INSERT INTO quality_rejected_record (
-                pipeline_run_id,
-                source_id,
-                table_name,
-                stage,
-                source_row_identifier,
-                reason_code,
-                reason_detail,
-                original_value,
-                serialized_record,
-                created_timestamp
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-            """,
-            (
-                pipeline_run_id,
-                source_id,
-                table_name,
-                stage,
-                source_row_identifier,
-                reason_code,
-                reason_detail,
-                original_value,
-                _serialize_record(serialized_record),
-                utc_timestamp(),
-            ),
-        )
+    statement = """
+        INSERT INTO quality_rejected_record (
+            pipeline_run_id, source_id, table_name, stage,
+            source_row_identifier, reason_code, reason_detail,
+            original_value, serialized_record, created_timestamp
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """
+    parameters = (
+        pipeline_run_id, source_id, table_name, stage, source_row_identifier,
+        reason_code, reason_detail, original_value,
+        _serialize_record(serialized_record), utc_timestamp(),
+    )
+    cursor = _write_in_current_transaction(connection, statement, parameters)
     return int(cursor.lastrowid)
+
+
+def _write_in_current_transaction(
+    connection: sqlite3.Connection, statement: str, parameters: tuple[Any, ...]
+) -> sqlite3.Cursor:
+    """Avoid committing each helper call when the caller owns a transaction."""
+    if connection.in_transaction:
+        return connection.execute(statement, parameters)
+    with connection:
+        return connection.execute(statement, parameters)

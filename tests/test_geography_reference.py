@@ -9,6 +9,7 @@ from pathlib import Path
 
 from regional_entrepreneurship_intelligence.database.reference import (
     GEOGRAPHY_VINTAGE,
+    OFFICIAL_REFERENCE_ASSETS,
     load_authoritative_reference_data,
 )
 from regional_entrepreneurship_intelligence.database.schema import create_schema
@@ -90,7 +91,7 @@ class GeographyReferenceTest(unittest.TestCase):
             manifest_count = connection.execute(
                 "SELECT COUNT(*) FROM metadata_source_manifest;"
             ).fetchone()[0]
-            self.assertEqual(manifest_count, 6)
+            self.assertEqual(manifest_count, len(OFFICIAL_REFERENCE_ASSETS))
 
             connection.close()
 

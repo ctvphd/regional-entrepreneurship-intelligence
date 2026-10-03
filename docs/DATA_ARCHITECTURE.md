@@ -526,7 +526,12 @@ MSA-sector backbone and age-0 firm rows into an ignored production SQLite
 database, then uses the established BDS staging/intermediate logic. Full
 source files and selected extracts have separate checksum manifests.
 
-The cross-source production run is incomplete. ACS variable `DP02_0068PE`
-changes definition in 2019; QCEW 2010 and CBP 2010-2011 use 2007 NAICS,
-which is absent from the project mapping bundle. See the production quality
-report for status and source evidence. No integration table has been populated.
+A4.11B resolves the historical source definitions in explicit registries.
+Official Census 2007-to-2012, 2012-to-2017, and 2017-to-2022 concordances
+support conservative broad-sector comparison. The ACS concept-year registry
+corrects the 2019 bachelor's-degree variable-ID shift. Each source remains in
+its own raw, staging, and intermediate tables; no four-source integration table
+has been populated. `v_bds_metropolitan_eligible` selects only metropolitan
+BDS intermediate rows, leaving micropolitan source records intact. See
+`docs/NAICS_VERSION_STRATEGY.md`, `docs/ACS_VARIABLE_REGISTRY.md`, and the
+production quality report for measured readiness.

@@ -544,9 +544,12 @@ INDEX_STATEMENTS: tuple[str, ...] = (
     "CREATE INDEX IF NOT EXISTS idx_raw_bds_firm_age_source_keys ON raw_bds_firm_age(source_geography_id, source_industry_id, source_year, source_fagecoarse);",
     "CREATE UNIQUE INDEX IF NOT EXISTS idx_raw_bds_firm_age_file_row ON raw_bds_firm_age(raw_source_filename, source_row_identifier);",
     "CREATE INDEX IF NOT EXISTS idx_raw_qcew_source_keys ON raw_qcew(source_geography_id, source_industry_id, source_year);",
+    "CREATE INDEX IF NOT EXISTS idx_raw_qcew_file_row ON raw_qcew(raw_source_filename, source_row_identifier);",
     "CREATE INDEX IF NOT EXISTS idx_raw_qcew_ownership ON raw_qcew(source_ownership_code, source_year);",
     "CREATE INDEX IF NOT EXISTS idx_raw_cbp_source_keys ON raw_cbp(source_geography_id, source_industry_id, source_year);",
+    "CREATE INDEX IF NOT EXISTS idx_raw_cbp_file_row ON raw_cbp(raw_source_filename, source_row_identifier);",
     "CREATE INDEX IF NOT EXISTS idx_raw_acs_source_keys ON raw_acs(source_geography_id, source_year);",
+    "CREATE INDEX IF NOT EXISTS idx_raw_acs_file_row ON raw_acs(raw_source_filename, source_row_identifier);",
     "CREATE INDEX IF NOT EXISTS idx_stg_bds_grain ON stg_bds(geography_id, industry_id, year);",
     "CREATE INDEX IF NOT EXISTS idx_stg_qcew_grain ON stg_qcew(geography_id, industry_id, year);",
     "CREATE INDEX IF NOT EXISTS idx_stg_cbp_grain ON stg_cbp(geography_id, industry_id, year);",
@@ -558,6 +561,13 @@ INDEX_STATEMENTS: tuple[str, ...] = (
     "CREATE INDEX IF NOT EXISTS idx_analytics_year ON analytics_msa_industry_year(year);",
     "CREATE INDEX IF NOT EXISTS idx_rejected_run_reason ON quality_rejected_record(pipeline_run_id, reason_code);",
     "CREATE INDEX IF NOT EXISTS idx_quality_metric_run_table ON quality_table_metric(pipeline_run_id, table_name);",
+)
+
+VIEW_STATEMENTS: tuple[str, ...] = (
+    """CREATE VIEW IF NOT EXISTS v_bds_metropolitan_eligible AS
+       SELECT e.* FROM int_entrepreneurship AS e
+       JOIN ref_geography AS g ON g.geography_id = e.geography_id
+       WHERE g.geography_type = 'MSA';""",
 )
 
 
@@ -574,6 +584,8 @@ def create_schema(connection: sqlite3.Connection, *, seed_years: bool = True) ->
         for statement in SCHEMA_STATEMENTS:
             connection.execute(statement)
         for statement in INDEX_STATEMENTS:
+            connection.execute(statement)
+        for statement in VIEW_STATEMENTS:
             connection.execute(statement)
         if seed_years:
             seed_ref_year(connection)

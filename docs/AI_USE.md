@@ -192,3 +192,17 @@ The 2007 NAICS years in QCEW and CBP were also left unmapped pending an
 authoritative project decision. The BDS production run exposed a suppression
 detail: flags on unrelated measures no longer invalidate numeric firm counts.
 All production raw files and the SQLite database remain Git-ignored.
+
+## A4.11B Historical-Definition Review
+
+AI-assisted code and metadata inspection helped identify why sample-scale
+validation was insufficient: QCEW/CBP year-specific NAICS fields, the ACS
+education-ID shift, and BDS metro/micro scope were visible only in a national
+historical run. The student-directed rule was to require official Census/BLS
+metadata and concordances, retain raw values, and leave ambiguous mappings or
+incomplete county aggregates out of intermediate measures. AI-generated
+classification code, ACS registry rows, acquisition scripts, audit outputs,
+and report claims were checked against official source metadata and local
+tests. A matching historical CBSA code is not treated as proof of unchanged
+boundaries. No approximate ACS education variable or unverified detailed
+NAICS mapping was silently substituted.

@@ -88,3 +88,13 @@ Before ACS can contribute to the final analytical panel, A4.9 must:
 - calculate population growth only after standardization
 - create selected one-year regional-control lags with calendar continuity
 - avoid industry duplication and avoid integration with BDS/QCEW until a later assignment
+
+## A4.11B Historical Registry
+
+The year-specific official ACS variable metadata is retained in
+`data/external/reference/acs_variable_registry.csv` and documented in
+`docs/ACS_VARIABLE_REGISTRY.md`. The bachelor's-degree percentage uses
+`DP02_0067PE` through 2018 and `DP02_0068PE` from 2019. The national
+production runner requests all five concepts and their paired MOEs for each
+year, retaining source geography and variable identifiers. API keys are never
+written to the source CSV or manifest.

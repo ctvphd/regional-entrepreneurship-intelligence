@@ -138,3 +138,16 @@ MSA/CBSA x 2022 NAICS 2-digit sector x year
 ```
 
 The A4.8 sample creates 8 intermediate rows for CBSA `10180`, four directly comparable sectors, and years 2022-2023.
+
+For A4.11B national production, `run_qcew_production.py` retains each source
+year's native NAICS vintage and checks broad-sector equivalence through the
+official concordance chain before standardization. Its study-window extract
+selects county, private ownership (`own_code=5`), all establishment sizes,
+annual rows, and broad sectors from official annual by-area ZIP files. The
+existing complete-county-coverage, suppression, growth, and calendar-lag
+rules remain in force. See `docs/NAICS_VERSION_STRATEGY.md`.
+The [BLS annual file layout](https://www.bls.gov/cew/about-data/downloadable-file-layouts/annual/naics-based-annual-layout.htm)
+distinguishes base annual `disclosure_code` from location-quotient and
+over-the-year disclosure codes. Only the former invalidates the annual
+employment, establishment, and wage inputs used here; the other source
+statuses remain in the raw payload.

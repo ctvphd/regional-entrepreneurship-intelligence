@@ -1,182 +1,97 @@
 # Assignment 4.11 Production Quality Report
 
-Status: **partial; not ready for A4.12**. The BDS 2010-2023 national run completed.
-The QCEW, ACS, and CBP national pipelines were stopped at source-year definition
-boundaries documented below. Counts below describe the ignored local production
-database, not the small committed samples. No cross-source table or model target
-was created.
+Status: **A4.11 production work complete; A4.12 integration is not started.** The
+ignored production database contains four source-specific national pipelines
+for 2010-2023. No measures were joined across sources, and
+`analytics_msa_industry_year` remains empty. Expected entrepreneurship,
+alignment residuals, and entrepreneurial-gap targets were not created.
 
-## BDS
+The local database and full source files are Git-ignored; committed samples
+remain unchanged. The report's counts describe the local production database.
 
-The official 2023 [MSA by Sector](https://www2.census.gov/programs-surveys/bds/tables/time-series/2023/bds2023_msa_sec.csv)
-and [MSA by Sector by Firm Age Coarse](https://www2.census.gov/programs-surveys/bds/tables/time-series/2023/bds2023_msa_sec_fac.csv)
-bulk files were acquired. Their SHA-256 checksums are respectively
-`69f2040952dc73d1c02cf8363e24d9b680f0f52dbee337a7b317f9ead5f494f9`
-and `e5673f22276699d10a0f81c2ad1b3c60aabf04a6640d15e822100ac7a6fcfc1b`.
-The full files contain 808,450 and 4,042,250 rows across all release years.
-The production extracts select all 246,050 MSA-sector rows in 2010-2023 and
-the 246,050 age-0 firm rows in the same window. Both full files and extracts
-are Git-ignored; the SQLite manifest records URLs, checksums, counts, release,
-and retrieval timestamps.
+## Production Counts
 
-| Measure | National result |
-| --- | ---: |
-| `raw_bds` rows | 246,050 |
-| `raw_bds_firm_age` age-0 rows | 246,050 |
-| `stg_bds` rows | 246,050 |
-| `int_entrepreneurship` rows | 178,382 |
-| Distinct mapped CBSA codes | 925 |
-| Metropolitan / micropolitan codes | 387 / 538 |
-| Distinct sector codes | 19 |
-| Years | 14 (2010-2023) |
-| MSA-sector panels | 16,930 |
-| Balanced 14-year panels | 5,962 |
-| Missing startup rate in staging | 67,668 |
-| Lag 1 / 2 / 3 available | 137,432 / 126,351 / 115,585 |
-| Raw backbone rows with any D/S flag | 98,352 |
-| Raw age-0 rows with any D/S flag | 53,856 |
-| Staging rows with a suppressed startup input | 64,786 |
-| Geography / industry code matches | 925/925 and 19/19 |
-| Unresolved geography / industry codes | 0 / 0 |
-| Duplicate staging / intermediate keys | 0 / 0 |
-| Rejected startup rows | 67,668 |
+| Source | Raw | Staging | Intermediate | Run-specific rejected/unavailable | Notes |
+| --- | ---: | ---: | ---: | ---: | --- |
+| BDS | 492,100 across two raw tables | 246,050 | 178,382 all-scope; 88,562 MSA | 67,668 startup rows missing | Age-0 firms / all firms; 14 years, 19 sectors |
+| QCEW | 811,113 | 245,012 | 179,731 | 384,589 | Private ownership, annual county records, 19 broad sectors |
+| ACS | 27,075 | 5,415 | 5,194 | 221 | Five profile concepts with paired MOEs; 2010-2023 |
+| CBP | 755,249 | 755,249 | 189,474 | 374,302 | County-level raw rows; only complete CBSA-sector-year aggregates enter the intermediate |
 
-The startup rate uses age-0 firms divided by all firms in the same MSA-sector-year.
-Only suppression of those two firm counts invalidates the startup measure;
-flags on unrelated BDS measures remain visible in raw data. Code matching
-against the July 2023 CBSA reference is 100%, but matching codes alone do not
-prove historical boundary equivalence. The BDS intermediate is available for
-review, with that geography caveat and substantial legitimate startup missingness.
-The 925 codes include 538 micropolitan areas; a metropolitan-only analytical
-scope must filter these explicitly before integration.
+QCEW additionally flagged 65,281 incomplete aggregation groups. That is a
+separate group-level completeness measure, not an additional number of raw
+rows rejected. Suppression and unavailable values are retained or classified
+under source-specific rules rather than interpreted as zero.
 
-## QCEW
+## Historical Definitions
 
-The 2010-2023 national county pipeline was not run. The official BLS
-[NAICS history](https://www.bls.gov/cew/classifications/industry/industry-titles.htm)
-identifies 2007 NAICS for 2010, 2012 NAICS for 2011-2016, 2017 NAICS for
-2017-2021, and 2022 NAICS for 2022-2023. The current project reference set has
-no 2007-to-2022 sector mapping, and the sample transformation's exact-code
-check does not establish vintage comparability for 2010. The
-[annual by-area archives](https://www.bls.gov/cew/downloadable-data-files.htm)
-were verified as available, but no national raw/staging/intermediate rows were
-loaded. County completeness, ownership exclusions, suppression, growth, lags,
-and rejected-row counts are therefore not measurable at production scale yet.
+The target industry classification is 2022 NAICS broad sectors. Source-year
+vintages are recorded explicitly and the official concordance chain
+2007 -> 2012 -> 2017 -> 2022 is used to test broad-sector comparability.
+Across all 19 retained private-business sectors, every source/year row in the
+QCEW and CBP version audit was directly comparable to the target sector; there
+were zero officially mapped, unresolved, or excluded rows. This conclusion is
+limited to broad sectors and does not establish detailed-industry equivalence.
 
-## ACS
+| Source | Native NAICS by years |
+| --- | --- |
+| BDS 2023 historical release | 2017, 2010-2023 |
+| QCEW | 2007 (2010); 2012 (2011-2016); 2017 (2017-2021); 2022 (2022-2023) |
+| CBP | 2007 (2010-2011); 2012 (2012-2016); 2017 (2017-2023) |
 
-The national ACS pipeline was stopped before loading rows. Official Census
-metadata for [`DP02_0068PE` in 2010](https://api.census.gov/data/2010/acs/acs5/profile/variables/DP02_0068PE.json)
-labels it as civilian population 18 years and over under veteran status.
-The ID remains in that category through 2018. In
-[2019](https://api.census.gov/data/2019/acs/acs5/profile/variables/DP02_0068PE.json)
-it becomes bachelor's degree or higher for population 25 years and over,
-the meaning retained in [2023](https://api.census.gov/data/2023/acs/acs5/profile/variables/DP02_0068PE.json).
-The locked 2010-2023 education definition is therefore incompatible. No
-silent variable substitution or false education values were produced. National
-geography, controls, MOE, missingness, growth, lag, and rejection results are
-unavailable until the variable decision is made.
+ACS controls use the year-specific official profile registry. Bachelor's
+degree or higher changes from `DP02_0067PE/PM` in 2010-2018 to
+`DP02_0068PE/PM` in 2019-2023; the registry confirms the same concept and
+population-25+ universe. The other four estimate/MOE pairs are validated for
+each year. Household-income estimates are in each release year's adjusted
+dollars and are not deflated to a common year.
 
-## CBP
+## BDS Missingness And Scope
 
-The national county pipeline was not run. Official CBP API variable metadata
-shows `NAICS2007` for 2010-2011, `NAICS2012` for 2012-2016, and `NAICS2017`
-for 2017-2023. The project has no 2007 mapping, and the current loader expects
-the later source field. See the Census metadata for
-[2010](https://api.census.gov/data/2010/cbp/variables.html),
-[2012](https://api.census.gov/data/2012/cbp/variables.html), and
-[2023](https://api.census.gov/data/2023/cbp/variables.html).
-No national raw/staging/intermediate CBP rows were loaded; county coverage,
-noise/suppression, rejected records, and completeness remain unmeasured at
-production scale.
-
-## Cross-Source Geography And Industry
-
-| Source | Unique source geographies | Direct matches | Crosswalk matches | Unresolved | Row share matched |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| BDS | 925 | 925 | 0 | 0 | 100% by code |
-| QCEW | Not acquired | Not measured | Not measured | Not measured | Not measured |
-| ACS | Not acquired | Not measured | Not measured | Not measured | Not measured |
-| CBP | Not acquired | Not measured | Not measured | Not measured | Not measured |
-
-| Source | Native NAICS | 2022 sector treatment | Unresolved |
-| --- | --- | --- | --- |
-| BDS | 2017 | 19 source sector codes match the 2022 reference by code, including combined sectors; no official concordance applied | 0 codes |
-| QCEW | 2007 / 2012 / 2017 / 2022 by year | Official vintage mapping still required for a national run | 2010 vintage unresolved |
-| CBP | 2007 / 2012 / 2017 by year | Source-year field and vintage handling required | 2010-2011 vintage unresolved |
-
-## Year Coverage
-
-Here *available* means a production intermediate year was built; *partial*
-means the official source is available but the national pipeline has not been
-run; *unusable* means the locked definition or mapping blocks that year.
-
-| Year | BDS | QCEW | ACS | CBP |
-| --- | --- | --- | --- | --- |
-| 2010 | available | unusable | unusable | unusable |
-| 2011 | available | partial | unusable | unusable |
-| 2012 | available | partial | unusable | partial |
-| 2013 | available | partial | unusable | partial |
-| 2014 | available | partial | unusable | partial |
-| 2015 | available | partial | unusable | partial |
-| 2016 | available | partial | unusable | partial |
-| 2017 | available | partial | unusable | partial |
-| 2018 | available | partial | unusable | partial |
-| 2019 | available | partial | partial | partial |
-| 2020 | available | partial | partial | partial |
-| 2021 | available | partial | partial | partial |
-| 2022 | available | partial | partial | partial |
-| 2023 | available | partial | partial | partial |
-
-## Idempotency And Resources
-
-The BDS production command is:
-
-```powershell
-$env:UV_CACHE_DIR='C:\Users\mcobp\Documents\Codex\2026-08-30\files-mentioned-by-the-user-you\work\uv-cache'
-uv run --offline python -m regional_entrepreneurship_intelligence.etl.run_bds_production
-```
-
-It reuses cached official files, recomputes study-window extracts, checks raw
-row identifiers before insertion, and rebuilds staging/intermediate tables.
-| Pass | Raw backbone | Raw age-0 | Staging | Intermediate | Run-specific rejections |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Initial national run | 246,050 | 246,050 | 246,050 | 132,420 | 67,668 |
-| Corrected production command | 246,050 | 246,050 | 246,050 | 178,382 | 67,668 |
-| Same-code transformation rerun | 246,050 | 246,050 | 246,050 | 178,382 | 67,668 |
-
-The first run took 304 seconds and exposed an overly broad suppression filter.
-The corrected production command took 389 seconds; its raw loaders inserted
-zero new rows. The same-code transformation rerun took about 375 seconds. Its
-12 quality metrics shared with the preceding run have identical values; seven
-additional production metrics were added before this final rerun. The
-`quality_rejected_record` table retains run history, so its cumulative count
-is 203,004 rather than 67,668. Raw, staging, and intermediate keys have no
-duplicates. Four BDS manifests (two original files, two extracts) remain
-stable; six reference manifests are also present.
-
-The full official BDS files occupy 493,881,797 bytes; the two study extracts
-occupy 48,260,956 bytes. The SQLite database is 801,452,032 bytes. All are
-Git-ignored. In-memory CSV reads and row-by-row SQLite/rejection insertion
-are the largest performance costs. The latest run persisted 19 quality
-metrics, including panel counts, year coverage, lags, suppression, missingness,
-duplicates, and rejected rows.
-
-## Tests
-
-The baseline suite passed 22 tests before production changes. The final
-offline suite passed 23 tests, with zero failures, errors, or skips:
-
-```powershell
-$env:UV_CACHE_DIR='C:\Users\mcobp\Documents\Codex\2026-08-30\files-mentioned-by-the-user-you\work\uv-cache'
-uv run --offline python -m unittest discover -s tests -v
-```
+Of 246,050 staged BDS rows, 67,668 lack a startup rate. The auditable primary
+reasons are 53,855 suppressed age-0 numerators (79.59%), 10,931 suppressed
+all-firm denominators (16.15%), and 2,882 zero denominators (4.26%). There
+were no residual “other” missing cases. Among metropolitan records, 88,562
+startup rates are complete and 14,380 are missing. The MSA intermediate
+contains 88,562 rows across 387 MSA codes, 19 sectors, and 14 years; its
+available startup-rate lags 1/2/3 are 75,322 / 69,464 / 63,621. Micropolitan
+records remain in source/staging/all-scope intermediate data but are omitted
+from the A4.11 primary metropolitan readiness view.
 
 ## Cross-Source Readiness
 
-`int_entrepreneurship` is populated nationally for 2010-2023, including
-metropolitan and micropolitan codes.
-`int_industry_growth`, `int_regional_controls`, and `int_business_structure`
-are not populated nationally. A4.11 is incomplete, and A4.12 integration
-must wait for explicit ACS variable handling and authoritative early-year
-NAICS comparability decisions, followed by production runs and audits.
+All four sources contain source-specific intermediate rows in every year from
+2010 through 2023. The cross-source audit found 387 metropolitan codes in BDS,
+QCEW, and ACS; 392 in CBP; and 381 codes common to all four. This is an
+observed-code overlap only, not proof that historical CBSA boundaries are
+equivalent. County-based QCEW/CBP use the fixed July 2023 county crosswalk;
+BDS/ACS code matches preserve the historical-boundary caveat. No additional
+geography crosswalk was inferred.
+
+All four sources expose the same 19 broad sectors in their intermediate
+layers. Row availability differs by source and year and must be assessed at
+cell level before any future analytical join. The detailed year-by-year
+production counts and the full geography list are preserved in the ignored
+generated audit file `reports/generated/a411b_readiness.json`; historical
+sector classifications are in `reports/generated/a411b_source_versions.json`.
+
+## Reproducibility And Validation
+
+Full source files, the production database, and generated JSON audits are
+ignored by Git. Production runners are under
+`src/regional_entrepreneurship_intelligence/etl/`; the ACS registry and NAICS
+strategy are documented in `docs/ACS_VARIABLE_REGISTRY.md` and
+`docs/NAICS_VERSION_STRATEGY.md`. Source-specific instructions and quality
+rules are in each source's profile and transformation document.
+
+The full offline test suite passed **30 tests** with no failures or skips.
+The four intermediate tables have zero duplicate keys at their declared
+grains. The production analytics table has zero rows. Production runner
+idempotency was verified for ACS and BDS; CBP raw acquisition and transformation
+were rerun successfully. QCEW transformation passed the full national build
+and focused synthetic idempotency tests; a second full national QCEW rebuild
+was not run because it takes about 13 minutes.
+
+The production SQLite database is approximately 4.72 GB locally and remains
+ignored. The regenerated final README and all A4.12 joining/target work are
+intentionally deferred.

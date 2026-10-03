@@ -126,6 +126,12 @@ The transformation documentation is maintained in `docs/QCEW_TRANSFORMATION.md`.
 
 BLS documents QCEW source vintages as 2007 NAICS for 2010, 2012 NAICS for
 2011-2016, 2017 NAICS for 2017-2021, and 2022 NAICS from 2022 onward.
-The project reference bundle does not yet include a 2007-to-2022 sector
-mapping. The national QCEW build is paused at the 2010 vintage boundary.
+The reference bundle now includes Census's official 2007-to-2012 concordance,
+composed conservatively with official 2012-to-2017 and 2017-to-2022 files.
+The 2010-2023 national runner reads official annual by-area ZIP archives,
+extracts county/private/all-size annual broad sectors, and preserves the
+native vintage per year. The historical bulk header
+`annual_avg_estabs_count` is copied to the loader's `annual_avg_estabs`
+field without changing its value. Source archives and extracts remain ignored.
+See `docs/NAICS_VERSION_STRATEGY.md` for mapping rules.
 See the official BLS [industry classifications](https://www.bls.gov/cew/classifications/industry/industry-titles.htm).

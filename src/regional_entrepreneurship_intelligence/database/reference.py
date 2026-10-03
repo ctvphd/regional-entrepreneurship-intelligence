@@ -16,6 +16,8 @@ from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree
 
+import xlrd
+
 from regional_entrepreneurship_intelligence.database.connection import (
     DEFAULT_DATABASE_PATH,
     PROJECT_ROOT,
@@ -35,6 +37,28 @@ GEOGRAPHY_VINTAGE = "July 2023 CBSA delineation"
 NAICS_ANALYTICAL_VERSION = "2022"
 
 OFFICIAL_REFERENCE_ASSETS: tuple[dict[str, str | int | None], ...] = (
+    {
+        "filename": "2007_to_2012_naics.xls",
+        "source_name": "North American Industry Classification System (NAICS)",
+        "source_agency": "U.S. Census Bureau",
+        "dataset_name": "2007 NAICS to 2012 NAICS full concordance",
+        "access_method": "official public HTTPS download",
+        "url": "https://www2.census.gov/library/reference/naics/technical-documentation/concordance/2007_to_2012_naics.xls",
+        "source_year": 2007,
+        "source_version": "2007-to-2012 NAICS concordance",
+        "notes": "Official six-digit relationships; sector equivalence must be audited before use.",
+    },
+    {
+        "filename": "2012_to_2007_naics.xls",
+        "source_name": "North American Industry Classification System (NAICS)",
+        "source_agency": "U.S. Census Bureau",
+        "dataset_name": "2012 NAICS to 2007 NAICS full concordance",
+        "access_method": "official public HTTPS download",
+        "url": "https://www2.census.gov/library/reference/naics/technical-documentation/concordance/2012_to_2007_naics.xls",
+        "source_year": 2012,
+        "source_version": "2012-to-2007 NAICS concordance",
+        "notes": "Official reverse six-digit relationships retained for validation.",
+    },
     {
         "filename": "list1_2023.xlsx",
         "source_name": "Census CBSA Delineation Files",
@@ -521,6 +545,16 @@ def _reference_asset_row_count(file_path: Path) -> int:
 
 
 def _xlsx_rows(path: Path) -> list[list[str]]:
+    if path.suffix.lower() == ".xls":
+        sheet = xlrd.open_workbook(path).sheet_by_index(0)
+        return [
+            [
+                str(int(value)) if isinstance(value, float) and value.is_integer()
+                else str(value) if value != "" else ""
+                for value in sheet.row_values(index)
+            ]
+            for index in range(sheet.nrows)
+        ]
     namespace = {"a": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
     with zipfile.ZipFile(path) as workbook:
         shared_strings = _shared_strings(workbook, namespace)

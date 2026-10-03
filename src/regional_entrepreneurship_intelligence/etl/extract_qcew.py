@@ -26,6 +26,7 @@ from regional_entrepreneurship_intelligence.database.metadata import (
     start_pipeline_run,
 )
 from regional_entrepreneurship_intelligence.database.reference import seed_reference_data
+from regional_entrepreneurship_intelligence.database.naics_versions import source_year_naics
 from regional_entrepreneurship_intelligence.database.schema import create_schema
 
 
@@ -60,13 +61,6 @@ REQUIRED_QCEW_COLUMNS = {
     "total_annual_wages",
     "avg_annual_pay",
 }
-
-QCEW_STATUS_COLUMNS = {
-    "disclosure_code",
-    "lq_disclosure_code",
-    "oty_disclosure_code",
-}
-
 
 @dataclass(frozen=True)
 class QCEWRawLoadResult:
@@ -132,24 +126,22 @@ def load_qcew_raw(
         official_source_url=official_source_url,
         source_version=source_version,
         row_count=len(rows),
+        source_year=int(rows[0]["year"]) if len({row["year"] for row in rows}) == 1 else None,
     )
     run_id = start_pipeline_run(connection, stage="raw_qcew_ingestion")
     inserted = 0
     skipped = 0
+    existing_rows = {
+        row[0] for row in connection.execute(
+            "SELECT source_row_identifier FROM raw_qcew WHERE raw_source_filename = ?;",
+            (path.name,),
+        )
+    }
     try:
         with connection:
             for row in rows:
                 source_row_identifier = qcew_source_row_identifier(row)
-                existing = connection.execute(
-                    """
-                    SELECT raw_qcew_id
-                    FROM raw_qcew
-                    WHERE raw_source_filename = ?
-                      AND source_row_identifier = ?;
-                    """,
-                    (path.name, source_row_identifier),
-                ).fetchone()
-                if existing:
+                if source_row_identifier in existing_rows:
                     skipped += 1
                     continue
                 connection.execute(
@@ -184,7 +176,7 @@ def load_qcew_raw(
                         row["industry_code"],
                         row["own_code"],
                         row["size_code"],
-                        "QCEW source-native NAICS coding; not standardized in A4.7",
+                        source_year_naics("QCEW", int(row["year"])).native_version,
                         source_row_identifier,
                         path.name,
                         row.get("disclosure_code", ""),
@@ -198,6 +190,7 @@ def load_qcew_raw(
                     ),
                 )
                 inserted += 1
+                existing_rows.add(source_row_identifier)
         finish_pipeline_run(
             connection,
             run_id,
@@ -250,8 +243,8 @@ def qcew_source_row_identifier(row: dict[str, str]) -> str:
 
 
 def row_has_status(row: dict[str, str]) -> bool:
-    """Return true when a QCEW row contains disclosure/status flags."""
-    return any((row.get(column) or "").strip() for column in QCEW_STATUS_COLUMNS)
+    """Annual suppression is distinct from LQ and over-the-year status."""
+    return bool((row.get("disclosure_code") or "").strip())
 
 
 def _ensure_qcew_manifest(
@@ -261,6 +254,7 @@ def _ensure_qcew_manifest(
     official_source_url: str,
     source_version: str,
     row_count: int,
+    source_year: int | None,
 ) -> int:
     checksum = _sha256(csv_path)
     existing = connection.execute(
@@ -289,17 +283,18 @@ def _ensure_qcew_manifest(
         source_name="BLS Quarterly Census of Employment and Wages (QCEW)",
         source_agency="U.S. Bureau of Labor Statistics",
         dataset_name=QCEW_PRODUCT,
-        access_method="official QCEW annual area CSV slices; full-scale plan uses annual by-area zip files",
+        access_method="official BLS annual by-area ZIP county-sector extract",
         source_url_or_endpoint=official_source_url,
-        source_year=2023,
+        source_year=source_year,
         source_version=source_version,
         raw_filename=csv_path.name,
         file_checksum=checksum,
         row_count=row_count,
         notes=(
-            "A4.7 committed sample derived from official BLS QCEW annual area "
-            "CSV slices for selected counties, years, industries, and ownerships. "
-            "Full annual by-area zip files are not committed."
+            "Local production extract from the official annual by-area ZIP; "
+            "county, private ownership, all establishment sizes, annual rows, "
+            "and selected broad sectors only. Extract checksum and selected-row "
+            "count are recorded; original ZIP archives remain Git-ignored."
         ),
     )
 

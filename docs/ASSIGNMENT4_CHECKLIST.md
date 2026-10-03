@@ -176,8 +176,15 @@ A4.10 completes CBP raw acquisition, county-to-CBSA business-structure construct
 ## A4.11 Production Run Status
 
 - [x] Baseline sample suite: 22 tests passed before production work.
-- [x] Official BDS MSA-sector and MSA-sector-firm-age files acquired for the full 2010-2023 window.
-- [ ] Four-source national run complete. ACS education has a documented 2019 definition break; QCEW and CBP include 2007 NAICS years without a project mapping.
-- [ ] Cross-source readiness for A4.12. See `reports/assignment4_production_quality_report.md`.
+- [x] Historical NAICS vintages and broad-sector concordance validated for BDS, QCEW, and CBP.
+- [x] ACS year-specific estimate/MOE registry validated for 2010-2023, including the education variable ID change in 2019.
+- [x] National BDS, QCEW, ACS, and CBP production layers built for 2010-2023.
+- [x] BDS startup missingness, cross-source coverage, and source-version audits generated.
+- [x] Full offline suite passed: 30 tests.
+- [x] A4.11 production quality report updated: `reports/assignment4_production_quality_report.md`.
+- [ ] A4.12 integration, analytical panel construction, and targets; intentionally deferred.
 
-A4.12 remains on hold while these production issues are unresolved.
+A4.11 stops before any cross-source measure join. The code overlap is not a
+historical boundary-equivalence assertion; the production report records 381
+common metropolitan codes and the remaining geography caveat. The final README
+rewrite is also deferred.

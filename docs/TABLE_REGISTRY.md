@@ -150,7 +150,10 @@ A4.10 does not merge CBP with BDS, QCEW, or ACS, build `analytics_msa_industry_y
 ## A4.11 Production Instance
 
 The ignored `database/assignment4_production.sqlite` is a separate production
-instance of the same schema. Its BDS raw, staging, intermediate, manifest,
-pipeline-run, rejection, and quality tables are populated by
-`etl.run_bds_production`. QCEW, ACS, and CBP production tables are not yet
-populated. The committed sample files and tests remain independent.
+instance of the same schema. National raw, staging, and source-specific
+intermediate tables are populated for BDS, QCEW, ACS, and CBP for 2010-2023.
+Production counts, historical-definition decisions, and readiness limitations
+are documented in `reports/assignment4_production_quality_report.md`. The
+committed sample files and tests remain independent. A4.11 does not populate
+`analytics_msa_industry_year` or create expected entrepreneurship, alignment,
+or entrepreneurial-gap targets.

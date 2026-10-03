@@ -166,3 +166,11 @@ tracks suppression of the age-0 firms numerator or all-firms denominator for
 this measure; source-wide flags remain in raw data. Production quality metrics
 now include raw suppression, startup missingness, all three lag missingness
 counts, year coverage, panel counts, and run-specific rejected rows.
+
+The A4.11B audit traces each null startup rate to the age-0 numerator or
+all-firms denominator stored in the two raw payloads. For the 67,668 national
+nulls, 53,855 numerators were suppressed, 10,931 denominators were suppressed,
+and 2,882 denominators were zero. Metropolitan staging contains 88,562
+complete and 14,380 missing startup rates; the remaining nulls are in
+micropolitan records. `v_bds_metropolitan_eligible` is the intended primary
+scope, and the full intermediate remains available for audit.

@@ -7,7 +7,7 @@ import json
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from regional_entrepreneurship_intelligence.database.connection import (
     DEFAULT_DATABASE_PATH,
@@ -24,6 +24,7 @@ from regional_entrepreneurship_intelligence.database.reference import (
     NAICS_ANALYTICAL_VERSION,
     load_authoritative_reference_data,
 )
+from regional_entrepreneurship_intelligence.database.naics_versions import classify_sector
 from regional_entrepreneurship_intelligence.database.schema import create_schema
 from regional_entrepreneurship_intelligence.etl.extract_cbp import (
     CBP_SAMPLE_PATH,
@@ -32,7 +33,7 @@ from regional_entrepreneurship_intelligence.etl.extract_cbp import (
 
 
 VALID_GEOGRAPHY_STATUS = "crosswalk_required"
-VALID_INDUSTRY_STATUS = "directly_comparable"
+VALID_INDUSTRY_STATUS = {"directly_comparable", "official_mapping_required"}
 
 
 @dataclass(frozen=True)
@@ -135,8 +136,13 @@ def audit_cbp_industry(connection: sqlite3.Connection) -> MappingAuditSummary:
     return _summary_from_statuses(statuses, row_counts)
 
 
-def classify_industry_code(connection: sqlite3.Connection, industry_code: str) -> str:
-    """Classify one CBP industry code using exact 2022 NAICS sector evidence."""
+def classify_industry_code(
+    connection: sqlite3.Connection, industry_code: str, native_version: str = "2017"
+) -> str:
+    """Classify a source-native sector using official vintage concordances."""
+    status, target = classify_sector(native_version, industry_code)
+    if target is None:
+        return "unresolved"
     exact = connection.execute(
         """
         SELECT 1
@@ -145,10 +151,10 @@ def classify_industry_code(connection: sqlite3.Connection, industry_code: str) -
           AND naics_version = ?
           AND naics_level = 2;
         """,
-        (industry_code, NAICS_ANALYTICAL_VERSION),
+        (target, NAICS_ANALYTICAL_VERSION),
     ).fetchone()
     if exact:
-        return "directly_comparable"
+        return status
     return "unresolved"
 
 
@@ -157,7 +163,10 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
     industries = _industries_by_code(connection)
     for raw in _raw_rows(connection):
         geography = geographies.get(raw["source_county_geoid"])
-        industry = industries.get(raw["source_industry_id"])
+        industry_status, target_sector = classify_sector(
+            raw["source_naics_version"], raw["source_industry_id"]
+        )
+        industry = industries.get(target_sector)
         measures = _parsed_measures(raw)
         connection.execute(
             """
@@ -208,8 +217,10 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
                 geography["cbsa_code"] if geography else None,
                 geography["cbsa_name"] if geography else None,
                 industry["naics_code"] if industry else None,
-                classify_geography_code(connection, raw["source_county_geoid"]),
-                classify_industry_code(connection, raw["source_industry_id"]),
+                "crosswalk_required" if geography else classify_geography_code(
+                    connection, raw["source_county_geoid"]
+                ),
+                industry_status if industry else "unresolved",
                 measures["establishments"],
                 measures["employment"],
                 measures["annual_payroll"],
@@ -401,13 +412,13 @@ def _transform_result(
         flagged_staging_rows=connection.execute(
             "SELECT COUNT(*) FROM stg_cbp WHERE is_suppressed = 1;"
         ).fetchone()[0],
-        incomplete_aggregation_rows=len(_incomplete_groups(connection)),
+        incomplete_aggregation_rows=_incomplete_aggregation_count(connection),
         geography_audit=geography_audit,
         industry_audit=industry_audit,
     )
 
 
-def _raw_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
+def _raw_rows(connection: sqlite3.Connection) -> Iterator[dict[str, Any]]:
     rows = connection.execute(
         """
         SELECT raw_cbp_id,
@@ -434,12 +445,10 @@ def _raw_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
         FROM raw_cbp
         WHERE source_year BETWEEN 2010 AND 2023;
         """
-    ).fetchall()
-    output = []
+    )
     for row in rows:
         payload = json.loads(row[20])
-        output.append(
-            {
+        yield {
                 "raw_cbp_id": row[0],
                 "manifest_id": row[1],
                 "source_year": row[2],
@@ -463,22 +472,20 @@ def _raw_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
                 "is_suppressed": bool(row[19]),
                 "raw_payload": row[20],
             }
-        )
-    return output
 
 
-def _eligible_staging_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
-    return [
+def _eligible_staging_rows(connection: sqlite3.Connection) -> Iterator[dict[str, Any]]:
+    return (
         row
         for row in _staging_rows(connection)
         if row["geography_mapping_status"] == VALID_GEOGRAPHY_STATUS
-        and row["industry_mapping_status"] == VALID_INDUSTRY_STATUS
+        and row["industry_mapping_status"] in VALID_INDUSTRY_STATUS
         and not row["is_missing"]
         and not row["is_suppressed"]
-    ]
+    )
 
 
-def _staging_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
+def _staging_rows(connection: sqlite3.Connection) -> Iterator[dict[str, Any]]:
     rows = connection.execute(
         """
         SELECT stg_cbp_id,
@@ -501,9 +508,9 @@ def _staging_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
                manifest_id
         FROM stg_cbp;
         """
-    ).fetchall()
-    return [
-        {
+    )
+    for row in rows:
+        yield {
             "stg_cbp_id": row[0],
             "geography_id": row[1],
             "industry_id": row[2],
@@ -523,8 +530,6 @@ def _staging_rows(connection: sqlite3.Connection) -> list[dict[str, Any]]:
             "is_suppressed": bool(row[16]),
             "manifest_id": row[17],
         }
-        for row in rows
-    ]
 
 
 def _parsed_measures(row: dict[str, Any]) -> dict[str, float | None]:
@@ -658,6 +663,32 @@ def _incomplete_groups(connection: sqlite3.Connection) -> list[dict[str, Any]]:
                 }
             )
     return incomplete
+
+
+def _incomplete_aggregation_count(connection: sqlite3.Connection) -> int:
+    return connection.execute(
+        """
+        SELECT COUNT(*)
+        FROM (
+            SELECT s.standardized_cbsa_code,
+                   s.standardized_sector_code,
+                   s.year
+            FROM stg_cbp AS s
+            WHERE s.geography_mapping_status = ?
+              AND s.industry_mapping_status IN ('directly_comparable', 'official_mapping_required')
+              AND s.is_missing = 0
+              AND s.is_suppressed = 0
+            GROUP BY s.standardized_cbsa_code, s.standardized_sector_code, s.year
+            HAVING COUNT(DISTINCT s.source_county_geoid) < COALESCE((
+                SELECT COUNT(*)
+                FROM ref_geography_county_crosswalk AS x
+                WHERE x.cbsa_code = s.standardized_cbsa_code
+                  AND x.source_vintage = ?
+            ), 0)
+        );
+        """,
+        (VALID_GEOGRAPHY_STATUS, GEOGRAPHY_VINTAGE),
+    ).fetchone()[0]
 
 
 def _flag_summary(row: dict[str, Any]) -> str | None:
