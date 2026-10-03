@@ -146,3 +146,11 @@ Implemented artifacts:
 A4.10 uses official Census CBP API rows at county x NAICS2017 sector x year x legal-form x employment-size grain. County rows are mapped through the July 2023 CBSA county crosswalk, source sectors are checked against the 2022 NAICS sector reference, and additive business-structure measures are summed only for complete, unsuppressed CBSA-sector-year groups.
 
 A4.10 does not merge CBP with BDS, QCEW, or ACS, build `analytics_msa_industry_year`, or create entrepreneurial-gap targets.
+
+## A4.11 Production Instance
+
+The ignored `database/assignment4_production.sqlite` is a separate production
+instance of the same schema. Its BDS raw, staging, intermediate, manifest,
+pipeline-run, rejection, and quality tables are populated by
+`etl.run_bds_production`. QCEW, ACS, and CBP production tables are not yet
+populated. The committed sample files and tests remain independent.

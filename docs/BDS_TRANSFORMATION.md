@@ -155,3 +155,14 @@ standardized MSA x directly comparable sector x year
 ```
 
 The table does not contain expected entrepreneurship, alignment residuals, entrepreneurial-gap targets, QCEW measures, ACS controls, or CBP measures.
+
+## A4.11 Production Behavior
+
+The national BDS build uses the existing MSA-sector-year staging and
+entrepreneurship transformations. Full-scale data showed that an age-0 or
+backbone row can have a D/S flag on an unrelated measure while both firm
+counts needed for startup rate are numeric. `stg_bds.is_suppressed` therefore
+tracks suppression of the age-0 firms numerator or all-firms denominator for
+this measure; source-wide flags remain in raw data. Production quality metrics
+now include raw suppression, startup missingness, all three lag missingness
+counts, year coverage, panel counts, and run-specific rejected rows.

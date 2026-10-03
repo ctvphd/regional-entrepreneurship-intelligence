@@ -80,3 +80,12 @@ A4.10 implements:
 - rejected-record and quality-metric tracking for unresolved industry and incomplete county coverage
 
 A4.10 does not merge CBP with BDS, QCEW, or ACS; does not build `analytics_msa_industry_year`; and does not create entrepreneurial-gap targets.
+
+## A4.11 Vintage Audit
+
+The official CBP API variable metadata identifies `NAICS2007` for 2010-2011,
+`NAICS2012` for 2012-2016, and `NAICS2017` for 2017-2023. The existing A4.10
+loader and transformation were built for the 2017 source field; the current
+reference bundle has no 2007 concordance. National CBP ingestion is paused
+until source-year field handling and the 2007 mapping are resolved. The 2022-2023
+sample remains valid.

@@ -414,3 +414,12 @@ A4.10 verifies CBP API source fields and expands CBP raw, staging, and intermedi
 | `int_business_structure` | `is_complete_county_coverage` | INTEGER |  | Yes | Derived | Complete-coverage indicator. | A4.10 intermediate rows require value `1`. |
 | `int_business_structure` | `geography_mapping_status` | TEXT |  | Yes | Mapping audit | Geography mapping status inherited from staging. | A4.10 intermediate rows use `crosswalk_required`. |
 | `int_business_structure` | `industry_mapping_status` | TEXT |  | Yes | Mapping audit | Industry mapping status inherited from staging. | A4.10 intermediate rows use `directly_comparable`. |
+
+## A4.11 Production Note
+
+The production BDS instance uses the existing table definitions. In `stg_bds`,
+`is_suppressed` now describes suppression of either firm count used in the
+startup-rate numerator or denominator; suppression of unrelated BDS measures
+does not erase a numeric startup rate. The source-wide suppression indicator
+and all original values remain in `raw_bds` and `raw_bds_firm_age`.
+The ignored production database is documented in the production quality report.

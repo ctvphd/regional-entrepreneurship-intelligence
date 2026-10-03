@@ -26,6 +26,17 @@ The sample includes:
 
 Full production acquisition should query the same variables for all study CBSAs and years 2010-2023.
 
+## A4.11 Definition Audit
+
+The 2010-2018 ACS 5-year Data Profile metadata labels `DP02_0068PE` as a
+veteran-status measure (civilian population 18 years and over). From 2019-2023
+the same ID is labeled bachelor's degree or higher for population 25 years and
+over. The locked education variable is therefore not comparable across the full
+study period. The national ACS pipeline is paused pending an explicit variable
+decision; no earlier-year value is silently used as education.
+
+Official metadata pattern: `https://api.census.gov/data/{year}/acs/acs5/profile/variables/DP02_0068PE.json`.
+
 ## Selected Variables
 
 | Control | Estimate variable | MOE variable | Universe / denominator |

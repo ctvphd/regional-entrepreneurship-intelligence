@@ -154,3 +154,13 @@ Calendar-year continuity rule:
 - lag3 requires year `t - 3`
 
 If a calendar year is missing, the corresponding lag is null. Lags are not forward-filled, and suppressed prior values are not used as valid lag values.
+
+## A4.11 National Acquisition
+
+The official 2023 release files were downloaded to ignored
+`data/raw/bds/production/`. The full MSA-sector file has 808,450 rows and
+89,784,307 bytes; the full MSA-sector-firm-age-coarse file has 4,042,250 rows
+and 404,097,490 bytes. The study-window extracts retain 246,050 backbone rows
+and 246,050 age-0 firm rows across 2010-2023. Original-file and extract
+checksums are separately recorded in the production SQLite manifest. The
+production command is documented in the quality report.

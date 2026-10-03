@@ -172,3 +172,12 @@ A4.10 completes CBP raw acquisition, county-to-CBSA business-structure construct
 - create alignment residuals
 - create entrepreneurial-gap targets
 - begin Assignment 4.11
+
+## A4.11 Production Run Status
+
+- [x] Baseline sample suite: 22 tests passed before production work.
+- [x] Official BDS MSA-sector and MSA-sector-firm-age files acquired for the full 2010-2023 window.
+- [ ] Four-source national run complete. ACS education has a documented 2019 definition break; QCEW and CBP include 2007 NAICS years without a project mapping.
+- [ ] Cross-source readiness for A4.12. See `reports/assignment4_production_quality_report.md`.
+
+A4.12 remains on hold while these production issues are unresolved.

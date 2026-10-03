@@ -30,8 +30,6 @@ from regional_entrepreneurship_intelligence.etl.extract_bds import (
     BDS_SAMPLE_PATH,
     load_bds_firm_age_raw,
     load_bds_raw,
-    row_has_status_value,
-    row_has_suppression,
 )
 
 
@@ -196,8 +194,7 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
                source_geography_id,
                source_industry_id,
                source_fagecoarse,
-               raw_payload,
-               is_suppressed
+               raw_payload
         FROM raw_bds_firm_age
         WHERE source_year BETWEEN 2010 AND 2023
           AND source_fagecoarse = ?;
@@ -213,7 +210,6 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
             source_industry,
             fagecoarse,
             payload_json,
-            firm_age_suppressed,
         ) = row
         payload = json.loads(payload_json)
         backbone_payload = backbone.get((year, source_geography, source_industry), {})
@@ -232,9 +228,8 @@ def _insert_staging_rows(connection: sqlite3.Connection, pipeline_run_id: str) -
         establishment_entry = _to_float(backbone_payload.get("estabs_entry"))
         establishment_entry_rate = _to_float(backbone_payload.get("estabs_entry_rate"))
         suppressed = (
-            bool(firm_age_suppressed)
-            or row_has_suppression(payload)
-            or row_has_suppression(backbone_payload)
+            payload.get("firms") in {"D", "S"}
+            or backbone_payload.get("firms") in {"D", "S"}
         )
         missing = startup_count is None or startup_rate is None
         connection.execute(
@@ -315,7 +310,8 @@ def _insert_intermediate_rows(connection: sqlite3.Connection, pipeline_run_id: s
         WHERE geography_mapping_status = 'direct_match'
           AND industry_mapping_status = 'directly_comparable'
           AND firm_startups IS NOT NULL
-          AND startup_rate IS NOT NULL;
+          AND startup_rate IS NOT NULL
+          AND is_suppressed = 0;
         """
     ).fetchall()
     for row in staged:
@@ -418,7 +414,8 @@ def _record_exclusions(connection: sqlite3.Connection, pipeline_run_id: str) -> 
         FROM stg_bds
         WHERE geography_mapping_status <> 'direct_match'
            OR industry_mapping_status <> 'directly_comparable'
-           OR startup_rate IS NULL;
+           OR startup_rate IS NULL
+           OR is_suppressed = 1;
         """
     ).fetchall()
     count = 0
@@ -428,6 +425,8 @@ def _record_exclusions(connection: sqlite3.Connection, pipeline_run_id: str) -> 
             reason = "unresolved_geography"
         elif row[4] != "directly_comparable":
             reason = "unresolved_industry"
+        elif row[6]:
+            reason = "suppressed_value"
         insert_rejected_record(
             connection,
             pipeline_run_id=pipeline_run_id,
@@ -463,6 +462,12 @@ def _record_quality_metrics(
         "raw_bds_firm_age_rows": connection.execute(
             "SELECT COUNT(*) FROM raw_bds_firm_age;"
         ).fetchone()[0],
+        "raw_bds_suppressed_rows": connection.execute(
+            "SELECT COUNT(*) FROM raw_bds WHERE is_suppressed = 1;"
+        ).fetchone()[0],
+        "raw_bds_firm_age_suppressed_rows": connection.execute(
+            "SELECT COUNT(*) FROM raw_bds_firm_age WHERE is_suppressed = 1;"
+        ).fetchone()[0],
         "stg_bds_rows": connection.execute("SELECT COUNT(*) FROM stg_bds;").fetchone()[0],
         "int_entrepreneurship_rows": connection.execute(
             "SELECT COUNT(*) FROM int_entrepreneurship;"
@@ -480,6 +485,19 @@ def _record_quality_metrics(
         "lag1_missing_rows": connection.execute(
             "SELECT COUNT(*) FROM int_entrepreneurship WHERE startup_rate_lag1 IS NULL;"
         ).fetchone()[0],
+        "lag2_missing_rows": connection.execute(
+            "SELECT COUNT(*) FROM int_entrepreneurship WHERE startup_rate_lag2 IS NULL;"
+        ).fetchone()[0],
+        "lag3_missing_rows": connection.execute(
+            "SELECT COUNT(*) FROM int_entrepreneurship WHERE startup_rate_lag3 IS NULL;"
+        ).fetchone()[0],
+        "year_coverage_count": connection.execute(
+            "SELECT COUNT(DISTINCT year) FROM int_entrepreneurship;"
+        ).fetchone()[0],
+        "rejected_rows": connection.execute(
+            "SELECT COUNT(*) FROM quality_rejected_record WHERE pipeline_run_id = ?;",
+            (pipeline_run_id,),
+        ).fetchone()[0],
         "valid_msa_sector_panels": connection.execute(
             """
             SELECT COUNT(*)
@@ -490,6 +508,14 @@ def _record_quality_metrics(
             );
             """
         ).fetchone()[0],
+        "balanced_msa_sector_panels": connection.execute(
+            """SELECT COUNT(*) FROM (
+                   SELECT geography_id, industry_id
+                   FROM int_entrepreneurship
+                   GROUP BY geography_id, industry_id
+                   HAVING COUNT(DISTINCT year) = 14
+               );"""
+        ).fetchone()[0],
     }
     for name, value in metrics.items():
         insert_quality_metric(
@@ -498,7 +524,7 @@ def _record_quality_metrics(
             table_name="bds_a46",
             metric_name=name,
             metric_value=float(value),
-            scope="A4.6 sample transformation",
+            scope="BDS standardization",
         )
 
 

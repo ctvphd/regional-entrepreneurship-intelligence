@@ -62,6 +62,9 @@ class BDSTransformTest(unittest.TestCase):
                 """
             ).fetchone()[0]
             self.assertEqual(int_count, 104)
+            self.assertEqual(connection.execute(
+                "SELECT COUNT(*) FROM int_entrepreneurship WHERE has_suppression = 1"
+            ).fetchone()[0], 0)
 
             connection.close()
 

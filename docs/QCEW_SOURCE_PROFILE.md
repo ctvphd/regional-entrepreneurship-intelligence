@@ -121,3 +121,11 @@ Before `stg_qcew` and `int_industry_growth` can be built, A4.8 must:
 A4.8 implements the county-level aggregation strategy recommended above. Private ownership (`own_code = 5`) is the selected analytical scope. County records are mapped through the July 2023 CBSA county crosswalk, additive measures are summed, and average annual pay is recalculated from aggregated total annual wages divided by annual average employment.
 
 The transformation documentation is maintained in `docs/QCEW_TRANSFORMATION.md`.
+
+## A4.11 Vintage Audit
+
+BLS documents QCEW source vintages as 2007 NAICS for 2010, 2012 NAICS for
+2011-2016, 2017 NAICS for 2017-2021, and 2022 NAICS from 2022 onward.
+The project reference bundle does not yet include a 2007-to-2022 sector
+mapping. The national QCEW build is paused at the 2010 vintage boundary.
+See the official BLS [industry classifications](https://www.bls.gov/cew/classifications/industry/industry-titles.htm).

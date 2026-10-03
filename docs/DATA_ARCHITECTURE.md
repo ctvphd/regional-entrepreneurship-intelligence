@@ -517,3 +517,16 @@ geography_id x industry_id x year
 Conceptually this is `MSA/CBSA x 2022 NAICS 2-digit sector x year`. Additive establishment, employment, annual payroll, and first-quarter payroll measures are summed across counties only after county-to-CBSA mapping, direct sector comparability checks, source-flag checks, and complete county-coverage checks. CBP payroll values remain nominal and in thousands of dollars.
 
 A4.10 does not merge CBP with BDS, QCEW, or ACS, build the final analytics table, or create model targets.
+
+## A4.11 Production Status
+
+The BDS national 2010-2023 source files are stored under ignored
+`data/raw/bds/production/`. `run_bds_production.py` loads the study-window
+MSA-sector backbone and age-0 firm rows into an ignored production SQLite
+database, then uses the established BDS staging/intermediate logic. Full
+source files and selected extracts have separate checksum manifests.
+
+The cross-source production run is incomplete. ACS variable `DP02_0068PE`
+changes definition in 2019; QCEW 2010 and CBP 2010-2011 use 2007 NAICS,
+which is absent from the project mapping bundle. See the production quality
+report for status and source evidence. No integration table has been populated.

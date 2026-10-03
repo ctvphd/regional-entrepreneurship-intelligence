@@ -181,3 +181,14 @@ For the Assignment 4.10 CBP business-structure stage, student-directed implement
 - deferring source integration, final analytics, and target construction
 
 A substantive AI-assisted shortcut was rejected during this step: the CBP `NAICS2017` source sectors were not treated as natively 2022 NAICS, and incomplete county-sector groups were not aggregated by pretending missing counties were zero.
+
+## Assignment 4.11 Production Review
+
+AI assistance downloaded and profiled the official BDS bulk files, added a
+reproducible BDS production command, and audited ACS/CBP/QCEW year-vintage
+metadata. The 2010-2018 ACS education variable ID was found to describe a
+veteran-status measure, so no substitute variable was chosen automatically.
+The 2007 NAICS years in QCEW and CBP were also left unmapped pending an
+authoritative project decision. The BDS production run exposed a suppression
+detail: flags on unrelated measures no longer invalidate numeric firm counts.
+All production raw files and the SQLite database remain Git-ignored.
