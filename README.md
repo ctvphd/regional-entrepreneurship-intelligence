@@ -2,155 +2,102 @@
 
 ## Project Overview
 
-Regional Entrepreneurship Intelligence is a predictive business analytics initiative examining whether entrepreneurial activity aligns with rapidly growing industries in regional economies.
+This research data project examines whether entrepreneurship keeps pace with regional industry growth. The Assignment 4 production database integrates federal business-demography, employment, regional-control, and business-pattern data into a documented metropolitan panel. It establishes a reproducible research dataset; it does not yet estimate alignment or make predictive claims.
 
-The framework is intended to support standardized geographic analysis across the United States. Future work may analyze Metropolitan Statistical Areas (MSAs), Micropolitan Statistical Areas, and Counties so the project can be replicated across different regional economies.
+**Unit of analysis:** MSA x industry x year. Each row represents one broad industry sector in one metropolitan statistical area for one calendar year.
 
-This repository currently contains the technical foundation for the project. It does not yet contain research results, data pipelines, exploratory analysis, predictive models, or dashboard code.
+**Study period:** 2010-2023.
 
-## Geographic Framework
+## Data Sources
 
-The project is being designed around standardized U.S. geographic units rather than a single fixed pilot region. Northern Alabama or the Tennessee Valley may still be useful as a future demonstration case, but they are not the defining analytical geography of the repository.
+- **Business Dynamics Statistics (BDS), U.S. Census Bureau:** firm startups and business dynamics.
+- **Quarterly Census of Employment and Wages (QCEW), U.S. Bureau of Labor Statistics:** employment, establishments, payroll, and industry growth.
+- **American Community Survey (ACS), U.S. Census Bureau:** metropolitan population, income, education, labor-force participation, and unemployment controls.
+- **County Business Patterns (CBP), U.S. Census Bureau:** supporting establishment, employment, and payroll measures aggregated from counties.
 
-### Metropolitan Statistical Areas
+The current integrated production panel contains **63,577 rows, 381 MSAs, 19 broad sectors, and 14 years (2010-2023)**. It includes 5,887 MSA-sector panels: 2,830 are balanced over all 14 years and 3,057 are unbalanced. See [the analytical-panel documentation](docs/ANALYTICAL_PANEL.md) and [the merge audit](reports/assignment4_merge_audit.md) for coverage and missingness details.
 
-Metropolitan Statistical Areas are expected to serve as the primary regional analytical unit because they better represent integrated labor and economic markets.
+## Architecture
 
-### Micropolitan Statistical Areas
-
-Micropolitan Statistical Areas may be used to represent smaller regional economies that are not included in metropolitan areas.
-
-### Counties
-
-Counties are expected to support more granular drill-down, local diagnostics, and future stakeholder analysis.
-
-Conceptually, the future geographic hierarchy may look like this where applicable:
+The data flow is:
 
 ```text
-United States
-`-- State
-    |-- Metropolitan Statistical Area
-    |   `-- County
-    `-- Micropolitan Statistical Area
-        `-- County
+reference -> raw -> staging -> intermediate -> analytics
 ```
 
-The anticipated primary analytical unit is Metropolitan Statistical Area x Industry x Year, with county-level analysis available for more granular investigation and potential inclusion of micropolitan areas. This design is not final; Assignment 3 will formally define the unit of analysis, dependent variable, independent variables, geographic scope, hypotheses, and modeling strategy.
-
-## Research Direction
-
-The eventual project is expected to explore:
-
-- regional industry growth
-- firm startup and business dynamics
-- entrepreneurial-industry alignment
-- entrepreneurial gaps
-- differences across metropolitan, micropolitan, and county economies
-- predictive modeling for business analytics
-- national scalability
-
-The exact formal research question and hypotheses will be finalized in Assignment 3.
+Source-faithful raw values are retained. Staging records mapping, validity, and suppression information; intermediate tables apply source-specific geographic/industry rules and measures; the final panel uses an inner BDS-QCEW core with left-joined ACS and CBP support. The analytical key is `geography_id + industry_id + year`; display labels are available from `v_analytics_msa_industry_year`.
 
 ## Repository Structure
 
-- `src/`: Python package source code for future project components.
-- `tests/`: Test package for future validation and regression checks.
-- `docs/`: Project documentation, including AI use disclosure.
-- `data/`: Placeholder folders for future raw, interim, processed, and external data.
-- `notebooks/`: Jupyter notebooks for future exploration and analysis.
+- `src/regional_entrepreneurship_intelligence/database/`: SQLite schema, reference loading, and run/quality metadata.
+- `src/regional_entrepreneurship_intelligence/etl/`: source extract/load/transform runners and panel integration.
+- `src/regional_entrepreneurship_intelligence/validation/`: reusable data checks.
+- `tests/`: unit and integration-contract tests.
+- `data/external/reference/`: small authoritative geography/industry workbooks and ACS concept registry.
+- `data/raw/`: ignored source caches and production downloads.
+- `data/processed/`: ignored generated analytical exports.
+- `docs/`: architecture, source profiles, transformations, ERD, dictionary, and AI disclosure.
+- `reports/`: committed QA documentation; generated details are normally ignored.
+- `logs/`: ignored execution logs.
 
-The source package uses an expanded structure in preparation for later assignments:
+## Setup
 
-- `data`: future data access and data-specific utilities
-- `etl`: future extract, transform, and load workflows across standardized geographies
-- `database`: future database connection and schema logic
-- `analysis`: future exploratory and statistical analysis code
-- `models`: future predictive modeling code
-- `dashboard`: future Streamlit or dashboard-related code
-
-Future data sources may include the BLS Quarterly Census of Employment and Wages (QCEW), Census Business Dynamics Statistics (BDS), Census County Business Patterns (CBP), and American Community Survey (ACS). Later assignments may integrate these sources using standardized geography and industry identifiers such as geographic codes, county FIPS, CBSA codes where appropriate, NAICS, and year.
-
-## Requirements
-
-- Python 3.10 or newer
-- Git
-- UV
-
-## Environment Setup
-
-Clone the repository:
+Requirements: Python 3.10+, Git, and [UV](https://docs.astral.sh/uv/).
 
 ```powershell
-git clone https://github.com/<your-github-username>/regional-entrepreneurship-intelligence.git
-```
-
-Change into the project directory:
-
-```powershell
-cd regional-entrepreneurship-intelligence
-```
-
-Check that UV is installed:
-
-```powershell
-uv --version
-```
-
-Install and sync the project dependencies:
-
-```powershell
+git clone https://github.com/ctvphd/regional-entrepreneurship-intelligence.git
+Set-Location regional-entrepreneurship-intelligence
 uv sync
-```
-
-Confirm the Python version managed by the project:
-
-```powershell
 uv run python --version
 ```
 
-Run commands inside the UV-managed environment:
+## Production Pipeline
+
+The documented end-to-end command is:
 
 ```powershell
-uv run python
+uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline
 ```
 
-Start Jupyter:
+By default this is cache-only and fails before changing the database if any required national production input is missing. Restore the ignored production files from the project’s approved storage first. To allow the existing source acquisition code to retrieve missing inputs, pass `--allow-downloads`; the Census API sources may require `CENSUS_API_KEY` in the environment. To select another SQLite file:
 
 ```powershell
-uv run jupyter notebook
+uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline --database-path .\database\review.sqlite
 ```
 
-## Dependency Management
+The default SQLite database is `database/assignment4_production.sqlite`. The runner loads committed reference assets, executes BDS, QCEW, ACS, and CBP stages, integrates and validates the analytical panel, updates the merge audit/export, and writes a timestamped log under `logs/`. It prints a JSON run summary and exits nonzero on a failed stage.
 
-New Python packages should be added with UV:
+## Tests
 
 ```powershell
-uv add package-name
+uv run python -m unittest discover -s tests -v
 ```
 
-Avoid manually editing dependency lock files. Assignment 2 intentionally includes only the core dependencies required for setup: `pandas`, `numpy`, and `jupyter`.
+## Data And Reproducibility Policy
 
-## Git Workflow
+Full national source files, the multi-gigabyte production database, generated exports, and run logs are Git-ignored. This keeps source data and local execution artifacts out of the repository; small official samples and reference assets remain available for review and tests. Source manifests record endpoints, vintages, checksums, filenames, and row counts. Pipeline runs, rejections, and quality metrics are stored in SQLite; generated logs record stage completion and failures. Transformations are designed for deterministic reruns, with production idempotency documented in the quality reports.
 
-A concise Git workflow for project updates:
+## Assignment Status
 
-```powershell
-git status
-git add .
-git commit -m "Meaningful commit message"
-git push
-```
+**Assignment 4 database, ETL, integration, and QA work is complete.** Assignment 5 exploratory analysis and modeling are not represented as complete. Expected entrepreneurship, alignment residuals, gap labels, future-outcome targets, predictions, dashboards, and deployment remain excluded.
 
-## Project Status
+## Documentation
 
-The project is currently in:
-
-**Assignment 2 - Environment Setup & Repository Creation**
+- [Database architecture](docs/DATA_ARCHITECTURE.md)
+- [Entity relationship diagram](docs/ERD.md)
+- [Data dictionary](docs/data_dictionary.md)
+- [Analytical panel](docs/ANALYTICAL_PANEL.md)
+- [End-to-end pipeline guide](docs/PIPELINE.md)
+- [Assignment 4 final rubric audit](reports/assignment4_final_rubric_audit.md)
+- [Assignment 4 final quality report](reports/assignment4_final_quality_report.md)
+- [Assignment 4 final review](reports/assignment4_final_review.md)
+- Source profiles and transformations: [BDS](docs/BDS_SOURCE_PROFILE.md), [QCEW](docs/QCEW_SOURCE_PROFILE.md), [ACS](docs/ACS_SOURCE_PROFILE.md), [CBP](docs/CBP_SOURCE_PROFILE.md)
+- [AI use disclosure](docs/AI_USE.md)
 
 ## AI Use
 
-AI-assisted development is documented in [docs/AI_USE.md](docs/AI_USE.md).
+AI-assisted work and student-directed decisions are documented in [docs/AI_USE.md](docs/AI_USE.md).
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License; see [LICENSE](LICENSE).

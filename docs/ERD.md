@@ -102,7 +102,7 @@ erDiagram
 | `quality_rejected_record` | `rejection_id` | run, source | Rejected-record and review-reason tracking. |
 | `quality_table_metric` | `metric_id` | run | Quality metric tracking. |
 
-The intermediate tables are intended to contribute values to `analytics_msa_industry_year` during later transformation work, but the implemented A4.2 schema does not declare direct foreign keys from the analytics table to those intermediate tables. The analytics table is keyed to the shared reference dimensions instead.
+The source intermediate tables contribute values to analytics through ETL joins, not direct foreign keys, because their source grains and lifecycles are independent. Physical analytics foreign keys target geography, industry, year, and pipeline-run dimensions. `quality_table_metric` and `quality_rejected_record` are run-linked audit tables.
 
 ## Indexing Strategy
 
@@ -123,19 +123,19 @@ The schema avoids excessive indexes until real query patterns emerge during late
 
 Assignment 4.8 expands `stg_qcew` and `int_industry_growth` while preserving the same ERD relationships. `stg_qcew` now stores QCEW county-to-CBSA mapping status, selected ownership scope, standardized CBSA and sector codes, county coverage indicators, and nominal annual measures. `int_industry_growth` now stores the standardized CBSA-sector-year QCEW panel with nominal level measures, growth rates, selected growth lags, completeness indicators, and source lineage.
 
-No new relationship to ACS, CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.8.
+At the A4.8 source-stage boundary, integration was not yet populated; A4.12 later consumes `int_industry_growth` in the analytics build.
 
 ## A4.9 ACS Update
 
 Assignment 4.9 expands `raw_acs`, `stg_acs`, and `int_regional_controls` while preserving the existing ERD relationships. `raw_acs` now stores ACS source geography labels, variable IDs, MOE variable IDs, product metadata, estimates, margins of error, and raw payloads. `stg_acs` pivots source variables to one MSA-year row with MOE fields and geography mapping status. `int_regional_controls` stores MSA-year regional controls, population growth, selected one-year lags, and source lineage.
 
-No relationship to CBP, `analytics_msa_industry_year`, or model-ready target tables is introduced in A4.9.
+At the A4.9 source-stage boundary, integration was not yet populated; A4.12 later left-joins MSA-year controls into the analytics build.
 
 ## A4.10 CBP Update
 
 Assignment 4.10 expands `raw_cbp`, `stg_cbp`, and `int_business_structure` while preserving the same ERD relationships. `raw_cbp` stores source-native county, 2017 NAICS sector, legal-form, employment-size, measure, flag, and payload fields. `stg_cbp` keeps county-level rows with July 2023 CBSA mapping status and 2022 sector comparability status. `int_business_structure` stores complete-coverage CBSA-sector-year establishment, employment, annual payroll, and first-quarter payroll measures with county coverage indicators and source lineage.
 
-No relationship to `analytics_msa_industry_year` or model-ready target tables is introduced in A4.10.
+At the A4.10 source-stage boundary, integration was not yet populated; A4.12 later left-joins accepted CBP support measures into the analytics build.
 
 ## A4.12 Integrated Analytical Panel
 

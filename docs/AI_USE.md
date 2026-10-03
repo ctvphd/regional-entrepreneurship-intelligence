@@ -224,3 +224,21 @@ for comparison statistics only, while both stored source series retain their
 native units. Neither source is automatically treated as ground truth based
 on a discrepancy. All integration decisions and production counts are
 covered by tests and the generated merge audit.
+
+## Assignment 4.13 Final QA And Orchestration
+
+AI assistance reviewed the repository against the A4 rubric, added a cache-first
+coordinator around existing source runners, created reusable validation checks,
+and refreshed final setup and QA documentation. Student-directed constraints
+remain: preserve the integrated source definitions and panel grain; do not
+create expected entrepreneurship, alignment residuals, gap labels, future
+targets, models, or exploratory analysis. Production inputs are required for
+the default end-to-end run; small samples are not substituted silently.
+
+One implementation assumption was refined during review: source-specific
+“rejected” counts, incomplete county aggregations, suppression flags, and
+unmatched integration keys are not interchangeable or additive. The final
+quality report now documents them as separate categories rather than claiming
+one aggregate bad-row total. Prior corrections documented above include the
+ACS MSA-year grain and CBP payroll unit scaling; no invented AI correction
+example is added.

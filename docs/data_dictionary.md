@@ -1,6 +1,6 @@
 # Data Dictionary
 
-This skeleton data dictionary is generated from the Assignment 4.2 SQLite schema. Raw source fields are provisional until live source ingestion verifies the exact source columns.
+This dictionary describes the implemented Assignment 4 schema and production fields. Source-native raw payloads retain their exact downloaded rows; named raw columns are documented where the loader maps them.
 
 Assignment 4.3 adds deterministic seed helpers for the reference and metadata framework. `ref_year` is populated with exactly the 2010-2023 primary study window, and `ref_source` is populated with the four approved source systems.
 
@@ -8,29 +8,6 @@ Assignment 4.4 loads authoritative Census reference files. `ref_geography` uses 
 
 | Table | Field | Type | Key status | Nullable? | Source | Definition | Important business rule |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `analytics_msa_industry_year` | `geography_id` | INTEGER | PK, FK -> ref_geography.geography_id | No | integrated analytics | Surrogate key for standardized geography. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `industry_id` | INTEGER | PK, FK -> ref_industry.industry_id | No | integrated analytics | Surrogate key for standardized industry. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `year` | INTEGER | PK, FK -> ref_year.year | No | integrated analytics | Calendar year. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `startup_rate` | REAL |  | Yes | integrated analytics | Startup rate measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `lagged_startup_rate` | REAL |  | Yes | integrated analytics | Lagged startup rate for historical feature construction. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `employment` | REAL |  | Yes | integrated analytics | Employment level. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `establishments` | REAL |  | Yes | integrated analytics | Establishment count. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `payroll` | REAL |  | Yes | integrated analytics | Payroll or wage total. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `average_wage` | REAL |  | Yes | integrated analytics | Average wage or average pay measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `employment_growth` | REAL |  | Yes | integrated analytics | Employment growth measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `establishment_growth` | REAL |  | Yes | integrated analytics | Establishment growth measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `payroll_growth` | REAL |  | Yes | integrated analytics | Payroll growth measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `wage_growth` | REAL |  | Yes | integrated analytics | Wage or average-pay growth measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `population` | REAL |  | Yes | integrated analytics | Population estimate or measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `median_household_income` | REAL |  | Yes | integrated analytics | Median household income measure. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `educational_attainment_pct` | REAL |  | Yes | integrated analytics | Educational attainment percentage. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `labor_force_participation_pct` | REAL |  | Yes | integrated analytics | Labor-force participation percentage. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `unemployment_rate` | REAL |  | Yes | integrated analytics | Unemployment rate. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `business_structure_establishments` | REAL |  | Yes | integrated analytics | CBP-derived establishments measure carried into analytics. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `business_structure_employment` | REAL |  | Yes | integrated analytics | CBP-derived employment measure carried into analytics. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `has_suppression` | INTEGER |  | No | integrated analytics | Boolean-like indicator that one or more contributing values are suppressed. | Signals contribution from suppressed inputs. |
-| `analytics_msa_industry_year` | `source_quality_notes` | TEXT |  | Yes | integrated analytics | Notes about source quality for the analytical row. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
-| `analytics_msa_industry_year` | `pipeline_run_id` | TEXT | FK -> metadata_pipeline_run.pipeline_run_id | Yes | integrated analytics | Identifier for a pipeline run or stage run. | Do not store global expected entrepreneurship, residual alignment, or final gap target. |
 | `int_business_structure` | `geography_id` | INTEGER | PK, FK -> ref_geography.geography_id | No | CBP-derived intermediate | Surrogate key for standardized geography. |  |
 | `int_business_structure` | `industry_id` | INTEGER | PK, FK -> ref_industry.industry_id | No | CBP-derived intermediate | Surrogate key for standardized industry. |  |
 | `int_business_structure` | `year` | INTEGER | PK, FK -> ref_year.year | No | CBP-derived intermediate | Calendar year. |  |
@@ -474,3 +451,44 @@ The generated analytical CSV is gzip-compressed and Git-ignored. Rebuild it,
 the table, and run-scoped `quality_table_metric` records with
 `etl.build_analytics_panel`. Expected entrepreneurship, residual alignment,
 gap labels, future leads, and predictive targets are absent by design.
+
+### Current Analytics Table Field Inventory
+
+The following field inventory is authoritative for `analytics_msa_industry_year` in `database/schema.py`; names from older A4.2 sketches (such as generic `employment`, `population`, or `business_structure_employment`) are not current analytical fields. The physical SQLite table may retain legacy nullable columns if it was migrated from an earlier schema; the integration view and current builder use the fields below.
+
+| Field(s) | Type | Source | Meaning and business rule |
+|---|---|---|---|
+| `geography_id` | INTEGER | Reference | MSA key; FK to `ref_geography`; part of composite primary key. |
+| `industry_id` | INTEGER | Reference | 2022 NAICS broad-sector key; FK to `ref_industry`; part of composite primary key. |
+| `year` | INTEGER | Reference | Study calendar year 2010-2023; FK to `ref_year`; part of composite primary key. |
+| `firm_startups` | REAL | BDS | Firm age-zero startup measure; source-native suppression/missingness is audited upstream. |
+| `startup_rate`, `startup_rate_lag1`, `startup_rate_lag2`, `startup_rate_lag3`, `lagged_startup_rate` | REAL | BDS | Startup rate and prior-calendar-year rates; no forward fill. `lagged_startup_rate` is the source-intermediate one-year lag field retained alongside explicit lag columns. |
+| `establishment_entry`, `establishment_entry_rate`, `startup_job_creation` | REAL | BDS | BDS establishment-entry measures and startup job creation. |
+| `qcew_employment`, `qcew_establishments` | REAL | QCEW | Annual employment and establishment levels. |
+| `qcew_payroll`, `qcew_average_wage`, `qcew_total_annual_wages_nominal`, `qcew_average_annual_pay_nominal` | REAL | QCEW | Payroll/pay measures in source nominal dollars; not inflation-adjusted in this build. |
+| `employment_growth`, `establishment_growth`, `payroll_growth`, `wage_growth` | REAL | QCEW | Same-year growth rates computed by the QCEW intermediate; unavailable when the valid prior observation is absent. |
+| `employment_growth_lag1`, `employment_growth_lag2`, `employment_growth_lag3`, `establishment_growth_lag1`, `establishment_growth_lag2`, `establishment_growth_lag3`, `payroll_growth_lag1`, `average_pay_growth_lag1` | REAL | QCEW | Historical, calendar-consistent growth lags. |
+| `acs_population`, `acs_population_growth`, `acs_population_growth_lag1` | REAL | ACS | MSA-year population levels/growth, repeated across matched industry rows; no forward fill. |
+| `median_household_income`, `median_household_income_lag1` | REAL | ACS | ACS estimate and one-year lag in the release's adjusted dollars; no common-year deflation. |
+| `educational_attainment_pct`, `educational_attainment_pct_lag1`, `labor_force_participation_pct`, `labor_force_participation_pct_lag1`, `unemployment_rate`, `unemployment_rate_lag1` | REAL | ACS | ACS profile percentages and one-year lags; concept-year variable IDs are in the ACS registry. |
+| `cbp_establishments`, `cbp_employment`, `cbp_annual_payroll`, `cbp_first_quarter_payroll` | REAL | CBP | Complete-coverage CBP measures; payroll retained in native $1,000 units. |
+| `bds_has_suppression`, `bds_startup_available`, `qcew_has_suppression`, `qcew_is_real_adjusted`, `acs_matched`, `acs_has_suppression`, `acs_has_missing_controls`, `cbp_matched`, `cbp_has_suppression`, `has_suppression` | INTEGER | Source QA | Boolean 0/1 provenance/availability flags; suppression is never equated with zero. |
+| `qcew_is_complete_county_coverage`, `cbp_is_complete_county_coverage` | INTEGER, nullable | QCEW / CBP | 1 means complete accepted coverage, 0 means known incomplete, NULL means not established/matched. |
+| `source_quality_notes` | TEXT, nullable | Integration QA | Human-readable source quality and support-join notes. |
+| `pipeline_run_id` | TEXT, nullable | Pipeline metadata | Run lineage FK to `metadata_pipeline_run`. |
+
+Every analytical field above is nullable except keys and non-null quality flags as declared by the schema. The declared unique grain is exactly `geography_id + industry_id + year`. `v_analytics_msa_industry_year` adds display-only `cbsa_code`, `cbsa_name`, `sector_code`, and `sector_title`; those are not stored facts in the normalized analytics table.
+
+#### Retired Compatibility Columns
+
+An upgraded copy of the production database retains the following nullable A4.2 columns for migration compatibility. The current panel builder does not write them, the analytical view/export omits them, and a final database check found all 63,577 values NULL. Do not use them as active measures. A clean newly initialized database may not contain them.
+
+| Field | Type | Table | Status / action |
+|---|---|---|---|
+| `employment` | REAL | `analytics_msa_industry_year` | Retired generic alias; use `qcew_employment` or `cbp_employment` according to source. |
+| `establishments` | REAL | `analytics_msa_industry_year` | Retired generic alias; use `qcew_establishments` or `cbp_establishments`. |
+| `payroll` | REAL | `analytics_msa_industry_year` | Retired generic alias; use `qcew_payroll` or `cbp_annual_payroll` and honor native units. |
+| `average_wage` | REAL | `analytics_msa_industry_year` | Retired generic alias; use the source-labeled QCEW average-pay fields. |
+| `population` | REAL | `analytics_msa_industry_year` | Retired generic alias; use `acs_population`. |
+| `business_structure_establishments` | REAL | `analytics_msa_industry_year` | Retired CBP alias; use `cbp_establishments`. |
+| `business_structure_employment` | REAL | `analytics_msa_industry_year` | Retired CBP alias; use `cbp_employment`. |

@@ -28,29 +28,29 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | BDS transformations | BDS staging, entrepreneurship intermediate, mapping audits, and lag construction | Complete |
 | Other source transformations | QCEW, ACS, and CBP transformations complete through source-specific intermediate layers | Complete |
 | Loading | Database loading utilities under `src/regional_entrepreneurship_intelligence/database/` | Complete |
-| Logging | Pipeline logging to `logs/` with generated logs normally ignored by Git | Planned |
+| Logging | End-to-end timestamped stage log under ignored `logs/` plus metadata run rows | Complete |
 | Error handling | Explicit exceptions, bad-record handling, and rejected-record outputs | Complete |
 | Rerunnability | Documented idempotency or rerun evidence | Complete |
-| Target pipeline command documented | `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` | Complete |
+| Target pipeline command documented | `etl/run_pipeline.py`; `docs/PIPELINE.md`; README command and cache policy | Complete |
 | Metadata helper utilities | Source manifest, pipeline run, quality metric, and rejected-record helpers | Complete |
 
 ## Data Quality - 20 pts
 
 | Requirement | Planned evidence | Status |
 | --- | --- | --- |
-| Validation framework | Reusable validation logic under `src/regional_entrepreneurship_intelligence/validation/` | Planned |
+| Validation framework | `validation/checks.py` reusable checks plus focused tests and final pipeline assertions | Complete |
 | Reference row counts | A4.4 loader/test evidence for geography, county crosswalk, industry, and manifests | Complete |
 | BDS quality metrics | A4.6 quality metrics for BDS raw, staging, intermediate, mapping, missingness, and lag checks | Complete |
 | QCEW raw quality checks | A4.7 QCEW raw row-count, manifest, status-row, and duplicate-key tests | Complete |
 | QCEW transformation quality checks | A4.8 QCEW mapping, aggregation, growth, lag, duplicate-key, and idempotency tests | Complete |
 | ACS quality checks | A4.9 ACS raw-ingestion, geography, MSA-year transform, population-growth, lag, duplicate-key, and idempotency tests | Complete |
 | CBP quality checks | A4.10 CBP raw-ingestion, geography/industry mapping, complete county coverage, duplicate-key, rejected-record, and idempotency tests | Complete |
-| Row counts | Quality report with source, staging, intermediate, and analytics row counts | Planned |
-| Missingness | Quality report with missingness by source and key variable | Planned |
+| Row counts | Production source/intermediate counts and final analytics in A4.11/A4.12 and A4.13 quality reports | Complete |
+| Missingness | Source and analytical missingness tables in production/merge/final quality reports | Complete |
 | Duplicates | Duplicate-key checks at relevant grains | Complete |
 | Rejected records | Rejected-record table or file with reason codes | Complete |
 | Actions on bad records | Documentation explaining whether records are rejected, retained with flags, or reviewed | Complete |
-| Quality report | Generated report under `reports/` or documented output path | Planned |
+| Quality report | `reports/assignment4_final_quality_report.md`; merge report and production report | Complete |
 | Bad-record policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
 | Suppression policy documented | `docs/DATA_ARCHITECTURE.md` | Complete |
 
@@ -62,9 +62,9 @@ This checklist maps the Assignment 4 rubric to planned repository evidence. It i
 | Data dictionary | Field-level dictionary for tables and analytical variables | Complete |
 | ETL documentation | Source-specific and end-to-end pipeline documentation | Complete |
 | Docstrings | Docstrings in ETL, database, and validation modules | In progress |
-| Setup instructions | README and Assignment 4 documentation | Planned |
+| Setup instructions | Refreshed README and `docs/PIPELINE.md` | Complete |
 | Safe review path | Raw-data policy and reproducibility guidance in `docs/DATA_ARCHITECTURE.md` | Complete |
-| Git history | Meaningful commits for Assignment 4 segments | In progress |
+| Git history | Incremental A4 commit progression in `git log` | Complete |
 | AI disclosure | Current entries in `docs/AI_USE.md` | Complete |
 
 ## A4.1 Stop Line
@@ -186,17 +186,32 @@ A4.10 completes CBP raw acquisition, county-to-CBSA business-structure construct
 - [x] A4.12 merge audits, coverage/missingness diagnostics, cross-source checks, metrics, export, and idempotency verified.
 - [x] A4.12 full suite passed: 34 tests, zero failures/errors/skips; integration documentation complete; leakage-prone targets remain absent.
 
-A4.11 itself stopped before cross-source joins. A4.12 now builds the canonical
+A4.11 itself stopped before cross-source joins. A4.12 builds the canonical
 panel; its code overlap is not a historical boundary-equivalence assertion.
 Expected entrepreneurship, alignment residuals, gap labels, future leads, and
-modeling remain deferred. The final README rewrite is also deferred.
+modeling remain deferred. A4.13 finalizes the end-to-end pipeline and README.
 
 ## A4.12 Integrated Panel Status
 
-- [x] Verified clean `main` at `1602760`; 30 pre-integration tests passed and production intermediates were present.
+- [x] Verified clean `main` at `8a4a1a8`; 34 pre-final-QA tests passed and production intermediates were present.
 - [x] Audited source keys, metropolitan scope, and common authoritative sectors before merge.
 - [x] Inner BDS-QCEW core and left ACS/CBP support joins; row losses and match rates reported.
 - [x] Populated `analytics_msa_industry_year` at unique MSA-sector-year grain (63,577 rows).
 - [x] Persisted quality metrics, generated merge audit, and wrote ignored compressed CSV export.
 - [x] Two production builds returned identical row counts, merge stats, and quality metric values.
 - [ ] Expected entrepreneurship, alignment residuals, gap targets, leads, and Assignment 5 modeling: intentionally deferred.
+
+## A4.13 Final QA Status
+
+| Requirement | Status | Evidence |
+|---|---|---|
+| Final rubric audit | Complete | `reports/assignment4_final_rubric_audit.md` |
+| Cache-first end-to-end orchestration | Complete | `etl/run_pipeline.py`, `docs/PIPELINE.md`; three complete cache-only production runs are recorded in the final review. |
+| Reusable validation checks | Complete | `validation/checks.py`, `tests/test_validation_checks.py` |
+| Final quality and review reports | Complete | `reports/assignment4_final_quality_report.md`, `reports/assignment4_final_review.md` |
+| Current README and setup path | Complete | Repository-root `README.md` |
+| Analytical schema/dictionary/ERD review | Complete | `docs/data_dictionary.md`, `docs/ERD.md` |
+| Complete rerun comparison | Complete | Two finalized full runs have identical cardinalities and 76/76 identical analytical quality metrics. |
+| No Assignment 5 or target construction | Complete | No target/model code added; final leakage validation required. |
+
+Final A4.13 validation: 37 tests passed with zero failures, errors, or skips; two finalized end-to-end runs had equal 76-metric snapshots and stable fact counts. The current analytical database passes its unique-key, MSA-scope, year-range, leakage-column, and SQLite foreign-key checks.

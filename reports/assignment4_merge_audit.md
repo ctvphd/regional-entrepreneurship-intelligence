@@ -550,7 +550,7 @@ For observations with more than 100% absolute difference, the year/sector/MSA br
 
 ## Idempotency And Leakage Boundary
 
-Build run c55846fe-78ca-4814-9ebe-e300d652e600 wrote 63,577 rows. The runner clears and deterministically rebuilds only the analytics table; it refuses duplicate source keys and records run-scoped metrics. No expected entrepreneurship, alignment residual, gap label, future lead, or modeling field is created.
+Build run c954f026-94d2-433f-b261-aff4f66bec44 wrote 63,577 rows. The runner clears and deterministically rebuilds only the analytics table; it refuses duplicate source keys and records run-scoped metrics. No expected entrepreneurship, alignment residual, gap label, future lead, or modeling field is created.
 
 
 ### Major Differences By Year, Sector, And MSA
