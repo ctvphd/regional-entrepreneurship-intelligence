@@ -1,0 +1,13 @@
+fold,transition,transition_n,prior_target_year_min,target_year_min,target_year_max
+fold_1,gap_to_gap,123,2016.0,2017,2017
+fold_1,gap_to_non_gap,475,2016.0,2017,2017
+fold_1,non_gap_to_gap,526,2016.0,2017,2017
+fold_1,non_gap_to_non_gap,2151,2016.0,2017,2017
+fold_2,gap_to_gap,126,2017.0,2018,2018
+fold_2,gap_to_non_gap,473,2017.0,2018,2018
+fold_2,non_gap_to_gap,574,2017.0,2018,2018
+fold_2,non_gap_to_non_gap,2134,2017.0,2018,2018
+fold_3,gap_to_gap,204,2018.0,2019,2020
+fold_3,gap_to_non_gap,1033,2018.0,2019,2020
+fold_3,non_gap_to_gap,937,2018.0,2019,2020
+fold_3,non_gap_to_non_gap,4469,2018.0,2019,2020

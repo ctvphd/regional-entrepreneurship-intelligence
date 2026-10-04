@@ -45,4 +45,14 @@ The A6.1 scaffolding validates year pairing, fold boundaries, MSA scope, and fea
 - [x] Keep MSA fixed effects sensitivity-only; validation MSAs without a complete training observation are not estimable in that sensitivity and are counted separately.
 - [x] Do not create residual quantile thresholds, gap labels, classifiers, or final-holdout predictions in A6.2.
 
-This audit concerns the expected-rate benchmark and its diagnostics only. A6.3 must separately implement and test fold-local residual cutoffs and labels before any predictive-model features or outcomes are assembled.
+## A6.3 Target Construction Audit
+
+- [x] Refit the selected expected-rate benchmark inside each frozen development fold.
+- [x] Estimate p20 and robustness cutoffs only from that fold's training residuals; apply the unchanged primary cutoff to its training pairs and validation pairs.
+- [x] Pair only exact same-CBSA/same-sector `t` and `t+3` calendar years; no nearest-year substitution.
+- [x] Keep target-year benchmark inputs in the target-construction artifact only; the target-pair artifact contains no predictor feature matrix.
+- [x] Restrict emitted pairs and diagnostics to target years through 2020; no final-holdout target outputs or classifier work.
+- [x] Keep the analytical SQLite panel read-only and disclose patterned complete-case selection; no imputation.
+- [x] Review negative expected rates and extreme residuals without clipping or automatic deletion.
+
+Before A6.4, the target is approved only for its complete-case eligible population. A6.4 must retain this eligibility definition and report its scope; all `X_t` features must be measured at predictor year `t`, independently of target construction.

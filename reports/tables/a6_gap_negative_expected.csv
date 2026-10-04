@@ -1,0 +1,7 @@
+fold,split_role,n,negative_expected_n,negative_expected_gap_n,negative_expected_share
+fold_1,training_residual,22450,365,0,0.016258351893095768
+fold_1,validation,3599,32,0,0.008891358710752986
+fold_2,training_residual,26337,426,0,0.01617496297983825
+fold_2,validation,3591,49,0,0.01364522417153996
+fold_3,training_residual,30230,478,0,0.015812107178299704
+fold_3,validation,7223,107,0,0.01481378928423093

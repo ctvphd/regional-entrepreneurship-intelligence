@@ -356,3 +356,20 @@ or Assignment 6.2 work begun.
 ## Assignment 6.2 Expected Entrepreneurship Model
 
 AI assistance implemented and ran fold-local OLS, sector-interaction, and Huber robust expected-startup-rate candidates; one-at-a-time lag/growth, training-tail, COVID, and MSA-effect sensitivities; validation residual/coefficient summaries; figures; report/specification; and leakage-focused tests. Model A was selected over Model B on the three development folds; Model C remained a robust sensitivity after its MAE/RMSE and residual-drift tradeoff was reviewed. Year fixed effects for unseen validation years use a documented last-training-year carry-forward rule. Complete-case only; the final holdout was not fit or scored; no gap threshold or label was generated. Student review remains required before A6.3.
+## Assignment 6.3 Entrepreneurial-Gap Target Construction
+
+AI assistance implemented fold-local residual thresholding and exact three-year
+target-pair construction from the student-approved A6.1/A6.2 decisions; added
+prevalence, robustness, sector/MSA, transition, A5 comparison, negative-rate,
+extreme-residual, and complete-case selection diagnostics; and documented
+leakage safeguards. The p20 cutoffs use training residuals only, validation
+labels use the unchanged fold cutoff, and target-year benchmark fields are not
+included in the predictor feature matrix. The final holdout was not labeled or
+summarized, the analytical SQLite panel was read-only, and no classifier was
+fit. Review surfaced materially patterned complete-case eligibility: excluded
+validation rows have smaller average ACS populations and lower startup rates;
+the target is therefore explicitly scoped to eligible complete cases, and A6.4
+must disclose that limitation. Negative expected rates and tail cases were
+retained after review rather than clipped or automatically removed. Verification
+includes focused target tests, the full test suite, output-boundary checks, and
+repeatable report generation.
