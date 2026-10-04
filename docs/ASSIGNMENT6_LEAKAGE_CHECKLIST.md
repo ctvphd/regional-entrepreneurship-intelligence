@@ -79,3 +79,13 @@ Before A6.4, the target is approved only for its complete-case eligible populati
 - [x] Preserve exact t+3 labels, unique OOF keys, predictor query cutoff 2017, and target cutoff 2020; leave the final holdout untouched.
 - [x] Do not tune thresholds or choose features using outer validation; pooled threshold classifications apply each fold's training prevalence cutoff.
 - [x] Do not begin geographic holdout, COVID/tail robustness, or other A6.6 analyses.
+
+## A6.6 Robustness and Generalization Audit
+
+- [x] Preserve the A6.4 common complete-case development OOF sample and frozen temporal folds for paired robustness checks.
+- [x] Keep predictor features through 2017 and target construction through 2020; do not query or score 2021-2023 outcomes.
+- [x] Estimate clipping bounds, MSA-size terciles, and Huber expected-model thresholds within their prescribed training folds.
+- [x] Hash-partition CBSA geography independently of outcomes; prevent held-out geographies from entering geographic training folds.
+- [x] Treat sector and MSA-size summaries as descriptive; flag sector estimates with fewer than 30 positive cases.
+- [x] Retain complete-case selection and coverage audits; do not impute or change canonical analytical data.
+- [x] Leave the reserved final temporal holdout and all A6.7 work untouched.

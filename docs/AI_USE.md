@@ -404,3 +404,16 @@ the result is not treated as evidence of generalization. The final holdout was
 not loaded or scored, no thresholds were tuned on validation outcomes, and A6.6
 was not started. Verification includes matching all A6.4 OOF keys/labels and
 the full unit test suite.
+
+## Assignment 6.6 Robustness, Interpretation & Generalization
+
+AI assistance implemented development-only target-definition and Huber-label
+checks, alternate growth and startup-history specifications, training-only
+tail clipping, pandemic-row exclusions, deterministic held-out geography,
+training-defined MSA-size groups, within-sector and leave-one-sector-out
+summaries, and complete-case selection/coverage audits. Outputs include
+reproducible CSV tables, figures, a scorecard, limitations register, and report.
+Predictors remain bounded at 2017 and target outcomes at 2020; the 2021-2023
+final temporal holdout was not read or scored, and A6.7 was not started. Results
+are predictive/descriptive, not causal. Student review is required before final
+assignment claims.
