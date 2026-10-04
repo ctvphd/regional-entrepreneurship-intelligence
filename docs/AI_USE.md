@@ -332,3 +332,23 @@ model choices to Assignment 6. The audit notes that no separate A5 grading
 rubric is present in the repository. Full tests and two complete runs verified
 stable outputs and unchanged source-panel content. No target, expected
 entrepreneurship, future label, or model was created.
+
+## Assignment 6.1 Target, Baseline, And Temporal Design
+
+AI assistance translated the user-specified Assignment 6.1 methodological
+choices into a versioned design document, exact t+3 expanding temporal-fold
+specification with observed calendar-pair counts, preliminary feature
+registry, leakage checklist, and minimal validation-only Python scaffolding.
+It added tests for exact calendar continuity, fold cutoffs, final-holdout
+isolation, feature timing, and MSA-only geography. Student-directed choices
+specified in the task were retained: startup rate and employment growth as
+the primary measures; year and sector effects mandatory in the expected-rate
+candidate; MSA effects sensitivity-only; bottom-20% training residual as the
+primary gap candidate with training-fold-only cutoffs; exact three-year
+horizon; temporal rather than geographic primary validation; prevalence and
+transparent logistic baselines; Average Precision as primary metric; natural
+class prevalence; and false-negative attention balanced against precision.
+The feature timing documentation distinguishes outcome-year benchmark inputs
+used solely for fold-local label construction from predictors available at
+forecast time. No models were fit, expected rates/residuals/labels created,
+or Assignment 6.2 work begun.

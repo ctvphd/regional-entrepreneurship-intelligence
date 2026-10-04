@@ -87,7 +87,7 @@ Reproduce the complete EDA with:
 uv run --offline python -m regional_entrepreneurship_intelligence.analysis.run_eda
 ```
 
-Assignment 6 modeling has **not** begun. Expected entrepreneurship, alignment residuals, the formal entrepreneurial-gap target, future labels, predictions, dashboards, and deployment remain excluded.
+Assignment 6.1 design is complete, but model fitting has **not** begun. No expected-entrepreneurship estimates, alignment residuals, formal entrepreneurial-gap labels, future target columns, predictions, dashboards, or deployment artifacts have been created. See the [A6.1 design](docs/ASSIGNMENT6_DESIGN.md), [temporal folds](docs/ASSIGNMENT6_TEMPORAL_FOLDS.md), [leakage checklist](docs/ASSIGNMENT6_LEAKAGE_CHECKLIST.md), and [feature registry](docs/ASSIGNMENT6_FEATURE_REGISTRY.md). A6.2 remains unstarted.
 
 ## Documentation
 
