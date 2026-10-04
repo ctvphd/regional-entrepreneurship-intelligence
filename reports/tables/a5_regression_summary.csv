@@ -1,0 +1,6 @@
+model,n,r_squared,covariance
+bivariate,57109,0.0097559484,panel_clustered
+regional_controls_year_sector,53655,0.36745903,panel_clustered
+sector_controls,57109,0.33388897,panel_clustered
+year_controls,57109,0.018945172,panel_clustered
+year_sector_controls,57109,0.34197284,panel_clustered

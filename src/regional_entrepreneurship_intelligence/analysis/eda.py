@@ -260,6 +260,154 @@ def build_descriptive_quadrants(
     return grouped
 
 
+def calculate_pairwise_relationship(frame: pd.DataFrame, x: str, y: str,
+                                    method: str = "pearson") -> dict[str, object]:
+    """Return an available-case correlation with its usable sample size."""
+    if method not in {"pearson", "spearman"}:
+        raise ValueError("method must be 'pearson' or 'spearman'")
+    if x not in frame or y not in frame:
+        raise ValueError(f"Relationship fields are absent: {x}, {y}")
+    from scipy import stats
+
+    data = frame[[x, y]].apply(pd.to_numeric, errors="coerce").replace([np.inf, -np.inf], np.nan).dropna()
+    coefficient = p_value = np.nan
+    if len(data) >= 3 and data[x].nunique() > 1 and data[y].nunique() > 1:
+        result = stats.pearsonr(data[x], data[y]) if method == "pearson" else stats.spearmanr(data[x], data[y])
+        coefficient, p_value = float(result.statistic), float(result.pvalue)
+    return {"x": x, "y": y, "method": method, "coefficient": coefficient,
+            "p_value": p_value, "n": len(data)}
+
+
+def build_correlation_matrix(frame: pd.DataFrame, variables: tuple[str, ...],
+                             method: str = "pearson") -> pd.DataFrame:
+    """Compute a complete matrix using pairwise available cases."""
+    absent = set(variables) - set(frame.columns)
+    if absent:
+        raise ValueError(f"Correlation fields are absent: {sorted(absent)}")
+    numeric = frame[list(variables)].apply(pd.to_numeric, errors="coerce")
+    return numeric.corr(method=method, min_periods=3)
+
+
+def fit_exploratory_regression(frame: pd.DataFrame, outcome: str,
+                               predictors: tuple[str, ...], *,
+                               categorical: tuple[str, ...] = (),
+                               cluster_keys: tuple[str, ...] = ("geography_id", "industry_id"),
+                               model_name: str = "exploratory") -> pd.DataFrame:
+    """Fit available-case OLS with panel-clustered covariance; never predicts or labels."""
+    import statsmodels.api as sm
+
+    fields = tuple(dict.fromkeys((outcome, *predictors, *categorical, *cluster_keys)))
+    absent = set(fields) - set(frame.columns)
+    if absent:
+        raise ValueError(f"Regression fields are absent: {sorted(absent)}")
+    data = frame[list(fields)].copy()
+    data[outcome] = pd.to_numeric(data[outcome], errors="coerce")
+    data = data.replace([np.inf, -np.inf], np.nan).dropna(subset=[outcome, *predictors, *categorical])
+    x = data[list(predictors)].apply(pd.to_numeric, errors="coerce")
+    if categorical:
+        x = pd.concat([x, pd.get_dummies(data[list(categorical)].astype(str), drop_first=True, dtype=float)], axis=1)
+    x = sm.add_constant(x.astype(float), has_constant="add")
+    valid = np.isfinite(x).all(axis=1) & np.isfinite(data[outcome])
+    x, data = x.loc[valid], data.loc[valid]
+    y = data[outcome]
+    if len(data) <= x.shape[1] or len(data) < 3:
+        raise ValueError(f"Insufficient observations for regression {model_name}: {len(data)}")
+    model = sm.OLS(y, x)
+    if cluster_keys:
+        groups = pd.MultiIndex.from_frame(data[list(cluster_keys)]).factorize()[0]
+        fitted = model.fit(cov_type="cluster", cov_kwds={"groups": groups, "use_correction": True})
+    else:
+        fitted = model.fit(cov_type="HC3")
+    ci = fitted.conf_int()
+    return pd.DataFrame({
+        "model": model_name, "term": fitted.params.index, "coefficient": fitted.params.values,
+        "std_error": fitted.bse.values, "ci_lower": ci.iloc[:, 0].values,
+        "ci_upper": ci.iloc[:, 1].values, "p_value": fitted.pvalues.values,
+        "n": int(fitted.nobs), "r_squared": float(fitted.rsquared),
+        "covariance": "panel_clustered" if cluster_keys else "HC3",
+    })
+
+
+def summarize_sector_relationships(frame: pd.DataFrame, *, min_n: int = 10) -> pd.DataFrame:
+    """Summarize primary growth/startup correlations and slopes by sector."""
+    rows = []
+    for sector, group in frame.groupby("sector_code", sort=True):
+        pair = group[["startup_rate", "employment_growth"]].dropna()
+        pearson = calculate_pairwise_relationship(group, "employment_growth", "startup_rate", "pearson")
+        spearman = calculate_pairwise_relationship(group, "employment_growth", "startup_rate", "spearman")
+        slope = float(np.polyfit(pair.employment_growth, pair.startup_rate, 1)[0]) if len(pair) >= min_n and pair.employment_growth.nunique() > 1 else np.nan
+        rows.append({"sector_code": sector, "n": len(pair), "pearson": pearson["coefficient"],
+                     "pearson_p": pearson["p_value"], "spearman": spearman["coefficient"],
+                     "spearman_p": spearman["p_value"], "slope": slope,
+                     "slope_eligible": len(pair) >= min_n})
+    return pd.DataFrame(rows)
+
+
+def summarize_quadrant_context(frame: pd.DataFrame) -> pd.DataFrame:
+    """Summarize regional controls after collapsing each MSA-year-quadrant once."""
+    dimensions = ["geography_id", "year", "sector_code", "startup_rate", "employment_growth",
+                  *ACS_MSA_YEAR_MEASURES]
+    absent = set(dimensions) - set(frame.columns)
+    if absent:
+        raise ValueError(f"Quadrant context fields are absent: {sorted(absent)}")
+    work = frame[dimensions].copy()
+    work["startup_cutoff"] = work.groupby(["year", "sector_code"]).startup_rate.transform("median")
+    work["growth_cutoff"] = work.groupby(["year", "sector_code"]).employment_growth.transform("median")
+    work = work.dropna(subset=["startup_rate", "employment_growth"])
+    work["quadrant"] = np.where(work.employment_growth.ge(work.growth_cutoff), "high_growth_", "low_growth_") + np.where(
+        work.startup_rate.ge(work.startup_cutoff), "high_startup", "low_startup")
+    values = ["startup_rate", "employment_growth", *ACS_MSA_YEAR_MEASURES]
+    msa_year_quadrant = work.groupby(["geography_id", "year", "quadrant"], as_index=False).agg(
+        **{f"{name}_mean": (name, "mean") for name in values}
+    )
+    return msa_year_quadrant.groupby("quadrant").agg(
+        msa_year_count=("geography_id", "size"), msa_count=("geography_id", "nunique"),
+        **{f"{name}_mean": (f"{name}_mean", "mean") for name in values},
+        **{f"{name}_median": (f"{name}_mean", "median") for name in ACS_MSA_YEAR_MEASURES},
+    ).reset_index()
+
+
+def summarize_lag_relationships(frame: pd.DataFrame) -> pd.DataFrame:
+    """Correlate current startup rates with each available historical lag."""
+    rows = []
+    for lag in (1, 2, 3):
+        variable = f"startup_rate_lag{lag}"
+        for method in ("pearson", "spearman"):
+            result = calculate_pairwise_relationship(frame, variable, "startup_rate", method)
+            result["lag"] = lag
+            rows.append(result)
+    return pd.DataFrame(rows)
+
+
+def run_covid_sensitivity(frame: pd.DataFrame) -> pd.DataFrame:
+    """Compare the primary association on full, exclude-2020, and exclude-2020/21 samples."""
+    definitions = (("full", ()), ("exclude_2020", (2020,)), ("exclude_2020_2021", (2020, 2021)))
+    rows = []
+    for label, excluded in definitions:
+        sample = frame.loc[~frame.year.isin(excluded)]
+        for method in ("pearson", "spearman"):
+            row = calculate_pairwise_relationship(sample, "employment_growth", "startup_rate", method)
+            row.update(sensitivity=label, excluded_years=",".join(map(str, excluded)))
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def run_outlier_sensitivity(frame: pd.DataFrame) -> pd.DataFrame:
+    """Compare full Pearson, full Spearman, and non-destructive P01/P99-trimmed Pearson."""
+    pair = frame[["employment_growth", "startup_rate"]].replace([np.inf, -np.inf], np.nan).dropna()
+    low, high = pair.employment_growth.quantile([.01, .99])
+    trimmed = pair[pair.employment_growth.between(low, high)]
+    rows = []
+    for label, sample, method in (
+        ("full_pearson", pair, "pearson"), ("full_spearman", pair, "spearman"),
+        ("exclude_employment_growth_p01_p99", trimmed, "pearson"),
+    ):
+        row = calculate_pairwise_relationship(sample, "employment_growth", "startup_rate", method)
+        row["sensitivity"] = label
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def _connect_read_only(database_path: str | Path) -> sqlite3.Connection:
     path = Path(database_path).resolve()
     if not path.is_file():

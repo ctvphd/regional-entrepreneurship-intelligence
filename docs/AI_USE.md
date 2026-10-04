@@ -297,3 +297,20 @@ summary design was refined so annual and MSA ACS context comes from
 deduplicated MSA-year observations rather than integrated industry rows.
 This refinement is covered by tests; no source data are modified. A5.4
 relationship or hypothesis analysis was not begun.
+
+## Assignment 5.4 Relationship And Hypothesis-Oriented Analysis
+
+AI assistance extended the EDA foundation with available-case Pearson and
+Spearman relationships, candidate correlation matrices, panel-clustered
+exploratory OLS, sector and lag summaries, within-panel persistence, COVID-year
+and outlier sensitivity checks, ACS MSA-year safeguards, figures, tests, and
+the reproducible A5.4 report/runner. Student-directed decisions were to keep
+the work exploratory; use employment growth and startup rate as the primary
+measures; compare additive year/sector controls without treating them as the
+final model; preserve source observations in sensitivity analysis; and defer
+formal gap construction, predictive evaluation, and Assignment 6. During
+review, a regression input-shape issue found by synthetic tests was corrected,
+and quadrant ACS summaries were refined to collapse repeated industry values
+within MSA-year-quadrant. Pooled p-values and repeated ACS observations are
+explicitly qualified; no variables are selected by significance and no
+unsupported causal or hypothesis conclusions are made.

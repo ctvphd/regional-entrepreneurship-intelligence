@@ -1,0 +1,15 @@
+x,y,method,coefficient,p_value,n,sample_grain
+employment_growth,startup_rate,pearson,0.098772205,9.0012998e-124,57109,msa_sector_year_pooled
+establishment_growth,startup_rate,pearson,0.088106846,8.6743857e-99,57109,msa_sector_year_pooled
+payroll_growth,startup_rate,pearson,0.076716408,2.748365e-75,57109,msa_sector_year_pooled
+wage_growth,startup_rate,pearson,0.014215707,0.00068055716,57109,msa_sector_year_pooled
+acs_population_growth,startup_rate,pearson,0.048588064,2.2287938e-30,55515,msa_sector_year_pooled
+median_household_income,startup_rate,pearson,0.15726057,0,60039,msa_sector_year_pooled
+educational_attainment_pct,startup_rate,pearson,0.1382711,5.0999408e-254,60039,msa_sector_year_pooled
+labor_force_participation_pct,startup_rate,pearson,0.016205832,7.1550605e-05,60039,msa_sector_year_pooled
+unemployment_rate,startup_rate,pearson,-0.047206395,5.6389747e-31,60039,msa_sector_year_pooled
+acs_population_growth,employment_growth,pearson,0.014312506,0.00091519612,53655,msa_sector_year_pooled
+median_household_income,employment_growth,pearson,0.037836835,1.2716132e-18,54157,msa_sector_year_pooled
+educational_attainment_pct,employment_growth,pearson,0.023514404,4.4292575e-08,54157,msa_sector_year_pooled
+labor_force_participation_pct,employment_growth,pearson,-0.0039746658,0.35499042,54157,msa_sector_year_pooled
+unemployment_rate,employment_growth,pearson,0.0082651728,0.054425933,54157,msa_sector_year_pooled

@@ -1,0 +1,7 @@
+x,y,method,coefficient,p_value,n,lag
+startup_rate_lag1,startup_rate,pearson,0.69039333,0,54894,1
+startup_rate_lag1,startup_rate,spearman,0.72159139,0,54894,1
+startup_rate_lag2,startup_rate,pearson,0.65705509,0,50599,2
+startup_rate_lag2,startup_rate,spearman,0.70415554,0,50599,2
+startup_rate_lag3,startup_rate,pearson,0.64779592,0,46406,3
+startup_rate_lag3,startup_rate,spearman,0.70243358,0,46406,3

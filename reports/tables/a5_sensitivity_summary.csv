@@ -1,0 +1,10 @@
+x,y,method,coefficient,p_value,n,sensitivity,excluded_years
+employment_growth,startup_rate,pearson,0.098772205,9.0012998e-124,57109,full,
+employment_growth,startup_rate,spearman,0.19307336,0,57109,full,
+employment_growth,startup_rate,pearson,0.12038614,1.896575e-169,52739,exclude_2020,2020
+employment_growth,startup_rate,spearman,0.21838129,0,52739,exclude_2020,2020
+employment_growth,startup_rate,pearson,0.10913952,5.0517721e-128,48355,exclude_2020_2021,"2020,2021"
+employment_growth,startup_rate,spearman,0.21032172,0,48355,exclude_2020_2021,"2020,2021"
+employment_growth,startup_rate,pearson,0.098772205,9.0012998e-124,57109,full_pearson,
+employment_growth,startup_rate,spearman,0.19307336,0,57109,full_spearman,
+employment_growth,startup_rate,pearson,0.15489137,1.7202585e-297,55965,exclude_employment_growth_p01_p99,

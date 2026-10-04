@@ -1,0 +1,3 @@
+x,y,method,coefficient,p_value,n,sample_grain
+startup_rate_lag1,startup_rate,pearson,0.69039333,0,54894,pooled_levels
+startup_rate_lag1_within,startup_rate_within,pearson,0.076946876,7.2579937e-73,54894,within_panel_deviations
