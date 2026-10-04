@@ -56,3 +56,15 @@ The A6.1 scaffolding validates year pairing, fold boundaries, MSA scope, and fea
 - [x] Review negative expected rates and extreme residuals without clipping or automatic deletion.
 
 Before A6.4, the target is approved only for its complete-case eligible population. A6.4 must retain this eligibility definition and report its scope; all `X_t` features must be measured at predictor year `t`, independently of target construction.
+
+## A6.4 Baseline Prediction Audit
+
+- [x] Join predictor features only on the exact CBSA-sector-predictor-year keys; assert the feature row year equals `t` and the target is `t+3`.
+- [x] Query the analytical view only through predictor year 2017; do not load holdout predictors or outcomes.
+- [x] Fit numeric scaling and sector levels independently inside each training fold; unseen validation sectors receive safe all-zero reference contrasts.
+- [x] Estimate prevalence probabilities and diagnostic prevalence thresholds from training labels only.
+- [x] Fit simple/extended logistic models only on fold training labels; validation outcomes are used only for scoring.
+- [x] Use the A6.3 eligible labels and explicitly audit additional predictor-feature exclusions; no imputation or class rebalancing.
+- [x] Validate exact-horizon, development-only, unique pooled OOF predictions.
+- [x] Do not tune thresholds on validation outcomes; report 0.50 and fold training prevalence only as diagnostics.
+- [x] Do not train advanced classifiers or access the final holdout.

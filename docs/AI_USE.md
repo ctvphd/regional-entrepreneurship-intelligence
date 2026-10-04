@@ -373,3 +373,19 @@ must disclose that limitation. Negative expected rates and tail cases were
 retained after review rather than clipped or automatically removed. Verification
 includes focused target tests, the full test suite, output-boundary checks, and
 repeatable report generation.
+
+## Assignment 6.4 Baseline Predictive Model
+
+AI assistance implemented the fold-local training-prevalence benchmark and
+interpretable simple/extended logistic baselines; training-only scaling and
+sector encoding; pooled out-of-fold probability metrics, threshold diagnostics,
+calibration, risk-bin/lift analysis, coefficient summaries, and paired feature
+ablations; plus report/figure generation and leakage tests. Student-approved
+choices retained the A6.3 p20 target, frozen temporal folds, natural class
+prevalence, PR-AUC metric hierarchy, and predictor-year feature boundary.
+Complete-case selection and additional predictor-feature exclusions were
+reported without imputation. The final holdout was not queried or scored, and
+no advanced classifiers or broad hyperparameter search were run. Baseline
+performance and limited marginal value from adding regional context are
+reported without causal claims. Verification includes the full unit suite,
+repeatable model outputs, and explicit OOF/holdout boundary checks.

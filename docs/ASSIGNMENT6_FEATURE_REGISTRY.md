@@ -30,3 +30,7 @@ Candidate registry only; no feature matrix or transformed values are created. Al
 Never put future startup/growth/ACS fields, `gap_status_t_plus_3`, future residual/expected-rate values, or any target-derived transformation into `X_t`. The future target-year covariates needed internally to apply a fold-trained expected-entrepreneurship benchmark are label-construction inputs only, not predictive features.
 
 Imputation and other missing-data/preprocessing choices remain open for A6.2/A6.4. Any fitted preprocessing must be trained inside each temporal training fold. Missing values must not be replaced by zero without a source-specific justification.
+
+## A6.4 Baseline Implementation
+
+Baseline 1 uses `startup_rate`, `startup_rate_lag1`, and `employment_growth`, plus sector contrasts and a standardized linear predictor-year trend. Baseline 2 adds the five ACS candidate controls above. The trend is used rather than validation-year dummy levels so future fold years remain scoreable. Numeric means/scales and sector levels are fitted from each training fold only; the extended-feature complete-case subset is shared across the prevalence, simple, extended, and ablation comparisons for paired evaluation. Rows lost to predictor-feature missingness are counted; no imputation or class rebalancing is performed. Current-year features always join on the predictor-year key, never the target-year row.
