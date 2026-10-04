@@ -71,7 +71,7 @@ The P01/P99 specification excludes observations outside those employment-growth 
 
 A5.3 sector-year median quadrant context, collapsed to one row per MSA-year within each quadrant: low_growth_high_startup: 4,237 MSA-year-quadrants (7.25% mean startup rate); high_growth_high_startup: 4,149 MSA-year-quadrants (7.54% mean startup rate); low_growth_low_startup: 3,982 MSA-year-quadrants (4.85% mean startup rate); high_growth_low_startup: 3,886 MSA-year-quadrants (4.98% mean startup rate). High-growth/low-startup versus high-growth/high-startup mean income is 56,267 vs 57,463, education 27.4% vs 28.3%, and unemployment 6.96% vs 7.02%. Selected ACS context means by quadrant are retained in `a5_quadrant_msa_year_context.csv`; each MSA-year contributes at most once to each quadrant. Among high-growth/low-startup observations, largest sector shares are 44-45, 23, 31-33 and largest year shares are 2023, 2011, 2012. Full sector/year composition counts are in `a5_quadrant_sector_composition.csv` and `a5_quadrant_year_composition.csv`.
 
-These are descriptive group summaries, NOT the entrepreneurial-gap target and not regression outcomes.
+`a5_quadrant_context.csv` summarizes classified MSA-sector-year rows; `a5_quadrant_msa_year_context.csv` collapses each MSA-year once within quadrant for regional context. These are descriptive group summaries, NOT the entrepreneurial-gap target and not regression outcomes.
 
 ## Multicollinearity / Predictor Redundancy
 

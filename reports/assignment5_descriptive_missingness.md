@@ -168,4 +168,4 @@ Revisit transformations for skewed positive level variables, robust summaries fo
 
 ## What Cannot Yet Be Concluded
 
-These summaries do not establish causality, predictive importance, hypothesis support, an entrepreneurial gap, expected entrepreneurship, or model performance. The panel is repeated over MSA-industry units; pooled observations are not independent. Time, sector, MSA pattern analysis and relationship analysis are reserved for A5.3/A5.4.
+These summaries do not establish causality, predictive importance, hypothesis support, an entrepreneurial gap, expected entrepreneurship, or model performance. The panel is repeated over MSA-industry units; pooled observations are not independent. Time, sector, and MSA patterns are reported in A5.3, and relationships are reported in A5.4.

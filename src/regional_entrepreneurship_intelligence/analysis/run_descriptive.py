@@ -212,7 +212,7 @@ def _save_figures(panel: pd.DataFrame, missingness: pd.DataFrame) -> list[str]:
     saved = []
     for variable, filename, title, xlabel in (
         ("startup_rate", "a5_startup_rate_histogram.png", "Startup Rate Distribution (P01-P99 View)", "Startup rate (percent)"),
-        ("employment_growth", "a5_employment_growth_histogram.png", "Employment Growth Distribution (P01-P99 View)", "Annual growth rate"),
+        ("employment_growth", "a5_employment_growth_histogram.png", "Employment Growth Distribution (P01-P99 View)", "Annual growth rate (decimal)"),
     ):
         values = panel[variable].dropna()
         fig, ax = plt.subplots()
@@ -227,7 +227,7 @@ def _save_figures(panel: pd.DataFrame, missingness: pd.DataFrame) -> list[str]:
     growths = ["employment_growth", "establishment_growth", "payroll_growth", "wage_growth"]
     fig, ax = plt.subplots()
     ax.boxplot([panel[name].dropna().to_numpy() for name in growths], tick_labels=growths, showfliers=False)
-    ax.set(title="Annual Growth Distributions (Fliers Hidden for Scale)", ylabel="Annual growth rate")
+    ax.set(title="Annual Growth Distributions (Fliers Hidden for Scale)", ylabel="Annual growth rate (decimal)")
     ax.tick_params(axis="x", labelrotation=25)
     fig.tight_layout()
     filename = "a5_growth_boxplot.png"
@@ -458,7 +458,7 @@ def _write_report(
         "",
         "## What Cannot Yet Be Concluded",
         "",
-        "These summaries do not establish causality, predictive importance, hypothesis support, an entrepreneurial gap, expected entrepreneurship, or model performance. The panel is repeated over MSA-industry units; pooled observations are not independent. Time, sector, MSA pattern analysis and relationship analysis are reserved for A5.3/A5.4.",
+        "These summaries do not establish causality, predictive importance, hypothesis support, an entrepreneurial gap, expected entrepreneurship, or model performance. The panel is repeated over MSA-industry units; pooled observations are not independent. Time, sector, and MSA patterns are reported in A5.3, and relationships are reported in A5.4.",
     ]
     REPORT_PATH.write_text("\n".join(sections) + "\n", encoding="utf-8")
 

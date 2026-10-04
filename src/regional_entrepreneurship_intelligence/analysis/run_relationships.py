@@ -127,6 +127,26 @@ def _quadrant_composition(panel: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFra
     return sector, year
 
 
+def _quadrant_panel_context(panel: pd.DataFrame) -> pd.DataFrame:
+    """Summarize classified MSA-sector-year rows separately from MSA-year context."""
+    work = panel[["geography_id", "year", "sector_code", "startup_rate", "employment_growth"]].copy()
+    work["startup_cutoff"] = work.groupby(["year", "sector_code"]).startup_rate.transform("median")
+    work["growth_cutoff"] = work.groupby(["year", "sector_code"]).employment_growth.transform("median")
+    work = work.dropna(subset=["startup_rate", "employment_growth"])
+    work["quadrant"] = np.where(work.employment_growth.ge(work.growth_cutoff), "high_growth_", "low_growth_") + np.where(
+        work.startup_rate.ge(work.startup_cutoff), "high_startup", "low_startup"
+    )
+    return work.groupby("quadrant", as_index=False).agg(
+        observation_count=("geography_id", "size"),
+        msa_count=("geography_id", "nunique"),
+        sector_count=("sector_code", "nunique"),
+        startup_rate_mean=("startup_rate", "mean"),
+        startup_rate_median=("startup_rate", "median"),
+        employment_growth_mean=("employment_growth", "mean"),
+        employment_growth_median=("employment_growth", "median"),
+    )
+
+
 def _figures(panel: pd.DataFrame, pearson: pd.DataFrame, sectors: pd.DataFrame,
              covid: pd.DataFrame) -> list[str]:
     FIGURES.mkdir(parents=True, exist_ok=True)
@@ -192,7 +212,8 @@ def _figures(panel: pd.DataFrame, pearson: pd.DataFrame, sectors: pd.DataFrame,
             sample = sample.iloc[np.sort(rng.choice(len(sample), 12000, replace=False))]
         fig, ax = plt.subplots(figsize=(7, 5))
         ax.scatter(sample[variable], sample.startup_rate, alpha=.18, s=10)
-        ax.set(title=title, xlabel=variable.replace("_", " ").title(), ylabel="Startup rate (%)")
+        xlabel = "Unemployment rate (percent)" if variable == "unemployment_rate" else "Population growth (decimal rate)"
+        ax.set(title=title, xlabel=xlabel, ylabel="Startup rate (percent)")
         ax.grid(True, alpha=.2)
         save(fig, filename)
 
@@ -287,7 +308,7 @@ def _write_report(panel: pd.DataFrame, correlations: pd.DataFrame, regressions: 
         "Selected ACS context means by quadrant are retained in `a5_quadrant_msa_year_context.csv`; each MSA-year contributes at most once to each quadrant. "
         f"Among high-growth/low-startup observations, largest sector shares are {', '.join(high_low_sector.sector_code.astype(str))} and largest year shares are {', '.join(high_low_year.year.astype(str))}. "
         "Full sector/year composition counts are in `a5_quadrant_sector_composition.csv` and `a5_quadrant_year_composition.csv`.", "",
-        "These are descriptive group summaries, NOT the entrepreneurial-gap target and not regression outcomes.", "",
+        "`a5_quadrant_context.csv` summarizes classified MSA-sector-year rows; `a5_quadrant_msa_year_context.csv` collapses each MSA-year once within quadrant for regional context. These are descriptive group summaries, NOT the entrepreneurial-gap target and not regression outcomes.", "",
         "## Multicollinearity / Predictor Redundancy", "",
         "Pairwise matrix coefficients identify potentially redundant candidates but do not establish harmful multicollinearity in a final specification. Growth measures share economic content; income and education may co-vary; unemployment and labor-force participation may overlap. No VIF-based pruning or p-value selection was performed.", "",
         "## Limitations", "",
@@ -313,6 +334,7 @@ def run_relationships(database_path: Path = DEFAULT_EDA_DATABASE) -> dict[str, o
     outliers = run_outlier_sensitivity(panel)
     within = _within_panel_persistence(panel)
     quadrant = summarize_quadrant_context(panel)
+    quadrant_panel = _quadrant_panel_context(panel)
     quadrant_sectors, quadrant_years = _quadrant_composition(panel)
     outputs = {
         "a5_pairwise_relationships.csv": pairs,
@@ -326,7 +348,7 @@ def run_relationships(database_path: Path = DEFAULT_EDA_DATABASE) -> dict[str, o
         "a5_regression_summary.csv": models,
         "a5_sensitivity_summary.csv": pd.concat([covid, outliers], ignore_index=True, sort=False),
         "a5_within_panel_persistence.csv": within,
-        "a5_quadrant_context.csv": quadrant,
+        "a5_quadrant_context.csv": quadrant_panel,
         "a5_quadrant_msa_year_context.csv": quadrant,
         "a5_quadrant_sector_composition.csv": quadrant_sectors,
         "a5_quadrant_year_composition.csv": quadrant_years,

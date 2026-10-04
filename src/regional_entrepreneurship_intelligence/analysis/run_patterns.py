@@ -48,11 +48,18 @@ def _figures(year: pd.DataFrame, sector: pd.DataFrame, msa: pd.DataFrame,
     FIGURES.mkdir(parents=True, exist_ok=True)
     names = []
 
+    axis_labels = {
+        "startup_rate": "Startup rate (percent)",
+        "employment_growth": "Employment growth (decimal rate)",
+        "unemployment_rate": "Unemployment rate (percent)",
+        "acs_population_growth": "Population growth (decimal rate)",
+    }
+
     def line(variable: str, title: str, filename: str, statistic: str = "median") -> None:
         data = year[year.variable.eq(variable)].sort_values("year")
         fig, ax = plt.subplots(figsize=(8, 4.5))
         ax.plot(data.year, data[statistic], marker="o")
-        ax.set(title=title, xlabel="Year", ylabel=variable.replace("_", " ").title())
+        ax.set(title=title, xlabel="Year", ylabel=axis_labels[variable])
         ax.grid(True, alpha=.25)
         fig.tight_layout()
         fig.savefig(FIGURES / filename, dpi=150)
@@ -71,7 +78,7 @@ def _figures(year: pd.DataFrame, sector: pd.DataFrame, msa: pd.DataFrame,
         data = sector[sector.variable.eq(variable)].sort_values("median")
         fig, ax = plt.subplots(figsize=(9, 6))
         ax.barh(data.sector_code.astype(str), data["median"])
-        ax.set(title=title, xlabel=variable.replace("_", " ").title(), ylabel="NAICS sector")
+        ax.set(title=title, xlabel=axis_labels[variable], ylabel="NAICS sector")
         ax.grid(True, axis="x", alpha=.25)
         fig.tight_layout()
         fig.savefig(FIGURES / filename, dpi=150)
@@ -98,7 +105,7 @@ def _figures(year: pd.DataFrame, sector: pd.DataFrame, msa: pd.DataFrame,
         data = msa.loc[msa.variable.eq(variable) & msa.eligible_for_comparison, "median"].dropna()
         fig, ax = plt.subplots(figsize=(8, 4.5))
         ax.hist(data, bins=30)
-        ax.set(title=title, xlabel=variable.replace("_", " ").title(), ylabel="Number of MSAs")
+        ax.set(title=title, xlabel=axis_labels[variable], ylabel="Number of MSAs")
         ax.grid(True, axis="y", alpha=.25)
         fig.tight_layout()
         fig.savefig(FIGURES / filename, dpi=150)

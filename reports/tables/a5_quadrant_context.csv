@@ -1,5 +1,5 @@
-quadrant,msa_year_count,msa_count,startup_rate_mean,employment_growth_mean,acs_population_growth_mean,median_household_income_mean,educational_attainment_pct_mean,labor_force_participation_pct_mean,unemployment_rate_mean,acs_population_growth_median,median_household_income_median,educational_attainment_pct_median,labor_force_participation_pct_median,unemployment_rate_median
-high_growth_high_startup,4149,379,7.5399555,0.062996001,0.0094560096,57462.966,28.329743,62.533655,7.0239776,0.006891045,54726,27.2,62.7,6.5
-high_growth_low_startup,3886,366,4.9818436,0.049926038,0.0069734023,56267.078,27.365805,62.324891,6.9613983,0.0050837723,53779.5,26,62.4,6.4
-low_growth_high_startup,4237,381,7.2513406,-0.028997449,0.0086308983,57398.432,28.172225,62.454082,7.0305127,0.0062542959,54644,27.1,62.6,6.5
-low_growth_low_startup,3982,363,4.8547924,-0.023074279,0.0066658296,56092.087,27.203988,62.242808,6.9743153,0.0046490284,53600,25.8,62.3,6.5
+quadrant,observation_count,msa_count,sector_count,startup_rate_mean,startup_rate_median,employment_growth_mean,employment_growth_median
+high_growth_high_startup,17609,379,19,8.1343874,8.3503055,0.062003182,0.043857788
+high_growth_low_startup,11019,366,16,4.9394746,4.8923679,0.051014587,0.040299653
+low_growth_high_startup,13530,381,19,7.420907,7.7348066,-0.030641357,-0.011716882
+low_growth_low_startup,14951,363,16,4.7568187,4.7244094,-0.023781511,-0.0098189352

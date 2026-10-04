@@ -79,7 +79,15 @@ Full national source files, the multi-gigabyte production database, generated ex
 
 ## Assignment Status
 
-**Assignment 4 database, ETL, integration, and QA work is complete.** Assignment 5 exploratory analysis and modeling are not represented as complete. Expected entrepreneurship, alignment residuals, gap labels, future-outcome targets, predictions, dashboards, and deployment remain excluded.
+**Assignments 4 and 5 are complete.** Assignment 5 EDA uses the final 63,577-row analytical panel (381 MSAs, 19 sectors, 2010-2023). The synthesis is in [the final EDA report](reports/assignment5_final_eda_report.md), with [final review](reports/assignment5_final_review.md), [figure index](reports/assignment5_figure_index.md), [table index](reports/assignment5_table_index.md), and [requirements audit](reports/assignment5_final_rubric_audit.md).
+
+Reproduce the complete EDA with:
+
+```powershell
+uv run --offline python -m regional_entrepreneurship_intelligence.analysis.run_eda
+```
+
+Assignment 6 modeling has **not** begun. Expected entrepreneurship, alignment residuals, the formal entrepreneurial-gap target, future labels, predictions, dashboards, and deployment remain excluded.
 
 ## Documentation
 

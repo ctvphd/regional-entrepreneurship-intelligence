@@ -15,6 +15,7 @@ from regional_entrepreneurship_intelligence.analysis.eda import (
     summarize_quadrant_context,
     summarize_sector_relationships,
 )
+from regional_entrepreneurship_intelligence.analysis.run_relationships import _quadrant_panel_context
 
 
 class EDARelationshipsTest(unittest.TestCase):
@@ -93,6 +94,32 @@ class EDARelationshipsTest(unittest.TestCase):
         self.assertIn("msa_year_count", summary)
         self.assertIn("unemployment_rate_mean", summary)
         self.assertTrue((summary.unemployment_rate_mean == 5).all())
+
+    def test_quadrant_panel_and_msa_year_context_are_distinct_grains(self) -> None:
+        rows = pd.DataFrame(
+            {
+                "geography_id": [1, 2, 3, 4],
+                "year": [2020] * 4,
+                "sector_code": ["11"] * 4,
+                "startup_rate": [1.0, 1.0, 3.0, 3.0],
+                "employment_growth": [0.1, 0.3, 0.1, 0.3],
+            }
+        )
+        panel_summary = _quadrant_panel_context(rows)
+        msa_year_summary = summarize_quadrant_context(
+            rows.assign(
+                acs_population_growth=0.01,
+                median_household_income=50000.0,
+                educational_attainment_pct=30.0,
+                labor_force_participation_pct=62.0,
+                unemployment_rate=5.0,
+            )
+        )
+        self.assertEqual(int(panel_summary.observation_count.sum()), 4)
+        self.assertIn("observation_count", panel_summary)
+        self.assertNotIn("msa_year_count", panel_summary)
+        self.assertIn("msa_year_count", msa_year_summary)
+        self.assertFalse(panel_summary.equals(msa_year_summary))
 
 
 if __name__ == "__main__":
