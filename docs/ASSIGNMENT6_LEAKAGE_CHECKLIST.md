@@ -32,3 +32,17 @@ Apply this checklist to every fold, preprocessing pipeline, expected-rate benchm
 ## A6.1 Implementation Boundary
 
 The A6.1 scaffolding validates year pairing, fold boundaries, MSA scope, and feature timing. It does not calculate expected values, residuals, thresholds from observations, labels, or model predictions.
+
+## A6.2 Leakage Audit
+
+- [x] Load the analytical panel read-only and use the frozen A6.1 fold configuration.
+- [x] Fit each expected-rate model only on complete-case rows through that fold's first-stage fit cutoff (2016, 2017, or 2018).
+- [x] Restrict validation residuals to exact same-CBSA/same-sector t-to-t+3 calendar pairs.
+- [x] Keep the final 2018-2020 predictor / 2021-2023 outcome holdout out of fitting, scoring, and model selection.
+- [x] Do not impute, cap, or trim values in the primary expected-rate model.
+- [x] Use target-year features only within fold-local expected-rate scoring and residual diagnostics; do not put them in any predictor matrix.
+- [x] Record the unseen validation-year fixed-effect rule: carry forward the latest fitted training-year effect, without validation outcomes.
+- [x] Keep MSA fixed effects sensitivity-only; validation MSAs without a complete training observation are not estimable in that sensitivity and are counted separately.
+- [x] Do not create residual quantile thresholds, gap labels, classifiers, or final-holdout predictions in A6.2.
+
+This audit concerns the expected-rate benchmark and its diagnostics only. A6.3 must separately implement and test fold-local residual cutoffs and labels before any predictive-model features or outcomes are assembled.

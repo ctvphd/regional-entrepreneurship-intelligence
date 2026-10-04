@@ -352,3 +352,7 @@ The feature timing documentation distinguishes outcome-year benchmark inputs
 used solely for fold-local label construction from predictors available at
 forecast time. No models were fit, expected rates/residuals/labels created,
 or Assignment 6.2 work begun.
+
+## Assignment 6.2 Expected Entrepreneurship Model
+
+AI assistance implemented and ran fold-local OLS, sector-interaction, and Huber robust expected-startup-rate candidates; one-at-a-time lag/growth, training-tail, COVID, and MSA-effect sensitivities; validation residual/coefficient summaries; figures; report/specification; and leakage-focused tests. Model A was selected over Model B on the three development folds; Model C remained a robust sensitivity after its MAE/RMSE and residual-drift tradeoff was reviewed. Year fixed effects for unseen validation years use a documented last-training-year carry-forward rule. Complete-case only; the final holdout was not fit or scored; no gap threshold or label was generated. Student review remains required before A6.3.
