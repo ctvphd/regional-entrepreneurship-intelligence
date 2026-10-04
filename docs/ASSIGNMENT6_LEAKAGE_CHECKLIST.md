@@ -67,4 +67,15 @@ Before A6.4, the target is approved only for its complete-case eligible populati
 - [x] Use the A6.3 eligible labels and explicitly audit additional predictor-feature exclusions; no imputation or class rebalancing.
 - [x] Validate exact-horizon, development-only, unique pooled OOF predictions.
 - [x] Do not tune thresholds on validation outcomes; report 0.50 and fold training prevalence only as diagnostics.
-- [x] Do not train advanced classifiers or access the final holdout.
+- [x] Keep the A6.4 baseline stage separate from advanced classifiers; the A6.4 stage itself did not access the final holdout.
+
+## A6.5 Advanced Model Audit
+
+- [x] Retain the exact A6.4 Baseline-2-complete sample and verify OOF keys and labels against the locked Baseline 1 artifact.
+- [x] Fit Random Forest and HistGradientBoosting candidates with training-fold-only preprocessing and natural class prevalence; no weighting or resampling.
+- [x] Tune only on the latest predictor-year slice inside each outer training fold, with inner training outcomes strictly preceding inner validation outcomes.
+- [x] Refit selected parameters on the full outer training fold; use outer validation labels only for metrics and descriptive permutation diagnostics.
+- [x] Keep ablations on the same paired rows and report partial dependence only over outer-training support.
+- [x] Preserve exact t+3 labels, unique OOF keys, predictor query cutoff 2017, and target cutoff 2020; leave the final holdout untouched.
+- [x] Do not tune thresholds or choose features using outer validation; pooled threshold classifications apply each fold's training prevalence cutoff.
+- [x] Do not begin geographic holdout, COVID/tail robustness, or other A6.6 analyses.

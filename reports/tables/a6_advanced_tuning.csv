@@ -1,0 +1,25 @@
+model,fold,candidate_id,params,inner_ap,inner_fit_n,inner_validation_n,inner_predictor_cutoff,inner_fit_target_max,inner_validation_target_min,selected
+random_forest,fold_1,2,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.3726356187254656,6297,3139,2013,2015,2016,True
+random_forest,fold_1,1,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.3690821727100061,6297,3139,2013,2015,2016,False
+random_forest,fold_1,3,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 30, 'max_features': 0.7}",0.34065920332716093,6297,3139,2013,2015,2016,False
+random_forest,fold_1,4,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 30, 'max_features': 0.7}",0.33993767810782344,6297,3139,2013,2015,2016,False
+hist_gradient_boosting,fold_1,1,"{'max_iter': 120, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.3788616924159125,6297,3139,2013,2015,2016,True
+hist_gradient_boosting,fold_1,4,"{'max_iter': 200, 'learning_rate': 0.08, 'max_leaf_nodes': 15, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.3669555395154734,6297,3139,2013,2015,2016,False
+hist_gradient_boosting,fold_1,2,"{'max_iter': 120, 'learning_rate': 0.08, 'max_leaf_nodes': 31, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.3655603393378346,6297,3139,2013,2015,2016,False
+hist_gradient_boosting,fold_1,3,"{'max_iter': 200, 'learning_rate': 0.05, 'max_leaf_nodes': 31, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.3629580598656036,6297,3139,2013,2015,2016,False
+random_forest,fold_2,2,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.36257537989481264,9436,3387,2014,2016,2017,True
+random_forest,fold_2,1,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.36048542141243367,9436,3387,2014,2016,2017,False
+random_forest,fold_2,4,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 30, 'max_features': 0.7}",0.34239773038656124,9436,3387,2014,2016,2017,False
+random_forest,fold_2,3,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 30, 'max_features': 0.7}",0.34181439218432574,9436,3387,2014,2016,2017,False
+hist_gradient_boosting,fold_2,1,"{'max_iter': 120, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.3627550785275878,9436,3387,2014,2016,2017,True
+hist_gradient_boosting,fold_2,3,"{'max_iter': 200, 'learning_rate': 0.05, 'max_leaf_nodes': 31, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.3535923473186682,9436,3387,2014,2016,2017,False
+hist_gradient_boosting,fold_2,2,"{'max_iter': 120, 'learning_rate': 0.08, 'max_leaf_nodes': 31, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.3519804390187384,9436,3387,2014,2016,2017,False
+hist_gradient_boosting,fold_2,4,"{'max_iter': 200, 'learning_rate': 0.08, 'max_leaf_nodes': 15, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.34930453667876016,9436,3387,2014,2016,2017,False
+random_forest,fold_3,2,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.3915773832461762,12823,3409,2015,2017,2018,True
+random_forest,fold_3,1,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 10, 'max_features': 'sqrt'}",0.3891776523508587,12823,3409,2015,2017,2018,False
+random_forest,fold_3,4,"{'n_estimators': 250, 'max_depth': 12, 'min_samples_leaf': 30, 'max_features': 0.7}",0.3797021293672445,12823,3409,2015,2017,2018,False
+random_forest,fold_3,3,"{'n_estimators': 250, 'max_depth': None, 'min_samples_leaf': 30, 'max_features': 0.7}",0.3756949403038402,12823,3409,2015,2017,2018,False
+hist_gradient_boosting,fold_3,1,"{'max_iter': 120, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.4000386011368593,12823,3409,2015,2017,2018,True
+hist_gradient_boosting,fold_3,4,"{'max_iter': 200, 'learning_rate': 0.08, 'max_leaf_nodes': 15, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.3847782697189247,12823,3409,2015,2017,2018,False
+hist_gradient_boosting,fold_3,2,"{'max_iter': 120, 'learning_rate': 0.08, 'max_leaf_nodes': 31, 'min_samples_leaf': 30, 'l2_regularization': 1.0}",0.38362490364772467,12823,3409,2015,2017,2018,False
+hist_gradient_boosting,fold_3,3,"{'max_iter': 200, 'learning_rate': 0.05, 'max_leaf_nodes': 31, 'min_samples_leaf': 60, 'l2_regularization': 1.0}",0.3799630352859971,12823,3409,2015,2017,2018,False

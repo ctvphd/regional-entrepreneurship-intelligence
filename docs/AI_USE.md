@@ -389,3 +389,18 @@ no advanced classifiers or broad hyperparameter search were run. Baseline
 performance and limited marginal value from adding regional context are
 reported without causal claims. Verification includes the full unit suite,
 repeatable model outputs, and explicit OOF/holdout boundary checks.
+
+## Assignment 6.5 Advanced Predictive Models
+
+AI assistance implemented fold-safe Random Forest and HistGradientBoosting
+comparisons against the locked A6.4 simple logistic baseline, using the same
+complete-case OOF sample and exact frozen folds. The limited candidate search
+uses only the latest predictor-year slice inside each outer training fold;
+selected models are refit on the full outer training set. Paired ablations,
+outer-validation permutation diagnostics, calibration/lift summaries, and
+training-support partial-dependence curves are descriptive. HistGradientBoosting
+has a small pooled AP advantage over logistic, while Random Forest does not;
+the result is not treated as evidence of generalization. The final holdout was
+not loaded or scored, no thresholds were tuned on validation outcomes, and A6.6
+was not started. Verification includes matching all A6.4 OOF keys/labels and
+the full unit test suite.

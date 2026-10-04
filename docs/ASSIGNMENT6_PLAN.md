@@ -6,7 +6,7 @@
 | A6.2 | Expected Entrepreneurship Model | Complete. Model A selected on development folds; robust/interaction/feature sensitivities, residual diagnostics, leakage audit, and outputs documented. Holdout unused; no labels created. |
 | A6.3 | Entrepreneurial Gap Target Construction | Complete for development folds only. Fold-local p20 labels, robustness cutoffs, selection/negative-prediction audits, and leakage checks documented. Complete-case scope is materially selective and must be disclosed in A6.4. No classifier or holdout labels. |
 | A6.4 | Baseline Prediction Model | Complete on development folds only. Training-prevalence, simple logistic, and extended logistic benchmarks; OOF metrics, calibration/lift, predictor ablations, and leakage audit documented. Complete-case scope retained; final holdout untouched. |
-| A6.5 | Advanced Predictive Models | Not started. Only after baseline and leakage review. |
+| A6.5 | Advanced Predictive Models | Complete on the same development folds and A6.4 complete-case OOF sample. Random Forest and HistGradientBoosting compared with the locked simple logistic baseline using fold-local inner temporal tuning, paired ablations, calibration/lift, and validation-only permutation diagnostics. Small pooled AP gains are reported conservatively; final holdout untouched. |
 | A6.6 | Robustness, Interpretation & Generalization | Not started. Include geographic holdout as robustness, tail/COVID sensitivities. |
 | A6.7 | Final Analytics Engine, QA & Assignment 6 Completion | Not started. |
 
