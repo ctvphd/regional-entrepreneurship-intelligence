@@ -417,3 +417,15 @@ Predictors remain bounded at 2017 and target outcomes at 2020; the 2021-2023
 final temporal holdout was not read or scored, and A6.7 was not started. Results
 are predictive/descriptive, not causal. Student review is required before final
 assignment claims.
+
+## Assignment 6.7 Final Analytics Engine
+
+AI assistance implemented the committed-lock validation, read-only final
+holdout evaluation, prespecified metrics and diagnostics, final report, and
+focused tests. The approved logistic model and frozen HGB sensitivity were
+evaluated without holdout-driven tuning, threshold selection, or feature
+changes. AI assistance also helped document reproducibility and limitations;
+the student remains responsible for reviewing the locked design, interpreting
+the evidence, and ensuring course-policy compliance. Verification includes
+repeat-run artifact hashes, the full test suite, and a before/after hash of the
+read-only analytical SQLite database. No Assignment 7/dashboard work was done.

@@ -89,3 +89,14 @@ Before A6.4, the target is approved only for its complete-case eligible populati
 - [x] Treat sector and MSA-size summaries as descriptive; flag sector estimates with fewer than 30 positive cases.
 - [x] Retain complete-case selection and coverage audits; do not impute or change canonical analytical data.
 - [x] Leave the reserved final temporal holdout and all A6.7 work untouched.
+
+## A6.7 Final Holdout Audit
+
+- [x] Verify the model lock and development-only numeric p20 threshold are committed and unmodified before any holdout target query.
+- [x] Fit Model A, derive its threshold, and fit all preprocessing/model parameters from development years only (outcomes through 2020; classifier predictor years through 2017).
+- [x] Query holdout target years 2021–2023 only after the locked design validation; pair exact same-CBSA/same-sector `t` and `t+3` records.
+- [x] Use only predictor-year features in classifier `X`; target-year benchmark covariates are confined to label construction.
+- [x] Apply the frozen logistic and HGB specifications, eligibility rules, and diagnostic thresholds unchanged; do not select or tune on holdout outcomes.
+- [x] Report holdout metrics, calibration, lift, year/sector/MSA-size diagnostics, sample exclusions, and limitations without post-hoc model changes.
+- [x] Re-run the locked analytics engine for output-hash reproducibility and verify the source SQLite database remains unchanged.
+- [x] Keep all Assignment 7/dashboard work outside this completion.

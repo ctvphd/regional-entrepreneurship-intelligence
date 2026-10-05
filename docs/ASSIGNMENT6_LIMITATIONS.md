@@ -8,5 +8,8 @@
 - **Predictive, not causal:** coefficients, importances, and lift do not identify effects of policy or economic conditions.
 - **Growth contribution:** employment growth helps define context and the first-stage expectation but adds limited incremental classification signal after sector/startup history in current checks.
 - **Period:** observations span 2010–2023 and include pandemic-era disruption; external periods may differ.
-- **Generalization:** geographic and size tests remain conditional on observed development data and feature availability; the reserved 2021–2023 outcome holdout has not been evaluated.
-- **Residual uncertainty:** temporal folds are finite and expanding, and subgroup scores (especially rare sectors) can be unstable; minimum-event rules are applied.
+- **Final temporal holdout:** the locked logistic model achieved AP 0.404 versus 0.233 prevalence, ROC-AUC 0.692, Brier 0.164, and top-decile lift 1.99 on 10,304 eligible MSA-sector pairs in 2021–2023. This is evidence of useful ranking, not reliable individual classification or external validity.
+- **Calibration and regime shift:** logistic Brier increased from 0.142 development OOF to 0.164 holdout. Calibration deciles show underprediction at the low end and overprediction in the upper deciles; no holdout recalibration was performed. Pandemic/post-pandemic target years also differ materially in prevalence.
+- **Subgroup uncertainty:** performance varies across sectors and MSA-size groups; sector metrics are suppressed below 30 positive events. Even supported cells are descriptive and may be unstable.
+- **Generalization:** the final holdout is one historical period and geographic results remain conditional on observed data and feature availability. New periods and populations require fresh validation.
+- **Residual uncertainty:** temporal folds are finite and expanding, rare-sector scores are unstable, and the final complete-case sample excludes a patterned subset (14.8% of exact holdout candidate pairs).

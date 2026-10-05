@@ -1,0 +1,6 @@
+research_item,status,evidence,interpretation
+Primary research question,supported,Holdout AP relative to natural prevalence and secondary ranking discrimination,Predictive association only; no causal claim.
+H1: predictors improve over baseline,supported,Locked logistic compared with development-prevalence benchmark on identical holdout rows,"Incremental predictive value, conditional on complete cases."
+H2: industry growth positively associated with entrepreneurship,descriptive support only,A5 descriptive association and A6.2 expected-startup specification,Association does not establish that growth causes entrepreneurship.
+H3: prior entrepreneurship reduces future gap risk,descriptive support only,Lag-1 startup-rate predictor and A6.6 startup-history sensitivity,Predictive signal is not a causal effect.
+H4: industry relationships vary by sector,partially supported,Development sector ablation and supported-event holdout sector metrics,Subgroup estimates are descriptive and may be unstable.
