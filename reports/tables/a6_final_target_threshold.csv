@@ -1,0 +1,2 @@
+expected_model,training_year_max,residual_N,p20_residual_cutoff,cutoff_rule,model_lock_sha256,lock_commit
+Model A OLS,2020,38061,-1.4783450423889537,development in-sample residual 20th percentile; linear interpolation,7e520993ff12453514ac7acb68fd5aae1208272809b622f50daa20e1d894fcad,abed624405dcf1dfa8190844e7cb446477025db5

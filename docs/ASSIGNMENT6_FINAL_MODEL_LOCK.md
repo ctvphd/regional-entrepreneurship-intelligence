@@ -8,7 +8,7 @@
 - Primary label: `gap_p20`, with an exact same-CBSA/same-2-digit-sector `t` to `t+3` pair.
 - Expected-startup benchmark: A6.2 Model A, OLS formula `startup_rate ~ startup_rate_lag1 + employment_growth + acs_population_growth + median_household_income + educational_attainment_pct + labor_force_participation_pct + unemployment_rate + C(sector_code) + C(year)`.
 - Final benchmark fit and residual-threshold population: complete Model A rows available through 2020; no 2021-2023 response or covariate rows may enter this fit.
-- The p20 threshold is the empirical 20th percentile of Model A's in-sample development residuals through 2020, equality inclusive. Its numeric value will be recorded after computing it from development rows only and before holdout model evaluation.
+- The p20 threshold is the empirical 20th percentile of Model A's in-sample development residuals through 2020, equality inclusive. Frozen numerical development p20 cutoff: `-1.4783450423889537` startup-rate points, calculated from 38,061 in-sample development residuals with linear interpolation. It was computed by a query bounded at year 2020, before any holdout target-year query or scoring.
 - For target years beyond 2020, year fixed-effect input is capped at the latest fitted year, 2020, following the documented A6.2 carry-forward rule. Other target-year benchmark covariates are used only to construct the label, never as predictive features.
 
 ## Frozen predictive models
