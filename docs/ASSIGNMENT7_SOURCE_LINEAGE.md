@@ -28,3 +28,29 @@ This document describes the A7.2 lineage boundary. The exhaustive dataset-field-
 ## Temporal and Model Boundary
 
 Historical panel rows, development OOF predictions, and final holdout predictions are separate concepts and files. The A6 holdout contains 10,304 final eligible pairs. No holdout probability/actual gap is propagated into the historical descriptive panel; no final model is fit again; no p20 threshold or label is recreated. Risk category is omitted because A7.1 did not freeze a non-holdout category rule. Source database remains read-only.
+
+## A7.6 Performance Diagnostics
+
+- Fixed KPI cards, model comparisons, and lift values come from
+  `dashboard_model_summary`; calibration points come from
+  `dashboard_calibration`; target-year, MSA-size, and sector results come from
+  their matching finalized A7.2 tables. The primary/sensitivity hierarchy is
+  read from A7.2 metadata and labels.
+- Pointwise PR and ROC chart coordinates are created deterministically from
+  `dashboard_model_predictions`: the selected split's `actual_gap` is the
+  observed label and the unchanged logistic/HGB probability is the score. The
+  transformation uses standard precision-recall and ROC coordinate
+  calculations only. It does not train or refit a model, alter scores, choose
+  a threshold, or recalculate the published summary metrics. The split is
+  always explicit, and the PR/ROC references are prevalence and random
+  ranking, respectively. This narrow transformation is approved in the A7.2
+  logical contracts for A7.6 presentation only.
+- Risk-concentration table values display the frozen top-10/20/25 lift and
+  prevalence from `dashboard_model_summary`; observed prevalence within each
+  share is shown as lift multiplied by overall prevalence. Selected N follows
+  the finalized A6 ceiling-of-fraction rule. No row-level outcome metric is
+  recomputed.
+- Sector metrics and `sufficient_sample_flag` are used as published. The chart
+  includes only sufficient logistic sectors; the table preserves all sectors
+  and blank A6-suppressed metrics. Random Forest is omitted because the frozen
+  A7.2 model summary contains no Random Forest rows.

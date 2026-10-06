@@ -49,3 +49,16 @@ These logical contracts were implemented in A7.2. Physical schemas, types, field
 - The dashboard reads versioned, validated A7.2 outputs and frozen A6 artifacts; canonical SQLite remains read-only.
 - No contract silently imputes, changes sector/geography vintage, or treats missing/suppressed values as zero.
 - `risk_category` is omitted because no non-holdout presentation rule was frozen; use continuous probability/rank only.
+
+## A7.6 Display-Only Curve Transformation
+
+The frozen `dashboard_model_predictions` records may be transformed at display
+time into pointwise precision-recall and ROC coordinates using their unchanged
+`actual_gap` labels and `logistic_probability` / `hgb_probability` scores,
+separately within `development_oof` and `final_holdout`. This deterministic
+evaluation-only transformation creates chart coordinates, not a model or a new
+metric artifact. It must not refit a model, change scores/labels, select an
+operating threshold, or replace fixed Average Precision, ROC-AUC, or other
+summary metrics in `dashboard_model_summary`. The charts label their split and
+retain a prevalence (PR) or random-ranking (ROC) reference. This narrow A7.6
+permission does not authorize recomputing reported metrics elsewhere in the UI.

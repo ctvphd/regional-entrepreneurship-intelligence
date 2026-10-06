@@ -7,7 +7,7 @@
 | A7.3 | Core Streamlit Application Shell | Complete: five-page st.navigation shell, shared components/theme, Explorer-only filter state, cached A7.2 loader adapters, health CLI, and smoke-tested app. |
 | A7.4 | Executive Overview | Complete: A7.2-only source-driven KPIs, Plotly holdout comparison/lift/calibration, retrospective top-N cases, gap explainer, practical interpretation, and limitations. |
 | A7.5 | Regional & Industry Explorer | Complete: Explorer-only MSA/sector/year/gap/prediction filters, source-faithful historical views, separate development/holdout predictions, logistic rankings, coverage and empty states, and filtered CSV export. |
-| A7.6 | Model Performance & Diagnostics | Incomplete; not started. |
+| A7.6 | Model Performance & Diagnostics | Complete: fixed A7.2 metrics, split/model comparisons, deterministic PR/ROC display curves, calibration, lift, time/MSA-size/sector diagnostics, interpretation, and source-lineage tests/report. |
 | A7.7 | Data Quality, Coverage & Limitations | Incomplete; not started. |
 | A7.8 | Interactive Visualization Refinement | Incomplete; not started. |
 | A7.9 | Deployment & Containerization | Incomplete; not started. |
@@ -50,7 +50,7 @@ A7.3 was completed without final Executive Overview visualizations or substantiv
 - Plotly charts, top-N output, focused tests, full test suite, and bounded browser smoke check pass.
 - App guide, AI-use disclosure, and A7.4 implementation report are updated; later A7 stages remain untouched.
 
-A7.4 is complete. Continue only with A7.5 after this stage is reviewed.
+A7.4 is complete; A7.5 was implemented and verified as a separate stage below.
 
 ## A7.5 Exit Criteria
 
@@ -62,4 +62,15 @@ A7.4 is complete. Continue only with A7.5 after this stage is reviewed.
 - Focused and full tests, dashboard health checks, representative QA cases, and bounded Explorer smoke testing pass.
 - App guide, AI-use disclosure, and A7.5 report are updated. A7.6 and later stages remain incomplete.
 
-A7.5 is complete. The Regional & Industry Explorer remains descriptive and retrospective; proceed to A7.6 only as a separate stage.
+A7.5 is complete. The Regional & Industry Explorer remains descriptive and retrospective; A7.6 is documented as a separate stage below.
+
+## A7.6 Exit Criteria
+
+- Performance page validates and consumes only finalized A7.2 metrics, calibration, year, MSA-size, sector, prediction, metadata, and label artifacts; fixed metrics remain independent of Explorer state.
+- Logistic remains primary, HGB remains sensitivity, and Random Forest appears only if a finalized comparison metric exists. Development OOF and final temporal holdout stay explicitly separate.
+- PR/ROC points, when shown, are a deterministic display-only transform of unchanged frozen probability/actual-label pairs, with no model fit, threshold selection, or summary-metric recomputation; lineage and this narrow contract allowance are documented.
+- Calibration and lift use fixed A7.2 values; temporal/size/sector diagnostics preserve source sample counts and sector sufficiency suppression. Metric direction and interpretation are explicit.
+- Focused and full tests, dashboard health, lockfile/diff checks, cross-page reconciliation, and bounded browser smoke pass; the A7.6 report and app guide are updated.
+- A7.7 through A7.10 remain incomplete. No Data Quality page, map, deployment, retraining, or A7.7 work is included.
+
+A7.6 is complete. Stop after this stage; A7.7 Data Quality, Coverage & Limitations remains a separate next assignment.

@@ -498,3 +498,16 @@ OOF and final holdout remain separate; nulls remain unavailable; no expected
 values, predictions, thresholds, categories, or models are recomputed. The
 student should review time-role wording, displayed units, representative-case
 interpretation, and course-policy compliance before submission.
+
+## Assignment 7.6 Model Performance & Diagnostics
+
+AI assistance implemented the fixed-study Model Performance page UX, metric
+interpretations, Plotly comparison/PR/ROC/calibration/lift/year/MSA-size/sector
+diagnostics, validation tests, report, and cross-page reconciliation. Fixed
+summary and subgroup values remain sourced from A7.2 artifacts. PR and ROC
+coordinates use the narrowly documented deterministic evaluation-only
+transformation of frozen probabilities and actual outcomes, without fitting,
+threshold tuning, or summary-metric recomputation. Logistic remains primary,
+HGB sensitivity, and no Random Forest was introduced because none is present
+in the finalized A7.2 model summary. The student should review the diagnostic
+communication, interpretations, and course-policy compliance.

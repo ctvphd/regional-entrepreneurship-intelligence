@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview and A7.5 Regional & Industry Explorer are implemented over validated A7.2 Parquet/JSON artifacts. Model Performance and Data Quality retain their later-stage scope; see the plan before beginning A7.6.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, and A7.6 Model Performance & Diagnostics are implemented over validated A7.2 Parquet/JSON artifacts. Data Quality remains for A7.7; see the plan for remaining stages.
 
 ## Launch
 
@@ -42,8 +42,32 @@ The Regional & Industry Explorer provides searchable MSA, sector, descriptive-ye
 
 Explorer-only filters are wired to the A7.2 option artifact. No risk category is available because no presentation cutpoints were approved. A5 coverage states are `comparison_eligible` and `thin`.
 
+The Model Performance page presents fixed holdout logistic AP, prevalence,
+ROC-AUC, Brier, recall, precision, F1, and top-decile lift from
+`dashboard_model_summary`. It compares Development OOF with the final
+temporal holdout and compares the prevalence benchmark, logistic primary, and
+HGB sensitivity separately by split. Random Forest is shown only if a
+finalized metric row is present; it is absent from the current A7.2 model set.
+Explorer filters do not affect this page. Brier direction is lower-is-better;
+AP is interpreted against prevalence rather than as accuracy.
+
+PR/ROC point coordinates are constructed deterministically from unchanged
+frozen predictions and actual labels, separately by evaluation split, under
+the A7.6 display-only allowance in `ASSIGNMENT7_DATA_CONTRACTS.md`. There is
+no refit, threshold selection, probability change, or summary-metric
+recalculation. Calibration uses the published reliability bins with no
+recalibration; lift uses the fixed summary values. Year and MSA-size charts
+use the finalized subgroup artifacts. Sector AP/ROC-AUC suppression is
+preserved; the source `sufficient_sample_flag` governs the AP chart and
+suppressed cells stay blank in the sortable table. A7.6 lineage is recorded
+in `ASSIGNMENT7_SOURCE_LINEAGE.md`.
+
 Reset defaults are all metropolitan areas, all sectors, the latest descriptive year, all risk categories (currently unavailable), and all observed-gap statuses.
 
 ## Current Limitations
 
-The Model Performance and Data Quality pages remain in their staged implementation phases. There is no map, deployment, live forecast, model fitting, or causal analysis. Overview metrics and Explorer prediction rankings are retrospective and do not establish generalization beyond the single temporal holdout.
+Data Quality & Limitations remains scheduled for A7.7. There is no map,
+deployment, live forecast, model fitting, or causal analysis. Overview
+metrics, Explorer predictions, and Performance holdout diagnostics are
+retrospective and do not establish generalization beyond the single temporal
+holdout.

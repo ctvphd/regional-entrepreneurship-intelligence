@@ -5,8 +5,10 @@ from __future__ import annotations
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from sklearn.metrics import precision_recall_curve, roc_curve
 
 from .overview_data import HOLDOUT_TABLE_LABEL, TOP_N_OPTIONS, get_metric
+from .performance_data import DISPLAY_MODELS, build_risk_concentration_table, metric_value
 
 PRIMARY = "#176B5B"
 HOLDOUT = "#C56A3B"
@@ -81,6 +83,11 @@ def build_model_comparison_chart(summary: pd.DataFrame) -> go.Figure:
     fig.update_yaxes(title_text="Brier score (lower is better)", range=[0, 1], gridcolor=GRID, row=1, col=2)
     fig.update_xaxes(showgrid=False)
     return fig
+
+
+def build_metric_comparison_chart(summary: pd.DataFrame) -> go.Figure:
+    """Descriptive logistic-only comparison with metric direction kept separate."""
+    return build_model_comparison_chart(summary)
 
 
 def build_lift_chart(summary: pd.DataFrame) -> go.Figure:
@@ -160,6 +167,231 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
     )
+    return fig
+
+
+def _metric_direction_chart(summary: pd.DataFrame, split: str, models: tuple[str, ...]) -> go.Figure:
+    fig = make_subplots(
+        rows=1,
+        cols=3,
+        subplot_titles=("Average Precision (higher)", "ROC-AUC (higher)", "Brier score (lower)"),
+        horizontal_spacing=0.12,
+    )
+    metrics = (("AP", "AP"), ("ROC_AUC", "ROC-AUC"), ("Brier", "Brier"))
+    colors = {"prevalence_benchmark": REFERENCE, "logistic": PRIMARY, "hist_gradient_boosting": HOLDOUT, "random_forest": "#5777A8"}
+    symbols = {"prevalence_benchmark": "circle", "logistic": "diamond", "hist_gradient_boosting": "square", "random_forest": "triangle-up"}
+    for model in models:
+        label = DISPLAY_MODELS[model]
+        for col, (metric, axis_label) in enumerate(metrics, start=1):
+            value = metric_value(summary, split, model, metric)
+            fig.add_trace(
+                go.Bar(
+                    x=[label], y=[value], name=label, legendgroup=model, showlegend=col == 1,
+                    marker_color=colors[model],
+                    marker_pattern_shape="/" if model == "hist_gradient_boosting" else "",
+                    text=[f"{value:.3f}"], textposition="outside",
+                    hovertemplate=f"{axis_label}: %{{y:.3f}}<extra>{label}</extra>",
+                ), row=1, col=col,
+            )
+    fig.update_layout(
+        title=f"Fixed {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')} model comparison",
+        template="plotly_white", barmode="group", height=390,
+        margin={"l": 35, "r": 20, "t": 105, "b": 120},
+        legend={"orientation": "h", "y": 1.18, "x": 0}, font={"size": 12},
+    )
+    for col in range(1, 4):
+        fig.update_yaxes(title_text="Score (0-1)", range=[0, 1], gridcolor=GRID, row=1, col=col)
+        fig.update_xaxes(showgrid=False, tickangle=-20, row=1, col=col)
+    return fig
+
+
+def build_performance_model_chart(summary: pd.DataFrame, split: str = "final_holdout") -> go.Figure:
+    if split not in {"development_oof", "final_holdout"}:
+        raise ValueError(f"Unknown model-comparison split: {split}")
+    models = tuple(model for model in ("prevalence_benchmark", "logistic", "hist_gradient_boosting", "random_forest")
+                   if ((summary.dataset_split == split) & (summary.model == model)).any())
+    if not {"prevalence_benchmark", "logistic", "hist_gradient_boosting"}.issubset(models):
+        raise ValueError("dashboard_model_summary.parquet: finalized comparison models are incomplete")
+    return _metric_direction_chart(summary, split, models)
+
+
+def build_pr_curve(predictions: pd.DataFrame, split: str, *, include_sensitivity: bool = False, prevalence: float | None = None) -> go.Figure:
+    rows = predictions.loc[predictions.development_or_holdout == split]
+    if rows.empty:
+        raise ValueError(f"dashboard_model_predictions.parquet: no rows for {split}")
+    models = (("logistic_probability", "Logistic regression (primary)", PRIMARY, "solid"),)
+    if include_sensitivity:
+        models += (("hgb_probability", "HistGradientBoosting (sensitivity)", HOLDOUT, "dash"),)
+    fig = go.Figure()
+    for field, label, color, dash in models:
+        precision, recall, _ = precision_recall_curve(rows.actual_gap.astype(int), rows[field].astype(float))
+        fig.add_trace(go.Scatter(
+            x=recall, y=precision, mode="lines", name=label,
+            line={"color": color, "dash": dash, "width": 2.5},
+            hovertemplate="Recall: %{x:.1%}<br>Precision: %{y:.1%}<extra>%{fullData.name}</extra>",
+        ))
+    if prevalence is not None:
+        fig.add_hline(y=prevalence, line_dash="dot", line_color=REFERENCE,
+                      annotation_text=f"No-information prevalence ({prevalence:.1%})", annotation_position="bottom right")
+    fig.update_layout(
+        title=f"Precision-recall curve: {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
+        template="plotly_white", height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
+        legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
+        xaxis={"title": "Recall", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
+        yaxis={"title": "Precision", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_roc_curve(predictions: pd.DataFrame, split: str, *, include_sensitivity: bool = False) -> go.Figure:
+    rows = predictions.loc[predictions.development_or_holdout == split]
+    if rows.empty:
+        raise ValueError(f"dashboard_model_predictions.parquet: no rows for {split}")
+    models = (("logistic_probability", "Logistic regression (primary)", PRIMARY, "solid"),)
+    if include_sensitivity:
+        models += (("hgb_probability", "HistGradientBoosting (sensitivity)", HOLDOUT, "dash"),)
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode="lines", name="Random-ranking reference",
+                             line={"color": REFERENCE, "dash": "dot", "width": 1.5}, hoverinfo="skip"))
+    for field, label, color, dash in models:
+        false_positive, true_positive, _ = roc_curve(rows.actual_gap.astype(int), rows[field].astype(float))
+        fig.add_trace(go.Scatter(
+            x=false_positive, y=true_positive, mode="lines", name=label,
+            line={"color": color, "dash": dash, "width": 2.5},
+            hovertemplate="False-positive rate: %{x:.1%}<br>True-positive rate: %{y:.1%}<extra>%{fullData.name}</extra>",
+        ))
+    fig.update_layout(
+        title=f"ROC curve: {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
+        template="plotly_white", height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
+        legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
+        xaxis={"title": "False-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
+        yaxis={"title": "True-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_sensitivity: bool = False) -> go.Figure:
+    models = (("logistic", "Logistic regression (primary)", PRIMARY, "circle", "solid"),)
+    if include_sensitivity:
+        models += (("hist_gradient_boosting", "HistGradientBoosting (sensitivity)", HOLDOUT, "diamond", "dash"),)
+    selected = calibration.loc[calibration.dataset_split == split]
+    if selected.empty:
+        raise ValueError(f"dashboard_calibration.parquet: no bins for {split}")
+    maximum = max(float(selected.mean_predicted_probability.max()), float(selected.observed_gap_prevalence.max()))
+    axis_max = min(1.0, max(0.1, (int(maximum * 20) + 1) / 20))
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=[0, axis_max], y=[0, axis_max], mode="lines", name="Ideal calibration",
+                             line={"color": REFERENCE, "dash": "dot"}, hoverinfo="skip"))
+    for model, label, color, symbol, dash in models:
+        bins = selected.loc[selected.model == model].sort_values("risk_bin")
+        fig.add_trace(go.Scatter(
+            x=bins.mean_predicted_probability, y=bins.observed_gap_prevalence,
+            customdata=bins[["risk_bin", "n"]], mode="lines+markers", name=label,
+            line={"color": color, "dash": dash, "width": 2.3}, marker={"symbol": symbol, "size": 8},
+            hovertemplate="Risk bin %{customdata[0]}<br>Mean predicted: %{x:.1%}<br>Observed: %{y:.1%}<br>N=%{customdata[1]:,}<extra>%{fullData.name}</extra>",
+        ))
+    title_split = "Development OOF" if split == "development_oof" else "Final temporal holdout"
+    fig.update_layout(
+        title=f"Calibration by score bin: {title_split}", template="plotly_white", height=390,
+        margin={"l": 55, "r": 25, "t": 75, "b": 65}, legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
+        xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
+        yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
+    )
+    return fig
+
+
+def build_lift_comparison_chart(summary: pd.DataFrame) -> go.Figure:
+    fractions = (("Top 10%", "top10_lift"), ("Top 20%", "top20_lift"), ("Top 25%", "top25_lift"))
+    models = ("logistic", "hist_gradient_boosting")
+    fig = go.Figure()
+    colors = {"logistic": PRIMARY, "hist_gradient_boosting": HOLDOUT}
+    symbols = {"logistic": "diamond", "hist_gradient_boosting": "square"}
+    for model in models:
+        values = [metric_value(summary, "final_holdout", model, metric) for _, metric in fractions]
+        fig.add_trace(go.Bar(
+            x=[name for name, _ in fractions], y=values, name=DISPLAY_MODELS[model],
+            marker_color=colors[model], marker_pattern_shape="/" if model == "hist_gradient_boosting" else "",
+            text=[f"{value:.2f}×" for value in values], textposition="outside",
+            customdata=[[symbols[model]] for _ in values],
+            hovertemplate="%{x}<br>Lift: %{y:.2f}× overall prevalence<extra>%{fullData.name}</extra>",
+        ))
+    fig.add_hline(y=1, line_color=REFERENCE, line_dash="dot", annotation_text="Overall rate (1.00×)")
+    fig.update_layout(title="Holdout gap concentration by frozen model and ranked share", template="plotly_white",
+                      barmode="group", height=370, margin={"l": 45, "r": 25, "t": 75, "b": 50},
+                      legend={"orientation": "h", "y": 1.12, "x": 0}, font={"size": 13},
+                      xaxis={"title": "Highest-scored share", "showgrid": False},
+                      yaxis={"title": "Observed prevalence / overall prevalence (lift)", "rangemode": "tozero", "gridcolor": GRID})
+    return fig
+
+
+def build_performance_by_year_chart(by_year: pd.DataFrame) -> go.Figure:
+    rows = by_year.loc[by_year.dataset_split == "final_holdout"].sort_values(["predictor_year", "model"])
+    fig = make_subplots(rows=1, cols=3, subplot_titles=("AP (higher)", "ROC-AUC (higher)", "Brier (lower)"), horizontal_spacing=0.12)
+    colors = {"logistic": PRIMARY, "hist_gradient_boosting": HOLDOUT}
+    markers = {"logistic": "diamond", "hist_gradient_boosting": "square"}
+    for model in ("logistic", "hist_gradient_boosting"):
+        model_rows = rows.loc[rows.model == model]
+        for col, metric in enumerate(("AP", "ROC_AUC", "Brier"), start=1):
+            fig.add_trace(go.Scatter(
+                x=model_rows.target_year, y=model_rows[metric], mode="lines+markers",
+                name=DISPLAY_MODELS[model], legendgroup=model, showlegend=col == 1,
+                line={"color": colors[model], "dash": "solid" if model == "logistic" else "dash"},
+                marker={"symbol": markers[model], "size": 9},
+                customdata=model_rows[["predictor_year", "sample_n", "prevalence"]],
+                hovertemplate="Predictor %{customdata[0]} → target %{x}<br>%{y:.3f}<br>N=%{customdata[1]:,}<br>Prevalence %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
+            ), row=1, col=col)
+    fig.update_layout(title="Final-holdout variation by target year", template="plotly_white", height=400,
+                      margin={"l": 45, "r": 20, "t": 100, "b": 55},
+                      legend={"orientation": "h", "y": 1.16, "x": 0}, font={"size": 12})
+    for col in range(1, 4):
+        fig.update_yaxes(title_text="Metric (0-1)", range=[0, 1], gridcolor=GRID, row=1, col=col)
+        fig.update_xaxes(title_text="Target year", dtick=1, showgrid=False, row=1, col=col)
+    return fig
+
+
+def build_msa_size_performance_chart(by_size: pd.DataFrame) -> go.Figure:
+    rows = by_size.loc[by_size.dataset_split == "final_holdout"].copy()
+    rows["msa_size_group"] = pd.Categorical(rows.msa_size_group, categories=("small", "middle", "large"), ordered=True)
+    rows = rows.sort_values("msa_size_group")
+    fig = make_subplots(rows=1, cols=3, subplot_titles=("AP (higher)", "ROC-AUC (higher)", "Top-decile lift (higher)"), horizontal_spacing=0.12)
+    colors = {"logistic": PRIMARY, "hist_gradient_boosting": HOLDOUT}
+    for model in ("logistic", "hist_gradient_boosting"):
+        model_rows = rows.loc[rows.model == model]
+        for col, metric in enumerate(("AP", "ROC_AUC", "top10_lift"), start=1):
+            fig.add_trace(go.Bar(
+                x=model_rows.msa_size_group.astype(str), y=model_rows[metric], name=DISPLAY_MODELS[model],
+                legendgroup=model, showlegend=col == 1, marker_color=colors[model],
+                marker_pattern_shape="/" if model == "hist_gradient_boosting" else "",
+                customdata=model_rows[["sample_n", "msa_count", "prevalence"]],
+                hovertemplate="%{x} MSA size<br>Value: %{y:.3f}<br>Prediction pairs: %{customdata[0]:,}<br>MSAs: %{customdata[1]:,}<br>Prevalence: %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
+            ), row=1, col=col)
+    fig.update_layout(title="Fixed final-holdout performance across MSA-size groups", template="plotly_white",
+                      barmode="group", height=410, margin={"l": 40, "r": 20, "t": 105, "b": 50},
+                      legend={"orientation": "h", "y": 1.15, "x": 0}, font={"size": 12})
+    for col in range(1, 4):
+        fig.update_yaxes(title_text="Metric value", rangemode="tozero", gridcolor=GRID, row=1, col=col)
+        fig.update_xaxes(title_text="Training-defined MSA-size group", showgrid=False, row=1, col=col)
+    return fig
+
+
+def build_sector_performance_chart(by_sector: pd.DataFrame) -> go.Figure:
+    rows = by_sector.loc[
+        (by_sector.dataset_split == "final_holdout")
+        & (by_sector.model == "logistic")
+        & by_sector.sufficient_sample_flag.astype(bool)
+    ].sort_values(["AP", "sector_name"], ascending=[True, True])
+    if rows.empty:
+        raise ValueError("dashboard_model_by_sector.parquet: no sufficient-sample logistic sectors")
+    fig = go.Figure(go.Bar(
+        x=rows.AP, y=rows.sector_name, orientation="h", name="Logistic regression (primary)",
+        marker_color=PRIMARY,
+        customdata=rows[["sample_n", "positive_n", "prevalence", "ROC_AUC"]],
+        hovertemplate="%{y}<br>Average Precision: %{x:.3f}<br>N=%{customdata[0]:,}<br>Positive outcomes=%{customdata[1]:,}<br>Prevalence=%{customdata[2]:.1%}<br>ROC-AUC=%{customdata[3]:.3f}<extra></extra>",
+    ))
+    fig.update_layout(title="Logistic Average Precision by sector (sufficient samples only)", template="plotly_white",
+                      height=590, margin={"l": 285, "r": 30, "t": 75, "b": 55}, showlegend=False, font={"size": 12},
+                      xaxis={"title": "Average Precision (higher is better)", "rangemode": "tozero", "gridcolor": GRID},
+                      yaxis={"title": "Final-holdout sector", "showgrid": False})
     return fig
 
 
