@@ -6,7 +6,7 @@
 
 ## Page Modules
 
-`dashboard/pages/` contains overview, explorer, performance, quality, and about modules. A7.4 Executive Overview, A7.5 Explorer, and A7.6 Model Performance are implemented over A7.2 artifacts. Quality remains the A7.7 scope; About provides methods and source context.
+`dashboard/pages/` contains overview, explorer, performance, quality, and about modules. A7.4 Executive Overview, A7.5 Explorer, A7.6 Model Performance, and A7.7 Data Quality are implemented over validated A7.2 artifacts; Quality also reads finalized A5/A6 reporting tables for frozen selection and generalization audits. About remains a separate, non-finalized page.
 
 ## Data Flow and Cache
 
@@ -22,4 +22,4 @@ The app uses `dashboard.loader` exclusively for data access. Thin `st.cache_data
 
 ## Future Integration
 
-The implemented Overview and Performance Plotly views preserve fixed A6 populations; Explorer filters remain Explorer-only. Performance PR/ROC points use the narrow deterministic display transformation approved in `ASSIGNMENT7_DATA_CONTRACTS.md`, without fitting or reported-metric recomputation. A7.7 can add data-quality coverage and limitation views. The Explorer can host a future map only after its separately documented geography specification is approved; mapping and deployment remain deferred.
+The implemented Overview and Performance Plotly views preserve fixed A6 populations; Explorer filters remain Explorer-only. Performance PR/ROC points use the narrow deterministic display transformation approved in `ASSIGNMENT7_DATA_CONTRACTS.md`, without fitting or reported-metric recomputation. Quality communicates source-backed coverage and limitations without altering analytics. The Explorer can host a future map only after its separately documented geography specification is approved; mapping and deployment remain deferred.

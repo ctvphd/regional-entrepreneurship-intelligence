@@ -8,7 +8,7 @@
 | A7.4 | Executive Overview | Complete: A7.2-only source-driven KPIs, Plotly holdout comparison/lift/calibration, retrospective top-N cases, gap explainer, practical interpretation, and limitations. |
 | A7.5 | Regional & Industry Explorer | Complete: Explorer-only MSA/sector/year/gap/prediction filters, source-faithful historical views, separate development/holdout predictions, logistic rankings, coverage and empty states, and filtered CSV export. |
 | A7.6 | Model Performance & Diagnostics | Complete: fixed A7.2 metrics, split/model comparisons, deterministic PR/ROC display curves, calibration, lift, time/MSA-size/sector diagnostics, interpretation, and source-lineage tests/report. |
-| A7.7 | Data Quality, Coverage & Limitations | Incomplete; not started. |
+| A7.7 | Data Quality, Coverage & Limitations | Complete: MSA/sector coverage, A6 complete-case selection and suppression, generalization, source lineage, and responsible-use limitations. |
 | A7.8 | Interactive Visualization Refinement | Incomplete; not started. |
 | A7.9 | Deployment & Containerization | Incomplete; not started. |
 | A7.10 | Final Integration, QA & Completion | Incomplete; not started. |
@@ -74,3 +74,13 @@ A7.5 is complete. The Regional & Industry Explorer remains descriptive and retro
 - A7.7 through A7.10 remain incomplete. No Data Quality page, map, deployment, retraining, or A7.7 work is included.
 
 A7.6 is complete. Stop after this stage; A7.7 Data Quality, Coverage & Limitations remains a separate next assignment.
+
+## A7.7 Exit Criteria
+
+- Quality page uses only validated A7.2 artifacts and finalized A5/A6 reporting tables; no raw database access, model refitting, label reconstruction, or map work.
+- MSA coverage, sector sample support and suppression, complete-case inclusion, missingness/null semantics, MSA-size and unseen-MSA evidence, sources, lineage, and responsible-use limits are visible and sourced.
+- MSA/sector records remain sortable and downloadable; counts and eligibility are distinguished from reliability claims.
+- Focused/full tests, health and lock checks, cross-page reconciliation, and a bounded browser smoke pass; A7.7 report and app documentation are updated.
+- A7.8 through A7.10 remain incomplete; About/Methods is not finalized.
+
+A7.7 is complete. Stop here; A7.8 Interactive Visualization Refinement remains a separate stage.

@@ -21,7 +21,7 @@ def main() -> None:
             st.json(health)
         st.stop()
 
-    # Each page loads only the relevant A7.2 table through the cached loader.
+    # Pages read validated dashboard artifacts and narrowly scoped frozen reports.
     navigation = st.navigation(
         [
             st.Page(overview.render, title="Executive Overview", url_path="overview", icon=":material/space_dashboard:", default=True),

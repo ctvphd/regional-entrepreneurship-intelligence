@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview, A7.5 Regional & Industry Explorer, and A7.6 Model Performance & Diagnostics are implemented over validated A7.2 Parquet/JSON artifacts. Data Quality remains for A7.7; see the plan for remaining stages.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, and A7.7 Data Quality & Limitations are implemented over validated A7.2 Parquet/JSON artifacts and finalized A5/A6 reporting tables. A7.8 through A7.10 remain.
 
 ## Launch
 
@@ -66,8 +66,14 @@ Reset defaults are all metropolitan areas, all sectors, the latest descriptive y
 
 ## Current Limitations
 
-Data Quality & Limitations remains scheduled for A7.7. There is no map,
-deployment, live forecast, model fitting, or causal analysis. Overview
+Data Quality & Limitations presents the 381-area A7.2 coverage inventory, A5
+comparison screen, finalized A6 complete-case selection audit, sector sample
+support and metric suppression, fixed MSA-size and unseen-MSA diagnostics,
+source catalog, lineage, null policy, and responsible-use boundaries. It does
+not read SQLite or reconstruct targets/models. About / Methods / Sources is
+still a separate shell and was not finalized in A7.7.
+
+There is no map, deployment, live forecast, model fitting, or causal analysis. Overview
 metrics, Explorer predictions, and Performance holdout diagnostics are
 retrospective and do not establish generalization beyond the single temporal
 holdout.

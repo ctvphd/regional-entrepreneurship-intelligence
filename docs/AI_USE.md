@@ -511,3 +511,15 @@ threshold tuning, or summary-metric recomputation. Logistic remains primary,
 HGB sensitivity, and no Random Forest was introduced because none is present
 in the finalized A7.2 model summary. The student should review the diagnostic
 communication, interpretations, and course-policy compliance.
+
+## Assignment 7.7 Data Quality, Coverage & Limitations
+
+AI assistance implemented the A7.7 quality page using A7.2 coverage, sector,
+MSA-size, and source artifacts plus finalized A6 complete-case and geographic
+generalization tables. The page exposes MSA and sector support, eligibility
+versus reliability boundaries, source null/suppression policy, sample
+selection, unseen-MSA and MSA-size evidence, source catalog/lineage, and
+responsible-use constraints. Counts and results are displayed from frozen
+artifacts; no model, label, or threshold was reconstructed, and no SQLite/raw
+data was accessed by the page. The student should review the statistical
+wording, visual interpretation, and course-policy compliance.

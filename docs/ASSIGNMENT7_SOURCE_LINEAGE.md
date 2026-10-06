@@ -54,3 +54,15 @@ Historical panel rows, development OOF predictions, and final holdout prediction
   includes only sufficient logistic sectors; the table preserves all sectors
   and blank A6-suppressed metrics. Random Forest is omitted because the frozen
   A7.2 model summary contains no Random Forest rows.
+
+## A7.7 Data Quality & Limitations
+
+- MSA coverage, A5 eligibility, A6 OOF participation, and sector support use
+  the matching validated A7.2 coverage and subgroup artifacts; source catalog
+  fields come from `dashboard_sources`.
+- Complete-case counts and inclusion/exclusion comparisons are displayed from
+  `a6_gap_complete_case_selection.csv` and `a6_sample_selection_audit.csv`;
+  unseen-MSA results are displayed from `a6_geographic_generalization.csv`.
+  The page does not recompute model, target, or sample-selection statistics.
+- Missing values and A6-suppressed sector metrics remain unavailable. The A5
+  coverage screen is not described as a model-confidence or quality measure.
