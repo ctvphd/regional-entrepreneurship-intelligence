@@ -137,9 +137,21 @@ class DashboardDataLayerTest(unittest.TestCase):
         self.assertEqual(options["risk_category_options"], [])
 
     def test_no_streamlit_runtime_is_required(self):
+        import subprocess
         import sys
 
-        self.assertNotIn("streamlit", sys.modules)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                "import sys; import regional_entrepreneurship_intelligence.dashboard.loader; "
+                "assert 'streamlit' not in sys.modules",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

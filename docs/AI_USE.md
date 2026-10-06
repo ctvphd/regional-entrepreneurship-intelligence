@@ -457,3 +457,17 @@ rule exists. Verification includes key/type/null/horizon/probability/coverage
 checks, exact metric reconciliation, repeat-build hashes, full tests, and
 before/after source-database integrity checks. No Streamlit UI, Plotly chart,
 map, deployment, or A7.3 work was performed. Student review remains required.
+
+## Assignment 7.3 Streamlit Application Shell
+
+AI assistance added the Streamlit entry point and `st.navigation` page
+structure, reusable header/footer/model/coverage/limitation components,
+Explorer-only filter controls and deterministic session-state reset, light
+theme configuration, and cached read adapters over the allow-listed A7.2
+loader. A standalone health CLI validates artifact availability, metadata,
+schema fields, and filter options. Tests cover page imports, valid filters,
+reset behavior, approved coverage and split labels, health failure modes,
+loader behavior, and absence of model-fitting or SQLite logic in UI modules.
+The app was smoke-tested in a browser on all five routes. No model, target,
+threshold, metric, production chart, map, or deployment was changed or added.
+The user should review wording and presentation choices before later stages.
