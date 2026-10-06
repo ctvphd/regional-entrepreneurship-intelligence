@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, and A7.8 visualization refinement are implemented over validated A7.2 artifacts and finalized A5/A6 reports. A7.9 and A7.10 remain.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, A7.8 visualization refinement, and A7.8B UX/plain-language refinement are implemented over validated A7.2 artifacts and finalized A5/A6 reports. A7.9 and A7.10 remain intentionally paused.
 
 ## Launch
 
@@ -30,11 +30,11 @@ uv run --offline python -m regional_entrepreneurship_intelligence.dashboard.heal
 
 ## Current Pages
 
-- Executive Overview
-- Regional & Industry Explorer
-- Model Performance
-- Data Quality & Limitations
-- About / Methods / Sources
+- Overview
+- Explore Markets
+- Model Insights
+- Data & Confidence
+- About the Analysis
 
 The Executive Overview presents frozen logistic final-holdout metrics, a development-OOF comparison, holdout lift and calibration diagnostics, and a selectable retrospective top-10/25/50 table. Logistic remains the pre-locked primary model; HistGradientBoosting is shown only as sensitivity analysis. No model is fit and no risk bands are defined in the app. The holdout table is an evaluation record, not a live forecast.
 
@@ -80,8 +80,8 @@ holdout.
 
 ## Visual Conventions
 
-Plotly charts share `dashboard.visual_style`: Arial-based typography, light
-gridlines, responsive width, consistent hover surfaces, and hidden persistent
+Plotly charts share `dashboard.visual_style`: system sans-serif typography,
+theme-aware chart surfaces and gridlines, responsive width, consistent hover surfaces, and hidden persistent
 toolbars. Teal marks observed activity and logistic primary; blue marks
 expected activity; orange marks HGB sensitivity and the final temporal
 holdout; gray is a reference; purple marks gap status. Line style, marker,
@@ -91,3 +91,18 @@ Probabilities/prevalence use one decimal percent, startup rates two decimals,
 employment growth one decimal percent, alignment percentage points, scores
 three decimals, lift two decimals with ×, and counts use separators. The metric
 glossary is centralized in `dashboard.glossary`.
+
+## UX and Language
+
+The dark theme is the default; the Streamlit settings menu can switch to the
+configured light theme. Both use the same responsive pages and semantic chart
+labels. KPI cards pair a plain-language headline with the exact metric name and
+a short interpretation. Navigation is task-oriented, and page titles are
+questions where that helps a first-time reader. Technical terminology and
+study design remain available in metric help, tooltips, and expanders.
+
+Display labels such as “Good comparison coverage” and “Limited data coverage”
+do not change the source categories `comparison_eligible` and `thin`. Neither
+category measures prediction confidence. Fixed A6 scores are retrospective,
+not live forecasts. See `docs/ASSIGNMENT7_PLAIN_LANGUAGE_POLICY.md` and
+`docs/ASSIGNMENT7_UX_STYLE_GUIDE.md` for copy and presentation conventions.

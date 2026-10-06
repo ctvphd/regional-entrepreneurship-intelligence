@@ -1,0 +1,43 @@
+page,component,original_text,revised_text,technical_detail_retained,notes
+Navigation,Overview,Executive Overview,Overview,Overview result details remain unchanged,Display name only
+Navigation,Explore Markets,Regional & Industry Explorer,Explore Markets,MSA and industry terms remain in page copy,Display name only
+Navigation,Model Insights,Model Performance,Model Insights,Technical metric names remain visible,Display name only
+Navigation,Data & Confidence,Data Quality & Limitations,Data & Confidence,Coverage and limitation definitions remain in detail,Display name only
+Navigation,About the Analysis,About / Methods / Sources,About the Analysis,Methods and sources remain in existing page,Display name only
+Overview,Page lead,A predictive framework for identifying MSA-industry combinations at elevated risk of future entrepreneurial under-response relative to observable economic conditions.,See where startup activity keeps pace with local economic conditions and where later gaps appeared in the study.,Model target and three-year evaluation context remain below,No scientific claim added
+Overview,Research question,How accurately can historical industry growth prior entrepreneurial activity labor-market conditions and regional economic characteristics predict future entrepreneurial gaps within MSA-industry combinations?,We compare startup activity with local and industry patterns then check whether earlier data helps identify gaps that appeared later.,Predictor definitions remain in methods,Shortened lead
+Overview,KPI,Average Precision,Find future gaps,Average Precision (AP) with help explains ranking across recall,Value remains frozen
+Overview,KPI,Gap prevalence,Gap rate in this sample,Observed prevalence remains exact technical term,Value remains frozen
+Overview,KPI,ROC-AUC,Rank higher-risk cases,ROC-AUC and its ranking definition remain in caption/help,Value remains frozen
+Overview,KPI,Top 10% lift,Gaps in the top 10%,Top-decile lift and overall-prevalence comparison remain in help,Value remains frozen
+Overview,KPI,Brier score,Probability error,Brier score and lower-is-better direction remain in help,Value remains frozen
+Overview,Comparison,Development and holdout,Did the results hold up in the final evaluation?,Development OOF and Final temporal holdout remain in chart and technical detail,Only heading changes
+Overview,Lift,Where higher scores concentrated observed gaps,Were gaps more common among the highest-scored cases?,Lift and the 1.00x reference remain in caption and glossary,Only copy changes
+Overview,Calibration,Calibration by score bin,Did predicted probabilities match what happened?,Calibration bins and no-refit method remain in technical details,Only copy changes
+Overview,Gap explanation,How the entrepreneurial-gap measure works,What does a gap mean?,Alignment formula and development-only cutoff remain in an expander,No target change
+Overview,Limitation,Coverage and limitations,Where should you use more caution?,A5 coverage and complete-case details remain in supporting copy and other page,No eligibility change
+Explore Markets,Page lead,Regional & Industry Explorer,Explore Markets,MSA and sector definitions remain,Route unchanged
+Explore Markets,Filter,Only rows with an evaluation prediction,Show rows with a model score,Exact place-industry-predictor-year rule remains in help,Filter behavior unchanged
+Explore Markets,Metric,Observed startup rate,Observed startup activity,Source-defined firm startup rate and percent units remain in help,Display text only
+Explore Markets,Metric,Expected startup rate,Expected startup activity,A6 Model A benchmark definition remains in help,Display text only
+Explore Markets,Metric,Logistic probability at t+3,Future gap risk (three years later),Frozen logistic probability and retrospective target remain in help,No prediction change
+Explore Markets,Section,Alignment and observed-gap history,When did activity fall below expectations?,Alignment retains percentage-point units and A6 status,Chart data unchanged
+Explore Markets,Section,Retrospective prediction history,What did the model estimate for later years?,Development OOF and final temporal holdout remain in selector help,Split values unchanged
+Explore Markets,Coverage,comparison_eligible / thin,Good comparison coverage / Limited data coverage,Canonical values and exact A5 threshold remain in technical expander,Source category unchanged
+Explore Markets,Section,Filtered descriptive observations,Matching market and industry records,CSV field lineage and filter contract remain in detail,Download unchanged
+Model Insights,Page lead,Review fixed development and holdout diagnostics,See how well the model identified later gaps during development and in a final period it had not seen.,Exact split names remain in technical detail,No generalization claim beyond one holdout
+Model Insights,Section,What the results say,What do the results tell us?,AP ROC-AUC Brier and calibration definitions remain in glossary,Same frozen metrics
+Model Insights,Section,Precision-recall diagnostics,Did higher scores find more actual gaps?,Precision recall and prevalence reference remain,Curves unchanged
+Model Insights,Section,Calibration,Did predicted probabilities match what happened?,Calibration and finalized A6 bins remain,No recalibration
+Model Insights,Section,Lift and risk concentration,Were gaps concentrated among the highest-scored cases?,Top-decile lift and ceiling rule remain in detail,No threshold change
+Model Insights,Control,Evaluation population for PR/ROC/calibration curves,Which study period should the charts show?,Final temporal holdout and Development OOF labels remain in help,Selection behavior unchanged
+Model Insights,Control,Show HGB sensitivity curves,Include the more flexible comparison model,HistGradientBoosting sensitivity model remains in help,Selection behavior unchanged
+Data & Confidence,Page lead,Understand coverage selection and study limits,Review where the evidence is well represented and where incomplete data calls for caution.,Eligibility rule remains in caption,Reframed without confidence guarantee
+Data & Confidence,Coverage KPI,A5 comparison eligible,Good comparison coverage,Canonical A5 category comparison_eligible remains in help,Counts unchanged
+Data & Confidence,Coverage KPI,Thin A5 coverage,Limited data coverage,Canonical A5 category thin remains in help,Counts unchanged
+Data & Confidence,Chart,Observed panel coverage by metropolitan area,How complete is the historical data across metros?,A5 completeness rule remains in caption,Chart data unchanged
+Data & Confidence,Section,Complete-case selection,Who is represented in the model results?,Frozen selection audit remains in technical expander,Audit values unchanged
+Data & Confidence,Section,Missingness nulls and suppression,What does a blank value mean?,Source suppression and A6 sufficiency rule remain in technical detail,Nulls unchanged
+Data & Confidence,Section,MSA-size variation,Do results differ by metro size?,Training-defined groups and final holdout remain in caption,Groups unchanged
+Data & Confidence,Section,Sources used,Which data sources were used?,A7.2 source catalog remains,Source set unchanged
+About the Analysis,Intro,Study methods data provenance and reproducibility,Learn how the data gap definition predictive model and validation process fit together.,Existing methods and source details remain,Full About redesign deferred

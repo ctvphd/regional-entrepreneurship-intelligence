@@ -192,7 +192,7 @@ class DashboardExplorerTest(unittest.TestCase):
             default_timeout=30,
         ).run()
         self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any(item.label == "Only rows with an evaluation prediction" for item in app.checkbox))
+        self.assertTrue(any(item.label == "Show rows with a model score" for item in app.checkbox))
         self.assertTrue(any(item.label == "Download filtered CSV" for item in app.download_button))
         risk_filter = next(item for item in app.selectbox if item.label == "Risk category")
         self.assertTrue(risk_filter.disabled)
@@ -238,13 +238,13 @@ class DashboardExplorerTest(unittest.TestCase):
         app.get_by_key("selected_year").select(2013).run()
         self.assertEqual(len(app.exception), 0)
         self.assertLessEqual(len(app.get("plotly_chart")), 2)
-        self.assertTrue(any(item.label == "Expected startup rate" and item.value == "N/A" for item in app.metric))
+        self.assertTrue(any(item.label == "Expected startup activity" and item.value == "N/A" for item in app.metric))
         self.assertTrue(any("Expected startup activity is unavailable" in item.value for item in app.info))
         self.assertTrue(any("No prediction records exist" in item.value for item in app.info))
-        self.assertTrue(any("marked thin by the A5 descriptive coverage screen" in item.value for item in app.warning))
+        self.assertTrue(any("Historical data coverage is limited" in item.value for item in app.warning))
         app.get_by_key("selected_gap_status").select(1).run()
         self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any("marked thin by the A5 descriptive coverage screen" in item.value for item in app.warning))
+        self.assertTrue(any("Historical data coverage is limited" in item.value for item in app.warning))
 
 
 if __name__ == "__main__":

@@ -8,14 +8,15 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from ..components import limitation_callout, render_footer, render_header
+from ..components import limitation_callout, render_footer, render_header, render_plotly_chart
 from ..constants import PAGE_DESCRIPTIONS
 from ..data_access import cached_dataset, cached_metadata
 from ..loader import ROOT
 from ..visual_style import (
-    PLOTLY_CONFIG, SUFFICIENT_SAMPLE, THIN_COVERAGE, INSUFFICIENT_SAMPLE,
+    SUFFICIENT_SAMPLE, THIN_COVERAGE, INSUFFICIENT_SAMPLE,
     apply_dashboard_style,
 )
+from ..copy import COVERAGE_LABELS, SELECTION_LIMITATION
 
 REPORTS = ROOT / "reports" / "tables"
 
@@ -34,27 +35,30 @@ def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
     year_span = metadata["study_period"]["descriptive"]
     cols = st.columns(4)
     cols[0].metric("Metropolitan areas", f"{len(coverage):,}")
-    cols[1].metric("A5 comparison eligible", f"{int(comparison.sum()):,}", f"{comparison.mean():.1%} of covered MSAs")
-    cols[2].metric("Thin A5 coverage", f"{int((~comparison).sum()):,}", "Below the descriptive coverage screen")
-    cols[3].metric("MSAs with A6 OOF rows", f"{int(model.sum()):,}", "Observed participation, not reliability")
+    cols[1].metric("Good comparison coverage", f"{int(comparison.sum()):,}", help="Canonical A5 value: comparison_eligible. This is a completeness screen, not a model-confidence measure.")
+    cols[1].caption(f"{comparison.mean():.1%} of covered metros")
+    cols[2].metric("Limited data coverage", f"{int((~comparison).sum()):,}", help="Canonical A5 value: thin. This is a coverage note, not a judgment about a place.")
+    cols[2].caption("Below the A5 completeness screen")
+    cols[3].metric("MSAs with A6 OOF rows", f"{int(model.sum()):,}", help="Observed participation in out-of-fold scoring, not a measure of reliability.")
+    cols[3].caption("Observed participation")
 
     st.caption(
         f"A7.2 coverage across {year_span[0]}–{year_span[1]}. The A5 comparison screen requires at least "
         "100 MSA-sector-year observations, 5 sectors, and 10 years. It is a descriptive completeness rule, "
         "not a model-quality score or causal inclusion criterion."
     )
-    st.plotly_chart(
+    render_plotly_chart(
         apply_dashboard_style(px.histogram(coverage.assign(coverage_status=coverage.coverage_status.map({
-                     "comparison_eligible": "Comparison eligible", "thin": "Thin coverage",
+                     "comparison_eligible": "Good comparison coverage", "thin": "Limited data coverage",
                  })), x="observation_count", nbins=24, color="coverage_status",
                      labels={"observation_count": "Observed MSA-sector-year rows", "coverage_status": "A5 coverage"},
-                     title="Observed panel coverage by metropolitan area",
-                     color_discrete_map={"Comparison eligible": SUFFICIENT_SAMPLE, "Thin coverage": THIN_COVERAGE})
-        .update_layout(height=330, margin={"l": 35, "r": 20, "t": 60, "b": 45})),
-        width="stretch", config=PLOTLY_CONFIG,
-    )
+                     title="How complete is the historical data across metros?",
+                     color_discrete_map={"Good comparison coverage": SUFFICIENT_SAMPLE, "Limited data coverage": THIN_COVERAGE})
+        .update_layout(height=330, margin={"l": 35, "r": 20, "t": 60, "b": 45})))
+    coverage_display = coverage.copy()
+    coverage_display["coverage_status"] = coverage_display["coverage_status"].map(COVERAGE_LABELS).fillna("Not available")
     st.dataframe(
-        coverage.sort_values(["comparison_eligible_flag", "observation_count"], ascending=[True, True]),
+        coverage_display.sort_values(["comparison_eligible_flag", "observation_count"], ascending=[True, True]),
         hide_index=True, width="stretch", height=420,
         column_config={
             "cbsa_code": st.column_config.TextColumn("CBSA code"),
@@ -64,13 +68,15 @@ def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
             "year_count": st.column_config.NumberColumn("Years", format="%d"),
             "first_year": st.column_config.NumberColumn("First year", format="%d"),
             "last_year": st.column_config.NumberColumn("Last year", format="%d"),
-            "comparison_eligible_flag": st.column_config.CheckboxColumn("A5 eligible"),
+            "comparison_eligible_flag": st.column_config.CheckboxColumn("Good comparison coverage", help="Canonical field: A5 comparison_eligible flag."),
             "model_eligible_flag": st.column_config.CheckboxColumn("A6 OOF present"),
             "a6_oof_row_count": st.column_config.NumberColumn("A6 OOF rows", format="%,d"),
-            "coverage_status": st.column_config.TextColumn("Coverage status"),
+            "coverage_status": st.column_config.TextColumn("Coverage status", help="Display wording maps to the unchanged canonical values comparison_eligible and thin."),
             "coverage_note": st.column_config.TextColumn("Coverage note"),
         },
     )
+    with st.expander("Technical details: canonical coverage values"):
+        st.write("Good comparison coverage corresponds to `comparison_eligible`; limited data coverage corresponds to `thin`. These are unchanged A5 source values, not model-confidence ratings.")
     st.caption("Use the table headers to sort; its built-in search and download controls retain all A7.2 coverage fields.")
 
 
@@ -109,15 +115,13 @@ def _render_selection() -> None:
 def _render_sector_coverage(sectors: pd.DataFrame) -> None:
     holdout = sectors.loc[(sectors["dataset_split"] == "final_holdout") & (sectors["model"] == "logistic")].copy()
     holdout["Sample sufficiency"] = holdout["sufficient_sample_flag"].map({True: "Sufficient", False: "Suppressed by A6 rule"})
-    st.plotly_chart(
+    render_plotly_chart(
         apply_dashboard_style(px.bar(holdout.sort_values("sample_n"), x="sample_n", y="sector_name", orientation="h", color="Sample sufficiency",
                custom_data=["positive_n", "prevalence"], labels={"sample_n": "Final-holdout pairs", "sector_name": "Sector"},
-               title="Final temporal holdout support by sector",
+               title="How many evaluation cases support each industry comparison?",
                color_discrete_map={"Sufficient": SUFFICIENT_SAMPLE, "Suppressed by A6 rule": INSUFFICIENT_SAMPLE})
         .update_traces(hovertemplate="%{y}<br>Pairs: %{x:,}<br>Positive events: %{customdata[0]:,}<br>Prevalence: %{customdata[1]:.1%}<extra></extra>")
-        .update_layout(height=620, margin={"l": 250, "r": 25, "t": 65, "b": 50})),
-        width="stretch", config=PLOTLY_CONFIG,
-    )
+        .update_layout(height=620, margin={"l": 250, "r": 25, "t": 65, "b": 50})))
     st.dataframe(
         holdout[["sector_code", "sector_name", "sample_n", "positive_n", "prevalence", "sufficient_sample_flag", "AP", "ROC_AUC"]]
         .sort_values("sector_name"), hide_index=True, width="stretch",
@@ -134,10 +138,15 @@ def _render_sector_coverage(sectors: pd.DataFrame) -> None:
 
 
 def _render_generalization(msa_size: pd.DataFrame) -> None:
-    st.subheader("MSA-size variation")
-    st.caption("Training-defined population thirds; fixed final-holdout values. Descriptive differences do not establish equal performance or explain why groups differ.")
+    st.subheader("Do results differ by metro size?")
+    st.caption("The groups were set using training data. These comparisons describe this evaluation sample; they do not explain why differences occur.")
+    holdout_display = msa_size.loc[msa_size["dataset_split"] == "final_holdout"].copy()
+    holdout_display["model"] = holdout_display["model"].map({
+        "logistic": "Logistic regression",
+        "hist_gradient_boosting": "HistGradientBoosting",
+    }).fillna(holdout_display["model"])
     st.dataframe(
-        msa_size.loc[msa_size["dataset_split"] == "final_holdout"].rename(columns={
+        holdout_display.rename(columns={
             "msa_size_group": "MSA size group", "msa_count": "Metropolitan areas",
             "sample_n": "Prediction pairs", "prevalence": "Gap prevalence",
             "model": "Model", "dataset_split": "Evaluation population",
@@ -159,7 +168,7 @@ def _render_generalization(msa_size: pd.DataFrame) -> None:
     rows = geographic.loc[(geographic["split"] == "pooled_geographic_oof") & (geographic["model"] == "logistic")]
     if not rows.empty:
         row = rows.iloc[0]
-        st.subheader("Unseen-MSA test")
+        st.subheader("How did the model do on held-out metros?")
         st.write(
             f"In A6's held-out-geography development test, logistic AP was {row['pr_auc']:.3f} and ROC-AUC "
             f"{row['roc_auc']:.3f} across {int(row['n']):,} pairs from {int(row['msa_n']):,} MSAs. "
@@ -174,36 +183,31 @@ def render() -> None:
     sectors = cached_dataset("model_by_sector")
     msa_size = cached_dataset("model_by_msa_size")
     sources = cached_dataset("sources")
-    render_header("Data Quality & Limitations", PAGE_DESCRIPTIONS["Data Quality & Limitations"], metadata)
+    render_header("Data & Confidence", PAGE_DESCRIPTIONS["Data & Confidence"], metadata)
 
     _render_coverage(coverage, metadata)
-    st.subheader("Sector support and metric suppression")
+    st.subheader("Is there enough data to compare each industry?")
     _render_sector_coverage(sectors)
 
-    st.subheader("Complete-case selection")
-    _render_selection()
+    st.subheader("Who is represented in the model results?")
+    st.write(SELECTION_LIMITATION)
+    with st.expander("Technical details: complete-case selection"):
+        _render_selection()
 
     _render_generalization(msa_size)
 
-    st.subheader("Missingness, nulls, and suppression")
-    st.write(
-        "Source missingness, source suppression, and incomplete geographic coverage are distinct conditions. "
-        "Unavailable numeric values remain null; the dashboard does not replace them with zero or impute them. "
-        "A blank metric can mean the source did not publish it or A6's stated sufficiency rule suppressed it. "
-        "The A7.2 field dictionary and lineage audit identify field-level meanings and source flags."
-    )
+    st.subheader("What does a blank value mean?")
+    st.write("Some values were not published or were unavailable for a place and year. A blank is not a zero, and the dashboard does not fill in missing values.")
+    with st.expander("Technical details: missingness and suppression"):
+        st.write("Source missingness, source suppression, and incomplete geographic coverage are distinct conditions. A blank metric can mean the source did not publish it or A6's stated sufficiency rule suppressed it. The A7.2 field dictionary and lineage audit identify field-level meanings and source flags.")
 
-    st.subheader("What the model-relative gap does and does not mean")
-    st.write(
-        "Startup rate is one narrow measure of entrepreneurship, not a complete account of business formation, "
-        "innovation, or welfare. The gap is relative to a fitted expected-startup benchmark and its frozen "
-        "fold-local threshold; it is not an observed absolute deficit, causal effect, or policy treatment effect. "
-        "A model score is retrospective ranking evidence for eligible MSA-sector pairs, not a current forecast "
-        "or a recommendation about any community."
-    )
-    limitation_callout("Coverage and subgroup tables describe data support and evaluation samples; they are not quality grades, causal evidence, or guarantees for an individual MSA.", warning=True)
+    st.subheader("What can these results tell you?")
+    st.write("Startup rate is one measure of entrepreneurship, not the whole picture. A gap means activity was low compared with a model-based expectation; it is not an absolute deficit or a judgment about a place.")
+    limitation_callout("These are historical comparisons, not cause-and-effect evidence, forecasts of current conditions, or recommendations for individual communities.", warning=True)
+    with st.expander("Technical details: construct and study limits"):
+        st.write("The gap is relative to a fitted expected-startup benchmark and its frozen fold-local threshold. Scores rank eligible MSA-sector pairs retrospectively and do not establish a policy treatment effect or external generalization.")
 
-    st.subheader("Sources used")
+    st.subheader("Which data sources were used?")
     st.dataframe(sources, hide_index=True, width="stretch", height=300)
     st.caption("Source names, agencies, dataset roles, years, geography, industry level, and notes are copied from the finalized A7.2 source catalog.")
 

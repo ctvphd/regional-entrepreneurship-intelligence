@@ -9,7 +9,7 @@ from ..data_access import cached_dataset, cached_metadata
 
 def render() -> None:
     metadata = cached_metadata()
-    render_header("About / Methods / Sources", PAGE_DESCRIPTIONS["About / Methods / Sources"], metadata)
+    render_header("About the Analysis", PAGE_DESCRIPTIONS["About the Analysis"], metadata)
     st.subheader("Project overview")
     st.write("This research describes MSA-by-industry startup activity and evaluates whether frozen models rank later model-relative entrepreneurial gaps.")
     st.write("Research question: How does observed startup activity compare with expected activity, and which eligible MSA-sector observations had higher predicted future gap risk under the locked reference model?")

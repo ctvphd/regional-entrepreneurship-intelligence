@@ -20,7 +20,7 @@ from ..charts import (
     format_probability,
     format_score,
 )
-from ..components import development_holdout_label, render_footer, render_header
+from ..components import development_holdout_label, render_footer, render_header, render_metric_card, render_plotly_chart
 from ..constants import DATA_LAYER_REBUILD_COMMAND, PAGE_DESCRIPTIONS
 from ..performance_data import (
     DISPLAY_MODELS,
@@ -31,12 +31,14 @@ from ..performance_data import (
     metric_value,
 )
 from ..glossary import GLOSSARY
-from ..visual_style import PLOTLY_CONFIG
+from ..copy import METRIC_PRESENTATION
 
 
 def _metric_card(column, label: str, value: str, help_text: str) -> None:
-    with column:
-        st.metric(label, value, help=help_text)
+    card = METRIC_PRESENTATION.get(label)
+    if card is None:
+        card = {"headline": label, "technical": label, "plain": help_text}
+    render_metric_card(column, card["headline"], value, card["technical"], card["plain"], help_text)
 
 
 def _render_interpretation(summary: pd.DataFrame, calibration: pd.DataFrame) -> None:
@@ -54,31 +56,15 @@ def _render_interpretation(summary: pd.DataFrame, calibration: pd.DataFrame) -> 
     under = int((logistic_bins.observed_gap_prevalence > logistic_bins.mean_predicted_probability).sum())
     over = int((logistic_bins.observed_gap_prevalence < logistic_bins.mean_predicted_probability).sum())
 
-    st.subheader("What the results say")
-    st.write(
-        f"The fixed logistic model ranked Final temporal holdout gaps above the no-information prevalence reference: "
-        f"Average Precision was {holdout_ap:.3f} versus {holdout_prevalence:.3f} prevalence. "
-        f"ROC-AUC was {holdout_auc:.3f} (random-ranking reference 0.500)."
-    )
-    st.write(
-        f"Compared with Development OOF, Final temporal holdout AP was {dev_ap:.3f} to {holdout_ap:.3f} and ROC-AUC "
-        f"was {dev_auc:.3f} to {holdout_auc:.3f}; Brier moved from {dev_brier:.3f} to "
-        f"{holdout_brier:.3f}, where higher is worse. Ranking signal remained, while probability error increased."
-    )
-    st.write(
-        f"HistGradientBoosting had Final temporal holdout AP {hgb_ap:.3f}; its difference from logistic is modest and "
-        "does not overturn the pre-locked, more interpretable and stable logistic reference specification. It is sensitivity evidence, "
-        "not a model-selection result."
-    )
-    st.write(
-        f"In the ten frozen logistic Final temporal holdout calibration bins, observed prevalence was above the mean score "
-        f"in {under} bins and below it in {over}; calibration varies across bins rather than following a "
-        "perfect line. Lift and subgroup diagnostics below show concentration and heterogeneity, not causal effects."
-    )
+    st.subheader("What do the results tell us?")
+    st.write(f"The model ranked later gap cases above a no-information comparison. Average Precision was {holdout_ap:.3f} versus a {holdout_prevalence:.3f} gap rate; ROC-AUC was {holdout_auc:.3f}.")
+    st.write(f"Ranking results changed only slightly between development and the later evaluation period. Probability error increased: Brier moved from {dev_brier:.3f} to {holdout_brier:.3f} (lower is better).")
+    st.write(f"The more flexible HistGradientBoosting check had AP {hgb_ap:.3f} in the later evaluation. The preselected logistic model remains primary; this comparison did not select it.")
+    st.write(f"In the ten score groups, observed gap rates were above the average score in {under} groups and below it in {over}. The scores do not match observed rates perfectly.")
 
 
 def _render_metric_glossary() -> None:
-    with st.expander("Metric glossary and reading guide"):
+    with st.expander("What do these metrics mean? (technical definitions)"):
         st.markdown(
             f"- **Prevalence:** {GLOSSARY['Prevalence']}\n"
             f"- **Average Precision (AP):** {GLOSSARY['AP']}\n"
@@ -105,28 +91,25 @@ def render() -> None:
     metadata = data["metadata"]
     summary = data["model_summary"]
     predictions = data["predictions"]
-    render_header("Model Performance", PAGE_DESCRIPTIONS["Model Performance"], metadata)
+    render_header("Model Insights", PAGE_DESCRIPTIONS["Model Insights"], metadata)
     holdout_n = int(predictions.loc[predictions.development_or_holdout == "final_holdout"].shape[0])
     st.caption(
         f"Fixed evaluation populations: {development_holdout_label('development_oof')} and "
         f"{development_holdout_label('final_holdout')}: {format_count(holdout_n)} "
         f"MSA-sector pairs | Predictor year t to target year t+{metadata['forecast_horizon_years']}"
     )
-    st.info(
-        "These fixed A6 metrics are not affected by Explorer selections. Holdout outcomes are retrospective "
-        "evaluation labels, not live or current forecasts."
-    )
+    st.info("The scores below describe past evaluation samples. They are not live forecasts, and Explorer filters do not change them.")
 
-    st.subheader("Final temporal holdout: logistic primary model")
+    st.subheader("How well did the model identify later gaps?")
     cards = (
-        ("Average Precision", format_score(metric_value(summary, "final_holdout", "logistic", "AP")), "Primary ranking metric; compare with Final temporal holdout prevalence."),
-        ("Gap prevalence", format_probability(metric_value(summary, "final_holdout", "logistic", "prevalence")), "No-information AP reference for this holdout population."),
-        ("ROC-AUC", format_score(metric_value(summary, "final_holdout", "logistic", "ROC_AUC")), "0.500 is random discrimination; higher values rank better."),
-        ("Brier score", format_score(metric_value(summary, "final_holdout", "logistic", "Brier")), "Mean squared probability error; lower is better."),
+        ("AP", format_score(metric_value(summary, "final_holdout", "logistic", "AP")), "Primary ranking metric; compare with the observed gap rate."),
+        ("prevalence", format_probability(metric_value(summary, "final_holdout", "logistic", "prevalence")), "Share of evaluated cases with an observed gap."),
+        ("ROC_AUC", format_score(metric_value(summary, "final_holdout", "logistic", "ROC_AUC")), "0.500 is random ranking; higher is better."),
+        ("Brier", format_score(metric_value(summary, "final_holdout", "logistic", "Brier")), "Average squared probability error; lower is better."),
         ("Recall", format_score(metric_value(summary, "final_holdout", "logistic", "recall")), "At the A6 frozen diagnostic threshold; not tuned here."),
         ("Precision", format_score(metric_value(summary, "final_holdout", "logistic", "precision")), "At the same A6 frozen diagnostic threshold."),
         ("F1", format_score(metric_value(summary, "final_holdout", "logistic", "f1")), "Threshold-specific harmonic mean of precision and recall."),
-        ("Top-decile lift", format_lift(metric_value(summary, "final_holdout", "logistic", "top10_lift")), "Gap prevalence in the top-ranked 10% relative to overall prevalence."),
+        ("lift", format_lift(metric_value(summary, "final_holdout", "logistic", "top10_lift")), "Gap rate in the highest-scored 10% compared with the overall rate."),
     )
     for start in (0, 4):
         cols = st.columns(4)
@@ -135,58 +118,62 @@ def render() -> None:
 
     _render_interpretation(summary, data["calibration"])
 
-    st.subheader("Development OOF vs final temporal holdout")
-    st.caption("Fixed logistic metrics. Ranking metrics (AP and ROC-AUC): higher is better. Brier probability error: lower is better.")
-    st.plotly_chart(build_metric_comparison_chart(summary), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Did performance hold up on later data?")
+    st.caption("Compare model results during development with results from a later evaluation period.")
+    render_plotly_chart(build_metric_comparison_chart(summary))
     ap_delta = metric_value(summary, "final_holdout", "logistic", "AP") - metric_value(summary, "development_oof", "logistic", "AP")
     auc_delta = metric_value(summary, "final_holdout", "logistic", "ROC_AUC") - metric_value(summary, "development_oof", "logistic", "ROC_AUC")
     brier_delta = metric_value(summary, "final_holdout", "logistic", "Brier") - metric_value(summary, "development_oof", "logistic", "Brier")
     st.caption(f"Final temporal holdout minus Development OOF: AP {ap_delta:+.3f}; ROC-AUC {auc_delta:+.3f}; Brier {brier_delta:+.3f} (positive means worse).")
 
-    st.subheader("Final temporal holdout model comparison")
+    st.subheader("How did the primary model compare with a more flexible check?")
     st.markdown("**Primary model: Logistic regression**  \n**Sensitivity model: HistGradientBoosting**")
     st.caption("The prevalence benchmark anchors no-information ranking. In pooled Development OOF, the published fold-specific prevalence benchmark AP need not equal pooled natural prevalence; both source values are retained.")
     comparison_tabs = st.tabs(["Development OOF", "Final temporal holdout"])
     for tab, split in zip(comparison_tabs, ("development_oof", "final_holdout")):
         with tab:
-            st.plotly_chart(build_performance_model_chart(summary, split), width="stretch", config=PLOTLY_CONFIG)
+            render_plotly_chart(build_performance_model_chart(summary, split))
     if "random_forest" not in set(summary.model.astype(str)):
         st.caption("Random Forest is not shown: there is no finalized Random Forest metric row in the A7.2 model summary.")
+
+    with st.expander("Technical details: model and evaluation design"):
+        st.write("Development OOF means out-of-fold predictions made during expanding-window validation. Final temporal holdout refers to target years reserved from model development and evaluated once. All scores are retrospective.")
+        st.write("The primary model is logistic regression. HistGradientBoosting is a sensitivity comparison for nonlinear patterns; it does not replace the locked primary model.")
 
     curve_left, curve_right = st.columns(2)
     with curve_left:
         curve_split = st.radio(
-            "Evaluation population for PR/ROC/calibration curves",
+            "Which study period should the charts show?",
             options=("final_holdout", "development_oof"),
             format_func=development_holdout_label,
             horizontal=True,
             key="performance_curve_split",
         )
     with curve_right:
-        include_hgb = st.checkbox("Show HGB sensitivity curves", value=False, key="performance_include_hgb")
+        include_hgb = st.checkbox("Include the more flexible comparison model", value=False, key="performance_include_hgb", help="Technical name: HistGradientBoosting sensitivity model.")
     prevalence = metric_value(summary, curve_split, "logistic", "prevalence")
 
-    st.subheader("Precision-recall diagnostics")
-    st.caption("AP is the primary metric for minority gap outcomes. The horizontal reference is prevalence, not an accuracy target.")
+    st.subheader("Did higher scores find more actual gaps?")
+    st.caption("The curves show ranking across score cutoffs. The reference line is the gap rate, not an accuracy target.")
     discrimination_tabs = st.tabs(["Precision-recall", "ROC"])
     with discrimination_tabs[0]:
         st.caption("AP summarizes minority-class ranking; the reference line is this population's prevalence, not an accuracy target.")
-        st.plotly_chart(build_pr_curve(predictions, curve_split, include_sensitivity=include_hgb, prevalence=prevalence), width="stretch", config=PLOTLY_CONFIG)
+        render_plotly_chart(build_pr_curve(predictions, curve_split, include_sensitivity=include_hgb, prevalence=prevalence))
     with discrimination_tabs[1]:
         st.caption("ROC-AUC summarizes ranking across thresholds; the diagonal is random ranking. No operating threshold is selected here.")
-        st.plotly_chart(build_roc_curve(predictions, curve_split, include_sensitivity=include_hgb), width="stretch", config=PLOTLY_CONFIG)
+        render_plotly_chart(build_roc_curve(predictions, curve_split, include_sensitivity=include_hgb))
 
-    st.subheader("Calibration")
-    st.caption("Calibration asks whether bins assigned a probability near p experience gaps about p of the time. This uses finalized A6 bins; no recalibration is performed.")
-    st.plotly_chart(build_reliability_chart(data["calibration"], curve_split, include_sensitivity=include_hgb), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Did predicted probabilities match what happened?")
+    st.caption("Compare each score group’s average predicted probability with its observed gap rate.")
+    render_plotly_chart(build_reliability_chart(data["calibration"], curve_split, include_sensitivity=include_hgb))
     cal = data["calibration"].loc[(data["calibration"].dataset_split == curve_split) & (data["calibration"].model == "logistic")].sort_values("risk_bin")
     under = int((cal.observed_gap_prevalence > cal.mean_predicted_probability).sum())
     over = int((cal.observed_gap_prevalence < cal.mean_predicted_probability).sum())
     st.caption(f"Logistic {development_holdout_label(curve_split)} bins: observed prevalence is above the mean score in {under}/{len(cal)} bins (underprediction), and below it in {over}/{len(cal)} bins (overprediction). Bin-level summaries do not imply smooth calibration between bins.")
 
-    st.subheader("Lift and risk concentration")
-    st.caption("Lift above 1.00x means the selected high-risk share contains observed gaps at a higher rate than the overall evaluated population.")
-    st.plotly_chart(build_lift_comparison_chart(summary), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Were gaps concentrated among the highest-scored cases?")
+    st.caption("A lift above 1.00× means the selected group had a higher observed gap rate than the full evaluation sample.")
+    render_plotly_chart(build_lift_comparison_chart(summary))
     risk_table = risk_concentration_table(summary)
     st.dataframe(
         risk_table,
@@ -204,19 +191,19 @@ def render() -> None:
     st.subheader("Subgroup diagnostics")
     diagnostic_tabs = st.tabs(["By target year", "By MSA size", "By sector"])
     with diagnostic_tabs[0]:
-        st.caption("Year-specific results are descriptive across the three final temporal holdout target years (2021–2023); variation does not establish pandemic causation.")
-        st.plotly_chart(build_performance_by_year_chart(data["model_by_year"]), width="stretch", config=PLOTLY_CONFIG)
+        st.caption("These results compare three later target years. Differences are descriptive and do not establish why results varied.")
+        render_plotly_chart(build_performance_by_year_chart(data["model_by_year"]))
         logistic_years = data["model_by_year"].loc[(data["model_by_year"].dataset_split == "final_holdout") & (data["model_by_year"].model == "logistic")].sort_values("target_year")
         weak_ap = logistic_years.loc[logistic_years.AP.idxmin()]
         min_auc = logistic_years.loc[logistic_years.ROC_AUC.idxmin()]
         max_brier = logistic_years.loc[logistic_years.Brier.idxmax()]
         st.caption(f"Logistic AP was lowest for {int(weak_ap.predictor_year)}→{int(weak_ap.target_year)} ({weak_ap.AP:.3f}); ROC-AUC was lowest for {int(min_auc.predictor_year)}→{int(min_auc.target_year)} ({min_auc.ROC_AUC:.3f}); Brier was highest (worse) for {int(max_brier.predictor_year)}→{int(max_brier.target_year)} ({max_brier.Brier:.3f}).")
     with diagnostic_tabs[1]:
-        st.caption("Groups use the finalized A6 training-defined size assignment. Differences reflect model behavior and potentially different sample composition.")
-        st.plotly_chart(build_msa_size_performance_chart(data["model_by_msa_size"]), width="stretch", config=PLOTLY_CONFIG)
+        st.caption("Metro-size groups were set using training data. Differences may reflect both model behavior and sample composition.")
+        render_plotly_chart(build_msa_size_performance_chart(data["model_by_msa_size"]))
     with diagnostic_tabs[2]:
-        st.caption("A6 suppresses sector AP/ROC-AUC below 30 positive outcomes or without a negative class; blank metrics remain unavailable.")
-        st.plotly_chart(build_sector_performance_chart(data["model_by_sector"]), width="stretch", config=PLOTLY_CONFIG)
+        st.caption("Some industry metrics are hidden when the sample is too small or lacks one outcome type. A blank is unavailable, not zero.")
+        render_plotly_chart(build_sector_performance_chart(data["model_by_sector"]))
         sector_table = build_sector_performance_table(data["model_by_sector"])
         st.dataframe(
             sector_table, hide_index=True, width="stretch",
@@ -226,9 +213,9 @@ def render() -> None:
                 "ROC-AUC": st.column_config.NumberColumn(format="%.3f"),
             },
         )
-        st.caption("Sector identity was important in A6 but does not imply equally strong within-sector predictive performance. The chart shows logistic AP for sectors meeting the frozen sufficiency rule.")
+        st.caption("The chart shows logistic results only for industries that meet the fixed sample-size rule. A sector’s role in the model does not guarantee strong within-sector performance.")
 
-    st.warning("These metrics do not establish causality, universal performance, perfect classification, or current live forecasting. The final temporal holdout is one evaluation period.")
+    st.warning("These results do not show cause and effect or guarantee performance in other settings. The final evaluation covers one later period; it is not a current forecast.")
     _render_metric_glossary()
     with st.expander("Technical details and lineage"):
         st.write(

@@ -10,6 +10,7 @@
 | A7.6 | Model Performance & Diagnostics | Complete: fixed A7.2 metrics, split/model comparisons, deterministic PR/ROC display curves, calibration, lift, time/MSA-size/sector diagnostics, interpretation, and source-lineage tests/report. |
 | A7.7 | Data Quality, Coverage & Limitations | Complete: MSA/sector coverage, A6 complete-case selection and suppression, generalization, source lineage, and responsible-use limitations. |
 | A7.8 | Interactive Visualization Refinement | Complete: visual audit, shared Plotly semantics/formatting/glossary, page layout refinements, accessibility cues, and route QA. |
+| A7.8B | UX & Plain-Language Redesign | Complete: dark-first/light-switchable theme, task-oriented navigation, question-led pages, plain-language metric cards, technical-detail disclosure, and UX language audit. No scientific outputs changed. |
 | A7.9 | Deployment & Containerization | Incomplete; not started. |
 | A7.10 | Final Integration, QA & Completion | Incomplete; not started. |
 
@@ -94,3 +95,13 @@ A7.7 is complete. Stop here; A7.8 Interactive Visualization Refinement remains a
 - A7.9 and A7.10 remain incomplete; no map, deployment, or About/Methods finalization is included.
 
 A7.8 is complete. Stop here; deployment and containerization remain A7.9.
+
+## A7.8B Exit Criteria
+
+- Navigation and page openings use the approved user-facing labels and practical questions.
+- Dark-first and light themes use supported Streamlit configuration; Plotly follows the active theme; metric cards pair plain language with exact technical terms.
+- Technical definitions, split semantics, coverage values, and limitations remain available through help text, labels, and expanders.
+- UX language audit and before/after wording log are recorded; focused/full tests, browser route/theme QA, health, lock, and diff checks pass.
+- Data artifacts, model outputs, metrics, target definition, and coverage rules remain unchanged. No map, deployment, or final A7 integration work is included.
+
+A7.8B is complete. Stop for user review; A7.9 remains intentionally paused.

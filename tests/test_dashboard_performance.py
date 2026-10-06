@@ -52,14 +52,15 @@ class DashboardPerformanceTest(unittest.TestCase):
         self.assertEqual(self.data["metadata"]["primary_model"], "logistic")
         self.assertEqual(self.data["metadata"]["sensitivity_model"], "hist_gradient_boosting")
         self.assertNotIn("random_forest", set(summary.model.astype(str)))
-        self.assertTrue(any(item.label == "Average Precision" and item.value == "0.404" for item in app.metric))
+        self.assertTrue(any(item.label == "Find future gaps" and item.value == "0.404" for item in app.metric))
+        self.assertTrue(any("Average Precision (AP)" in item.value for item in app.caption))
         self.assertTrue(any("Random Forest is not shown" in item.value for item in app.caption))
         self.assertFalse(any(item.label in {"Metropolitan area", "NAICS sector"} for item in app.selectbox))
         self.assertGreaterEqual(len(app.get("plotly_chart")), 10)
         app.get_by_key("performance_curve_split").set_value("development_oof").run()
         app.get_by_key("performance_include_hgb").check().run()
         self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any(item.label == "Average Precision" and item.value == "0.404" for item in app.metric))
+        self.assertTrue(any(item.label == "Find future gaps" and item.value == "0.404" for item in app.metric))
 
     def test_standard_split_labels_and_brier_direction_are_explicit(self):
         self.assertEqual(self.data["metadata"]["primary_model"], "logistic")
@@ -67,7 +68,8 @@ class DashboardPerformanceTest(unittest.TestCase):
         text = page.read_text(encoding="utf-8")
         self.assertEqual(development_holdout_label("development_oof"), "Development OOF")
         self.assertEqual(development_holdout_label("final_holdout"), "Final temporal holdout")
-        self.assertIn("Brier probability error: lower is better", text)
+        self.assertIn("Brier score", text)
+        self.assertIn("lower is better", text)
         self.assertIn("Brier {brier_delta:+.3f}", text)
 
     def test_overview_and_performance_metrics_reconcile_to_the_same_artifact(self):
@@ -159,7 +161,7 @@ class DashboardPerformanceTest(unittest.TestCase):
         insufficient = sector.loc[~sector["Sufficient sample"]]
         self.assertEqual(len(insufficient), 2)
         self.assertTrue(insufficient[["AP", "ROC-AUC"]].isna().all().all())
-        self.assertTrue(sector_chart.layout.title.text.endswith("sufficient samples only)"))
+        self.assertIn("supported industry", sector_chart.layout.title.text)
 
     def test_every_performance_figure_is_a_nonempty_plotly_chart(self):
         data = self.data

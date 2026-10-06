@@ -89,8 +89,8 @@ class DashboardShellTest(unittest.TestCase):
         self.assertEqual(state, defaults)
 
     def test_coverage_accepts_only_approved_a72_statuses(self):
-        self.assertIn("Comparison eligible", coverage_badge("comparison_eligible"))
-        self.assertIn("Thin coverage", coverage_badge("thin"))
+        self.assertEqual(coverage_badge("comparison_eligible"), "Good comparison coverage")
+        self.assertEqual(coverage_badge("thin"), "Limited data coverage")
         for status in ("strong", "moderate", "unknown"):
             with self.assertRaises(ValueError):
                 coverage_badge(status)

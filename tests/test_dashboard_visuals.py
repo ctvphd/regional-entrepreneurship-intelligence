@@ -31,7 +31,7 @@ class DashboardVisualsTest(unittest.TestCase):
 
     def test_shared_plotly_style_applies_layout_and_responsive_config(self):
         fig = apply_dashboard_style(go.Figure(go.Bar(x=["AP"], y=[0.42])))
-        self.assertEqual(fig.layout.paper_bgcolor, "#FFFFFF")
+        self.assertEqual(fig.layout.paper_bgcolor, "rgba(0,0,0,0)")
         self.assertEqual(fig.layout.font.size, 13)
         self.assertTrue(PLOTLY_CONFIG["responsive"])
         self.assertFalse(PLOTLY_CONFIG["scrollZoom"])
@@ -44,7 +44,7 @@ class DashboardVisualsTest(unittest.TestCase):
         self.assertLess(logistic_index, hgb_index)
         self.assertEqual(fig.data[logistic_index].marker.color, LOGISTIC_PRIMARY)
         self.assertEqual(fig.data[hgb_index].marker.color, HGB_SENSITIVITY)
-        self.assertEqual(fig.layout.title.text, "Fixed Final temporal holdout model comparison")
+        self.assertIn("How did the models compare?", fig.layout.title.text)
 
     def test_shared_display_formats_follow_dashboard_precision(self):
         self.assertEqual(format_probability(0.12345), "12.3%")

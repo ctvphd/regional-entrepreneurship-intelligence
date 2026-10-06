@@ -6,7 +6,7 @@
 
 ## Page Modules
 
-`dashboard/pages/` contains overview, explorer, performance, quality, and about modules. A7.4 Executive Overview, A7.5 Explorer, A7.6 Model Performance, and A7.7 Data Quality are implemented over validated A7.2 artifacts; Quality also reads finalized A5/A6 reporting tables for frozen selection and generalization audits. About remains a separate, non-finalized page.
+`dashboard/pages/` contains overview, explorer, performance, quality, and about modules. User-facing navigation uses Overview, Explore Markets, Model Insights, Data & Confidence, and About the Analysis. Page headlines are question-led; A7.8B changes presentation copy only. Quality also reads finalized A5/A6 reporting tables for frozen selection and generalization audits. About remains a separate, non-finalized page.
 
 ## Data Flow and Cache
 
@@ -14,7 +14,9 @@ The app uses `dashboard.loader` exclusively for data access. Thin `st.cache_data
 
 ## Reusable Components
 
-`components.py` provides shared header/footer, primary-model label, gap explainer, coverage state, split labels, limitation/empty-state callouts, and UTF-8 CSV conversion. `filters.py` exposes Explorer-scoped controls using `dashboard_filter_options.json`; `state.py` sanitizes invalid session values and resets to documented defaults.
+`components.py` provides shared header/footer, metric cards, gap explainer, coverage state, split labels, limitation/empty-state callouts, and UTF-8 CSV conversion. `copy.py` centralizes plain-language KPI, model, coverage, and limitation wording; `glossary.py` retains technical metric definitions. `filters.py` exposes Explorer-scoped controls using `dashboard_filter_options.json`; `state.py` sanitizes invalid session values and resets to documented defaults.
+
+`.streamlit/config.toml` defines a dark-first theme and switchable light theme. Plotly receives Streamlit's active theme rather than hard-coded light or dark backgrounds.
 
 ## Health Checks
 

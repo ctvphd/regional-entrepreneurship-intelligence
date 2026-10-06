@@ -58,8 +58,7 @@ def build_model_comparison_chart(summary: pd.DataFrame) -> go.Figure:
             col=2,
         )
     fig.update_layout(
-        title="Logistic model: Development OOF and Final temporal holdout",
-        template="plotly_white",
+        title="Did the primary model identify future gaps in both study periods?",
         barmode="group",
         height=390,
         margin={"l": 30, "r": 20, "t": 90, "b": 45},
@@ -94,8 +93,7 @@ def build_lift_chart(summary: pd.DataFrame) -> go.Figure:
     )
     fig.add_hline(y=1.0, line_dash="dash", line_color=REFERENCE, annotation_text="Overall holdout rate (1.00x)", annotation_position="bottom right")
     fig.update_layout(
-        title="Gap concentration among the highest-ranked holdout cases",
-        template="plotly_white",
+        title="Were gaps more common among the highest-scored cases?",
         height=350,
         margin={"l": 35, "r": 35, "t": 72, "b": 48},
         showlegend=False,
@@ -145,8 +143,7 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
         )
     )
     fig.update_layout(
-        title="Final temporal holdout calibration by frozen logistic score bin",
-        template="plotly_white",
+        title="Did predicted probabilities match later gap rates?",
         height=390,
         margin={"l": 50, "r": 25, "t": 70, "b": 55},
         legend={"orientation": "h", "y": -0.24, "x": 0},
@@ -181,8 +178,8 @@ def _metric_direction_chart(summary: pd.DataFrame, split: str, models: tuple[str
                 ), row=1, col=col,
             )
     fig.update_layout(
-        title=f"Fixed {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')} model comparison",
-        template="plotly_white", barmode="group", height=390,
+        title=f"How did the models compare? · {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
+        barmode="group", height=390,
         margin={"l": 35, "r": 20, "t": 105, "b": 120},
         legend={"orientation": "h", "y": 1.18, "x": 0}, font={"size": 12},
     )
@@ -221,8 +218,8 @@ def build_pr_curve(predictions: pd.DataFrame, split: str, *, include_sensitivity
         fig.add_hline(y=prevalence, line_dash="dot", line_color=REFERENCE,
                       annotation_text=f"No-information prevalence ({prevalence:.1%})", annotation_position="bottom right")
     fig.update_layout(
-        title=f"Precision-recall curve: {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
-        template="plotly_white", height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
+        title=f"How many later gaps did higher scores capture? · {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
+        height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
         legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
         xaxis={"title": "Recall", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Precision", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
@@ -248,8 +245,8 @@ def build_roc_curve(predictions: pd.DataFrame, split: str, *, include_sensitivit
             hovertemplate="False-positive rate: %{x:.1%}<br>True-positive rate: %{y:.1%}<extra>%{fullData.name}</extra>",
         ))
     fig.update_layout(
-        title=f"ROC curve: {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
-        template="plotly_white", height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
+        title=f"How well were gap cases ranked above non-gap cases? · {('Development OOF' if split == 'development_oof' else 'Final temporal holdout')}",
+        height=390, margin={"l": 55, "r": 30, "t": 75, "b": 55},
         legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
         xaxis={"title": "False-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "True-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
@@ -279,7 +276,7 @@ def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_se
         ))
     title_split = "Development OOF" if split == "development_oof" else "Final temporal holdout"
     fig.update_layout(
-        title=f"Calibration by score bin: {title_split}", template="plotly_white", height=390,
+        title=f"Did predicted probabilities match observed rates? · {title_split}", height=390,
         margin={"l": 55, "r": 25, "t": 75, "b": 65}, legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
         xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
@@ -303,7 +300,7 @@ def build_lift_comparison_chart(summary: pd.DataFrame) -> go.Figure:
             hovertemplate="%{x}<br>Lift: %{y:.2f}× overall prevalence<extra>%{fullData.name}</extra>",
         ))
     fig.add_hline(y=1, line_color=REFERENCE, line_dash="dot", annotation_text="Overall rate (1.00×)")
-    fig.update_layout(title="Final temporal holdout gap concentration by model and ranked share", template="plotly_white",
+    fig.update_layout(title="Which model concentrated more gaps in the highest-scored groups?",
                       barmode="group", height=370, margin={"l": 45, "r": 25, "t": 75, "b": 50},
                       legend={"orientation": "h", "y": 1.12, "x": 0}, font={"size": 13},
                       xaxis={"title": "Highest-scored share", "showgrid": False},
@@ -327,7 +324,7 @@ def build_performance_by_year_chart(by_year: pd.DataFrame) -> go.Figure:
                 customdata=model_rows[["predictor_year", "sample_n", "prevalence"]],
                 hovertemplate="Predictor %{customdata[0]} → target %{x}<br>%{y:.3f}<br>N=%{customdata[1]:,}<br>Prevalence %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
             ), row=1, col=col)
-    fig.update_layout(title="Final temporal holdout variation by target year", template="plotly_white", height=400,
+    fig.update_layout(title="Did results differ across target years?", height=400,
                       margin={"l": 45, "r": 20, "t": 100, "b": 55},
                       legend={"orientation": "h", "y": 1.16, "x": 0}, font={"size": 12})
     for col in range(1, 4):
@@ -352,7 +349,7 @@ def build_msa_size_performance_chart(by_size: pd.DataFrame) -> go.Figure:
                 customdata=model_rows[["sample_n", "msa_count", "prevalence"]],
                 hovertemplate="%{x} MSA size<br>Value: %{y:.3f}<br>Prediction pairs: %{customdata[0]:,}<br>MSAs: %{customdata[1]:,}<br>Prevalence: %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
             ), row=1, col=col)
-    fig.update_layout(title="Final temporal holdout performance across MSA-size groups", template="plotly_white",
+    fig.update_layout(title="Did model performance differ by metro size?",
                       barmode="group", height=410, margin={"l": 40, "r": 20, "t": 105, "b": 50},
                       legend={"orientation": "h", "y": 1.15, "x": 0}, font={"size": 12})
     for col in range(1, 4):
@@ -375,7 +372,7 @@ def build_sector_performance_chart(by_sector: pd.DataFrame) -> go.Figure:
         customdata=rows[["sample_n", "positive_n", "prevalence", "ROC_AUC"]],
         hovertemplate="%{y}<br>Average Precision: %{x:.3f}<br>N=%{customdata[0]:,}<br>Positive outcomes=%{customdata[1]:,}<br>Prevalence=%{customdata[2]:.1%}<br>ROC-AUC=%{customdata[3]:.3f}<extra></extra>",
     ))
-    fig.update_layout(title="Logistic Average Precision by sector (sufficient samples only)", template="plotly_white",
+    fig.update_layout(title="How well did the model identify gaps in each supported industry?",
                       height=590, margin={"l": 285, "r": 30, "t": 75, "b": 55}, showlegend=False, font={"size": 12},
                       xaxis={"title": "Average Precision (higher is better)", "rangemode": "tozero", "gridcolor": GRID},
                       yaxis={"title": "Final-holdout sector", "showgrid": False})
@@ -481,8 +478,8 @@ def build_observed_expected_chart(panel: pd.DataFrame) -> go.Figure:
             hovertemplate="Year %{x}<br>Observed startup rate: %{y:.2f}%<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<br>Gap observed<extra></extra>",
         ))
     fig.update_layout(
-        title="Observed and expected startup activity",
-        template="plotly_white", height=370,
+        title="Is startup activity above or below expectation?",
+        height=370,
         margin={"l": 55, "r": 25, "t": 75, "b": 50},
         legend={"orientation": "h", "y": -0.24, "x": 0}, font={"size": 13},
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
@@ -503,7 +500,7 @@ def build_startup_trend_chart(panel: pd.DataFrame) -> go.Figure:
         hovertemplate="Year %{x}<br>Startup rate: %{y:.2f}%<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<extra></extra>",
     ))
     fig.update_layout(
-        title="Historical startup-rate trend", template="plotly_white", height=320,
+        title="How has startup activity changed over time?", height=320,
         margin={"l": 55, "r": 25, "t": 70, "b": 45}, showlegend=False,
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Startup rate (percent units)", "ticksuffix": "%", "gridcolor": GRID},
@@ -524,7 +521,7 @@ def build_employment_growth_chart(panel: pd.DataFrame) -> go.Figure:
     ))
     fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="No annual change")
     fig.update_layout(
-        title="Historical employment-growth trend", template="plotly_white", height=320,
+        title="How has local industry employment changed?", height=320,
         margin={"l": 55, "r": 25, "t": 70, "b": 45}, showlegend=False,
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Employment growth", "tickformat": ".0%", "gridcolor": GRID},
@@ -558,7 +555,7 @@ def build_alignment_history_chart(panel: pd.DataFrame) -> go.Figure:
         ))
     fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="Observed = expected")
     fig.update_layout(
-        title="Historical entrepreneurial alignment", template="plotly_white", height=340,
+        title="When did startup activity fall behind expectations?", height=340,
         margin={"l": 55, "r": 25, "t": 75, "b": 45},
         legend={"orientation": "h", "y": -0.24, "x": 0},
         xaxis={"title": "Descriptive target year", "dtick": 1, "showgrid": False},
@@ -587,8 +584,8 @@ def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
                            "<br>Development OOF historical label<extra></extra>"),
         ))
     fig.update_layout(
-        title="Historical A6 gap-status timeline (development OOF labels)",
-        template="plotly_white", height=260,
+        title="When was a gap observed in the historical study?",
+        height=260,
         margin={"l": 40, "r": 20, "t": 70, "b": 45},
         xaxis={"title": "Target / descriptive year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Observed status", "categoryorder": "array", "categoryarray": ["No gap observed", "Gap observed"]},
@@ -619,7 +616,7 @@ def build_prediction_history_chart(predictions: pd.DataFrame) -> go.Figure:
                        "<br>Actual target gap (retrospective): %{customdata[1]}<extra></extra>"),
     ))
     fig.update_layout(
-        title=f"Retrospective logistic prediction history - {label}", template="plotly_white", height=320,
+        title=f"What did the model estimate for later years? · {label}", height=320,
         margin={"l": 55, "r": 25, "t": 70, "b": 50}, showlegend=False,
         xaxis={"title": "Predictor year (t)", "dtick": 1, "showgrid": False},
         yaxis={"title": "Predicted probability of gap at t+3", "tickformat": ".0%", "range": [0, 1], "gridcolor": GRID},

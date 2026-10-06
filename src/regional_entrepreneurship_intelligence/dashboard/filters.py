@@ -11,7 +11,7 @@ def render_explorer_filters(options: dict, prediction_years_by_split: dict | Non
     # These controls scope Explorer placeholders only; fixed performance and
     # holdout metrics always remain the finalized A6 populations.
     initialize_filter_state(st.session_state, options, prediction_years_by_split)
-    st.subheader("Explorer filters")
+    st.subheader("Choose a market")
     if st.button("Reset filters", key="reset_explorer_filters"):
         reset_filter_state(st.session_state, options, prediction_years_by_split)
 
@@ -65,9 +65,9 @@ def render_explorer_filters(options: dict, prediction_years_by_split: dict | Non
         help="Historical OOF target-year status, not a current prediction.",
     )
     has_prediction = st.checkbox(
-        "Only rows with an evaluation prediction",
+        "Show rows with a model score",
         key="selected_has_prediction",
-        help="Restricts descriptive rows to exact MSA-sector-predictor-year keys in the frozen A6 score artifact.",
+        help="Shows only rows that match an exact place, industry, and predictor year in the finalized score data.",
     )
     return {
         "msa": msa,

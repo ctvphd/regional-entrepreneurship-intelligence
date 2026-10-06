@@ -15,16 +15,11 @@ from ..charts import (
     format_score,
     lift_takeaway,
 )
-from ..components import gap_explainer, render_footer, render_header
+from ..components import gap_explainer, render_footer, render_header, render_metric_card, render_plotly_chart
 from ..constants import DATA_LAYER_REBUILD_COMMAND, PAGE_DESCRIPTIONS
 from ..overview_data import HOLDOUT_TABLE_LABEL, TOP_N_OPTIONS, OverviewDataError, get_metric, load_overview_data
 from ..glossary import GLOSSARY
-from ..visual_style import PLOTLY_CONFIG
-
-
-def _render_kpi(label: str, value: str, help_text: str) -> None:
-    with st.container(border=True):
-        st.metric(label, value, help=help_text)
+from ..copy import METRIC_PRESENTATION, MODEL_DETAILS, SELECTION_LIMITATION
 
 
 def _render_workflow() -> None:
@@ -70,77 +65,64 @@ def render() -> None:
     sector_count = int(holdout["sector_code"].nunique())
     holdout_period = metadata["study_period"]["holdout_target"]
 
-    render_header("Executive Overview", PAGE_DESCRIPTIONS["Executive Overview"], metadata)
-    st.subheader("Research question")
-    st.write(
-        "How accurately can historical industry growth, prior entrepreneurial activity, "
-        "labor-market conditions, and regional economic characteristics predict future "
-        "entrepreneurial gaps within MSA-industry combinations?"
-    )
-    st.caption(
-        f"Fixed evaluation population: {HOLDOUT_TABLE_LABEL} | Target years "
-        f"{holdout_period[0]}-{holdout_period[-1]} | Predictor year t to t+{metadata['forecast_horizon_years']}"
-    )
-
-    st.subheader("Final temporal holdout results")
+    render_header("Overview", PAGE_DESCRIPTIONS["Overview"], metadata)
+    st.subheader("What did the model find?")
+    st.caption(f"Final evaluation period · Outcomes from {holdout_period[0]}–{holdout_period[-1]} · Not a live forecast")
     kpi_rows = (
         (
-            ("Average Precision", format_score(get_metric(summary, "final_holdout", "logistic", "AP")),
-             GLOSSARY["AP"]),
-            ("Gap prevalence", format_probability(get_metric(summary, "final_holdout", "logistic", "prevalence")),
-             GLOSSARY["Prevalence"]),
-            ("ROC-AUC", format_score(get_metric(summary, "final_holdout", "logistic", "ROC_AUC")),
-             GLOSSARY["ROC-AUC"]),
-            ("Top 10% lift", format_lift(get_metric(summary, "final_holdout", "logistic", "top10_lift")),
-             GLOSSARY["Lift"]),
+            (METRIC_PRESENTATION["AP"], format_score(get_metric(summary, "final_holdout", "logistic", "AP")), GLOSSARY["AP"]),
+            (METRIC_PRESENTATION["prevalence"], format_probability(get_metric(summary, "final_holdout", "logistic", "prevalence")), GLOSSARY["Prevalence"]),
+            (METRIC_PRESENTATION["ROC_AUC"], format_score(get_metric(summary, "final_holdout", "logistic", "ROC_AUC")), GLOSSARY["ROC-AUC"]),
+            (METRIC_PRESENTATION["lift"], format_lift(get_metric(summary, "final_holdout", "logistic", "top10_lift")), GLOSSARY["Lift"]),
         ),
         (
-            ("Brier score", format_score(get_metric(summary, "final_holdout", "logistic", "Brier")),
-             GLOSSARY["Brier"]),
-            ("Holdout observations", format_count(holdout_n), "Eligible MSA-sector prediction pairs in the final temporal holdout."),
-            ("MSAs represented", format_count(msa_count), "Distinct metropolitan areas in the final prediction sample."),
-            ("Sectors represented", format_count(sector_count), "Distinct analytical 2-digit NAICS sector codes in the final prediction sample."),
+            (METRIC_PRESENTATION["Brier"], format_score(get_metric(summary, "final_holdout", "logistic", "Brier")), GLOSSARY["Brier"]),
+            ({"headline": "Cases reviewed", "technical": "Eligible holdout pairs", "plain": "Metro-industry cases in the final evaluation."}, format_count(holdout_n), "Eligible MSA-sector prediction pairs in the final temporal holdout."),
+            ({"headline": "Places represented", "technical": "Metropolitan areas", "plain": "Distinct metropolitan areas in the final sample."}, format_count(msa_count), "Distinct metropolitan areas in the final prediction sample."),
+            ({"headline": "Industries represented", "technical": "NAICS sectors", "plain": "Distinct two-digit industries in the final sample."}, format_count(sector_count), "Distinct analytical 2-digit NAICS sector codes in the final prediction sample."),
         ),
     )
     for row in kpi_rows:
         columns = st.columns(4)
-        for column, (label, value, help_text) in zip(columns, row):
-            with column:
-                _render_kpi(label, value, help_text)
+        for column, (copy, value, help_text) in zip(columns, row):
+            render_metric_card(column, copy["headline"], value, copy["technical"], copy["plain"], help_text)
 
-    st.subheader("Model hierarchy")
+    st.subheader("How did it perform on later data?")
     st.markdown("**Primary model: Logistic regression**")
     hgb_ap_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "AP") - get_metric(summary, "final_holdout", "logistic", "AP")
     hgb_roc_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "ROC_AUC") - get_metric(summary, "final_holdout", "logistic", "ROC_AUC")
     st.write(
-        f"HistGradientBoosting is a sensitivity model. On the Final temporal holdout its AP and ROC-AUC "
-        f"were higher by {hgb_ap_change:.3f} and {hgb_roc_change:.3f}, respectively; the modest "
-        "difference does not change the pre-locked, more interpretable logistic reference. "
-        "This post-lock sensitivity comparison was not used to select the primary model."
+        f"HistGradientBoosting, a more flexible comparison model, scored {hgb_ap_change:.3f} higher on AP and "
+        f"{hgb_roc_change:.3f} higher on ROC-AUC in the final evaluation. The difference is modest. "
+        f"{MODEL_DETAILS['primary']} This comparison did not select the primary model."
     )
 
-    st.subheader("Development and holdout")
-    st.caption("Average Precision and ROC-AUC are ranking metrics (higher is better); Brier is probability error (lower is better).")
-    st.plotly_chart(build_model_comparison_chart(summary), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Did the results hold up in the final evaluation?")
+    st.caption("Compare model ranking across development and later data. The Brier score measures probability error; lower is better.")
+    render_plotly_chart(build_model_comparison_chart(summary))
     st.caption(comparison_takeaway(summary))
 
-    st.subheader("Where higher scores concentrated observed gaps")
-    st.caption("Lift compares realized gap prevalence in the top-ranked share with overall Final temporal holdout prevalence; 1.00× is the overall rate.")
-    st.plotly_chart(build_lift_chart(summary), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Were gaps more common among the highest-scored cases?")
+    st.caption("The highest-scored 10% is compared with the overall gap rate. A value of 1.00× means the rates were equal.")
+    render_plotly_chart(build_lift_chart(summary))
     st.caption(lift_takeaway(summary))
 
-    st.subheader("Calibration by score bin")
-    st.caption("Each point compares the frozen logistic mean score with the later observed gap prevalence in an equal-count holdout bin. No recalibration is applied.")
-    st.plotly_chart(build_calibration_chart(data["calibration"]), width="stretch", config=PLOTLY_CONFIG)
+    st.subheader("Did predicted probabilities match what happened?")
+    st.caption("Each point compares a group’s average predicted probability with the share that later had a gap.")
+    render_plotly_chart(build_calibration_chart(data["calibration"]))
     st.caption(calibration_takeaway(data["calibration"]))
 
-    st.subheader("Highest-ranked holdout cases")
+    st.subheader("Which cases received the highest scores?")
     st.warning(
-        f"{HOLDOUT_TABLE_LABEL}. Actual gap status is the later realized target outcome, "
-        "shown only for retrospective evaluation; these are not live or current forecasts."
+        f"These records come from the {holdout_period[0]}–{holdout_period[-1]} evaluation. "
+        "The gap status happened later and is shown only for retrospective checking; these are not live forecasts."
     )
     top_n = st.selectbox("Show highest-ranked cases", options=TOP_N_OPTIONS, index=0, key="overview_top_n")
     table = build_top_risk_table(predictions, top_n=top_n, labels=data["labels"])
+    table["Coverage status"] = table["Coverage status"].map({
+        "comparison_eligible": "Good comparison coverage",
+        "thin": "Limited data coverage",
+    }).fillna("Not available")
     st.dataframe(
         table,
         hide_index=True,
@@ -151,24 +133,25 @@ def render() -> None:
                 format=".1%",
                 help="Frozen primary logistic probability for the target year shown; retrospective holdout score.",
             ),
+            "Coverage status": st.column_config.TextColumn(
+                help="Plain-language display of the unchanged A5 status values comparison_eligible and thin. Coverage is not prediction confidence."
+            ),
         },
     )
 
-    st.subheader("How the entrepreneurial-gap measure works")
+    st.subheader("What does a gap mean?")
     gap_explainer()
-    st.write(
-        "Observed startup activity is the historical firm-startup rate. Expected startup activity is an A6 Model A benchmark based on prior startup activity, employment growth, regional controls, industry, and year. Alignment compares observed activity with that benchmark."
-    )
-    st.write(
-        "A gap label marks unusually low alignment using a threshold fixed from development residuals only. The logistic model then estimates the probability of that label at t+3. A gap is model-relative, not proof of ecosystem failure."
-    )
+    st.write("Expected startup activity is an estimate based on past startup activity and regional and industry conditions. It describes a comparison point, not an ideal level.")
+    with st.expander("Technical details: expected rate and gap label"):
+        st.write("Alignment is observed startup rate minus expected startup rate. The A6 gap label uses a threshold fixed from development data; the model then estimates the probability of that label at t+3.")
+        st.write(f"{GLOSSARY['Expected rate']} {GLOSSARY['Alignment']}")
     with st.expander("Illustrative interpretation"):
         st.write(
             "If observed startup activity is below its expected benchmark, alignment is negative; it counts as an A6 gap only when it reaches the frozen development-only p20 cutoff. The later t+3 prediction is a probability for the evaluation design, not a causal or guaranteed outcome."
         )
     _render_workflow()
 
-    st.subheader("What this means")
+    st.subheader("What can these results support?")
     left, right = st.columns(2)
     with left:
         st.markdown("**Can support**")
@@ -184,20 +167,25 @@ def render() -> None:
     )
 
     coverage_counts = data["coverage"]["coverage_status"].value_counts().to_dict()
-    st.subheader("Coverage and limitations")
+    st.subheader("Where should you use more caution?")
+    eligible_label = "Good comparison coverage"
+    limited_label = "Limited data coverage"
     st.warning(
-        "Model results use a patterned complete-case sample; earlier A6 audits found excluded observations "
-        "disproportionately smaller and lower-startup. Industries are aggregated to 2-digit NAICS, and startup "
-        "rates are narrower than entrepreneurship broadly. Holdout quality varies across years and MSA-size "
-        "groups; equal reliability across places is not established. "
+        SELECTION_LIMITATION + " "
+        "Industries are grouped into broad two-digit sectors, and startup rates do not capture every form of entrepreneurship. "
+        "Results vary across years and metro-size groups; equal reliability across places is not established. "
         f"The A5 descriptive screen covers {format_count(len(data['coverage']))} CBSAs "
-        f"({format_count(coverage_counts.get('comparison_eligible', 0))} comparison-eligible; "
-        f"{format_count(coverage_counts.get('thin', 0))} thin). These coverage labels are not model-confidence ratings."
+        f"({format_count(coverage_counts.get('comparison_eligible', 0))} {eligible_label}; "
+        f"{format_count(coverage_counts.get('thin', 0))} {limited_label}). Coverage is not model confidence."
     )
-    st.markdown("[Review Data Quality & Limitations](/quality)")
+    st.markdown("[Review data coverage and limitations](/quality)")
 
     sources = _source_names(data["sources"])
     if sources:
         st.caption("Source systems represented in A7.2: " + " | ".join(sources))
-    st.markdown("[Methods & Sources](/about)")
+    with st.expander("Technical details and metric definitions"):
+        st.write(f"Evaluation sample: {HOLDOUT_TABLE_LABEL}; target years {holdout_period[0]}–{holdout_period[-1]}, using predictor information from three years earlier.")
+        st.markdown("- **Average Precision:** " + GLOSSARY["AP"] + "\n- **ROC-AUC:** " + GLOSSARY["ROC-AUC"] + "\n- **Brier score:** " + GLOSSARY["Brier"] + "\n- **Lift:** " + GLOSSARY["Lift"] + "\n- **Calibration:** " + GLOSSARY["Calibration"])
+        st.write(MODEL_DETAILS["sensitivity"])
+    st.markdown("[How the analysis was built](/about)")
     render_footer(metadata)

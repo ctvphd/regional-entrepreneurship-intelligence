@@ -24,11 +24,11 @@ def main() -> None:
     # Pages read validated dashboard artifacts and narrowly scoped frozen reports.
     navigation = st.navigation(
         [
-            st.Page(overview.render, title="Executive Overview", url_path="overview", icon=":material/space_dashboard:", default=True),
-            st.Page(explorer.render, title="Regional & Industry Explorer", url_path="explorer", icon=":material/search:"),
-            st.Page(performance.render, title="Model Performance", url_path="performance", icon=":material/assessment:"),
-            st.Page(quality.render, title="Data Quality & Limitations", url_path="quality", icon=":material/fact_check:"),
-            st.Page(about.render, title="About / Methods / Sources", url_path="about", icon=":material/menu_book:"),
+            st.Page(overview.render, title="Overview", url_path="overview", icon=":material/space_dashboard:", default=True),
+            st.Page(explorer.render, title="Explore Markets", url_path="explorer", icon=":material/search:"),
+            st.Page(performance.render, title="Model Insights", url_path="performance", icon=":material/assessment:"),
+            st.Page(quality.render, title="Data & Confidence", url_path="quality", icon=":material/fact_check:"),
+            st.Page(about.render, title="About the Analysis", url_path="about", icon=":material/menu_book:"),
         ],
         position="sidebar",
     )

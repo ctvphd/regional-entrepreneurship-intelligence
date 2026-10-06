@@ -21,6 +21,7 @@ from regional_entrepreneurship_intelligence.dashboard.components import (
     limitation_callout,
     render_footer,
     render_header,
+    render_plotly_chart,
 )
 from regional_entrepreneurship_intelligence.dashboard.constants import PAGE_DESCRIPTIONS
 from regional_entrepreneurship_intelligence.dashboard.data_access import (
@@ -43,9 +44,8 @@ from regional_entrepreneurship_intelligence.dashboard.explorer_data import (
 from regional_entrepreneurship_intelligence.dashboard.filters import render_explorer_filters
 from regional_entrepreneurship_intelligence.dashboard.state import initialize_filter_state
 from regional_entrepreneurship_intelligence.dashboard.glossary import GLOSSARY
-from regional_entrepreneurship_intelligence.dashboard.visual_style import (
-    PLOTLY_CONFIG, format_alignment, format_growth, format_rate,
-)
+from regional_entrepreneurship_intelligence.dashboard.visual_style import format_alignment, format_growth, format_rate
+from regional_entrepreneurship_intelligence.dashboard.copy import COVERAGE_LABELS
 
 
 def _rate(value) -> str:
@@ -67,7 +67,7 @@ def _status(value, labels: dict) -> str:
 
 
 def _render_metrics(row: pd.Series | None, labels: dict, *, has_specific_selection: bool = False) -> None:
-    st.subheader("Selected-observation metrics")
+    st.subheader("Is startup activity keeping pace?")
     if row is None:
         message = (
             "No observation matches this MSA-sector, descriptive year, and active gap/prediction filters. Historical values are shown separately when available."
@@ -78,10 +78,10 @@ def _render_metrics(row: pd.Series | None, labels: dict, *, has_specific_selecti
         return
     first = st.columns(4)
     metrics = (
-        ("Observed startup rate", _rate(row["startup_rate"]), "Source-defined startup rate, in percent units."),
-        ("Expected startup rate", _rate(row["expected_startup_rate"]), GLOSSARY["Expected rate"]),
-        ("Alignment", _alignment(row["alignment_residual"]), GLOSSARY["Alignment"]),
-        ("Historical A6 gap", _status(row["observed_historical_gap_status"], labels.get("gap_status", {})), "Development OOF target-year label; unavailable outside validated fold years."),
+        ("Observed startup activity", _rate(row["startup_rate"]), "Source-defined firm startup rate, in percent units."),
+        ("Expected startup activity", _rate(row["expected_startup_rate"]), GLOSSARY["Expected rate"]),
+        ("Above / below expectation", _alignment(row["alignment_residual"]), GLOSSARY["Alignment"]),
+        ("Gap observed in past", _status(row["observed_historical_gap_status"], labels.get("gap_status", {})), "Historical A6 label; not a future prediction."),
     )
     for column, (label, value, help_text) in zip(first, metrics):
         with column:
@@ -94,9 +94,9 @@ def _render_metrics(row: pd.Series | None, labels: dict, *, has_specific_selecti
     if not pd.isna(split):
         prediction_help += f" Evaluation split: {split}."
     more = (
-        ("Logistic probability at t+3", prediction_value, prediction_help),
-        ("Employment growth", _growth(row["employment_growth"]), "QCEW annual growth; shown separately from startup rate."),
-        ("Coverage", str(row["coverage_status"]), "A5 descriptive screen status; not prediction confidence."),
+        ("Future gap risk (three years later)", prediction_value, prediction_help),
+        ("Local employment growth", _growth(row["employment_growth"]), "Annual change in local industry employment; separate from startup activity."),
+        ("Data coverage", COVERAGE_LABELS.get(str(row["coverage_status"]), "Not available"), "A5 historical coverage status; not prediction confidence. The source category remains available in the coverage section."),
     )
     for column, (label, value, help_text) in zip(second, more):
         with column:
@@ -151,7 +151,7 @@ def render() -> None:
         for split in ("final_holdout", "development_oof")
     }
     initialize_filter_state(st.session_state, options, prediction_years_by_split)
-    render_header("Regional & Industry Explorer", PAGE_DESCRIPTIONS["Regional & Industry Explorer"], metadata)
+    render_header("Explore Markets", PAGE_DESCRIPTIONS["Explore Markets"], metadata)
     with st.sidebar:
         selections = render_explorer_filters(options, prediction_years_by_split)
 
@@ -171,7 +171,7 @@ def render() -> None:
     joined_historical = filter_explorer_data(joined_panel, **base_filters)
     joined_selected = filter_explorer_data(joined_panel, year=selected_year, **base_filters)
 
-    st.subheader("Selection")
+    st.subheader("Your selected market")
     st.write(selection_summary(selected_rows, msa=msa, sectors=sectors, year=selected_year))
     st.caption("The descriptive year is the year of observed startup activity. Prediction records separately identify predictor year t and target year t+3.")
     st.caption("Explorer controls do not alter fixed Model Performance or Executive Overview results.")
@@ -195,9 +195,9 @@ def render() -> None:
         )
         msa_name = str(history["msa_name"].iloc[0]) if not history.empty else "selected MSA"
         sector_name = str(history["sector_name"].iloc[0]) if not history.empty else "selected sector"
-        st.subheader("Observed vs expected entrepreneurship")
+        st.subheader("How does startup activity compare with expectations?")
         if history["expected_startup_rate"].notna().any():
-            st.plotly_chart(build_observed_expected_chart(history), width="stretch", config=PLOTLY_CONFIG)
+            render_plotly_chart(build_observed_expected_chart(history))
             usable = history.loc[history["startup_rate"].notna() & history["expected_startup_rate"].notna()]
             above = int((usable["startup_rate"] >= usable["expected_startup_rate"]).sum())
             st.caption(f"Observed startup activity was at or above its A6 expectation in {above} of {len(usable)} available comparison year(s) for {msa_name}, {sector_name}.")
@@ -207,7 +207,7 @@ def render() -> None:
             startup_values = history["startup_rate"].dropna()
             st.caption(f"Median observed startup rate: {float(startup_values.median()):.2f}% across {len(startup_values)} available year(s); the observed series remains visible in the comparison above.")
             if history["employment_growth"].notna().any():
-                st.plotly_chart(build_employment_growth_chart(history), width="stretch", config=PLOTLY_CONFIG)
+                render_plotly_chart(build_employment_growth_chart(history))
                 valid_growth = history["employment_growth"].dropna()
                 positive = int((valid_growth > 0).sum())
                 st.caption(f"Employment growth was positive in {positive} of {len(valid_growth)} available year(s); this descriptive association does not establish causation.")
@@ -216,31 +216,31 @@ def render() -> None:
         else:
             empty_state("Observed startup-rate values are unavailable for the selected MSA-sector history.")
 
-        st.subheader("Alignment and observed-gap history")
+        st.subheader("When did activity fall below expectations?")
         if history["alignment_residual"].notna().any():
-            st.plotly_chart(build_alignment_history_chart(history), width="stretch", config=PLOTLY_CONFIG)
+            render_plotly_chart(build_alignment_history_chart(history))
             residuals = history["alignment_residual"].dropna()
             above = int((residuals >= 0).sum())
             st.caption(f"Observed startup activity was at or above expectation in {above} of {len(residuals)} A6 validation year(s); negative alignment means below expectation.")
         else:
             empty_state("A6 alignment values are unavailable for this MSA-sector history; no residuals are reconstructed in the Explorer.")
         if history["observed_historical_gap_status"].notna().any():
-            st.plotly_chart(build_gap_timeline(history), width="stretch", config=PLOTLY_CONFIG)
+            render_plotly_chart(build_gap_timeline(history))
             n_gaps = int((history["observed_historical_gap_status"] == 1).sum())
             n_status = int(history["observed_historical_gap_status"].notna().sum())
             st.caption(f"A6 gaps were observed in {n_gaps} of {n_status} available fold-validation target year(s). These historical labels are not future probabilities.")
         else:
             empty_state("No A6 fold-validation historical gap-status records are available for this MSA-sector selection.")
 
-        st.subheader("Retrospective prediction history")
+        st.subheader("What did the model estimate for later years?")
         if not prediction_history.empty:
             split_label = "Final temporal holdout" if split == "final_holdout" else "Development OOF"
             st.caption(f"{split_label}; logistic is the primary model. Each score uses predictor-year information to estimate a gap at t+3. Actual outcomes shown in hover detail are retrospective.")
-            st.plotly_chart(build_prediction_history_chart(prediction_history), width="stretch", config=PLOTLY_CONFIG)
+            render_plotly_chart(build_prediction_history_chart(prediction_history))
         else:
             empty_state("No prediction records exist for this MSA-sector in the selected evaluation split.")
     else:
-        st.subheader("Historical trends and alignment")
+        st.subheader("Market trends")
         empty_state("Select exactly one MSA and one sector to view time-series charts. Broader selections remain available in the filtered observations and risk ranking below.")
         history = pd.DataFrame()
         prediction_history = pd.DataFrame()
@@ -259,7 +259,7 @@ def render() -> None:
                 f"{int(joined_selected['logistic_probability'].notna().sum()):,} exact-key prediction record(s)."
             )
 
-    st.subheader("Coverage context")
+    st.subheader("How complete is the historical data?")
     if msa is not None:
         coverage_rows = coverage.loc[coverage["cbsa_code"].astype(str) == str(msa)]
         coverage_row = coverage_rows.iloc[0] if not coverage_rows.empty else None
@@ -277,28 +277,28 @@ def render() -> None:
             "This status is not a model-confidence rating."
         )
         if coverage_row["coverage_status"] == "thin":
-            limitation_callout("This MSA is marked thin by the A5 descriptive coverage screen; its inclusion is retained, but comparisons warrant added caution.", warning=True)
+            limitation_callout("Historical data coverage is limited for this metro. It remains in the Explorer, but comparisons call for more caution.", warning=True)
     elif not coverage_rows.empty:
         counts = coverage_rows.groupby("coverage_status")["cbsa_code"].nunique().to_dict()
-        st.write(
-            f"Coverage among selected MSAs: {counts.get('comparison_eligible', 0):,} comparison_eligible; "
-            f"{counts.get('thin', 0):,} thin. `comparison_eligible` requires at least 100 panel rows, 5 sectors, and 10 years."
-        )
+        st.write(f"Among the selected places, {counts.get('comparison_eligible', 0):,} have good comparison coverage and {counts.get('thin', 0):,} have limited data coverage.")
+        with st.expander("Technical details: A5 coverage categories"):
+            st.write("The stored values remain `comparison_eligible` and `thin`. `comparison_eligible` requires at least 100 panel rows, 5 sectors, and 10 years; this is a descriptive completeness screen, not a model-confidence score.")
         if counts.get("thin", 0):
-            limitation_callout("Thin-coverage MSAs are retained in the Explorer and may have less complete historical context.", warning=True)
+            limitation_callout("Places with limited data coverage remain in the Explorer and may have less complete historical context.", warning=True)
     else:
         empty_state("Coverage context is unavailable because the current selection has no panel observations.")
 
-    st.subheader("Retrospective final temporal holdout ranking" if st.session_state["selected_prediction_split"] == "final_holdout" else "Retrospective development OOF ranking")
-    st.caption("This fixed A6 evaluation ranking is retrospective, not a live forecast. Choose one evaluation split at a time; the default is the final temporal holdout.")
+    st.subheader("Which cases had the highest future-gap scores?")
+    st.caption("These are fixed historical evaluation scores, not live forecasts. Select one evaluation period at a time.")
     rank_controls = st.columns(3)
     split = st.session_state["selected_prediction_split"]
     with rank_controls[0]:
         split = st.selectbox(
-            "Evaluation population",
+            "Evaluation period",
             options=[value for value in ("final_holdout", "development_oof") if prediction_years_by_split.get(value)],
-            format_func=lambda value: "Final temporal holdout" if value == "final_holdout" else "Development OOF",
+            format_func=lambda value: "Later evaluation period" if value == "final_holdout" else "Development test folds",
             key="selected_prediction_split",
+            help="Technical labels: Final temporal holdout and Development OOF. Each score remains tied to its original study period.",
         )
     split_years = prediction_years_by_split.get(split, [])
     with rank_controls[1]:
@@ -331,8 +331,8 @@ def render() -> None:
         ranking = pd.DataFrame()
         empty_state("No finalized predictions are available for the selected evaluation split.")
 
-    st.subheader("Filtered descriptive observations")
-    st.caption(f"Showing up to 100 of {len(joined_selected):,} filtered row(s) below; CSV download includes every matching dashboard row. Missing values remain blank.")
+    st.subheader("Matching market and industry records")
+    st.caption(f"Showing up to 100 of {len(joined_selected):,} matching rows; the CSV includes every match. Missing values remain blank.")
     display_columns = [
         "msa_name", "sector_name", "year", "startup_rate", "expected_startup_rate",
         "alignment_residual", "observed_historical_gap_status", "coverage_status",
@@ -374,7 +374,7 @@ def render() -> None:
     with csv_columns[1]:
         st.caption("CSV contains only the selected A7.2 panel rows and exact-key attached prediction fields. Actual target gap is labeled retrospective; no raw or staging data is exported.")
 
-    st.subheader("Coverage and interpretation limits")
+    st.subheader("What to keep in mind")
     limitation_callout(
         "Startup, expected-rate, alignment, historical gap, and prediction fields have different time roles and may be unavailable for some years. "
         "Nulls are not zero and are not extrapolated. Startup activity is a narrower entrepreneurship measure; the A6 gap is model-relative, not causal, "

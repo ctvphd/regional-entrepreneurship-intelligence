@@ -5,12 +5,19 @@ APP_SUBTITLE = (
     "Exploring MSA-industry entrepreneurial alignment and three-year "
     "future-gap risk."
 )
+PAGE_HEADLINES = {
+    "Overview": "Where are startup gaps emerging, and can we spot patterns early?",
+    "Explore Markets": "How is startup activity changing across places and industries?",
+    "Model Insights": "How well does the model identify future gaps?",
+    "Data & Confidence": "Where is the evidence strongest, and where should we be cautious?",
+    "About the Analysis": "How was this analysis built?",
+}
 PAGE_DESCRIPTIONS = {
-    "Executive Overview": "A predictive framework for identifying MSA-industry combinations at elevated risk of future entrepreneurial under-response relative to observable economic conditions.",
-    "Regional & Industry Explorer": "Explore historical MSA-sector observations.",
-    "Model Performance": "Review fixed development and holdout diagnostics.",
-    "Data Quality & Limitations": "Understand coverage, selection, and study limits.",
-    "About / Methods / Sources": "Study methods, data provenance, and reproducibility.",
+    "Overview": "See where startup activity keeps pace with local economic conditions and where later gaps appeared in the study. Results are historical, not live forecasts.",
+    "Explore Markets": "Compare startup activity with the level expected from past, industry, and regional patterns. Review historical gaps and fixed three-year evaluation scores.",
+    "Model Insights": "See how well the model identified later gaps during development and in a final period it had not seen.",
+    "Data & Confidence": "Coverage differs across places and industries. Review what is well represented and where incomplete data calls for caution.",
+    "About the Analysis": "Learn how the data, gap definition, predictive model, and validation process fit together.",
 }
 REQUIRED_DATASETS = (
     "msa_industry_year",

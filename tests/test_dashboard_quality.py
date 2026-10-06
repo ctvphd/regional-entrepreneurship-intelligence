@@ -28,7 +28,7 @@ class DashboardQualityTest(unittest.TestCase):
             *app.title, *app.header, *app.subheader, *app.markdown, *app.caption, *app.text,
         ]
         rendered = " ".join(str(element.value) for element in rendered_elements)
-        for expected in ("Data Quality & Limitations", "Complete-case selection", "Unseen-MSA test", "Sources used"):
+        for expected in ("Where is the evidence strongest", "Who is represented", "held-out metros", "Which data sources were used"):
             self.assertIn(expected, rendered)
         self.assertGreaterEqual(len(app.dataframe), 5)
 

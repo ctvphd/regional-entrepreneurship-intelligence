@@ -535,3 +535,13 @@ model definitions, dashboard data artifacts, and static research figures were
 not changed. No GIS, map, container, or deployment work was performed. The
 student should review visual interpretation, accessibility, and course-policy
 compliance.
+
+## Assignment 7.8B UX and Plain-Language Refinement
+
+AI assistance audited user-facing dashboard language, rewrote page introductions,
+metric explanations, navigation labels, and coverage/limitation copy, and
+configured a dark-first Streamlit theme with a switchable light theme. Shared
+metric cards and technical expanders preserve exact statistical terminology.
+Visualization titles and hover context were simplified without changing any
+data, model, target, metric, or coverage category. The student should review
+the wording and visual choices for research and course-policy fit.
