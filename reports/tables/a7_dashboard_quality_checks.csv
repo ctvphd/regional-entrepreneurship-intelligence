@@ -1,0 +1,44 @@
+check_name,dataset,status,observed,expected,notes
+unique_primary_key,dashboard_msa_industry_year,pass,0,0,"cbsa_code, sector_code, year"
+non_null_primary_key,dashboard_msa_industry_year,pass,0,0,
+unique_primary_key,dashboard_model_predictions,pass,0,0,"cbsa_code, sector_code, predictor_year, target_year"
+non_null_primary_key,dashboard_model_predictions,pass,0,0,
+unique_primary_key,dashboard_model_summary,pass,0,0,"dataset_split, model, metric"
+non_null_primary_key,dashboard_model_summary,pass,0,0,
+unique_primary_key,dashboard_calibration,pass,0,0,"dataset_split, model, risk_bin"
+non_null_primary_key,dashboard_calibration,pass,0,0,
+unique_primary_key,dashboard_model_by_year,pass,0,0,"predictor_year, target_year, model"
+non_null_primary_key,dashboard_model_by_year,pass,0,0,
+unique_primary_key,dashboard_model_by_sector,pass,0,0,"sector_code, model"
+non_null_primary_key,dashboard_model_by_sector,pass,0,0,
+unique_primary_key,dashboard_model_by_msa_size,pass,0,0,"msa_size_group, model"
+non_null_primary_key,dashboard_model_by_msa_size,pass,0,0,
+unique_primary_key,dashboard_coverage,pass,0,0,cbsa_code
+non_null_primary_key,dashboard_coverage,pass,0,0,
+unique_primary_key,dashboard_sources,pass,0,0,"source_name, dataset"
+non_null_primary_key,dashboard_sources,pass,0,0,
+exact_three_year_horizon,dashboard_model_predictions,pass,23937,23937,
+predictor_precedes_target,dashboard_model_predictions,pass,True,True,
+probability_bounds_logistic_probability,dashboard_model_predictions,pass,"min=8.310290318364069e-08, max=0.8236498108631033","[0, 1], non-null",
+probability_bounds_hgb_probability,dashboard_model_predictions,pass,"min=0.0120877654875013, max=0.9319125221679884","[0, 1], non-null",
+binary_gap_labels,dashboard_model_predictions,pass,"[0, 1]",0/1,
+split_labels,dashboard_model_predictions,pass,"['development_oof', 'final_holdout']",development_oof/final_holdout,
+model_identity_and_primary_flag,dashboard_model_predictions,pass,logistic primary; HGB sensitivity,frozen A6 model identities,
+development_holdout_year_boundaries,dashboard_model_predictions,pass,development targets <=2020; holdout predictor 2018-2020/target 2021-2023,development targets <=2020; holdout predictor 2018-2020/target 2021-2023,
+cbsa_string_type,dashboard_msa_industry_year,pass,string,string,
+sector_string_type,dashboard_msa_industry_year,pass,string,string,
+sector_codes_resolve_to_panel_reference,dashboard_msa_industry_year,pass,"['11', '21', '22', '23', '31-33', '42', '44-45', '48-49', '51', '52', '53', '54', '55', '56', '61', '62', '71', '72', '81']","['11', '21', '22', '23', '31-33', '42', '44-45', '48-49', '51', '52', '53', '54', '55', '56', '61', '62', '71', '72', '81']",
+coverage_categories,dashboard_coverage,pass,"['comparison_eligible', 'thin']",comparison_eligible/thin,
+one_coverage_row_per_msa,dashboard_coverage,pass,0,0,
+coverage_counts_and_year_range,dashboard_coverage,pass,nonnegative counts; first_year <= last_year,nonnegative counts; first_year <= last_year,
+historical_gap_label_year_scope,dashboard_msa_industry_year,pass,"[2017, 2018, 2019, 2020]",development OOF target years through 2020,
+descriptive_year_range,dashboard_msa_industry_year,pass,2010-2023,2010-2023,
+sector_metric_suppression_matches_a6_flag,dashboard_model_by_sector,pass,A6 sufficiency flag agrees with AP/ROC-AUC null status,metrics present iff source flag sufficient,
+summary_model_names,dashboard_model_summary,pass,"['hist_gradient_boosting', 'logistic', 'prevalence_benchmark']","['hist_gradient_boosting', 'logistic', 'prevalence_benchmark']",
+calibration_null_and_probability_policy,dashboard_calibration,pass,"required values populated and proportions in [0,1]",same,
+no_risk_category_rule,dashboard_model_predictions,pass,False,False,A7.1 has no frozen non-holdout category rule
+metric_reconciliation_AP,dashboard_model_summary,pass,0.4042247778660049,0.4042247778660049,Source is reports/tables/a6_final_model_performance.csv
+metric_reconciliation_prevalence,dashboard_model_summary,pass,0.2325310559006211,0.2325310559006211,Source is reports/tables/a6_final_model_performance.csv
+metric_reconciliation_ROC_AUC,dashboard_model_summary,pass,0.6915475379214895,0.6915475379214895,Source is reports/tables/a6_final_model_performance.csv
+metric_reconciliation_Brier,dashboard_model_summary,pass,0.163742473124212,0.163742473124212,Source is reports/tables/a6_final_model_performance.csv
+metric_reconciliation_top10_lift,dashboard_model_summary,pass,1.985488261230729,1.985488261230729,Source is reports/tables/a6_final_model_performance.csv

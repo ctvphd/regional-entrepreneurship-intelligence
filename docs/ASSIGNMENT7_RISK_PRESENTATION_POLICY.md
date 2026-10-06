@@ -8,6 +8,8 @@ The raw frozen logistic predicted probability is the primary quantitative risk o
 
 “Lower predicted risk,” “Moderate predicted risk,” and “Higher predicted risk” are communication aids only. Before implementation, A7.2 must document a deterministic category rule and lineage (for example, fixed score bands or a frozen development-derived rule). The rule must not be selected, calibrated, or tuned to maximize holdout metrics, balance prevalence, or reach desired counts. These categories are not validated intervention, funding, or service thresholds.
 
+A7.2 did not freeze such a rule. Its datasets therefore contain only continuous probability/rank, with no `risk_category`. Any later category decision is deferred to a separately reviewed A7.3/A7.4 presentation decision and must comply with the no-holdout-tuning rule below.
+
 If a defensible fixed rule has not been documented, display probability and rank only; do not invent category cutpoints in the UI. Do not reuse the classifier's diagnostic threshold as an operational boundary without explicit rationale and disclosure.
 
 ## Language

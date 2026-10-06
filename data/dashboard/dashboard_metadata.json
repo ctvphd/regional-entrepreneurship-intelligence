@@ -1,0 +1,538 @@
+{
+  "assignment": "A7.2",
+  "build_timestamp_utc": null,
+  "dashboard_data_version": "1.0.0",
+  "database_access": "SQLite read-only URI and PRAGMA query_only",
+  "dataset_row_counts": {
+    "dashboard_calibration": 52,
+    "dashboard_coverage": 381,
+    "dashboard_model_by_msa_size": 6,
+    "dashboard_model_by_sector": 38,
+    "dashboard_model_by_year": 6,
+    "dashboard_model_predictions": 23937,
+    "dashboard_model_summary": 66,
+    "dashboard_msa_industry_year": 63577,
+    "dashboard_sources": 7
+  },
+  "dataset_schemas": {
+    "dashboard_calibration": [
+      {
+        "dtype": "string",
+        "field": "dataset_split"
+      },
+      {
+        "dtype": "string",
+        "field": "model"
+      },
+      {
+        "dtype": "Int8",
+        "field": "risk_bin"
+      },
+      {
+        "dtype": "Int32",
+        "field": "n"
+      },
+      {
+        "dtype": "Float64",
+        "field": "mean_predicted_probability"
+      },
+      {
+        "dtype": "Float64",
+        "field": "observed_gap_prevalence"
+      }
+    ],
+    "dashboard_coverage": [
+      {
+        "dtype": "string",
+        "field": "cbsa_code"
+      },
+      {
+        "dtype": "string",
+        "field": "msa_name"
+      },
+      {
+        "dtype": "Int32",
+        "field": "observation_count"
+      },
+      {
+        "dtype": "Int16",
+        "field": "sector_count"
+      },
+      {
+        "dtype": "Int16",
+        "field": "year_count"
+      },
+      {
+        "dtype": "Int16",
+        "field": "first_year"
+      },
+      {
+        "dtype": "Int16",
+        "field": "last_year"
+      },
+      {
+        "dtype": "boolean",
+        "field": "comparison_eligible_flag"
+      },
+      {
+        "dtype": "boolean",
+        "field": "model_eligible_flag"
+      },
+      {
+        "dtype": "string",
+        "field": "coverage_status"
+      },
+      {
+        "dtype": "string",
+        "field": "coverage_note"
+      },
+      {
+        "dtype": "Int32",
+        "field": "a6_oof_row_count"
+      }
+    ],
+    "dashboard_model_by_msa_size": [
+      {
+        "dtype": "string",
+        "field": "msa_size_group"
+      },
+      {
+        "dtype": "Int16",
+        "field": "msa_count"
+      },
+      {
+        "dtype": "Int32",
+        "field": "sample_n"
+      },
+      {
+        "dtype": "Float64",
+        "field": "prevalence"
+      },
+      {
+        "dtype": "string",
+        "field": "model"
+      },
+      {
+        "dtype": "Float64",
+        "field": "AP"
+      },
+      {
+        "dtype": "Float64",
+        "field": "ROC_AUC"
+      },
+      {
+        "dtype": "Float64",
+        "field": "Brier"
+      },
+      {
+        "dtype": "Float64",
+        "field": "top10_lift"
+      },
+      {
+        "dtype": "string",
+        "field": "dataset_split"
+      }
+    ],
+    "dashboard_model_by_sector": [
+      {
+        "dtype": "string",
+        "field": "sector_code"
+      },
+      {
+        "dtype": "Int32",
+        "field": "sample_n"
+      },
+      {
+        "dtype": "Int32",
+        "field": "positive_n"
+      },
+      {
+        "dtype": "Float64",
+        "field": "prevalence"
+      },
+      {
+        "dtype": "string",
+        "field": "model"
+      },
+      {
+        "dtype": "Float64",
+        "field": "AP"
+      },
+      {
+        "dtype": "Float64",
+        "field": "ROC_AUC"
+      },
+      {
+        "dtype": "boolean",
+        "field": "sufficient_sample_flag"
+      },
+      {
+        "dtype": "string",
+        "field": "sector_name"
+      },
+      {
+        "dtype": "string",
+        "field": "dataset_split"
+      }
+    ],
+    "dashboard_model_by_year": [
+      {
+        "dtype": "Int16",
+        "field": "predictor_year"
+      },
+      {
+        "dtype": "Int16",
+        "field": "target_year"
+      },
+      {
+        "dtype": "string",
+        "field": "model"
+      },
+      {
+        "dtype": "Int32",
+        "field": "sample_n"
+      },
+      {
+        "dtype": "Float64",
+        "field": "prevalence"
+      },
+      {
+        "dtype": "Float64",
+        "field": "AP"
+      },
+      {
+        "dtype": "Float64",
+        "field": "ROC_AUC"
+      },
+      {
+        "dtype": "Float64",
+        "field": "Brier"
+      },
+      {
+        "dtype": "string",
+        "field": "dataset_split"
+      }
+    ],
+    "dashboard_model_predictions": [
+      {
+        "dtype": "string",
+        "field": "cbsa_code"
+      },
+      {
+        "dtype": "string",
+        "field": "msa_name"
+      },
+      {
+        "dtype": "string",
+        "field": "sector_code"
+      },
+      {
+        "dtype": "string",
+        "field": "sector_name"
+      },
+      {
+        "dtype": "Int16",
+        "field": "predictor_year"
+      },
+      {
+        "dtype": "Int16",
+        "field": "target_year"
+      },
+      {
+        "dtype": "Int8",
+        "field": "actual_gap"
+      },
+      {
+        "dtype": "string",
+        "field": "development_or_holdout"
+      },
+      {
+        "dtype": "string",
+        "field": "fold"
+      },
+      {
+        "dtype": "Float64",
+        "field": "logistic_probability"
+      },
+      {
+        "dtype": "Float64",
+        "field": "hgb_probability"
+      },
+      {
+        "dtype": "boolean",
+        "field": "primary_model_flag"
+      },
+      {
+        "dtype": "string",
+        "field": "coverage_status"
+      }
+    ],
+    "dashboard_model_summary": [
+      {
+        "dtype": "string",
+        "field": "dataset_split"
+      },
+      {
+        "dtype": "string",
+        "field": "model"
+      },
+      {
+        "dtype": "string",
+        "field": "model_label"
+      },
+      {
+        "dtype": "string",
+        "field": "metric"
+      },
+      {
+        "dtype": "Float64",
+        "field": "value"
+      },
+      {
+        "dtype": "string",
+        "field": "metric_label"
+      },
+      {
+        "dtype": "Int8",
+        "field": "interpretation_order"
+      },
+      {
+        "dtype": "boolean",
+        "field": "primary_metric_flag"
+      },
+      {
+        "dtype": "boolean",
+        "field": "primary_model_flag"
+      },
+      {
+        "dtype": "Int32",
+        "field": "sample_n"
+      },
+      {
+        "dtype": "Float64",
+        "field": "prevalence"
+      }
+    ],
+    "dashboard_msa_industry_year": [
+      {
+        "dtype": "string",
+        "field": "cbsa_code"
+      },
+      {
+        "dtype": "string",
+        "field": "msa_name"
+      },
+      {
+        "dtype": "string",
+        "field": "sector_code"
+      },
+      {
+        "dtype": "string",
+        "field": "sector_name"
+      },
+      {
+        "dtype": "Int16",
+        "field": "year"
+      },
+      {
+        "dtype": "Float64",
+        "field": "startup_rate"
+      },
+      {
+        "dtype": "Float64",
+        "field": "startup_rate_lag1"
+      },
+      {
+        "dtype": "Float64",
+        "field": "employment_growth"
+      },
+      {
+        "dtype": "Float64",
+        "field": "establishment_growth"
+      },
+      {
+        "dtype": "Float64",
+        "field": "payroll_growth"
+      },
+      {
+        "dtype": "Float64",
+        "field": "wage_growth"
+      },
+      {
+        "dtype": "Float64",
+        "field": "acs_population"
+      },
+      {
+        "dtype": "Float64",
+        "field": "acs_population_growth"
+      },
+      {
+        "dtype": "Float64",
+        "field": "median_household_income"
+      },
+      {
+        "dtype": "Float64",
+        "field": "educational_attainment_pct"
+      },
+      {
+        "dtype": "Float64",
+        "field": "labor_force_participation_pct"
+      },
+      {
+        "dtype": "Float64",
+        "field": "unemployment_rate"
+      },
+      {
+        "dtype": "boolean",
+        "field": "bds_startup_available"
+      },
+      {
+        "dtype": "boolean",
+        "field": "bds_has_suppression"
+      },
+      {
+        "dtype": "boolean",
+        "field": "qcew_has_suppression"
+      },
+      {
+        "dtype": "boolean",
+        "field": "qcew_is_complete_county_coverage"
+      },
+      {
+        "dtype": "boolean",
+        "field": "acs_matched"
+      },
+      {
+        "dtype": "boolean",
+        "field": "acs_has_suppression"
+      },
+      {
+        "dtype": "boolean",
+        "field": "acs_has_missing_controls"
+      },
+      {
+        "dtype": "boolean",
+        "field": "cbp_matched"
+      },
+      {
+        "dtype": "boolean",
+        "field": "cbp_has_suppression"
+      },
+      {
+        "dtype": "boolean",
+        "field": "cbp_is_complete_county_coverage"
+      },
+      {
+        "dtype": "boolean",
+        "field": "has_suppression"
+      },
+      {
+        "dtype": "string",
+        "field": "source_quality_notes"
+      },
+      {
+        "dtype": "Float64",
+        "field": "expected_startup_rate"
+      },
+      {
+        "dtype": "Float64",
+        "field": "alignment_residual"
+      },
+      {
+        "dtype": "Int8",
+        "field": "observed_historical_gap_status"
+      },
+      {
+        "dtype": "Int32",
+        "field": "msa_observation_count"
+      },
+      {
+        "dtype": "Int16",
+        "field": "msa_sector_count"
+      },
+      {
+        "dtype": "Int16",
+        "field": "msa_year_count"
+      },
+      {
+        "dtype": "string",
+        "field": "coverage_status"
+      },
+      {
+        "dtype": "boolean",
+        "field": "comparison_eligible_flag"
+      },
+      {
+        "dtype": "boolean",
+        "field": "model_eligible_flag"
+      },
+      {
+        "dtype": "string",
+        "field": "alignment_label"
+      },
+      {
+        "dtype": "Int16",
+        "field": "gap_label_predictor_year"
+      }
+    ],
+    "dashboard_sources": [
+      {
+        "dtype": "string",
+        "field": "source_name"
+      },
+      {
+        "dtype": "string",
+        "field": "agency"
+      },
+      {
+        "dtype": "string",
+        "field": "dataset"
+      },
+      {
+        "dtype": "string",
+        "field": "role_in_project"
+      },
+      {
+        "dtype": "string",
+        "field": "years_used"
+      },
+      {
+        "dtype": "string",
+        "field": "geography"
+      },
+      {
+        "dtype": "string",
+        "field": "industry_level"
+      },
+      {
+        "dtype": "string",
+        "field": "notes"
+      },
+      {
+        "dtype": "string",
+        "field": "source_category"
+      }
+    ]
+  },
+  "final_A6_commit": "78f89c6dbd63883f137ec306fd59c3eeb2267d09",
+  "forecast_horizon_years": 3,
+  "primary_model": "logistic",
+  "repository_name": "regional-entrepreneurship-intelligence",
+  "risk_categories": null,
+  "risk_category_note": "No fixed presentation cutpoints are approved; probability/rank only.",
+  "schema_version": "1.0.0",
+  "sensitivity_model": "hist_gradient_boosting",
+  "study_period": {
+    "descriptive": [
+      2010,
+      2023
+    ],
+    "development_target_max": 2020,
+    "holdout_target": [
+      2021,
+      2023
+    ]
+  },
+  "target_definition": "A6 gap_p20: Model A startup-rate residual at exact t+3 target year relative to development-only p20 cutoff",
+  "unit_of_analysis": "CBSA x 2-digit NAICS sector x year"
+}

@@ -1,0 +1,10 @@
+dataset,path,row_count,column_count,primary_key,source,dashboard_pages,contains_model_output,contains_holdout_outcome,file_size_bytes
+dashboard_msa_industry_year,data/dashboard/dashboard_msa_industry_year.parquet,63577,40,cbsa_code+sector_code+year,A4 analytical panel + A6 validation gap target + A5/A6 coverage,Executive Overview; Regional & Industry Explorer; Data Quality & Limitations,False,False,3071427
+dashboard_model_predictions,data/dashboard/dashboard_model_predictions.parquet,23937,13,cbsa_code+sector_code+predictor_year+target_year,A6 baseline OOF + A6 advanced OOF + A6 final holdout predictions,Executive Overview; Regional & Industry Explorer; Data Quality & Limitations,True,True,491084
+dashboard_model_summary,data/dashboard/dashboard_model_summary.parquet,66,11,dataset_split+model+metric,A6 final model performance,Executive Overview; Model Performance,True,True,8083
+dashboard_calibration,data/dashboard/dashboard_calibration.parquet,52,6,dataset_split+model+risk_bin,A6 baseline/advanced OOF calibration + A6 final holdout calibration,Executive Overview; Model Performance,True,True,5323
+dashboard_model_by_year,data/dashboard/dashboard_model_by_year.parquet,6,9,predictor_year+target_year+model,A6 final holdout by year,Executive Overview; Model Performance,True,True,5987
+dashboard_model_by_sector,data/dashboard/dashboard_model_by_sector.parquet,38,10,sector_code+model,A6 final holdout by sector + analytical sector labels,Executive Overview; Model Performance,True,True,7811
+dashboard_model_by_msa_size,data/dashboard/dashboard_model_by_msa_size.parquet,6,10,msa_size_group+model,A6 final holdout by MSA size,Executive Overview; Model Performance,True,True,6594
+dashboard_coverage,data/dashboard/dashboard_coverage.parquet,381,12,cbsa_code,A5 coverage + A6 coverage audit + A4 analytical panel year range,Executive Overview; Regional & Industry Explorer; Data Quality & Limitations,False,False,16327
+dashboard_sources,data/dashboard/dashboard_sources.parquet,7,9,source_name+dataset,A4 metadata source manifest + A6 finalized artifacts,About / Methods / Sources,False,False,8071

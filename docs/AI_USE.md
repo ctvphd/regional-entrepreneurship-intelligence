@@ -444,3 +444,16 @@ and map deferral. This stage created documentation only; it did not build a UI,
 dashboard dataset, map, or A7.2 data layer. The student remains responsible
 for reviewing audience fit, analytic interpretation, and course-policy
 compliance.
+
+## Assignment 7.2 Dashboard Data Layer
+
+AI assistance implemented read-only A4/A5/A6 source ingestion, explicit source
+lineage, typed dashboard schemas, Parquet generation/loader, source and label
+catalogs, coverage/null rules, field dictionary, and repeatable QA. Existing
+A6 OOF and final holdout metrics, labels, and scores were reshaped or joined
+without model fitting or threshold changes. Logistic remains primary and HGB
+remains sensitivity; no risk category was added because no frozen presentation
+rule exists. Verification includes key/type/null/horizon/probability/coverage
+checks, exact metric reconciliation, repeat-build hashes, full tests, and
+before/after source-database integrity checks. No Streamlit UI, Plotly chart,
+map, deployment, or A7.3 work was performed. Student review remains required.
