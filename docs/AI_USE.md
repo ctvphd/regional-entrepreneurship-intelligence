@@ -471,3 +471,17 @@ loader behavior, and absence of model-fitting or SQLite logic in UI modules.
 The app was smoke-tested in a browser on all five routes. No model, target,
 threshold, metric, production chart, map, or deployment was changed or added.
 The user should review wording and presentation choices before later stages.
+
+## Assignment 7.4 Executive Overview
+
+AI assistance implemented the Executive Overview using only validated A7.2
+dashboard artifacts. It added source-driven metric validation, Plotly charts
+for development-versus-holdout performance, holdout lift and calibration, and
+a top-N retrospective holdout table, plus plain-language explanations of the
+gap measure, model hierarchy, evaluation credibility, interpretation, and
+limitations. Logistic remains the pre-locked primary model and
+HistGradientBoosting remains a sensitivity model; no model was refit, no
+holdout-driven choice was made, and no risk categories were introduced. The
+student should review statistical language and visual interpretation before
+submission. Tests and a bounded browser smoke check are recorded in the A7.4
+implementation report.

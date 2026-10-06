@@ -6,7 +6,7 @@ APP_SUBTITLE = (
     "future-gap risk."
 )
 PAGE_DESCRIPTIONS = {
-    "Executive Overview": "Research scope and high-level results.",
+    "Executive Overview": "A predictive framework for identifying MSA-industry combinations at elevated risk of future entrepreneurial under-response relative to observable economic conditions.",
     "Regional & Industry Explorer": "Explore historical MSA-sector observations.",
     "Model Performance": "Review fixed development and holdout diagnostics.",
     "Data Quality & Limitations": "Understand coverage, selection, and study limits.",

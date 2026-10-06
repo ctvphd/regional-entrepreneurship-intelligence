@@ -5,7 +5,7 @@
 | A7.1 | Dashboard Architecture & User Requirements | Complete: audience, page architecture, UX, contracts/lineage, risk and visualization policies, wireframes, component inventory, map deferral. |
 | A7.2 | Dashboard Data Layer | Complete: typed Parquet datasets, pure-Python loader, source/field lineage, coverage and null policies, quality checks, reproducibility audit, and documentation. |
 | A7.3 | Core Streamlit Application Shell | Complete: five-page st.navigation shell, shared components/theme, Explorer-only filter state, cached A7.2 loader adapters, health CLI, and smoke-tested app. |
-| A7.4 | Executive Overview | Incomplete; not started. |
+| A7.4 | Executive Overview | Complete: A7.2-only source-driven KPIs, Plotly holdout comparison/lift/calibration, retrospective top-N cases, gap explainer, practical interpretation, and limitations. |
 | A7.5 | Regional & Industry Explorer | Incomplete; not started. |
 | A7.6 | Model Performance & Diagnostics | Incomplete; not started. |
 | A7.7 | Data Quality, Coverage & Limitations | Incomplete; not started. |
@@ -40,4 +40,14 @@ A7.2 was completed as a separate stage after schemas and null/time-role rules we
 - Missing/corrupt/incompatible artifacts produce actionable health results; CLI and app startup checks pass.
 - Focused shell tests, full suite, and bounded application smoke test pass; no model fitting, target reconstruction, chart, map, or deployment work is added.
 
-Proceed to A7.4 only as a separate stage. A7.3 contains no final Executive Overview visualizations or substantive analytics.
+A7.3 was completed without final Executive Overview visualizations or substantive analytics; A7.4 implements those items as its own stage.
+
+## A7.4 Exit Criteria
+
+- Executive Overview consumes only validated A7.2 artifacts; no SQLite reads, target reconstruction, or model refitting.
+- Final holdout metrics, lift, calibration, and ranked cases remain retrospective and use the pre-locked logistic primary model; HGB remains sensitivity only.
+- The page explains the entrepreneurial-gap construction, what the score can and cannot support, and sample coverage and limitations without inventing risk bands.
+- Plotly charts, top-N output, focused tests, full test suite, and bounded browser smoke check pass.
+- App guide, AI-use disclosure, and A7.4 implementation report are updated; later A7 stages remain untouched.
+
+A7.4 is complete. Continue only with A7.5 after this stage is reviewed.
