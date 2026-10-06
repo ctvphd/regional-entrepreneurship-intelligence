@@ -16,3 +16,11 @@ Retain existing Matplotlib A5/A6 figures as reproducibility and research-archive
 - No misleading axis truncation; if a nonzero baseline is analytically necessary, mark and explain it.
 - No decorative 3D charts. Avoid clutter and long paragraphs beneath every visual.
 - Risk, coverage, and uncertainty annotations stay close to the plotted result.
+
+## A7.8 Shared Visual System
+
+- Plotly figures use `dashboard.visual_style.apply_dashboard_style` for typography, white surfaces, hover labels, axes, and responsive sizing. Page rendering uses `PLOTLY_CONFIG` with no scroll zoom or persistent toolbar.
+- Semantic palette: observed/logistic primary `#176B5B`; expected `#5777A8`; HGB sensitivity/final temporal holdout `#C56A3B`; reference/development/insufficient sample `#64736E`; thin coverage `#A66E28`; gap `#7A3E8E`. Expected/HGB/different splits also use line/marker/pattern or explicit text cues; meaning is not color-only.
+- Display precision is shared: probabilities one decimal percent; source startup rate two decimals; employment growth one decimal percent; alignment two decimals in percentage points; scores three decimals; lift two decimals with `×`; counts comma-separated; years integer.
+- Canonical evaluation labels are `Development OOF` and `Final temporal holdout`. Logistic remains the primary model; HGB is a patterned sensitivity series.
+- Metric and construct help text is maintained in `dashboard.glossary.GLOSSARY`. Chart context, subtitles, and takeaways remain outside figures so the plot area stays uncluttered.

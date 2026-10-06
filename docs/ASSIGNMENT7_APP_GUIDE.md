@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, and A7.7 Data Quality & Limitations are implemented over validated A7.2 Parquet/JSON artifacts and finalized A5/A6 reporting tables. A7.8 through A7.10 remain.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, and A7.8 visualization refinement are implemented over validated A7.2 artifacts and finalized A5/A6 reports. A7.9 and A7.10 remain.
 
 ## Launch
 
@@ -77,3 +77,17 @@ There is no map, deployment, live forecast, model fitting, or causal analysis. O
 metrics, Explorer predictions, and Performance holdout diagnostics are
 retrospective and do not establish generalization beyond the single temporal
 holdout.
+
+## Visual Conventions
+
+Plotly charts share `dashboard.visual_style`: Arial-based typography, light
+gridlines, responsive width, consistent hover surfaces, and hidden persistent
+toolbars. Teal marks observed activity and logistic primary; blue marks
+expected activity; orange marks HGB sensitivity and the final temporal
+holdout; gray is a reference; purple marks gap status. Line style, marker,
+pattern, and explicit text reinforce these meanings.
+Evaluation populations are named Development OOF and Final temporal holdout.
+Probabilities/prevalence use one decimal percent, startup rates two decimals,
+employment growth one decimal percent, alignment percentage points, scores
+three decimals, lift two decimals with ×, and counts use separators. The metric
+glossary is centralized in `dashboard.glossary`.

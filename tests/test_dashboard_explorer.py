@@ -216,7 +216,7 @@ class DashboardExplorerTest(unittest.TestCase):
         self.assertEqual(app.get_by_key("selected_prediction_split").value, "development_oof")
         self.assertEqual(app.get_by_key("selected_prediction_year").value, min(self.prediction_years["development_oof"]))
         self.assertEqual(app.get_by_key("selected_top_n").value, 25)
-        self.assertGreaterEqual(len(app.get("plotly_chart")), 6)
+        self.assertGreaterEqual(len(app.get("plotly_chart")), 5)
         app.get_by_key("reset_explorer_filters").click().run()
         self.assertIsNone(app.get_by_key("selected_msa").value)
         self.assertEqual(app.get_by_key("selected_sectors").value, [])

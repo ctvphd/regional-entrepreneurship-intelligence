@@ -523,3 +523,15 @@ responsible-use constraints. Counts and results are displayed from frozen
 artifacts; no model, label, or threshold was reconstructed, and no SQLite/raw
 data was accessed by the page. The student should review the statistical
 wording, visual interpretation, and course-policy compliance.
+
+## Assignment 7.8 Interactive Visualization Refinement
+
+AI assistance inventoried 31 existing dashboard charts/tables, implemented a
+shared Plotly theme and semantic color policy, centralized display formatters
+and glossary language, refined chart hover labels and evaluation terminology,
+and reduced Performance-page scrolling with diagnostic tabs. It added
+visualization contract tests and a page-by-page QA checklist. Research results,
+model definitions, dashboard data artifacts, and static research figures were
+not changed. No GIS, map, container, or deployment work was performed. The
+student should review visual interpretation, accessibility, and course-policy
+compliance.

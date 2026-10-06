@@ -9,31 +9,18 @@ from sklearn.metrics import precision_recall_curve, roc_curve
 
 from .overview_data import HOLDOUT_TABLE_LABEL, TOP_N_OPTIONS, get_metric
 from .performance_data import DISPLAY_MODELS, build_risk_concentration_table, metric_value
+from .visual_style import (
+    DEVELOPMENT, EXPECTED, FINAL_HOLDOUT, GAP, GRID, HGB_SENSITIVITY,
+    LOGISTIC_PRIMARY, NON_GAP, OBSERVED, REFERENCE, apply_dashboard_style,
+    format_count, format_lift, format_probability, format_score,
+)
 
-PRIMARY = "#176B5B"
-HOLDOUT = "#C56A3B"
-REFERENCE = "#64736E"
-GRID = "#E3E9E6"
-
-
-def format_probability(value: float) -> str:
-    return f"{float(value):.1%}"
-
-
-def format_score(value: float) -> str:
-    return f"{float(value):.3f}"
-
-
-def format_lift(value: float) -> str:
-    return f"{float(value):.2f}\u00d7"
-
-
-def format_count(value: int) -> str:
-    return f"{int(value):,}"
+PRIMARY = LOGISTIC_PRIMARY
+HOLDOUT = HGB_SENSITIVITY
 
 
 def build_model_comparison_chart(summary: pd.DataFrame) -> go.Figure:
-    splits = (("development_oof", "Development OOF", PRIMARY), ("final_holdout", "Final temporal holdout", HOLDOUT))
+    splits = (("development_oof", "Development OOF", DEVELOPMENT), ("final_holdout", "Final temporal holdout", FINAL_HOLDOUT))
     fig = make_subplots(
         rows=1,
         cols=2,
@@ -71,7 +58,7 @@ def build_model_comparison_chart(summary: pd.DataFrame) -> go.Figure:
             col=2,
         )
     fig.update_layout(
-        title="Logistic model: development OOF and final holdout",
+        title="Logistic model: Development OOF and Final temporal holdout",
         template="plotly_white",
         barmode="group",
         height=390,
@@ -82,7 +69,7 @@ def build_model_comparison_chart(summary: pd.DataFrame) -> go.Figure:
     fig.update_yaxes(title_text="Metric value (0-1)", range=[0, 1], gridcolor=GRID, row=1, col=1)
     fig.update_yaxes(title_text="Brier score (lower is better)", range=[0, 1], gridcolor=GRID, row=1, col=2)
     fig.update_xaxes(showgrid=False)
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_metric_comparison_chart(summary: pd.DataFrame) -> go.Figure:
@@ -98,7 +85,7 @@ def build_lift_chart(summary: pd.DataFrame) -> go.Figure:
         go.Bar(
             x=list(labels),
             y=values,
-            marker_color=[HOLDOUT, PRIMARY, "#7D8D87"],
+            marker_color=[HOLDOUT, PRIMARY, REFERENCE],
             text=[format_lift(value) for value in values],
             textposition="outside",
             customdata=[[metric] for metric in metrics],
@@ -116,7 +103,7 @@ def build_lift_chart(summary: pd.DataFrame) -> go.Figure:
         yaxis={"title": "Observed gap prevalence / overall prevalence (lift)", "rangemode": "tozero", "gridcolor": GRID},
         xaxis={"title": "Cases ranked by frozen logistic probability", "showgrid": False},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
@@ -150,7 +137,7 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
             mode="lines+markers",
             name="Observed holdout prevalence by score bin",
             line={"color": PRIMARY, "width": 2.5},
-            marker={"color": HOLDOUT, "size": 9},
+            marker={"color": LOGISTIC_PRIMARY, "size": 9},
             hovertemplate=(
                 "Risk bin %{customdata[0]}<br>Mean predicted: %{x:.1%}"
                 "<br>Observed prevalence: %{y:.1%}<br>N=%{customdata[1]:,}<extra></extra>"
@@ -158,7 +145,7 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
         )
     )
     fig.update_layout(
-        title="Final holdout calibration by frozen logistic score bin",
+        title="Final temporal holdout calibration by frozen logistic score bin",
         template="plotly_white",
         height=390,
         margin={"l": 50, "r": 25, "t": 70, "b": 55},
@@ -167,7 +154,7 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def _metric_direction_chart(summary: pd.DataFrame, split: str, models: tuple[str, ...]) -> go.Figure:
@@ -202,7 +189,7 @@ def _metric_direction_chart(summary: pd.DataFrame, split: str, models: tuple[str
     for col in range(1, 4):
         fig.update_yaxes(title_text="Score (0-1)", range=[0, 1], gridcolor=GRID, row=1, col=col)
         fig.update_xaxes(showgrid=False, tickangle=-20, row=1, col=col)
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_performance_model_chart(summary: pd.DataFrame, split: str = "final_holdout") -> go.Figure:
@@ -240,7 +227,7 @@ def build_pr_curve(predictions: pd.DataFrame, split: str, *, include_sensitivity
         xaxis={"title": "Recall", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Precision", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_roc_curve(predictions: pd.DataFrame, split: str, *, include_sensitivity: bool = False) -> go.Figure:
@@ -267,7 +254,7 @@ def build_roc_curve(predictions: pd.DataFrame, split: str, *, include_sensitivit
         xaxis={"title": "False-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "True-positive rate", "range": [0, 1], "tickformat": ".0%", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_sensitivity: bool = False) -> go.Figure:
@@ -297,7 +284,7 @@ def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_se
         xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
         yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_lift_comparison_chart(summary: pd.DataFrame) -> go.Figure:
@@ -316,12 +303,12 @@ def build_lift_comparison_chart(summary: pd.DataFrame) -> go.Figure:
             hovertemplate="%{x}<br>Lift: %{y:.2f}× overall prevalence<extra>%{fullData.name}</extra>",
         ))
     fig.add_hline(y=1, line_color=REFERENCE, line_dash="dot", annotation_text="Overall rate (1.00×)")
-    fig.update_layout(title="Holdout gap concentration by frozen model and ranked share", template="plotly_white",
+    fig.update_layout(title="Final temporal holdout gap concentration by model and ranked share", template="plotly_white",
                       barmode="group", height=370, margin={"l": 45, "r": 25, "t": 75, "b": 50},
                       legend={"orientation": "h", "y": 1.12, "x": 0}, font={"size": 13},
                       xaxis={"title": "Highest-scored share", "showgrid": False},
                       yaxis={"title": "Observed prevalence / overall prevalence (lift)", "rangemode": "tozero", "gridcolor": GRID})
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_performance_by_year_chart(by_year: pd.DataFrame) -> go.Figure:
@@ -340,13 +327,13 @@ def build_performance_by_year_chart(by_year: pd.DataFrame) -> go.Figure:
                 customdata=model_rows[["predictor_year", "sample_n", "prevalence"]],
                 hovertemplate="Predictor %{customdata[0]} → target %{x}<br>%{y:.3f}<br>N=%{customdata[1]:,}<br>Prevalence %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
             ), row=1, col=col)
-    fig.update_layout(title="Final-holdout variation by target year", template="plotly_white", height=400,
+    fig.update_layout(title="Final temporal holdout variation by target year", template="plotly_white", height=400,
                       margin={"l": 45, "r": 20, "t": 100, "b": 55},
                       legend={"orientation": "h", "y": 1.16, "x": 0}, font={"size": 12})
     for col in range(1, 4):
         fig.update_yaxes(title_text="Metric (0-1)", range=[0, 1], gridcolor=GRID, row=1, col=col)
         fig.update_xaxes(title_text="Target year", dtick=1, showgrid=False, row=1, col=col)
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_msa_size_performance_chart(by_size: pd.DataFrame) -> go.Figure:
@@ -365,13 +352,13 @@ def build_msa_size_performance_chart(by_size: pd.DataFrame) -> go.Figure:
                 customdata=model_rows[["sample_n", "msa_count", "prevalence"]],
                 hovertemplate="%{x} MSA size<br>Value: %{y:.3f}<br>Prediction pairs: %{customdata[0]:,}<br>MSAs: %{customdata[1]:,}<br>Prevalence: %{customdata[2]:.1%}<extra>%{fullData.name}</extra>",
             ), row=1, col=col)
-    fig.update_layout(title="Fixed final-holdout performance across MSA-size groups", template="plotly_white",
+    fig.update_layout(title="Final temporal holdout performance across MSA-size groups", template="plotly_white",
                       barmode="group", height=410, margin={"l": 40, "r": 20, "t": 105, "b": 50},
                       legend={"orientation": "h", "y": 1.15, "x": 0}, font={"size": 12})
     for col in range(1, 4):
         fig.update_yaxes(title_text="Metric value", rangemode="tozero", gridcolor=GRID, row=1, col=col)
         fig.update_xaxes(title_text="Training-defined MSA-size group", showgrid=False, row=1, col=col)
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_sector_performance_chart(by_sector: pd.DataFrame) -> go.Figure:
@@ -392,7 +379,7 @@ def build_sector_performance_chart(by_sector: pd.DataFrame) -> go.Figure:
                       height=590, margin={"l": 285, "r": 30, "t": 75, "b": 55}, showlegend=False, font={"size": 12},
                       xaxis={"title": "Average Precision (higher is better)", "rangemode": "tozero", "gridcolor": GRID},
                       yaxis={"title": "Final-holdout sector", "showgrid": False})
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_top_risk_table(predictions: pd.DataFrame, top_n: int = 10, labels: dict | None = None) -> pd.DataFrame:
@@ -429,7 +416,7 @@ def comparison_takeaway(summary: pd.DataFrame) -> str:
     roc_change = get_metric(summary, "final_holdout", "logistic", "ROC_AUC") - get_metric(summary, "development_oof", "logistic", "ROC_AUC")
     brier_change = get_metric(summary, "final_holdout", "logistic", "Brier") - get_metric(summary, "development_oof", "logistic", "Brier")
     return (
-        f"Holdout AP changed {ap_change:+.3f} and ROC-AUC {roc_change:+.3f} versus development OOF; "
+        f"Final temporal holdout AP changed {ap_change:+.3f} and ROC-AUC {roc_change:+.3f} versus Development OOF; "
         f"Brier changed {brier_change:+.3f} (a positive change is worse)."
     )
 
@@ -438,7 +425,7 @@ def lift_takeaway(summary: pd.DataFrame) -> str:
     prevalence = get_metric(summary, "final_holdout", "logistic", "prevalence")
     lift = get_metric(summary, "final_holdout", "logistic", "top10_lift")
     return (
-        f"The highest-ranked 10% had {format_lift(lift)} the overall holdout gap prevalence "
+        f"The highest-ranked 10% had {format_lift(lift)} the overall Final temporal holdout gap prevalence "
         f"({format_probability(prevalence)}); this is retrospective concentration, not a causal effect."
     )
 
@@ -452,7 +439,7 @@ def calibration_takeaway(calibration: pd.DataFrame) -> str:
     first = float(bins.iloc[0]["observed_gap_prevalence"])
     last = float(bins.iloc[-1]["observed_gap_prevalence"])
     return (
-        f"Observed holdout gap prevalence rose from {format_probability(first)} in the lowest score bin "
+        f"Observed Final temporal holdout gap prevalence rose from {format_probability(first)} in the lowest score bin "
         f"to {format_probability(last)} in the highest; these bins are retrospective diagnostics, not recalibration."
     )
 
@@ -466,18 +453,22 @@ def build_observed_expected_chart(panel: pd.DataFrame) -> go.Figure:
         x=rows["year"], y=rows["startup_rate"], mode="lines+markers",
         name="Observed startup rate", line={"color": PRIMARY, "width": 2.5},
         marker={"symbol": "circle", "size": 7},
-        customdata=rows[["expected_startup_rate", "observed_historical_gap_status"]],
-        hovertemplate=("Year %{x}<br>Observed: %{y:.2f}%<br>Expected: %{customdata[0]:.2f}%"
-                       "<br>Historical A6 gap: %{customdata[1]}<extra></extra>"),
+        customdata=rows[["msa_name", "sector_name", "expected_startup_rate", "observed_historical_gap_status"]].assign(
+            observed_historical_gap_status=lambda data: data.observed_historical_gap_status.map({0: "No gap observed", 1: "Gap observed"}).fillna("Unavailable")
+        ),
+        hovertemplate=("Year %{x}<br>Observed startup rate: %{y:.2f}%<br>Expected startup rate: %{customdata[2]:.2f}%"
+                       "<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}"
+                       "<br>Historical A6 status: %{customdata[3]}<extra></extra>"),
         connectgaps=False,
     ))
     if rows["expected_startup_rate"].notna().any():
         fig.add_trace(go.Scatter(
             x=rows["year"], y=rows["expected_startup_rate"], mode="lines+markers",
             name="Expected startup rate (A6 Model A)",
-            line={"color": HOLDOUT, "width": 2.2, "dash": "dash"},
+            line={"color": EXPECTED, "width": 2.2, "dash": "dash"},
             marker={"symbol": "diamond-open", "size": 7},
-            hovertemplate="Year %{x}<br>Expected: %{y:.2f}%<extra></extra>",
+            customdata=rows[["msa_name", "sector_name"]],
+            hovertemplate="Year %{x}<br>Expected startup rate: %{y:.2f}%<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<extra></extra>",
             connectgaps=False,
         ))
     gaps = rows.loc[(rows["observed_historical_gap_status"] == 1) & rows["startup_rate"].notna()]
@@ -485,8 +476,9 @@ def build_observed_expected_chart(panel: pd.DataFrame) -> go.Figure:
         fig.add_trace(go.Scatter(
             x=gaps["year"], y=gaps["startup_rate"], mode="markers",
             name="A6 gap observed (historical)",
-            marker={"color": "#7A3E8E", "symbol": "x", "size": 12, "line": {"width": 2}},
-            hovertemplate="Year %{x}<br>Observed startup rate: %{y:.2f}%<br>A6 gap observed<extra></extra>",
+            customdata=gaps[["msa_name", "sector_name"]],
+            marker={"color": GAP, "symbol": "x", "size": 12, "line": {"width": 2}},
+            hovertemplate="Year %{x}<br>Observed startup rate: %{y:.2f}%<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<br>Gap observed<extra></extra>",
         ))
     fig.update_layout(
         title="Observed and expected startup activity",
@@ -496,7 +488,7 @@ def build_observed_expected_chart(panel: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Startup rate (percent units)", "ticksuffix": "%", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_startup_trend_chart(panel: pd.DataFrame) -> go.Figure:
@@ -507,7 +499,8 @@ def build_startup_trend_chart(panel: pd.DataFrame) -> go.Figure:
         x=rows["year"], y=rows["startup_rate"], mode="lines+markers",
         name="Observed firm startup rate", line={"color": PRIMARY, "width": 2.5},
         marker={"symbol": "circle", "size": 7}, connectgaps=False,
-        hovertemplate="Year %{x}<br>Startup rate: %{y:.2f}%<extra></extra>",
+        customdata=rows[["msa_name", "sector_name"]],
+        hovertemplate="Year %{x}<br>Startup rate: %{y:.2f}%<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<extra></extra>",
     ))
     fig.update_layout(
         title="Historical startup-rate trend", template="plotly_white", height=320,
@@ -515,7 +508,7 @@ def build_startup_trend_chart(panel: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Startup rate (percent units)", "ticksuffix": "%", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_employment_growth_chart(panel: pd.DataFrame) -> go.Figure:
@@ -524,9 +517,10 @@ def build_employment_growth_chart(panel: pd.DataFrame) -> go.Figure:
         raise ValueError("No employment-growth values are available for this selection")
     fig = go.Figure(go.Scatter(
         x=rows["year"], y=rows["employment_growth"], mode="lines+markers",
-        name="QCEW employment growth", line={"color": HOLDOUT, "width": 2.5, "dash": "dash"},
+        name="QCEW employment growth", line={"color": EXPECTED, "width": 2.5, "dash": "dash"},
         marker={"symbol": "diamond", "size": 7}, connectgaps=False,
-        hovertemplate="Year %{x}<br>Employment growth: %{y:.1%}<extra></extra>",
+        customdata=rows[["msa_name", "sector_name"]],
+        hovertemplate="Year %{x}<br>Employment growth: %{y:.1%}<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<extra></extra>",
     ))
     fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="No annual change")
     fig.update_layout(
@@ -535,7 +529,7 @@ def build_employment_growth_chart(panel: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Employment growth", "tickformat": ".0%", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_alignment_history_chart(panel: pd.DataFrame) -> go.Figure:
@@ -546,17 +540,21 @@ def build_alignment_history_chart(panel: pd.DataFrame) -> go.Figure:
         x=rows["year"], y=rows["alignment_residual"], mode="lines+markers",
         name="Observed minus expected", line={"color": PRIMARY, "width": 2.2},
         marker={"symbol": "circle", "size": 7}, connectgaps=False,
-        customdata=rows["observed_historical_gap_status"],
+        customdata=rows[["msa_name", "sector_name", "observed_historical_gap_status"]].assign(
+            observed_historical_gap_status=lambda data: data.observed_historical_gap_status.map({0: "No gap observed", 1: "Gap observed"}).fillna("Unavailable")
+        ),
         hovertemplate=("Year %{x}<br>Alignment: %{y:.2f} percentage points"
-                       "<br>A6 gap status: %{customdata}<extra></extra>"),
+                       "<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}"
+                       "<br>Historical A6 status: %{customdata[2]}<extra></extra>"),
     ))
     gaps = rows.loc[(rows["observed_historical_gap_status"] == 1) & rows["alignment_residual"].notna()]
     if not gaps.empty:
         fig.add_trace(go.Scatter(
             x=gaps["year"], y=gaps["alignment_residual"], mode="markers",
             name="A6 gap observed (historical)",
-            marker={"color": "#7A3E8E", "symbol": "x", "size": 12, "line": {"width": 2}},
-            hovertemplate="Year %{x}<br>Alignment: %{y:.2f} percentage points<br>A6 gap observed<extra></extra>",
+            marker={"color": GAP, "symbol": "x", "size": 12, "line": {"width": 2}},
+            customdata=gaps[["msa_name", "sector_name"]],
+            hovertemplate="Year %{x}<br>Alignment: %{y:.2f} percentage points<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}<br>Gap observed<extra></extra>",
         ))
     fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="Observed = expected")
     fig.update_layout(
@@ -566,7 +564,7 @@ def build_alignment_history_chart(panel: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Descriptive target year", "dtick": 1, "showgrid": False},
         yaxis={"title": "Observed minus expected (percentage points)", "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
@@ -575,7 +573,7 @@ def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
         raise ValueError("No A6 fold-validation gap-status records are available for this selection")
     rows["status_label"] = rows["observed_historical_gap_status"].astype(int).map({0: "No gap observed", 1: "Gap observed"})
     fig = go.Figure()
-    for status, label, symbol, color in ((0, "No gap observed", "circle", PRIMARY), (1, "Gap observed", "x", "#7A3E8E")):
+    for status, label, symbol, color in ((0, "No gap observed", "circle", NON_GAP), (1, "Gap observed", "x", GAP)):
         group = rows.loc[rows["observed_historical_gap_status"].astype(int) == status]
         if group.empty:
             continue
@@ -583,8 +581,9 @@ def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
             x=group["year"], y=group["status_label"], mode="markers+text",
             name=label, text=["No gap" if status == 0 else "Gap"] * len(group),
             textposition="top center", marker={"symbol": symbol, "color": color, "size": 11},
-            customdata=group["gap_label_predictor_year"],
-            hovertemplate=("Target year %{x}<br>%{y}<br>Associated predictor year: %{customdata}"
+            customdata=group[["msa_name", "sector_name", "gap_label_predictor_year"]],
+            hovertemplate=("Target year %{x}<br>%{y}<br>MSA: %{customdata[0]}<br>Sector: %{customdata[1]}"
+                           "<br>Associated predictor year: %{customdata[2]}"
                            "<br>Development OOF historical label<extra></extra>"),
         ))
     fig.update_layout(
@@ -595,7 +594,7 @@ def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
         yaxis={"title": "Observed status", "categoryorder": "array", "categoryarray": ["No gap observed", "Gap observed"]},
         legend={"orientation": "h", "y": -0.28, "x": 0},
     )
-    return fig
+    return apply_dashboard_style(fig)
 
 
 def build_prediction_history_chart(predictions: pd.DataFrame) -> go.Figure:
@@ -608,12 +607,16 @@ def build_prediction_history_chart(predictions: pd.DataFrame) -> go.Figure:
     label = "Final temporal holdout" if split == "final_holdout" else "Development OOF"
     fig = go.Figure(go.Scatter(
         x=rows["predictor_year"], y=rows["logistic_probability"], mode="lines+markers",
-        name=f"Logistic primary - {label}", line={"color": HOLDOUT if split == "final_holdout" else PRIMARY, "width": 2.5},
+        name=f"Logistic regression (primary) - {label}",
+        line={"color": PRIMARY, "width": 2.5, "dash": "solid" if split == "final_holdout" else "dash"},
         marker={"symbol": "circle", "size": 8},
-        customdata=rows[["target_year", "actual_gap"]],
+        customdata=rows[["target_year", "actual_gap", "msa_name", "sector_name"]].assign(
+            actual_gap=lambda data: data.actual_gap.map({0: "No gap observed", 1: "Gap observed"}).fillna("Unavailable")
+        ),
         hovertemplate=("Predictor year %{x} to target year %{customdata[0]}"
                        "<br>Logistic probability: %{y:.1%}"
-                       "<br>Actual future gap (retrospective): %{customdata[1]}<extra></extra>"),
+                       "<br>MSA: %{customdata[2]}<br>Sector: %{customdata[3]}"
+                       "<br>Actual target gap (retrospective): %{customdata[1]}<extra></extra>"),
     ))
     fig.update_layout(
         title=f"Retrospective logistic prediction history - {label}", template="plotly_white", height=320,
@@ -621,4 +624,4 @@ def build_prediction_history_chart(predictions: pd.DataFrame) -> go.Figure:
         xaxis={"title": "Predictor year (t)", "dtick": 1, "showgrid": False},
         yaxis={"title": "Predicted probability of gap at t+3", "tickformat": ".0%", "range": [0, 1], "gridcolor": GRID},
     )
-    return fig
+    return apply_dashboard_style(fig)

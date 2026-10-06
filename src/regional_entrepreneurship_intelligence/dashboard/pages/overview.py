@@ -18,6 +18,8 @@ from ..charts import (
 from ..components import gap_explainer, render_footer, render_header
 from ..constants import DATA_LAYER_REBUILD_COMMAND, PAGE_DESCRIPTIONS
 from ..overview_data import HOLDOUT_TABLE_LABEL, TOP_N_OPTIONS, OverviewDataError, get_metric, load_overview_data
+from ..glossary import GLOSSARY
+from ..visual_style import PLOTLY_CONFIG
 
 
 def _render_kpi(label: str, value: str, help_text: str) -> None:
@@ -80,21 +82,21 @@ def render() -> None:
         f"{holdout_period[0]}-{holdout_period[-1]} | Predictor year t to t+{metadata['forecast_horizon_years']}"
     )
 
-    st.subheader("Final holdout results")
+    st.subheader("Final temporal holdout results")
     kpi_rows = (
         (
             ("Average Precision", format_score(get_metric(summary, "final_holdout", "logistic", "AP")),
-             "Ranks future gap cases within an imbalanced prediction task; interpret against prevalence."),
+             GLOSSARY["AP"]),
             ("Gap prevalence", format_probability(get_metric(summary, "final_holdout", "logistic", "prevalence")),
-             "Observed share of positive gap outcomes in this final holdout population."),
+             GLOSSARY["Prevalence"]),
             ("ROC-AUC", format_score(get_metric(summary, "final_holdout", "logistic", "ROC_AUC")),
-             "Chance that a randomly selected gap case ranks above a non-gap case."),
+             GLOSSARY["ROC-AUC"]),
             ("Top 10% lift", format_lift(get_metric(summary, "final_holdout", "logistic", "top10_lift")),
-             "Observed gap prevalence in the highest-ranked decile relative to the overall holdout rate."),
+             GLOSSARY["Lift"]),
         ),
         (
             ("Brier score", format_score(get_metric(summary, "final_holdout", "logistic", "Brier")),
-             "Mean squared probability error; lower is better. This is not accuracy."),
+             GLOSSARY["Brier"]),
             ("Holdout observations", format_count(holdout_n), "Eligible MSA-sector prediction pairs in the final temporal holdout."),
             ("MSAs represented", format_count(msa_count), "Distinct metropolitan areas in the final prediction sample."),
             ("Sectors represented", format_count(sector_count), "Distinct analytical 2-digit NAICS sector codes in the final prediction sample."),
@@ -111,7 +113,7 @@ def render() -> None:
     hgb_ap_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "AP") - get_metric(summary, "final_holdout", "logistic", "AP")
     hgb_roc_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "ROC_AUC") - get_metric(summary, "final_holdout", "logistic", "ROC_AUC")
     st.write(
-        f"HistGradientBoosting is a sensitivity model. On the final holdout its AP and ROC-AUC "
+        f"HistGradientBoosting is a sensitivity model. On the Final temporal holdout its AP and ROC-AUC "
         f"were higher by {hgb_ap_change:.3f} and {hgb_roc_change:.3f}, respectively; the modest "
         "difference does not change the pre-locked, more interpretable logistic reference. "
         "This post-lock sensitivity comparison was not used to select the primary model."
@@ -119,17 +121,17 @@ def render() -> None:
 
     st.subheader("Development and holdout")
     st.caption("Average Precision and ROC-AUC are ranking metrics (higher is better); Brier is probability error (lower is better).")
-    st.plotly_chart(build_model_comparison_chart(summary), width="stretch", config={"displayModeBar": False})
+    st.plotly_chart(build_model_comparison_chart(summary), width="stretch", config=PLOTLY_CONFIG)
     st.caption(comparison_takeaway(summary))
 
     st.subheader("Where higher scores concentrated observed gaps")
-    st.caption("Lift compares the realized gap prevalence in the top-ranked share with overall final-holdout prevalence; 1.0x is the overall rate.")
-    st.plotly_chart(build_lift_chart(summary), width="stretch", config={"displayModeBar": False})
+    st.caption("Lift compares realized gap prevalence in the top-ranked share with overall Final temporal holdout prevalence; 1.00× is the overall rate.")
+    st.plotly_chart(build_lift_chart(summary), width="stretch", config=PLOTLY_CONFIG)
     st.caption(lift_takeaway(summary))
 
     st.subheader("Calibration by score bin")
     st.caption("Each point compares the frozen logistic mean score with the later observed gap prevalence in an equal-count holdout bin. No recalibration is applied.")
-    st.plotly_chart(build_calibration_chart(data["calibration"]), width="stretch", config={"displayModeBar": False})
+    st.plotly_chart(build_calibration_chart(data["calibration"]), width="stretch", config=PLOTLY_CONFIG)
     st.caption(calibration_takeaway(data["calibration"]))
 
     st.subheader("Highest-ranked holdout cases")

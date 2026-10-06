@@ -8,6 +8,7 @@ import pandas as pd
 import streamlit as st
 
 from .constants import APP_SUBTITLE, APP_TITLE
+from .glossary import GLOSSARY
 
 
 def render_header(page_title: str, description: str, metadata: dict) -> None:
@@ -40,11 +41,7 @@ def model_badge(primary: str, sensitivity: str | None = None) -> None:
 
 
 def gap_explainer() -> None:
-    st.info(
-        "An entrepreneurial gap is a model-relative signal that observed startup "
-        "activity fell below its expected level for an MSA-industry combination. "
-        "It is not proof of ecosystem failure and is not causal."
-    )
+    st.info(GLOSSARY["Gap"] + " It is not proof of ecosystem failure or a causal finding.")
 
 
 def development_holdout_label(split: str) -> str:

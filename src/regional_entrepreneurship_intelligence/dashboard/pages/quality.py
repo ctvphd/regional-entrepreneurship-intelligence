@@ -12,6 +12,10 @@ from ..components import limitation_callout, render_footer, render_header
 from ..constants import PAGE_DESCRIPTIONS
 from ..data_access import cached_dataset, cached_metadata
 from ..loader import ROOT
+from ..visual_style import (
+    PLOTLY_CONFIG, SUFFICIENT_SAMPLE, THIN_COVERAGE, INSUFFICIENT_SAMPLE,
+    apply_dashboard_style,
+)
 
 REPORTS = ROOT / "reports" / "tables"
 
@@ -40,11 +44,14 @@ def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
         "not a model-quality score or causal inclusion criterion."
     )
     st.plotly_chart(
-        px.histogram(coverage, x="observation_count", nbins=24, color="coverage_status",
-                     labels={"observation_count": "Observed MSA-sector-year rows", "coverage_status": "A5 status"},
-                     title="Observed panel coverage by metropolitan area", color_discrete_sequence=["#176B5B", "#C56A3B"])
-        .update_layout(template="plotly_white", height=330, margin={"l": 35, "r": 20, "t": 60, "b": 45}),
-        width="stretch", config={"displayModeBar": False},
+        apply_dashboard_style(px.histogram(coverage.assign(coverage_status=coverage.coverage_status.map({
+                     "comparison_eligible": "Comparison eligible", "thin": "Thin coverage",
+                 })), x="observation_count", nbins=24, color="coverage_status",
+                     labels={"observation_count": "Observed MSA-sector-year rows", "coverage_status": "A5 coverage"},
+                     title="Observed panel coverage by metropolitan area",
+                     color_discrete_map={"Comparison eligible": SUFFICIENT_SAMPLE, "Thin coverage": THIN_COVERAGE})
+        .update_layout(height=330, margin={"l": 35, "r": 20, "t": 60, "b": 45})),
+        width="stretch", config=PLOTLY_CONFIG,
     )
     st.dataframe(
         coverage.sort_values(["comparison_eligible_flag", "observation_count"], ascending=[True, True]),
@@ -60,6 +67,8 @@ def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
             "comparison_eligible_flag": st.column_config.CheckboxColumn("A5 eligible"),
             "model_eligible_flag": st.column_config.CheckboxColumn("A6 OOF present"),
             "a6_oof_row_count": st.column_config.NumberColumn("A6 OOF rows", format="%,d"),
+            "coverage_status": st.column_config.TextColumn("Coverage status"),
+            "coverage_note": st.column_config.TextColumn("Coverage note"),
         },
     )
     st.caption("Use the table headers to sort; its built-in search and download controls retain all A7.2 coverage fields.")
@@ -101,12 +110,13 @@ def _render_sector_coverage(sectors: pd.DataFrame) -> None:
     holdout = sectors.loc[(sectors["dataset_split"] == "final_holdout") & (sectors["model"] == "logistic")].copy()
     holdout["Sample sufficiency"] = holdout["sufficient_sample_flag"].map({True: "Sufficient", False: "Suppressed by A6 rule"})
     st.plotly_chart(
-        px.bar(holdout.sort_values("sample_n"), x="sample_n", y="sector_name", orientation="h", color="Sample sufficiency",
+        apply_dashboard_style(px.bar(holdout.sort_values("sample_n"), x="sample_n", y="sector_name", orientation="h", color="Sample sufficiency",
                custom_data=["positive_n", "prevalence"], labels={"sample_n": "Final-holdout pairs", "sector_name": "Sector"},
-               title="Final-holdout support by sector", color_discrete_map={"Sufficient": "#176B5B", "Suppressed by A6 rule": "#C56A3B"})
+               title="Final temporal holdout support by sector",
+               color_discrete_map={"Sufficient": SUFFICIENT_SAMPLE, "Suppressed by A6 rule": INSUFFICIENT_SAMPLE})
         .update_traces(hovertemplate="%{y}<br>Pairs: %{x:,}<br>Positive events: %{customdata[0]:,}<br>Prevalence: %{customdata[1]:.1%}<extra></extra>")
-        .update_layout(template="plotly_white", height=620, margin={"l": 250, "r": 25, "t": 65, "b": 50}),
-        width="stretch", config={"displayModeBar": False},
+        .update_layout(height=620, margin={"l": 250, "r": 25, "t": 65, "b": 50})),
+        width="stretch", config=PLOTLY_CONFIG,
     )
     st.dataframe(
         holdout[["sector_code", "sector_name", "sample_n", "positive_n", "prevalence", "sufficient_sample_flag", "AP", "ROC_AUC"]]
@@ -127,16 +137,21 @@ def _render_generalization(msa_size: pd.DataFrame) -> None:
     st.subheader("MSA-size variation")
     st.caption("Training-defined population thirds; fixed final-holdout values. Descriptive differences do not establish equal performance or explain why groups differ.")
     st.dataframe(
-        msa_size.loc[msa_size["dataset_split"] == "final_holdout"].sort_values(["msa_size_group", "model"]),
+        msa_size.loc[msa_size["dataset_split"] == "final_holdout"].rename(columns={
+            "msa_size_group": "MSA size group", "msa_count": "Metropolitan areas",
+            "sample_n": "Prediction pairs", "prevalence": "Gap prevalence",
+            "model": "Model", "dataset_split": "Evaluation population",
+            "ROC_AUC": "ROC-AUC", "Brier": "Brier score", "top10_lift": "Top-decile lift",
+        }).sort_values(["MSA size group", "Model"]),
         hide_index=True, width="stretch",
         column_config={
-            "sample_n": st.column_config.NumberColumn("Prediction pairs", format="%,d"),
-            "msa_count": st.column_config.NumberColumn("MSAs", format="%,d"),
-            "prevalence": st.column_config.NumberColumn("Gap prevalence", format="%.1%%"),
+            "Prediction pairs": st.column_config.NumberColumn(format="%,d"),
+            "Metropolitan areas": st.column_config.NumberColumn(format="%,d"),
+            "Gap prevalence": st.column_config.NumberColumn(format="%.1%%"),
             "AP": st.column_config.NumberColumn("AP", format="%.3f"),
-            "ROC_AUC": st.column_config.NumberColumn("ROC-AUC", format="%.3f"),
-            "Brier": st.column_config.NumberColumn("Brier", format="%.3f"),
-            "top10_lift": st.column_config.NumberColumn("Top-decile lift", format="%.2f"),
+            "ROC-AUC": st.column_config.NumberColumn(format="%.3f"),
+            "Brier score": st.column_config.NumberColumn(format="%.3f"),
+            "Top-decile lift": st.column_config.NumberColumn(format="%.2f"),
         },
     )
 

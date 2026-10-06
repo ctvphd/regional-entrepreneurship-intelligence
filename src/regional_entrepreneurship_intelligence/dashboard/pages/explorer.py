@@ -13,7 +13,6 @@ from regional_entrepreneurship_intelligence.dashboard.charts import (
     build_gap_timeline,
     build_observed_expected_chart,
     build_prediction_history_chart,
-    build_startup_trend_chart,
 )
 from regional_entrepreneurship_intelligence.dashboard.components import (
     coverage_badge,
@@ -43,18 +42,22 @@ from regional_entrepreneurship_intelligence.dashboard.explorer_data import (
 )
 from regional_entrepreneurship_intelligence.dashboard.filters import render_explorer_filters
 from regional_entrepreneurship_intelligence.dashboard.state import initialize_filter_state
+from regional_entrepreneurship_intelligence.dashboard.glossary import GLOSSARY
+from regional_entrepreneurship_intelligence.dashboard.visual_style import (
+    PLOTLY_CONFIG, format_alignment, format_growth, format_rate,
+)
 
 
 def _rate(value) -> str:
-    return "N/A" if pd.isna(value) else f"{float(value):.2f}%"
+    return "N/A" if pd.isna(value) else format_rate(float(value))
 
 
 def _growth(value) -> str:
-    return "N/A" if pd.isna(value) else f"{float(value):.1%}"
+    return "N/A" if pd.isna(value) else format_growth(float(value))
 
 
 def _alignment(value) -> str:
-    return "N/A" if pd.isna(value) else f"{float(value):+.2f} pp"
+    return "N/A" if pd.isna(value) else format_alignment(float(value))
 
 
 def _status(value, labels: dict) -> str:
@@ -76,8 +79,8 @@ def _render_metrics(row: pd.Series | None, labels: dict, *, has_specific_selecti
     first = st.columns(4)
     metrics = (
         ("Observed startup rate", _rate(row["startup_rate"]), "Source-defined startup rate, in percent units."),
-        ("Expected startup rate", _rate(row["expected_startup_rate"]), "A6 Model A fold-validation expectation; unavailable rows are not extrapolated."),
-        ("Alignment", _alignment(row["alignment_residual"]), "Observed minus expected startup rate, in percentage-point units."),
+        ("Expected startup rate", _rate(row["expected_startup_rate"]), GLOSSARY["Expected rate"]),
+        ("Alignment", _alignment(row["alignment_residual"]), GLOSSARY["Alignment"]),
         ("Historical A6 gap", _status(row["observed_historical_gap_status"], labels.get("gap_status", {})), "Development OOF target-year label; unavailable outside validated fold years."),
     )
     for column, (label, value, help_text) in zip(first, metrics):
@@ -194,39 +197,35 @@ def render() -> None:
         sector_name = str(history["sector_name"].iloc[0]) if not history.empty else "selected sector"
         st.subheader("Observed vs expected entrepreneurship")
         if history["expected_startup_rate"].notna().any():
-            st.plotly_chart(build_observed_expected_chart(history), width="stretch", config={"displayModeBar": False})
+            st.plotly_chart(build_observed_expected_chart(history), width="stretch", config=PLOTLY_CONFIG)
             usable = history.loc[history["startup_rate"].notna() & history["expected_startup_rate"].notna()]
             above = int((usable["startup_rate"] >= usable["expected_startup_rate"]).sum())
             st.caption(f"Observed startup activity was at or above its A6 expectation in {above} of {len(usable)} available comparison year(s) for {msa_name}, {sector_name}.")
         else:
             empty_state("Expected startup activity is unavailable for this MSA-sector history; only observed activity can be inspected.")
         if history["startup_rate"].notna().any():
-            left, right = st.columns(2)
-            with left:
-                st.plotly_chart(build_startup_trend_chart(history), width="stretch", config={"displayModeBar": False})
-                startup_values = history["startup_rate"].dropna()
-                st.caption(f"Median observed startup rate: {float(startup_values.median()):.2f}% across {len(startup_values)} available year(s); source values are in percent units.")
-            with right:
-                if history["employment_growth"].notna().any():
-                    st.plotly_chart(build_employment_growth_chart(history), width="stretch", config={"displayModeBar": False})
-                    valid_growth = history["employment_growth"].dropna()
-                    positive = int((valid_growth > 0).sum())
-                    st.caption(f"Employment growth was positive in {positive} of {len(valid_growth)} available year(s); this descriptive association does not establish causation.")
-                else:
-                    empty_state("Employment-growth values are unavailable for this selection.")
+            startup_values = history["startup_rate"].dropna()
+            st.caption(f"Median observed startup rate: {float(startup_values.median()):.2f}% across {len(startup_values)} available year(s); the observed series remains visible in the comparison above.")
+            if history["employment_growth"].notna().any():
+                st.plotly_chart(build_employment_growth_chart(history), width="stretch", config=PLOTLY_CONFIG)
+                valid_growth = history["employment_growth"].dropna()
+                positive = int((valid_growth > 0).sum())
+                st.caption(f"Employment growth was positive in {positive} of {len(valid_growth)} available year(s); this descriptive association does not establish causation.")
+            else:
+                empty_state("Employment-growth values are unavailable for this selection.")
         else:
             empty_state("Observed startup-rate values are unavailable for the selected MSA-sector history.")
 
         st.subheader("Alignment and observed-gap history")
         if history["alignment_residual"].notna().any():
-            st.plotly_chart(build_alignment_history_chart(history), width="stretch", config={"displayModeBar": False})
+            st.plotly_chart(build_alignment_history_chart(history), width="stretch", config=PLOTLY_CONFIG)
             residuals = history["alignment_residual"].dropna()
             above = int((residuals >= 0).sum())
             st.caption(f"Observed startup activity was at or above expectation in {above} of {len(residuals)} A6 validation year(s); negative alignment means below expectation.")
         else:
             empty_state("A6 alignment values are unavailable for this MSA-sector history; no residuals are reconstructed in the Explorer.")
         if history["observed_historical_gap_status"].notna().any():
-            st.plotly_chart(build_gap_timeline(history), width="stretch", config={"displayModeBar": False})
+            st.plotly_chart(build_gap_timeline(history), width="stretch", config=PLOTLY_CONFIG)
             n_gaps = int((history["observed_historical_gap_status"] == 1).sum())
             n_status = int(history["observed_historical_gap_status"].notna().sum())
             st.caption(f"A6 gaps were observed in {n_gaps} of {n_status} available fold-validation target year(s). These historical labels are not future probabilities.")
@@ -237,7 +236,7 @@ def render() -> None:
         if not prediction_history.empty:
             split_label = "Final temporal holdout" if split == "final_holdout" else "Development OOF"
             st.caption(f"{split_label}; logistic is the primary model. Each score uses predictor-year information to estimate a gap at t+3. Actual outcomes shown in hover detail are retrospective.")
-            st.plotly_chart(build_prediction_history_chart(prediction_history), width="stretch", config={"displayModeBar": False})
+            st.plotly_chart(build_prediction_history_chart(prediction_history), width="stretch", config=PLOTLY_CONFIG)
         else:
             empty_state("No prediction records exist for this MSA-sector in the selected evaluation split.")
     else:

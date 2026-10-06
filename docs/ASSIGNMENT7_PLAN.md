@@ -9,7 +9,7 @@
 | A7.5 | Regional & Industry Explorer | Complete: Explorer-only MSA/sector/year/gap/prediction filters, source-faithful historical views, separate development/holdout predictions, logistic rankings, coverage and empty states, and filtered CSV export. |
 | A7.6 | Model Performance & Diagnostics | Complete: fixed A7.2 metrics, split/model comparisons, deterministic PR/ROC display curves, calibration, lift, time/MSA-size/sector diagnostics, interpretation, and source-lineage tests/report. |
 | A7.7 | Data Quality, Coverage & Limitations | Complete: MSA/sector coverage, A6 complete-case selection and suppression, generalization, source lineage, and responsible-use limitations. |
-| A7.8 | Interactive Visualization Refinement | Incomplete; not started. |
+| A7.8 | Interactive Visualization Refinement | Complete: visual audit, shared Plotly semantics/formatting/glossary, page layout refinements, accessibility cues, and route QA. |
 | A7.9 | Deployment & Containerization | Incomplete; not started. |
 | A7.10 | Final Integration, QA & Completion | Incomplete; not started. |
 
@@ -84,3 +84,13 @@ A7.6 is complete. Stop after this stage; A7.7 Data Quality, Coverage & Limitatio
 - A7.8 through A7.10 remain incomplete; About/Methods is not finalized.
 
 A7.7 is complete. Stop here; A7.8 Interactive Visualization Refinement remains a separate stage.
+
+## A7.8 Exit Criteria
+
+- All Overview, Explorer, Performance, and Quality charts and tables are inventoried in `reports/tables/a7_visual_audit.csv`.
+- Shared style, semantic colors, metric formats, evaluation labels, hover guidance, and glossary are applied without changing research values, labels, model code, or artifacts.
+- Performance diagnostics use tabs to reduce scroll burden; visual QA checklist is documented; accessibility cues do not rely on color alone.
+- Focused/full tests, health, lock, diff checks, and browser smoke of all implemented routes pass. Static A5/A6 figures remain unchanged.
+- A7.9 and A7.10 remain incomplete; no map, deployment, or About/Methods finalization is included.
+
+A7.8 is complete. Stop here; deployment and containerization remain A7.9.
