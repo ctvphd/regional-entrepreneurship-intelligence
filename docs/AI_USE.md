@@ -429,3 +429,18 @@ the student remains responsible for reviewing the locked design, interpreting
 the evidence, and ensuring course-policy compliance. Verification includes
 repeat-run artifact hashes, the full test suite, and a before/after hash of the
 read-only analytical SQLite database. No Assignment 7/dashboard work was done.
+
+## Assignment 7.1 Dashboard Architecture & User Requirements
+
+AI assistance drafted the dashboard requirements and information architecture,
+audience jobs-to-be-done, page wireframes, reusable component inventory,
+logical data contracts and source lineage, risk terminology, visualization and
+accessibility policy, future-map specification, and staged A7 roadmap. The
+student-approved product decisions in the architecture brief were preserved:
+five pages, practical exploration with transparent methods, logistic as
+primary and HGB as sensitivity, Explorer-scoped filters, filtered CSV only,
+Plotly for future interactive charts, retained Matplotlib research figures,
+and map deferral. This stage created documentation only; it did not build a UI,
+dashboard dataset, map, or A7.2 data layer. The student remains responsible
+for reviewing audience fit, analytic interpretation, and course-policy
+compliance.
