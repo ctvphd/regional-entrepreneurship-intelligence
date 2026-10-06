@@ -6,7 +6,7 @@
 | A7.2 | Dashboard Data Layer | Complete: typed Parquet datasets, pure-Python loader, source/field lineage, coverage and null policies, quality checks, reproducibility audit, and documentation. |
 | A7.3 | Core Streamlit Application Shell | Complete: five-page st.navigation shell, shared components/theme, Explorer-only filter state, cached A7.2 loader adapters, health CLI, and smoke-tested app. |
 | A7.4 | Executive Overview | Complete: A7.2-only source-driven KPIs, Plotly holdout comparison/lift/calibration, retrospective top-N cases, gap explainer, practical interpretation, and limitations. |
-| A7.5 | Regional & Industry Explorer | Incomplete; not started. |
+| A7.5 | Regional & Industry Explorer | Complete: Explorer-only MSA/sector/year/gap/prediction filters, source-faithful historical views, separate development/holdout predictions, logistic rankings, coverage and empty states, and filtered CSV export. |
 | A7.6 | Model Performance & Diagnostics | Incomplete; not started. |
 | A7.7 | Data Quality, Coverage & Limitations | Incomplete; not started. |
 | A7.8 | Interactive Visualization Refinement | Incomplete; not started. |
@@ -51,3 +51,15 @@ A7.3 was completed without final Executive Overview visualizations or substantiv
 - App guide, AI-use disclosure, and A7.4 implementation report are updated; later A7 stages remain untouched.
 
 A7.4 is complete. Continue only with A7.5 after this stage is reviewed.
+
+## A7.5 Exit Criteria
+
+- Explorer uses only validated A7.2 panel, prediction, filter-option, label, and metadata artifacts; keys and exact t+3 pairs are validated.
+- MSA, sector, descriptive year, observed-gap and evaluation-prediction availability filters use documented defaults and reset behavior; risk categories remain unavailable.
+- Observed/expected rates, startup and employment trends, alignment, historical A6 gap labels, and retrospective prediction scores remain distinct by source and time role; nulls are never replaced or extrapolated.
+- Development OOF and final holdout prediction views are explicitly separated; logistic remains primary and rankings sort by its frozen probability.
+- Coverage, data availability, empty states, contextual limitations, and filtered CSV metadata are present.
+- Focused and full tests, dashboard health checks, representative QA cases, and bounded Explorer smoke testing pass.
+- App guide, AI-use disclosure, and A7.5 report are updated. A7.6 and later stages remain incomplete.
+
+A7.5 is complete. The Regional & Industry Explorer remains descriptive and retrospective; proceed to A7.6 only as a separate stage.

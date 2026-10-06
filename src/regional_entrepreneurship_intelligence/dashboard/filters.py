@@ -7,13 +7,13 @@ import streamlit as st
 from .state import initialize_filter_state, reset_filter_state
 
 
-def render_explorer_filters(options: dict) -> dict:
+def render_explorer_filters(options: dict, prediction_years_by_split: dict | None = None) -> dict:
     # These controls scope Explorer placeholders only; fixed performance and
     # holdout metrics always remain the finalized A6 populations.
-    initialize_filter_state(st.session_state, options)
+    initialize_filter_state(st.session_state, options, prediction_years_by_split)
     st.subheader("Explorer filters")
     if st.button("Reset filters", key="reset_explorer_filters"):
-        reset_filter_state(st.session_state, options)
+        reset_filter_state(st.session_state, options, prediction_years_by_split)
 
     msa_rows = options.get("msa_options", [])
     msa_labels = {row["value"]: row["label"] for row in msa_rows}
@@ -64,10 +64,16 @@ def render_explorer_filters(options: dict) -> dict:
         key="selected_gap_status",
         help="Historical OOF target-year status, not a current prediction.",
     )
+    has_prediction = st.checkbox(
+        "Only rows with an evaluation prediction",
+        key="selected_has_prediction",
+        help="Restricts descriptive rows to exact MSA-sector-predictor-year keys in the frozen A6 score artifact.",
+    )
     return {
         "msa": msa,
         "sectors": list(sectors),
         "descriptive_year": year,
         "risk_category": None,
         "observed_gap_status": gap,
+        "has_prediction": has_prediction,
     }

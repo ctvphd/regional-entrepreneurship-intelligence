@@ -485,3 +485,16 @@ holdout-driven choice was made, and no risk categories were introduced. The
 student should review statistical language and visual interpretation before
 submission. Tests and a bounded browser smoke check are recorded in the A7.4
 implementation report.
+
+## Assignment 7.5 Regional & Industry Explorer
+
+AI assistance implemented the Explorer's MSA/sector/year/gap and prediction-
+availability filtering, state sanitization/reset, pure A7.2 filtering and
+exact-key prediction joins, Plotly history charts, coverage and empty-state
+messaging, logistic-primary retrospective rankings, and filtered CSV export.
+It also added validation for panel/prediction uniqueness and the frozen t+3
+pairing, plus focused interaction and representative-case tests. Development
+OOF and final holdout remain separate; nulls remain unavailable; no expected
+values, predictions, thresholds, categories, or models are recomputed. The
+student should review time-role wording, displayed units, representative-case
+interpretation, and course-policy compliance before submission.

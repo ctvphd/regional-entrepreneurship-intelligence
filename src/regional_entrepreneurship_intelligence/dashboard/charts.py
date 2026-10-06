@@ -223,3 +223,170 @@ def calibration_takeaway(calibration: pd.DataFrame) -> str:
         f"Observed holdout gap prevalence rose from {format_probability(first)} in the lowest score bin "
         f"to {format_probability(last)} in the highest; these bins are retrospective diagnostics, not recalibration."
     )
+
+
+def build_observed_expected_chart(panel: pd.DataFrame) -> go.Figure:
+    rows = panel.sort_values("year")
+    if rows.empty or rows["startup_rate"].notna().sum() == 0:
+        raise ValueError("No observed startup-rate values are available for this selection")
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=rows["year"], y=rows["startup_rate"], mode="lines+markers",
+        name="Observed startup rate", line={"color": PRIMARY, "width": 2.5},
+        marker={"symbol": "circle", "size": 7},
+        customdata=rows[["expected_startup_rate", "observed_historical_gap_status"]],
+        hovertemplate=("Year %{x}<br>Observed: %{y:.2f}%<br>Expected: %{customdata[0]:.2f}%"
+                       "<br>Historical A6 gap: %{customdata[1]}<extra></extra>"),
+        connectgaps=False,
+    ))
+    if rows["expected_startup_rate"].notna().any():
+        fig.add_trace(go.Scatter(
+            x=rows["year"], y=rows["expected_startup_rate"], mode="lines+markers",
+            name="Expected startup rate (A6 Model A)",
+            line={"color": HOLDOUT, "width": 2.2, "dash": "dash"},
+            marker={"symbol": "diamond-open", "size": 7},
+            hovertemplate="Year %{x}<br>Expected: %{y:.2f}%<extra></extra>",
+            connectgaps=False,
+        ))
+    gaps = rows.loc[(rows["observed_historical_gap_status"] == 1) & rows["startup_rate"].notna()]
+    if not gaps.empty:
+        fig.add_trace(go.Scatter(
+            x=gaps["year"], y=gaps["startup_rate"], mode="markers",
+            name="A6 gap observed (historical)",
+            marker={"color": "#7A3E8E", "symbol": "x", "size": 12, "line": {"width": 2}},
+            hovertemplate="Year %{x}<br>Observed startup rate: %{y:.2f}%<br>A6 gap observed<extra></extra>",
+        ))
+    fig.update_layout(
+        title="Observed and expected startup activity",
+        template="plotly_white", height=370,
+        margin={"l": 55, "r": 25, "t": 75, "b": 50},
+        legend={"orientation": "h", "y": -0.24, "x": 0}, font={"size": 13},
+        xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Startup rate (percent units)", "ticksuffix": "%", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_startup_trend_chart(panel: pd.DataFrame) -> go.Figure:
+    rows = panel.sort_values("year")
+    if rows.empty or rows["startup_rate"].notna().sum() == 0:
+        raise ValueError("No observed startup-rate values are available for this selection")
+    fig = go.Figure(go.Scatter(
+        x=rows["year"], y=rows["startup_rate"], mode="lines+markers",
+        name="Observed firm startup rate", line={"color": PRIMARY, "width": 2.5},
+        marker={"symbol": "circle", "size": 7}, connectgaps=False,
+        hovertemplate="Year %{x}<br>Startup rate: %{y:.2f}%<extra></extra>",
+    ))
+    fig.update_layout(
+        title="Historical startup-rate trend", template="plotly_white", height=320,
+        margin={"l": 55, "r": 25, "t": 70, "b": 45}, showlegend=False,
+        xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Startup rate (percent units)", "ticksuffix": "%", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_employment_growth_chart(panel: pd.DataFrame) -> go.Figure:
+    rows = panel.sort_values("year")
+    if rows.empty or rows["employment_growth"].notna().sum() == 0:
+        raise ValueError("No employment-growth values are available for this selection")
+    fig = go.Figure(go.Scatter(
+        x=rows["year"], y=rows["employment_growth"], mode="lines+markers",
+        name="QCEW employment growth", line={"color": HOLDOUT, "width": 2.5, "dash": "dash"},
+        marker={"symbol": "diamond", "size": 7}, connectgaps=False,
+        hovertemplate="Year %{x}<br>Employment growth: %{y:.1%}<extra></extra>",
+    ))
+    fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="No annual change")
+    fig.update_layout(
+        title="Historical employment-growth trend", template="plotly_white", height=320,
+        margin={"l": 55, "r": 25, "t": 70, "b": 45}, showlegend=False,
+        xaxis={"title": "Descriptive calendar year", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Employment growth", "tickformat": ".0%", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_alignment_history_chart(panel: pd.DataFrame) -> go.Figure:
+    rows = panel.sort_values("year")
+    if rows.empty or rows["alignment_residual"].notna().sum() == 0:
+        raise ValueError("Alignment is unavailable for this selection")
+    fig = go.Figure(go.Scatter(
+        x=rows["year"], y=rows["alignment_residual"], mode="lines+markers",
+        name="Observed minus expected", line={"color": PRIMARY, "width": 2.2},
+        marker={"symbol": "circle", "size": 7}, connectgaps=False,
+        customdata=rows["observed_historical_gap_status"],
+        hovertemplate=("Year %{x}<br>Alignment: %{y:.2f} percentage points"
+                       "<br>A6 gap status: %{customdata}<extra></extra>"),
+    ))
+    gaps = rows.loc[(rows["observed_historical_gap_status"] == 1) & rows["alignment_residual"].notna()]
+    if not gaps.empty:
+        fig.add_trace(go.Scatter(
+            x=gaps["year"], y=gaps["alignment_residual"], mode="markers",
+            name="A6 gap observed (historical)",
+            marker={"color": "#7A3E8E", "symbol": "x", "size": 12, "line": {"width": 2}},
+            hovertemplate="Year %{x}<br>Alignment: %{y:.2f} percentage points<br>A6 gap observed<extra></extra>",
+        ))
+    fig.add_hline(y=0, line_color=REFERENCE, line_dash="dot", annotation_text="Observed = expected")
+    fig.update_layout(
+        title="Historical entrepreneurial alignment", template="plotly_white", height=340,
+        margin={"l": 55, "r": 25, "t": 75, "b": 45},
+        legend={"orientation": "h", "y": -0.24, "x": 0},
+        xaxis={"title": "Descriptive target year", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Observed minus expected (percentage points)", "gridcolor": GRID},
+    )
+    return fig
+
+
+def build_gap_timeline(panel: pd.DataFrame) -> go.Figure:
+    rows = panel.loc[panel["observed_historical_gap_status"].notna()].sort_values("year").copy()
+    if rows.empty:
+        raise ValueError("No A6 fold-validation gap-status records are available for this selection")
+    rows["status_label"] = rows["observed_historical_gap_status"].astype(int).map({0: "No gap observed", 1: "Gap observed"})
+    fig = go.Figure()
+    for status, label, symbol, color in ((0, "No gap observed", "circle", PRIMARY), (1, "Gap observed", "x", "#7A3E8E")):
+        group = rows.loc[rows["observed_historical_gap_status"].astype(int) == status]
+        if group.empty:
+            continue
+        fig.add_trace(go.Scatter(
+            x=group["year"], y=group["status_label"], mode="markers+text",
+            name=label, text=["No gap" if status == 0 else "Gap"] * len(group),
+            textposition="top center", marker={"symbol": symbol, "color": color, "size": 11},
+            customdata=group["gap_label_predictor_year"],
+            hovertemplate=("Target year %{x}<br>%{y}<br>Associated predictor year: %{customdata}"
+                           "<br>Development OOF historical label<extra></extra>"),
+        ))
+    fig.update_layout(
+        title="Historical A6 gap-status timeline (development OOF labels)",
+        template="plotly_white", height=260,
+        margin={"l": 40, "r": 20, "t": 70, "b": 45},
+        xaxis={"title": "Target / descriptive year", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Observed status", "categoryorder": "array", "categoryarray": ["No gap observed", "Gap observed"]},
+        legend={"orientation": "h", "y": -0.28, "x": 0},
+    )
+    return fig
+
+
+def build_prediction_history_chart(predictions: pd.DataFrame) -> go.Figure:
+    rows = predictions.sort_values("predictor_year")
+    if rows.empty:
+        raise ValueError("No retrospective prediction records are available for this selection")
+    split = str(rows["development_or_holdout"].iloc[0])
+    if rows["development_or_holdout"].nunique() != 1:
+        raise ValueError("Prediction history must display exactly one evaluation split")
+    label = "Final temporal holdout" if split == "final_holdout" else "Development OOF"
+    fig = go.Figure(go.Scatter(
+        x=rows["predictor_year"], y=rows["logistic_probability"], mode="lines+markers",
+        name=f"Logistic primary - {label}", line={"color": HOLDOUT if split == "final_holdout" else PRIMARY, "width": 2.5},
+        marker={"symbol": "circle", "size": 8},
+        customdata=rows[["target_year", "actual_gap"]],
+        hovertemplate=("Predictor year %{x} to target year %{customdata[0]}"
+                       "<br>Logistic probability: %{y:.1%}"
+                       "<br>Actual future gap (retrospective): %{customdata[1]}<extra></extra>"),
+    ))
+    fig.update_layout(
+        title=f"Retrospective logistic prediction history - {label}", template="plotly_white", height=320,
+        margin={"l": 55, "r": 25, "t": 70, "b": 50}, showlegend=False,
+        xaxis={"title": "Predictor year (t)", "dtick": 1, "showgrid": False},
+        yaxis={"title": "Predicted probability of gap at t+3", "tickformat": ".0%", "range": [0, 1], "gridcolor": GRID},
+    )
+    return fig

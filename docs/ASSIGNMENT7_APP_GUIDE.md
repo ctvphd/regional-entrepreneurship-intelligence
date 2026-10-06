@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview is implemented over validated A7.2 Parquet/JSON artifacts. The remaining pages retain their staged scope; see the plan before beginning A7.5.
+A7.4 Executive Overview and A7.5 Regional & Industry Explorer are implemented over validated A7.2 Parquet/JSON artifacts. Model Performance and Data Quality retain their later-stage scope; see the plan before beginning A7.6.
 
 ## Launch
 
@@ -38,10 +38,12 @@ uv run --offline python -m regional_entrepreneurship_intelligence.dashboard.heal
 
 The Executive Overview presents frozen logistic final-holdout metrics, a development-OOF comparison, holdout lift and calibration diagnostics, and a selectable retrospective top-10/25/50 table. Logistic remains the pre-locked primary model; HistGradientBoosting is shown only as sensitivity analysis. No model is fit and no risk bands are defined in the app. The holdout table is an evaluation record, not a live forecast.
 
+The Regional & Industry Explorer provides searchable MSA, sector, descriptive-year, historical-gap, and exact-key evaluation-prediction filters. Its default is all MSAs/sectors, the latest descriptive year, no gap restriction, no prediction-only restriction, and a top-10 final-holdout ranking. Reset restores those defaults. Observed/expected startup rates, alignment and development-OOF gap history, employment growth, and t-to-t+3 retrospective logistic records are presented separately with null-aware empty states. Prediction split and predictor year are explicit; a development OOF ranking is never combined with final holdout. A5 coverage labels are `comparison_eligible` and `thin`, and `thin` is a descriptive coverage warning rather than model confidence. The filtered UTF-8 CSV contains selected A7.2 panel rows, metadata context, and any exact-key attached prediction fields; actual target gaps are named retrospective. Risk categories remain unavailable.
+
 Explorer-only filters are wired to the A7.2 option artifact. No risk category is available because no presentation cutpoints were approved. A5 coverage states are `comparison_eligible` and `thin`.
 
 Reset defaults are all metropolitan areas, all sectors, the latest descriptive year, all risk categories (currently unavailable), and all observed-gap statuses.
 
 ## Current Limitations
 
-The Explorer, Model Performance, and Data Quality pages remain in their staged implementation phases. There is no map, deployment, live forecast, model fitting, or causal analysis. Overview metrics and ranked cases are retrospective and do not establish generalization beyond the single temporal holdout.
+The Model Performance and Data Quality pages remain in their staged implementation phases. There is no map, deployment, live forecast, model fitting, or causal analysis. Overview metrics and Explorer prediction rankings are retrospective and do not establish generalization beyond the single temporal holdout.
