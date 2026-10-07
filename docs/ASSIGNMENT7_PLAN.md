@@ -105,3 +105,13 @@ A7.8 is complete. Stop here; deployment and containerization remain A7.9.
 - Data artifacts, model outputs, metrics, target definition, and coverage rules remain unchanged. No map, deployment, or final A7 integration work is included.
 
 A7.8B is complete. Stop for user review; A7.9 remains intentionally paused.
+
+## A7.8C Exit Criteria
+
+- Overview prioritizes executive signals and a concise evidence story; Explorer explains market selection; Model Insights preserves secondary detail while reducing metric competition.
+- Data & Confidence distinguishes historical completeness from prediction confidence; About presents a short method flow with technical details retained.
+- Calibration axes reflect displayed data, and lift values are readable without changing raw values; full-precision CSV remains available.
+- Audit/change logs, UX guide, app guide, AI-use note, focused/full tests, and route QA are recorded.
+- No scientific artifacts, model outputs, target definitions, metrics, coverage rules, map, deployment, A7.9, or A7.10 work is included.
+
+A7.8C is complete. The full 193-test suite passed; browser smoke QA covered all five routes. Deployment remains paused pending user review. A7.9 remains paused and A7.10 remains incomplete.

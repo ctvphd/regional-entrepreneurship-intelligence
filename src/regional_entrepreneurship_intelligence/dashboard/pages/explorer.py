@@ -152,6 +152,8 @@ def render() -> None:
     }
     initialize_filter_state(st.session_state, options, prediction_years_by_split)
     render_header("Explore Markets", PAGE_DESCRIPTIONS["Explore Markets"], metadata)
+    st.subheader("Start exploring")
+    st.write("Choose one metro and one industry in the filters to build a market profile. Broader selections remain available for reviewing historical patterns and ranked cases.")
     with st.sidebar:
         selections = render_explorer_filters(options, prediction_years_by_split)
 
@@ -171,7 +173,7 @@ def render() -> None:
     joined_historical = filter_explorer_data(joined_panel, **base_filters)
     joined_selected = filter_explorer_data(joined_panel, year=selected_year, **base_filters)
 
-    st.subheader("Your selected market")
+    st.subheader("Market profile" if msa is not None and len(sectors) == 1 else "Choose a metro and industry")
     st.write(selection_summary(selected_rows, msa=msa, sectors=sectors, year=selected_year))
     st.caption("The descriptive year is the year of observed startup activity. Prediction records separately identify predictor year t and target year t+3.")
     st.caption("Explorer controls do not alter fixed Model Performance or Executive Overview results.")
@@ -319,13 +321,13 @@ def render() -> None:
         if ranking.empty:
             empty_state("No finalized prediction is available for this MSA-sector, evaluation split, and predictor year.")
         else:
+            ranking_display = ranking.copy()
+            probability_column = "Predicted gap probability (logistic)"
+            ranking_display[probability_column] = ranking_display[probability_column].map(
+                lambda value: "N/A" if pd.isna(value) else f"{float(value):.1%}"
+            )
             st.dataframe(
-                ranking, hide_index=True, width="stretch",
-                column_config={
-                    "Predicted gap probability (logistic)": st.column_config.NumberColumn(
-                        format=".1%", help="Frozen A6 primary logistic score for the explicit target year; retrospective evaluation record."
-                    ),
-                },
+                ranking_display, hide_index=True, width="stretch",
             )
     else:
         ranking = pd.DataFrame()
@@ -352,13 +354,21 @@ def render() -> None:
         "development_or_holdout": "Prediction evaluation split", "prediction_predictor_year": "Prediction year (t)",
         "target_year": "Prediction target year",
     })
+    for column in ("Observed startup rate (%)", "Expected startup rate (%)"):
+        if column in display:
+            display[column] = display[column].map(lambda value: "N/A" if pd.isna(value) else format_rate(value))
+    if "Alignment (percentage points)" in display:
+        display["Alignment (percentage points)"] = display["Alignment (percentage points)"].map(
+            lambda value: "N/A" if pd.isna(value) else format_alignment(value)
+        )
+    if "Logistic probability at t+3" in display:
+        display["Logistic probability at t+3"] = display["Logistic probability at t+3"].map(
+            lambda value: "N/A" if pd.isna(value) else f"{float(value):.1%}"
+        )
     if display.empty:
         empty_state("There are no filtered rows to display or download.")
     else:
-        st.dataframe(
-            display, hide_index=True, width="stretch",
-            column_config={"Logistic probability at t+3": st.column_config.NumberColumn(format=".1%")},
-        )
+        st.dataframe(display, hide_index=True, width="stretch")
 
     export = filtered_csv_frame(
         joined_selected, dashboard_version=str(metadata["dashboard_data_version"]),

@@ -1,0 +1,10 @@
+page,component,before,after,user_benefit,scientific_change
+Overview,Executive metrics,Two rows of four equal metric cards,Three primary signals and three concise takeaways,Readers can understand the result quickly,false
+Overview,Model comparison,Long narrative before evidence,Three short evidence statements,Clearer distinction between primary and sensitivity results,false
+Explore Markets,Entry state,Filters introduced without orientation,Start exploring prompt before controls,First action is clearer,false
+Explore Markets,Selection title,Your selected market,Market profile for one metro and industry,Selection scope is explicit,false
+Model Insights,Headline metrics,Eight equal cards,Four primary metrics with secondary measures in an expander,Less scanning burden while preserving detail,false
+Model Insights,Calibration axes,Fixed zero-to-wide range,Range bounded to displayed calibration values with padding,Observed bins are easier to inspect,false
+Model Insights,Lift table,Incorrect format key and full precision,Concise display copy plus raw precision CSV,Readable display and reproducible numeric values,false
+Data & Confidence,Coverage entry,Technical detail before user summary,Counts of good limited and participating metros first,Confidence caveat is immediately clear,false
+About the Analysis,Methods,Formal question and method sections at top,Five-step story with method in a disclosure,Accessible orientation with exact methods retained,false

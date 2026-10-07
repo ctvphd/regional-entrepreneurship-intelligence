@@ -80,3 +80,16 @@ accent, and subtle borders. The native Streamlit theme selector provides the
 configured light alternative. Plotly uses Streamlit's active chart theme;
 semantic color meaning is also encoded through labels, markers, patterns, or
 line style. Do not claim WCAG certification without formal testing.
+
+## A7.8C Product Experience
+
+Lead the Overview with no more than three primary signals and a short set of
+evidence-based takeaways. Keep secondary metrics and exact definitions
+available without giving them equal first-screen weight. A single-metro,
+single-industry selection is a market profile; broad selections remain useful
+for browsing and ranking. Data coverage cards report completeness or observed
+participation and must never imply prediction confidence or uncertainty bounds.
+Use a short visual methods sequence for orientation, then disclose the exact
+research question, threshold, time roles, split definitions, and lineage.
+Display tables may format copies of source-backed data, but preserve full
+precision in exports and never recalculate or overwrite frozen values.

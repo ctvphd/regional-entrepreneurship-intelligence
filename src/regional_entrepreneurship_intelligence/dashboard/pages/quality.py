@@ -31,22 +31,8 @@ def _read_report(name: str) -> pd.DataFrame:
 
 def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
     comparison = coverage["comparison_eligible_flag"].fillna(False).astype(bool)
-    model = coverage["model_eligible_flag"].fillna(False).astype(bool)
     year_span = metadata["study_period"]["descriptive"]
-    cols = st.columns(4)
-    cols[0].metric("Metropolitan areas", f"{len(coverage):,}")
-    cols[1].metric("Good comparison coverage", f"{int(comparison.sum()):,}", help="Canonical A5 value: comparison_eligible. This is a completeness screen, not a model-confidence measure.")
-    cols[1].caption(f"{comparison.mean():.1%} of covered metros")
-    cols[2].metric("Limited data coverage", f"{int((~comparison).sum()):,}", help="Canonical A5 value: thin. This is a coverage note, not a judgment about a place.")
-    cols[2].caption("Below the A5 completeness screen")
-    cols[3].metric("MSAs with A6 OOF rows", f"{int(model.sum()):,}", help="Observed participation in out-of-fold scoring, not a measure of reliability.")
-    cols[3].caption("Observed participation")
-
-    st.caption(
-        f"A7.2 coverage across {year_span[0]}–{year_span[1]}. The A5 comparison screen requires at least "
-        "100 MSA-sector-year observations, 5 sectors, and 10 years. It is a descriptive completeness rule, "
-        "not a model-quality score or causal inclusion criterion."
-    )
+    st.caption(f"Historical coverage across {year_span[0]}–{year_span[1]} varies across metropolitan areas.")
     render_plotly_chart(
         apply_dashboard_style(px.histogram(coverage.assign(coverage_status=coverage.coverage_status.map({
                      "comparison_eligible": "Good comparison coverage", "thin": "Limited data coverage",
@@ -57,27 +43,32 @@ def _render_coverage(coverage: pd.DataFrame, metadata: dict) -> None:
         .update_layout(height=330, margin={"l": 35, "r": 20, "t": 60, "b": 45})))
     coverage_display = coverage.copy()
     coverage_display["coverage_status"] = coverage_display["coverage_status"].map(COVERAGE_LABELS).fillna("Not available")
-    st.dataframe(
-        coverage_display.sort_values(["comparison_eligible_flag", "observation_count"], ascending=[True, True]),
-        hide_index=True, width="stretch", height=420,
-        column_config={
-            "cbsa_code": st.column_config.TextColumn("CBSA code"),
-            "msa_name": st.column_config.TextColumn("Metropolitan area"),
-            "observation_count": st.column_config.NumberColumn("Panel rows", format="%,d"),
-            "sector_count": st.column_config.NumberColumn("Sectors", format="%d"),
-            "year_count": st.column_config.NumberColumn("Years", format="%d"),
-            "first_year": st.column_config.NumberColumn("First year", format="%d"),
-            "last_year": st.column_config.NumberColumn("Last year", format="%d"),
-            "comparison_eligible_flag": st.column_config.CheckboxColumn("Good comparison coverage", help="Canonical field: A5 comparison_eligible flag."),
-            "model_eligible_flag": st.column_config.CheckboxColumn("A6 OOF present"),
-            "a6_oof_row_count": st.column_config.NumberColumn("A6 OOF rows", format="%,d"),
-            "coverage_status": st.column_config.TextColumn("Coverage status", help="Display wording maps to the unchanged canonical values comparison_eligible and thin."),
-            "coverage_note": st.column_config.TextColumn("Coverage note"),
-        },
-    )
-    with st.expander("Technical details: canonical coverage values"):
-        st.write("Good comparison coverage corresponds to `comparison_eligible`; limited data coverage corresponds to `thin`. These are unchanged A5 source values, not model-confidence ratings.")
-    st.caption("Use the table headers to sort; its built-in search and download controls retain all A7.2 coverage fields.")
+    with st.expander("Review individual metro coverage"):
+        st.dataframe(
+            coverage_display.sort_values(["comparison_eligible_flag", "observation_count"], ascending=[True, True]),
+            hide_index=True, width="stretch", height=420,
+            column_config={
+                "cbsa_code": st.column_config.TextColumn("CBSA code"),
+                "msa_name": st.column_config.TextColumn("Metropolitan area"),
+                "observation_count": st.column_config.NumberColumn("Panel rows", format="%,d"),
+                "sector_count": st.column_config.NumberColumn("Sectors", format="%d"),
+                "year_count": st.column_config.NumberColumn("Years", format="%d"),
+                "first_year": st.column_config.NumberColumn("First year", format="%d"),
+                "last_year": st.column_config.NumberColumn("Last year", format="%d"),
+                "comparison_eligible_flag": st.column_config.CheckboxColumn("Good comparison coverage", help="Canonical field: A5 comparison_eligible flag."),
+                "model_eligible_flag": st.column_config.CheckboxColumn("A6 OOF present"),
+                "a6_oof_row_count": st.column_config.NumberColumn("A6 OOF rows", format="%,d"),
+                "coverage_status": st.column_config.TextColumn("Coverage status", help="Display wording maps to the unchanged canonical values comparison_eligible and thin."),
+                "coverage_note": st.column_config.TextColumn("Coverage note"),
+            },
+        )
+        st.caption("Use the table headers to sort; its built-in search and download controls retain all A7.2 coverage fields.")
+    with st.expander("Technical details: A5 coverage rule and canonical values"):
+        st.write(
+            "The A5 comparison screen requires at least 100 MSA-sector-year observations, 5 sectors, and 10 years. "
+            "Good comparison coverage corresponds to `comparison_eligible`; limited data coverage corresponds to `thin`. "
+            "This descriptive completeness rule is not a model-quality score or causal inclusion criterion."
+        )
 
 
 def _render_selection() -> None:
@@ -115,6 +106,7 @@ def _render_selection() -> None:
 def _render_sector_coverage(sectors: pd.DataFrame) -> None:
     holdout = sectors.loc[(sectors["dataset_split"] == "final_holdout") & (sectors["model"] == "logistic")].copy()
     holdout["Sample sufficiency"] = holdout["sufficient_sample_flag"].map({True: "Sufficient", False: "Suppressed by A6 rule"})
+    st.write("Each bar shows the number of later-evaluation cases for one industry. Some sector metrics are withheld when the fixed sample rule is not met.")
     render_plotly_chart(
         apply_dashboard_style(px.bar(holdout.sort_values("sample_n"), x="sample_n", y="sector_name", orientation="h", color="Sample sufficiency",
                custom_data=["positive_n", "prevalence"], labels={"sample_n": "Final-holdout pairs", "sector_name": "Sector"},
@@ -134,7 +126,8 @@ def _render_sector_coverage(sectors: pd.DataFrame) -> None:
             "ROC_AUC": st.column_config.NumberColumn("ROC-AUC", format="%.3f"),
         },
     )
-    st.caption("A6 suppresses sector AP/ROC-AUC if there are fewer than 30 positive events or no negative class. Blank metric values are intentionally unavailable, never zero.")
+    with st.expander("Technical details: sector-metric sufficiency"):
+        st.caption("A6 suppresses sector AP/ROC-AUC if there are fewer than 30 positive events or no negative class. Blank metric values are intentionally unavailable, never zero.")
 
 
 def _render_generalization(msa_size: pd.DataFrame) -> None:
@@ -184,6 +177,16 @@ def render() -> None:
     msa_size = cached_dataset("model_by_msa_size")
     sources = cached_dataset("sources")
     render_header("Data & Confidence", PAGE_DESCRIPTIONS["Data & Confidence"], metadata)
+
+    eligible = int(coverage["comparison_eligible_flag"].fillna(False).astype(bool).sum())
+    limited = int(len(coverage) - eligible)
+    model_places = int(coverage["model_eligible_flag"].fillna(False).astype(bool).sum())
+    st.subheader("How much historical evidence is available?")
+    st.caption("Coverage describes data completeness and participation. It is not prediction confidence or a guarantee of result quality.")
+    confidence = st.columns(3)
+    confidence[0].metric("Good comparison coverage", f"{eligible:,}", f"of {len(coverage):,} metros")
+    confidence[1].metric("Limited data coverage", f"{limited:,}", "Use more caution for comparisons")
+    confidence[2].metric("Model participants", f"{model_places:,}", "Metros with observed A6 OOF rows")
 
     _render_coverage(coverage, metadata)
     st.subheader("Is there enough data to compare each industry?")

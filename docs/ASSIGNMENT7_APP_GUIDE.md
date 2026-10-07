@@ -106,3 +106,15 @@ do not change the source categories `comparison_eligible` and `thin`. Neither
 category measures prediction confidence. Fixed A6 scores are retrospective,
 not live forecasts. See `docs/ASSIGNMENT7_PLAIN_LANGUAGE_POLICY.md` and
 `docs/ASSIGNMENT7_UX_STYLE_GUIDE.md` for copy and presentation conventions.
+
+## Assignment 7.8C Product Experience & Storytelling
+
+The Overview prioritizes executive signals and a concise evidence story.
+Explorer introduces metro/industry selection and calls an exact selection a
+market profile. Model Insights retains secondary sample and threshold metrics
+in a disclosure and exposes the full-precision lift table as CSV. Calibration
+axes follow displayed bins. Data & Confidence leads with completeness and
+participation counts while stating that these are not predictive confidence.
+About provides a five-step plain-language flow and retains the technical
+research question and methods in an expander. Scientific artifacts and model
+outputs remain unchanged.

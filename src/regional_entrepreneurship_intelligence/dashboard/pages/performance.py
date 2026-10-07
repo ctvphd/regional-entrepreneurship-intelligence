@@ -20,7 +20,7 @@ from ..charts import (
     format_probability,
     format_score,
 )
-from ..components import development_holdout_label, render_footer, render_header, render_metric_card, render_plotly_chart
+from ..components import dataframe_csv_bytes, development_holdout_label, render_footer, render_header, render_metric_card, render_plotly_chart
 from ..constants import DATA_LAYER_REBUILD_COMMAND, PAGE_DESCRIPTIONS
 from ..performance_data import (
     DISPLAY_MODELS,
@@ -103,17 +103,22 @@ def render() -> None:
     st.subheader("How well did the model identify later gaps?")
     cards = (
         ("AP", format_score(metric_value(summary, "final_holdout", "logistic", "AP")), "Primary ranking metric; compare with the observed gap rate."),
-        ("prevalence", format_probability(metric_value(summary, "final_holdout", "logistic", "prevalence")), "Share of evaluated cases with an observed gap."),
         ("ROC_AUC", format_score(metric_value(summary, "final_holdout", "logistic", "ROC_AUC")), "0.500 is random ranking; higher is better."),
         ("Brier", format_score(metric_value(summary, "final_holdout", "logistic", "Brier")), "Average squared probability error; lower is better."),
-        ("Recall", format_score(metric_value(summary, "final_holdout", "logistic", "recall")), "At the A6 frozen diagnostic threshold; not tuned here."),
-        ("Precision", format_score(metric_value(summary, "final_holdout", "logistic", "precision")), "At the same A6 frozen diagnostic threshold."),
-        ("F1", format_score(metric_value(summary, "final_holdout", "logistic", "f1")), "Threshold-specific harmonic mean of precision and recall."),
         ("lift", format_lift(metric_value(summary, "final_holdout", "logistic", "top10_lift")), "Gap rate in the highest-scored 10% compared with the overall rate."),
     )
-    for start in (0, 4):
+    cols = st.columns(4)
+    for col, (label, value, help_text) in zip(cols, cards):
+        _metric_card(col, label, value, help_text)
+    with st.expander("Additional sample and threshold measures"):
+        secondary = (
+            ("prevalence", format_probability(metric_value(summary, "final_holdout", "logistic", "prevalence")), "Share of evaluated cases with an observed gap."),
+            ("Recall", format_score(metric_value(summary, "final_holdout", "logistic", "recall")), "At the A6 frozen diagnostic threshold; not tuned here."),
+            ("Precision", format_score(metric_value(summary, "final_holdout", "logistic", "precision")), "At the same A6 frozen diagnostic threshold."),
+            ("F1", format_score(metric_value(summary, "final_holdout", "logistic", "f1")), "Threshold-specific harmonic mean of precision and recall."),
+        )
         cols = st.columns(4)
-        for col, (label, value, help_text) in zip(cols, cards[start:start + 4]):
+        for col, (label, value, help_text) in zip(cols, secondary):
             _metric_card(col, label, value, help_text)
 
     _render_interpretation(summary, data["calibration"])
@@ -175,17 +180,27 @@ def render() -> None:
     st.caption("A lift above 1.00× means the selected group had a higher observed gap rate than the full evaluation sample.")
     render_plotly_chart(build_lift_comparison_chart(summary))
     risk_table = risk_concentration_table(summary)
+    risk_display = risk_table.rename(columns={
+        "Top-risk fraction": "Highest-scored share",
+        "Selected N (ceiling rule)": "Cases selected",
+        "Observed gap prevalence (lift x overall)": "Observed gap prevalence",
+    }).copy()
+    risk_display["Highest-scored share"] = risk_display["Highest-scored share"].map(lambda value: f"{value:.0%}")
+    risk_display["Observed gap prevalence"] = risk_display["Observed gap prevalence"].map(format_probability)
+    risk_display["Overall prevalence"] = risk_display["Overall prevalence"].map(format_probability)
+    risk_display["Lift"] = risk_display["Lift"].map(format_lift)
     st.dataframe(
-        risk_table,
+        risk_display,
         hide_index=True,
         width="stretch",
         column_config={
-            "Top-risk fraction": st.column_config.NumberColumn(format="0%"),
-            "Observed gap prevalence (lift x overall)": st.column_config.NumberColumn("Observed gap prevalence (lift × overall)", format="0.0%"),
-            "Overall prevalence": st.column_config.NumberColumn(format="0.0%"),
-            "Lift": st.column_config.NumberColumn(format="0.00×"),
+            "Highest-scored share": st.column_config.TextColumn(),
+            "Observed gap prevalence": st.column_config.TextColumn(),
+            "Overall prevalence": st.column_config.TextColumn(),
+            "Lift": st.column_config.TextColumn(),
         },
     )
+    st.download_button("Download full-precision lift table (CSV)", dataframe_csv_bytes(risk_table), "risk_concentration.csv", "text/csv")
     st.caption("Selected N follows the A6 ceiling-of-fraction rule. The table's observed prevalence is the frozen lift multiplied by frozen overall prevalence; metrics are not recomputed from row-level outcomes.")
 
     st.subheader("Subgroup diagnostics")

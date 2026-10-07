@@ -67,27 +67,30 @@ def render() -> None:
 
     render_header("Overview", PAGE_DESCRIPTIONS["Overview"], metadata)
     st.subheader("What did the model find?")
-    st.caption(f"Final evaluation period · Outcomes from {holdout_period[0]}–{holdout_period[-1]} · Not a live forecast")
-    kpi_rows = (
-        (
-            (METRIC_PRESENTATION["AP"], format_score(get_metric(summary, "final_holdout", "logistic", "AP")), GLOSSARY["AP"]),
-            (METRIC_PRESENTATION["prevalence"], format_probability(get_metric(summary, "final_holdout", "logistic", "prevalence")), GLOSSARY["Prevalence"]),
-            (METRIC_PRESENTATION["ROC_AUC"], format_score(get_metric(summary, "final_holdout", "logistic", "ROC_AUC")), GLOSSARY["ROC-AUC"]),
-            (METRIC_PRESENTATION["lift"], format_lift(get_metric(summary, "final_holdout", "logistic", "top10_lift")), GLOSSARY["Lift"]),
-        ),
-        (
-            (METRIC_PRESENTATION["Brier"], format_score(get_metric(summary, "final_holdout", "logistic", "Brier")), GLOSSARY["Brier"]),
-            ({"headline": "Cases reviewed", "technical": "Eligible holdout pairs", "plain": "Metro-industry cases in the final evaluation."}, format_count(holdout_n), "Eligible MSA-sector prediction pairs in the final temporal holdout."),
-            ({"headline": "Places represented", "technical": "Metropolitan areas", "plain": "Distinct metropolitan areas in the final sample."}, format_count(msa_count), "Distinct metropolitan areas in the final prediction sample."),
-            ({"headline": "Industries represented", "technical": "NAICS sectors", "plain": "Distinct two-digit industries in the final sample."}, format_count(sector_count), "Distinct analytical 2-digit NAICS sector codes in the final prediction sample."),
-        ),
+    st.caption(f"Later outcomes from {holdout_period[0]}–{holdout_period[-1]} · Historical analysis, not a live forecast")
+    primary_metrics = (
+        ("Average Precision", format_score(get_metric(summary, "final_holdout", "logistic", "AP")), "Compared with the observed gap rate; higher means stronger ranking."),
+        ("Top 10% lift", format_lift(get_metric(summary, "final_holdout", "logistic", "top10_lift")), "Observed gap prevalence in the highest-scored tenth, relative to the full sample."),
+        ("Evaluation coverage", f"{format_count(msa_count)} metros · {format_count(sector_count)} industries", f"{format_count(holdout_n)} eligible metro-industry cases in the final evaluation."),
     )
-    for row in kpi_rows:
-        columns = st.columns(4)
-        for column, (copy, value, help_text) in zip(columns, row):
-            render_metric_card(column, copy["headline"], value, copy["technical"], copy["plain"], help_text)
+    columns = st.columns(3)
+    for column, (label, value, help_text) in zip(columns, primary_metrics):
+        with column:
+            st.metric(label, value, help=help_text)
+    st.subheader("Three things to know")
+    ap_delta = get_metric(summary, "final_holdout", "logistic", "AP") - get_metric(summary, "development_oof", "logistic", "AP")
+    auc_delta = get_metric(summary, "final_holdout", "logistic", "ROC_AUC") - get_metric(summary, "development_oof", "logistic", "ROC_AUC")
+    st.markdown(
+        f"- **Ranking:** AP was {get_metric(summary, 'final_holdout', 'logistic', 'AP'):.3f} versus a "
+        f"{get_metric(summary, 'final_holdout', 'logistic', 'prevalence'):.3f} gap rate; ROC-AUC changed {auc_delta:+.3f} from development.\n"
+        f"- **Concentration:** the top-scored tenth had {format_lift(get_metric(summary, 'final_holdout', 'logistic', 'top10_lift'))} "
+        "the overall gap prevalence in this retrospective evaluation.\n"
+        f"- **Comparison:** the flexible HGB check changed AP by {get_metric(summary, 'final_holdout', 'hist_gradient_boosting', 'AP') - get_metric(summary, 'final_holdout', 'logistic', 'AP'):+.3f}; "
+        "logistic remains the prespecified primary model."
+    )
+    st.caption("Next: Explore Markets to compare a specific metro and industry.")
 
-    st.subheader("How did it perform on later data?")
+    st.subheader("Did results hold up in later data?")
     st.markdown("**Primary model: Logistic regression**")
     hgb_ap_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "AP") - get_metric(summary, "final_holdout", "logistic", "AP")
     hgb_roc_change = get_metric(summary, "final_holdout", "hist_gradient_boosting", "ROC_AUC") - get_metric(summary, "final_holdout", "logistic", "ROC_AUC")
@@ -107,10 +110,10 @@ def render() -> None:
     render_plotly_chart(build_lift_chart(summary))
     st.caption(lift_takeaway(summary))
 
-    st.subheader("Did predicted probabilities match what happened?")
-    st.caption("Each point compares a group’s average predicted probability with the share that later had a gap.")
-    render_plotly_chart(build_calibration_chart(data["calibration"]))
-    st.caption(calibration_takeaway(data["calibration"]))
+    with st.expander("Probability quality"):
+        st.caption("Each point compares a group’s average predicted probability with the share that later had a gap.")
+        render_plotly_chart(build_calibration_chart(data["calibration"]))
+        st.caption(calibration_takeaway(data["calibration"]))
 
     st.subheader("Which cases received the highest scores?")
     st.warning(

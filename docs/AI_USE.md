@@ -545,3 +545,13 @@ metric cards and technical expanders preserve exact statistical terminology.
 Visualization titles and hover context were simplified without changing any
 data, model, target, metric, or coverage category. The student should review
 the wording and visual choices for research and course-policy fit.
+
+## Assignment 7.8C Product Experience & Storytelling
+
+AI assistance reorganized the executive hierarchy, added market-exploration
+guidance and a five-step methods story, foregrounded coverage counts with
+explicit confidence caveats, and corrected display-only formatting for the
+lift table. Calibration plot bounds follow the displayed frozen bins. Raw lift
+values remain downloadable at full precision. No target, metric, model,
+evaluation sample, source artifact, or coverage rule was modified. Deployment
+was not started; the dashboard remains pending user review.

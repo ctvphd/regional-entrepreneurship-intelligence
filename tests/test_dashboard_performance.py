@@ -16,6 +16,7 @@ from regional_entrepreneurship_intelligence.dashboard.charts import (
     build_reliability_chart,
     build_roc_curve,
     build_sector_performance_chart,
+    format_lift,
 )
 from regional_entrepreneurship_intelligence.dashboard.components import development_holdout_label
 from regional_entrepreneurship_intelligence.dashboard.overview_data import get_metric
@@ -106,6 +107,11 @@ class DashboardPerformanceTest(unittest.TestCase):
         reliability = build_reliability_chart(self.data["calibration"], "final_holdout", include_sensitivity=True)
         self.assertEqual(len(reliability.data), 3)
         self.assertEqual(reliability.data[1].name, "Logistic regression (primary)")
+        x_min, x_max = reliability.layout.xaxis.range
+        points = [float(value) for trace in reliability.data[1:] for value in trace.x]
+        self.assertLessEqual(x_min, min(points))
+        self.assertGreaterEqual(x_max, max(points))
+        self.assertLess(x_max, 0.6)
         bad = dict(self.data)
         bad["calibration"] = self.data["calibration"].iloc[0:0].copy()
         with self.assertRaisesRegex(PerformanceDataError, "dashboard_calibration"):
@@ -141,6 +147,7 @@ class DashboardPerformanceTest(unittest.TestCase):
         self.assertEqual(logistic_top10["Selected N (ceiling rule)"], 1031)
         self.assertAlmostEqual(logistic_top10["Lift"], metric_value(summary, "final_holdout", "logistic", "top10_lift"))
         self.assertAlmostEqual(logistic_top10["Observed gap prevalence (lift x overall)"], logistic_top10["Lift"] * logistic_top10["Overall prevalence"])
+        self.assertEqual(format_lift(logistic_top10["Lift"]), "1.99×")
         self.assertTrue(any(shape.y0 == 1 and shape.y1 == 1 for shape in chart.layout.shapes))
 
     def test_year_sequence_is_finalized_and_temporal_chart_is_valid(self):

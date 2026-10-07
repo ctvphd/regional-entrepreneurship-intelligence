@@ -110,17 +110,20 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
     ].sort_values("risk_bin")
     if bins.empty:
         raise ValueError("dashboard_calibration.parquet: no final-holdout logistic bins")
-    maximum = max(
-        float(bins["mean_predicted_probability"].max()),
-        float(bins["observed_gap_prevalence"].max()),
-    )
-    axis_max = min(1.0, max(0.1, (int(maximum * 20) + 1) / 20))
+    values = pd.concat(
+        [bins["mean_predicted_probability"], bins["observed_gap_prevalence"]],
+        ignore_index=True,
+    ).dropna().astype(float)
+    observed_min, observed_max = float(values.min()), float(values.max())
+    padding = max((observed_max - observed_min) * 0.08, 0.01)
+    axis_min = max(0.0, observed_min - padding)
+    axis_max = min(1.0, observed_max + padding)
     custom = bins[["risk_bin", "n"]].to_numpy()
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=[0, axis_max],
-            y=[0, axis_max],
+            x=[axis_min, axis_max],
+            y=[axis_min, axis_max],
             mode="lines",
             name="Perfect calibration reference",
             line={"color": REFERENCE, "dash": "dot", "width": 1.5},
@@ -148,8 +151,8 @@ def build_calibration_chart(calibration: pd.DataFrame) -> go.Figure:
         margin={"l": 50, "r": 25, "t": 70, "b": 55},
         legend={"orientation": "h", "y": -0.24, "x": 0},
         font={"size": 13},
-        xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
-        yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
+        xaxis={"title": "Mean predicted probability", "range": [axis_min, axis_max], "tickformat": ".0%", "gridcolor": GRID, "constrain": "domain"},
+        yaxis={"title": "Observed gap prevalence", "range": [axis_min, axis_max], "tickformat": ".0%", "gridcolor": GRID},
     )
     return apply_dashboard_style(fig)
 
@@ -261,10 +264,20 @@ def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_se
     selected = calibration.loc[calibration.dataset_split == split]
     if selected.empty:
         raise ValueError(f"dashboard_calibration.parquet: no bins for {split}")
-    maximum = max(float(selected.mean_predicted_probability.max()), float(selected.observed_gap_prevalence.max()))
-    axis_max = min(1.0, max(0.1, (int(maximum * 20) + 1) / 20))
+    plotted_models = tuple(model for model, *_ in models)
+    plotted = selected.loc[selected.model.isin(plotted_models)]
+    values = pd.concat(
+        [plotted.mean_predicted_probability, plotted.observed_gap_prevalence],
+        ignore_index=True,
+    ).dropna().astype(float)
+    if values.empty:
+        raise ValueError(f"dashboard_calibration.parquet: no usable bins for {split}")
+    observed_min, observed_max = float(values.min()), float(values.max())
+    padding = max((observed_max - observed_min) * 0.08, 0.01)
+    axis_min = max(0.0, observed_min - padding)
+    axis_max = min(1.0, observed_max + padding)
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=[0, axis_max], y=[0, axis_max], mode="lines", name="Ideal calibration",
+    fig.add_trace(go.Scatter(x=[axis_min, axis_max], y=[axis_min, axis_max], mode="lines", name="Ideal calibration",
                              line={"color": REFERENCE, "dash": "dot"}, hoverinfo="skip"))
     for model, label, color, symbol, dash in models:
         bins = selected.loc[selected.model == model].sort_values("risk_bin")
@@ -278,8 +291,8 @@ def build_reliability_chart(calibration: pd.DataFrame, split: str, *, include_se
     fig.update_layout(
         title=f"Did predicted probabilities match observed rates? · {title_split}", height=390,
         margin={"l": 55, "r": 25, "t": 75, "b": 65}, legend={"orientation": "h", "y": -0.25, "x": 0}, font={"size": 13},
-        xaxis={"title": "Mean predicted probability", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID},
-        yaxis={"title": "Observed gap prevalence", "range": [0, axis_max], "tickformat": ".0%", "gridcolor": GRID, "scaleanchor": "x", "scaleratio": 1},
+        xaxis={"title": "Mean predicted probability", "range": [axis_min, axis_max], "tickformat": ".0%", "gridcolor": GRID, "constrain": "domain"},
+        yaxis={"title": "Observed gap prevalence", "range": [axis_min, axis_max], "tickformat": ".0%", "gridcolor": GRID},
     )
     return apply_dashboard_style(fig)
 
