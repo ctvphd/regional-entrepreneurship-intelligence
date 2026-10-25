@@ -11,8 +11,11 @@
 | A7.7 | Data Quality, Coverage & Limitations | Complete: MSA/sector coverage, A6 complete-case selection and suppression, generalization, source lineage, and responsible-use limitations. |
 | A7.8 | Interactive Visualization Refinement | Complete: visual audit, shared Plotly semantics/formatting/glossary, page layout refinements, accessibility cues, and route QA. |
 | A7.8B | UX & Plain-Language Redesign | Complete: dark-first/light-switchable theme, task-oriented navigation, question-led pages, plain-language metric cards, technical-detail disclosure, and UX language audit. No scientific outputs changed. |
-| A7.9 | Deployment & Containerization | Incomplete; not started. |
+| A7.8D | Reviewer Reproducibility & Synthetic Fixture | Implemented; pending full-suite verification: deterministic synthetic source set, isolated review SQLite build using A4 loaders/transforms, dashboard descriptive-panel compatibility, production-cache preflight detail, and reviewer/methodology documentation. Synthetic data do not validate production empirical results. |
+| A7.9 | Deployment & Containerization | Paused; not started. |
 | A7.10 | Final Integration, QA & Completion | Incomplete; not started. |
+
+A7.8D focused tests pass, but the complete suite currently stalls in a headless Streamlit Explorer AppTest and remains pending. A7.9 remains paused. A7.10 remains incomplete; A7.8D does not authorize deployment, map work, or production model reruns.
 
 ## A7.1 Exit Criteria
 

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, A7.8 visualization refinement, and A7.8B UX/plain-language refinement are implemented over validated A7.2 artifacts and finalized A5/A6 reports. A7.9 and A7.10 remain intentionally paused.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, A7.8 visualization refinement, A7.8B UX/plain-language refinement, and A7.8D reviewer reproducibility are implemented. A7.9 remains paused and A7.10 remains incomplete.
 
 ## Launch
 
@@ -15,6 +15,8 @@ uv run streamlit run streamlit_app.py
 ## Data Prerequisites
 
 The validated A7.2 Parquet and JSON artifacts must exist under `data/dashboard/`. The app loads them only through the allow-listed dashboard loader and caches immutable reads with Streamlit `st.cache_data`.
+
+The synthetic reviewer workflow creates a separate descriptive panel at `data/review/dashboard/`. It verifies panel-loader compatibility only; it does not create model performance, prediction, or production dashboard artifacts and is not a substitute for the app's finalized A7.2 production inputs.
 
 ## Rebuild
 

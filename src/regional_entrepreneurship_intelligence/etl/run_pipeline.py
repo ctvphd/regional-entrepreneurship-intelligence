@@ -72,13 +72,14 @@ def run_pipeline(
     log_dir: Path = DEFAULT_LOG_DIR,
 ) -> dict[str, Any]:
     """Orchestrate references, four source pipelines, integration, and QA."""
-    missing = [path for path in required_production_inputs() if not path.is_file()]
+    required = required_production_inputs()
+    missing = [path for path in required if not path.is_file()]
     if missing and not allow_downloads:
-        sample = "\n".join(f"  - {path}" for path in missing[:12])
-        more = f"\n  ... and {len(missing) - 12} more" if len(missing) > 12 else ""
         raise FileNotFoundError(
-            f"Cache-only production run is missing {len(missing)} required inputs. "
-            "Restore the production files or rerun with --allow-downloads:\n" + sample + more
+            "Production-cache preflight failed before database or ETL changes. "
+            f"Required inputs: {len(required)}; present: {len(required) - len(missing)}; "
+            f"missing: {len(missing)}. Production reproduction requires the authorized "
+            "local source cache. Missing paths:\n" + "\n".join(f"  - {path}" for path in missing)
         )
 
     log_dir.mkdir(parents=True, exist_ok=True)

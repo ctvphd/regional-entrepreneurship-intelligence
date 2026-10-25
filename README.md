@@ -73,13 +73,33 @@ The default SQLite database is `database/assignment4_production.sqlite`. The run
 uv run python -m unittest discover -s tests -v
 ```
 
+## Reviewer Quickstart
+
+```powershell
+uv sync
+uv run python -m regional_entrepreneurship_intelligence.review.build_reviewer_fixture
+uv run python -m unittest discover -s tests -v
+```
+
+This reproduces the end-to-end transformation path on synthetic data. It does not reproduce the production empirical estimates. See [reviewer reproducibility](docs/REVIEWER_REPRODUCIBILITY.md) and [fixture notes](tests/fixtures/reviewer_sources/README.md).
+
+| Capability | Clean clone | Production cache required |
+| --- | ---: | ---: |
+| Unit tests | Yes | No |
+| Synthetic end-to-end ETL | Yes | No |
+| Review SQLite database | Yes | No |
+| Dashboard descriptive-panel loader integration | Yes | No |
+| Production 63,577-row panel | No | Yes |
+| Final predictive metrics | No | Yes |
+| Production dashboard artifacts | No | Yes |
+
 ## Data And Reproducibility Policy
 
 Full national source files, the multi-gigabyte production database, generated exports, and run logs are Git-ignored. This keeps source data and local execution artifacts out of the repository; small official samples and reference assets remain available for review and tests. Source manifests record endpoints, vintages, checksums, filenames, and row counts. Pipeline runs, rejections, and quality metrics are stored in SQLite; generated logs record stage completion and failures. Transformations are designed for deterministic reruns, with production idempotency documented in the quality reports.
 
 ## Assignment Status
 
-**Assignments 4 and 5 are complete.** Assignment 5 EDA uses the final 63,577-row analytical panel (381 MSAs, 19 sectors, 2010-2023). The synthesis is in [the final EDA report](reports/assignment5_final_eda_report.md), with [final review](reports/assignment5_final_review.md), [figure index](reports/assignment5_figure_index.md), [table index](reports/assignment5_table_index.md), and [requirements audit](reports/assignment5_final_rubric_audit.md).
+**Assignments 4-6 and A7.1-A7.8C are complete.** Assignment 5 EDA uses the documented 63,577-row production panel (381 MSAs, 19 sectors, 2010-2023). Assignment 6 has a locked temporal model evaluation, documented in [the final analytics report](reports/assignment6_final_analytics_engine.md). A7.8D adds a synthetic reviewer path; its full-suite verification remains pending. Production results still require the authorized local source cache. See [reviewer reproducibility](docs/REVIEWER_REPRODUCIBILITY.md) and [the professor feedback response](docs/PROFESSOR_FEEDBACK_RESPONSE.md).
 
 Reproduce the complete EDA with:
 
@@ -87,7 +107,7 @@ Reproduce the complete EDA with:
 uv run --offline python -m regional_entrepreneurship_intelligence.analysis.run_eda
 ```
 
-Assignment 6.1 design is complete, but model fitting has **not** begun. No expected-entrepreneurship estimates, alignment residuals, formal entrepreneurial-gap labels, future target columns, predictions, dashboards, or deployment artifacts have been created. See the [A6.1 design](docs/ASSIGNMENT6_DESIGN.md), [temporal folds](docs/ASSIGNMENT6_TEMPORAL_FOLDS.md), [leakage checklist](docs/ASSIGNMENT6_LEAKAGE_CHECKLIST.md), and [feature registry](docs/ASSIGNMENT6_FEATURE_REGISTRY.md). A6.2 remains unstarted.
+Assignment 7.9 remains paused; A7.10 remains incomplete. No map, deployment, or containerization work is included in A7.8D.
 
 ## Documentation
 

@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from regional_entrepreneurship_intelligence.dashboard.data_layer import (
+    DATABASE,
     PANEL_COLUMNS,
     TABLE_DIR,
     _read_panel,
@@ -27,6 +28,11 @@ from regional_entrepreneurship_intelligence.dashboard.loader import (
 class DashboardDataLayerTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if not DATABASE.is_file():
+            raise unittest.SkipTest(
+                "Frozen A5/A6 reconciliation requires the authorized production SQLite cache; "
+                "the synthetic dashboard-loader integration runs in test_reviewer_reproducibility."
+            )
         cls.datasets = build_datasets()
 
     def test_all_dataset_keys_are_unique(self):

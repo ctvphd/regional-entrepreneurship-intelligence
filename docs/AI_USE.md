@@ -555,3 +555,15 @@ lift table. Calibration plot bounds follow the displayed frozen bins. Raw lift
 values remain downloadable at full precision. No target, metric, model,
 evaluation sample, source artifact, or coverage rule was modified. Deployment
 was not started; the dashboard remains pending user review.
+
+## Assignment 7.8D Reviewer Reproducibility & Synthetic Fixture
+
+AI assistance designed deterministic fictional source fixtures, a separate
+review-database build that reuses the existing A4 loaders and transformations,
+dashboard descriptive-panel compatibility tests, and production-cache
+preflight reporting. It also documented the reproducibility boundary and
+clarified the existing A6 gap, timing, validation, and causal-language rules
+for the professor response. No production source records, estimates, model
+outputs, target definitions, or performance metrics were generated or changed.
+The student remains responsible for reviewing interpretations, the synthetic
+fixture, and course-policy compliance.

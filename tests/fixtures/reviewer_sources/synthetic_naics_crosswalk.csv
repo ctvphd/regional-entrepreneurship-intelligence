@@ -1,0 +1,4 @@
+native_version,source_sector,target_2022_sector,mapping_status
+2017,11,11,directly_comparable
+2017,54,54,directly_comparable
+2017,98,,unmatched synthetic edge case

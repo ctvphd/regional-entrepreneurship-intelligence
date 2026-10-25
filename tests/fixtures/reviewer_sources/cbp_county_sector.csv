@@ -1,0 +1,9 @@
+source_year,cbp_product,state_fips,county_fips,county_geoid,county_name,source_industry_id,source_industry_label,source_naics_version,legal_form_code,employment_size_code,establishments,establishments_flag,employment,employment_flag,annual_payroll,annual_payroll_flag,first_quarter_payroll,first_quarter_payroll_flag,official_api_url,raw_response
+2022,Synthetic CBP,99,001,99001,Synthetic County,11,Synthetic sector 11,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2022,Synthetic CBP,99,001,99001,Synthetic County,54,Synthetic sector 54,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2022,Synthetic CBP,99,003,99003,Synthetic County,11,Synthetic sector 11,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2022,Synthetic CBP,99,003,99003,Synthetic County,54,Synthetic sector 54,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2023,Synthetic CBP,99,001,99001,Synthetic County,11,Synthetic sector 11,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2023,Synthetic CBP,99,001,99001,Synthetic County,54,Synthetic sector 54,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2023,Synthetic CBP,99,003,99003,Synthetic County,11,Synthetic sector 11,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"
+2023,Synthetic CBP,99,003,99003,Synthetic County,54,Synthetic sector 54,2017,001,001,10,,80,,4000,,1000,,synthetic://cbp,"{""synthetic"": true}"

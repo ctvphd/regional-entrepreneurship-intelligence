@@ -10,6 +10,8 @@ uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline
 
 The command is cache-only by default. It checks the production cache before opening the database and identifies missing files rather than substituting samples. To permit existing source runners to acquire missing files, opt in with `--allow-downloads`. `CENSUS_API_KEY` may be needed for Census API acquisition. `--database-path PATH` selects a different SQLite database.
 
+Preflight reports required, present, and missing input totals plus every missing path, then exits before database, log, or ETL writes. Production reproduction requires the authorized local source cache. This command never falls back to synthetic data. For a separate reviewer-safe synthetic run see `docs/REVIEWER_REPRODUCIBILITY.md`.
+
 ## Stages
 
 1. Create/update the schema and load committed July 2023 CBSA and 2022 NAICS references.
