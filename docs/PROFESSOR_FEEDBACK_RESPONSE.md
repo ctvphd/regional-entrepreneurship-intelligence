@@ -44,3 +44,15 @@ Without the authorized production cache, a reviewer cannot independently verify 
 ## Production-Only Results
 
 The 63,577-row production panel and final predictive metrics remain production-cache-derived and are not claimed as independently reproduced by this review fixture. Large source files and the production SQLite file remain outside Git.
+
+## A7.8D Verification Addendum
+
+- The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).
+- The production dashboard artifact health command passed; its descriptive panel has 63,577 rows and its coverage file has 381 MSAs. The Explorer AppTest passed in the prior project verification record; a current rerun stalled at initial rendering in this sandbox. Prior notes record a 196-test pass, but the full offline suite is not newly verified here.
+- The clean reviewer path does not require the production SQLite database. Production empirical panel/metrics and reviewer-fixture output remain explicitly separate.
+- The current machine inventory found 58 of 58 required production cache files. Because all inputs are present, a real missing-cache execution was not run; mocked testing verified exact path reporting and no DB/log creation when inputs are absent.
+- Seven topics are addressed above: analytical grain/mapping/missingness; gap construction; timing/leakage; study window; baselines/evaluation; causal interpretation; and what requires production access.
+
+## Current A7.10 Boundary
+
+Read-only production verification confirmed 63,577 analytical rows and four retained failed run-metadata rows from two interrupted end-to-end invocations at BDS ingestion before panel integration. No production panel integration or model rebuild completed; this incident affected run metadata only. Full-suite completion and five-route browser QA remain unverified in this sandbox, as recorded in `reports/assignment7_final_integration.md`.

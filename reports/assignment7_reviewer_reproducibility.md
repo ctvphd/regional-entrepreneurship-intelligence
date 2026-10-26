@@ -44,4 +44,4 @@ The test loads the generated descriptive panel through the dashboard allow-liste
 
 ## Readiness
 
-A7.8D is limited to reviewer reproducibility. A7.9 remains paused and A7.10 remains incomplete. No map, deployment, or production model run is included.
+A7.8D is limited to reviewer reproducibility. A7.9 is deferred as optional deployment work. A7.10 documentation and read-only checks are recorded, but the full offline suite and five-route browser smoke QA remain unverified in the current sandbox; see `reports/assignment7_final_integration.md`. No map, deployment, or production model run is included.

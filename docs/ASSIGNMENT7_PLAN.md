@@ -11,11 +11,12 @@
 | A7.7 | Data Quality, Coverage & Limitations | Complete: MSA/sector coverage, A6 complete-case selection and suppression, generalization, source lineage, and responsible-use limitations. |
 | A7.8 | Interactive Visualization Refinement | Complete: visual audit, shared Plotly semantics/formatting/glossary, page layout refinements, accessibility cues, and route QA. |
 | A7.8B | UX & Plain-Language Redesign | Complete: dark-first/light-switchable theme, task-oriented navigation, question-led pages, plain-language metric cards, technical-detail disclosure, and UX language audit. No scientific outputs changed. |
-| A7.8D | Reviewer Reproducibility & Synthetic Fixture | Implemented; pending full-suite verification: deterministic synthetic source set, isolated review SQLite build using A4 loaders/transforms, dashboard descriptive-panel compatibility, production-cache preflight detail, and reviewer/methodology documentation. Synthetic data do not validate production empirical results. |
-| A7.9 | Deployment & Containerization | Paused; not started. |
-| A7.10 | Final Integration, QA & Completion | Incomplete; not started. |
+| A7.8C | Product Experience & Storytelling | Complete: executive hierarchy, market-exploration guidance, five-step methods story, confidence-aware coverage, and display-only lift/calibration refinements. No scientific outputs changed. |
+| A7.8D | Reviewer Reproducibility & Synthetic Fixture | Complete: deterministic seven-file synthetic source set, isolated review SQLite build using A4 loaders/transforms, dashboard descriptive-panel compatibility, production-cache preflight detail, focused repeatability/preflight tests, and reviewer/methodology documentation. Synthetic data do not validate production empirical results. |
+| A7.9 | Deployment & Containerization | Deferred / optional portfolio deployment work; not started. |
+| A7.10 | Final Integration, QA & Completion | Partial: final design, alignment, limitations/strengths, summary, presentation outline, professor response, README, AI disclosure, and read-only production checks reconciled. Full offline test completion and five-route browser QA remain blocked in this sandbox. |
 
-A7.8D focused tests pass, but the complete suite currently stalls in a headless Streamlit Explorer AppTest and remains pending. A7.9 remains paused. A7.10 remains incomplete; A7.8D does not authorize deployment, map work, or production model reruns.
+A7.8D focused reviewer and production-preflight tests pass. In the current sandbox, the full suite stalls at the Streamlit Explorer AppTest even after redirecting `TEMP`/`TMP` to a writable project scratch directory. A7.9 is deferred optional work. A7.10 is partial until full-suite and five-route QA are verified; no deployment, map work, or production model rerun is authorized.
 
 ## A7.1 Exit Criteria
 
@@ -117,4 +118,4 @@ A7.8B is complete. Stop for user review; A7.9 remains intentionally paused.
 - Audit/change logs, UX guide, app guide, AI-use note, focused/full tests, and route QA are recorded.
 - No scientific artifacts, model outputs, target definitions, metrics, coverage rules, map, deployment, A7.9, or A7.10 work is included.
 
-A7.8C is complete. The full 193-test suite passed; browser smoke QA covered all five routes. Deployment remains paused pending user review. A7.9 remains paused and A7.10 remains incomplete.
+A7.8C's prior stage verification recorded 193 passing tests and five-route browser smoke QA. A7.8D is complete with focused reviewer/preflight verification. A7.9 is deferred optional work. Current A7.10 status and verification boundary are recorded at the top of this plan; do not treat prior-stage test counts as the current full-suite result.

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, A7.8 visualization refinement, A7.8B UX/plain-language refinement, and A7.8D reviewer reproducibility are implemented. A7.9 remains paused and A7.10 remains incomplete.
+A7.4 Executive Overview, A7.5 Regional & Industry Explorer, A7.6 Model Performance & Diagnostics, A7.7 Data Quality & Limitations, A7.8 visualization refinement, A7.8B UX/plain-language refinement, A7.8C product storytelling, and A7.8D reviewer reproducibility are implemented. A7.9 is deferred optional portfolio work. A7.10 documentation is reconciled, but full-suite and browser route verification remain incomplete in the current sandbox; see `reports/assignment7_final_integration.md`.
 
 ## Launch
 

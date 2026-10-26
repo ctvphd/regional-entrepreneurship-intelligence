@@ -2,7 +2,7 @@
 
 ## Two Separate Paths
 
-**Production reproduction** runs `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` and requires the authorized local production source cache. It never substitutes test data. The default production database is `database/assignment4_production.sqlite`.
+**Production reproduction** runs `uv run python -m regional_entrepreneurship_intelligence.etl.run_pipeline` and requires all 58 authorized local production source-cache files. The preflight reports required/present/missing counts and exact missing paths, then fails before database/log changes if inputs are absent. It never substitutes test data. The default production database is `database/assignment4_production.sqlite`. A read-only inventory is `uv run python -c "from regional_entrepreneurship_intelligence.etl.run_pipeline import required_production_inputs; p=required_production_inputs(); n=sum(x.is_file() for x in p); print(f'Required: {len(p)}; present: {n}; missing: {len(p)-n}')"`.
 
 **Clean-review reproduction** runs `uv run python -m regional_entrepreneurship_intelligence.review.build_reviewer_fixture`. It creates deterministic fictional source-shaped files, executes the existing A4 raw loaders, transformations, and analytics panel builder, and writes only to `data/review/`. This is not a production mode.
 
@@ -25,3 +25,11 @@ The A6 outcome is a **model-relative entrepreneurial response gap**, not a direc
 Logistic regression is the primary predictive model; Average Precision is primary and interpreted against natural prevalence/no-information ranking. Natural class balance is preserved; the primary analysis does not use SMOTE. ROC-AUC, Brier, lift, recall, precision, F1, and calibration are secondary diagnostics. Robustness work includes alternative models/target definitions, geographic holdout, and MSA-size variation. The study supports prediction and predictive association, not a causal effect of industry growth on entrepreneurship. Use “predicts,” “associated with,” and “predictive signal”; do not claim “causes,” “leads to,” or “proves.”
 
 Without the production cache, a reviewer cannot independently audit full production crosswalk coverage, suppression prevalence, exact final panel size, target prevalence, final model performance, or full temporal/geographic generalization. The fixture verifies transformation behavior and integration contracts only.
+
+## A7.8D Verification and A7.10 Status
+
+The fixture command was rerun for A7.10 and reported 7 source files, 27 analytical rows, 2 fictional MSAs, 2 sectors, years 2017-2023, zero duplicate keys, four quality checks, and zero foreign-key violations. Focused reviewer repeatability, dashboard-loader, t+3/lag, and mocked missing-cache preflight tests passed (3 tests in the current run). Prior project verification records 196 passing tests and an Explorer AppTest pass; the current full-suite attempt stalled at that AppTest's initial Streamlit render in this sandbox. A destructive removal of the production database was not used to simulate a clean clone.
+
+The current machine has 58/58 required production cache inputs. Because all inputs are present, a real missing-cache execution was not run; mocked tests verify missing-path reporting and no database/log creation. Read-only verification confirmed 63,577 production analytical rows and four retained failed run-metadata rows for two interrupted end-to-end invocations at BDS ingestion before integration. No production panel/model rebuild was completed; the incident affected run metadata only.
+
+A7.10 documentation and read-only checks are recorded, but full offline-suite completion and five-route browser smoke QA remain unverified in this sandbox. No map, deployment, or production model run is included.
