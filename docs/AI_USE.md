@@ -613,3 +613,14 @@ prevalence drift, and produced a comparison table, figure, and methods report.
 The work did not retrain models or alter labels, probabilities, thresholds, or
 evaluation rows. The student remains responsible for reviewing the benchmark
 interpretation, predictive-not-causal boundary, and course-policy compliance.
+
+## 2026-11-18 Assignment 6.8D Decision Calibration and Business Rule
+
+AI assistance implemented and tested deterministic capacity-based selection
+rules over frozen Logistic holdout scores, quantified precision, recall, lift,
+false-positive burden, and missed-gap costs, audited sector/MSA/MSA-size workload
+concentration, and generated decision tables, a figure, and a methods report.
+The analysis did not retrain models, alter predictions or labels, change the
+scientific target threshold, assign monetary costs, or modify dashboard outputs.
+The student remains responsible for reviewing the operating-rule recommendation,
+stakeholder-burden interpretation, and course-policy compliance.

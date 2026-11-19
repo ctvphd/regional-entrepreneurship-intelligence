@@ -250,3 +250,9 @@ A6.6 ends here. No holdout metrics, final model refit, deployment threshold, das
 The frozen final holdout was subsequently evaluated against a leakage-safe sector-only score derived from pooled development OOF gap prevalence. Sector-only AP is 0.325 versus 0.233 for the prevalence benchmark, 0.404 for Logistic, and 0.424 for HGB. In 5,000 paired MSA-cluster bootstrap replications (seed 755), Logistic minus sector-only AP is 0.079 with a 95% percentile CI of 0.061-0.098; HGB minus sector-only is 0.099 with a CI of 0.078-0.121. No model was refit and no label, probability, threshold, or evaluation row changed.
 
 The benchmark shows that broad sector context is predictive, but does not explain all model ranking performance. Within-sector Logistic AP exceeds within-sector prevalence in all 17 sectors meeting the minimum-positive rule. Sector prevalence ranks are fairly persistent from development to holdout (rank correlation 0.919), although levels drift. Full methods, limitations, and outputs are in `reports/assignment6_sector_only_benchmark.md`.
+
+## A6.8D Post-Assignment Decision Calibration
+
+Capacity-based evaluation of the unchanged final Logistic ranking supports a top-10% priority-review rule. It flags 1,031 cells, of which 476 are realized gaps: precision 46.2%, recall 19.9%, lift 1.99x, and 1.17 false positives per true positive. The committed development-prevalence threshold flags 5,173 cells with 32.8% precision and 70.8% recall, illustrating the workload cost of broader early-warning coverage.
+
+The recommendation is a screening queue for deeper human investigation, not an automatic allocation or intervention rule. Sector, MSA, and training-cutpoint MSA-size concentration are documented in `reports/assignment6_decision_calibration.md`. No model, label, prediction, scientific target threshold, or dashboard output changed.

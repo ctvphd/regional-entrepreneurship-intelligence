@@ -63,6 +63,12 @@ To separate broad industry composition from within-sector ranking signal, each h
 
 Logistic also exceeds natural prevalence within all 17 sectors having at least 30 positive holdout labels; two sparse sectors are suppressed. This supports the narrower conclusion that sector context explains part, but not all, of frozen predictive ranking. It does not establish a causal sector effect. No model, probability, label, threshold, or evaluation row was changed.
 
+## A6.8D Decision Calibration and Business Rule
+
+The frozen Logistic holdout ranking was translated into explicit capacity-based screening rules. The recommended top-10% rule flags 1,031 MSA-industry-year cells: 476 realized gaps and 555 non-gap cases, for 46.2% precision, 19.9% recall, 1.99x lift, and 1.17 false positives per true positive. For every 100 reviews, approximately 46 would be realized gaps and 54 would not. The 1,920 gaps outside the queue make the recall cost explicit.
+
+The committed 0.188348 development-prevalence threshold was also checked directly. It flags 5,173 cells, confirming the professor's approximate count, with 1,696 realized gaps, 3,477 false positives, 32.8% precision, and 70.8% recall. This broader rule captures more gaps but requires reviewing half the holdout. The top-decile recommendation is a human-review priority queue, not an automatic funding, deficiency, or intervention decision. Models, predictions, labels, scientific target thresholds, and dashboard outputs were not changed.
+
 ## A7.8D Verification Addendum
 
 - The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).
