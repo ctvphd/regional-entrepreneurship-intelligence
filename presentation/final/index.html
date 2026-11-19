@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f6">
+  <title>Regional Entrepreneurship Intelligence</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#deck">Skip to presentation</a>
+  <main id="deck" class="deck" aria-live="polite">
+    <section class="slide title-slide" data-title="Regional Entrepreneurship Intelligence" data-time="20" aria-labelledby="s1-title">
+      <div class="slide-kicker">Business Analytics Research Project</div>
+      <div class="title-rule"></div>
+      <h1 id="s1-title">Regional Entrepreneurship Intelligence</h1>
+      <p class="subtitle">Predicting Where Startup Activity Falls Behind Regional Economic Opportunity</p>
+      <div class="title-bottom">
+        <p>MSA × Industry × Year</p><p>2010–2023</p>
+      </div>
+      <div class="title-signal" aria-hidden="true"><span>Opportunity</span><i></i><span>Entrepreneurship</span></div>
+      <aside class="speaker-data">
+        <p class="full-notes">Economic growth creates opportunity, but opportunity does not automatically translate into entrepreneurship. This project asks whether historical regional and industry conditions can help identify where startup activity is most likely to fall behind a model-based expectation three years later. The goal is not to diagnose a market from a score. It is to focus limited analytical attention.</p>
+        <ul class="cues"><li>Open with the opportunity-response tension.</li><li>Name the three-year prediction horizon.</li><li>Frame the output as prioritization, not diagnosis.</li></ul>
+      </aside>
+    </section>
+
+    <section class="slide" data-title="The problem" data-time="35" aria-labelledby="s2-title">
+      <div class="slide-kicker">The problem</div>
+      <h2 id="s2-title">Economic opportunity and entrepreneurial response do not always move together.</h2>
+      <div class="divergence" role="img" aria-label="Industry opportunity and jobs rise while startup response trails its expected path">
+        <div class="flow-line strong"><span>Industry opportunity</span><b>↑</b><span>Economic activity + jobs</span><b>↑</b></div>
+        <div class="fork"><span>Expected response</span><div class="track"><i></i></div><strong>Entrepreneurship keeps pace</strong></div>
+        <div class="fork lag"><span>Observed response</span><div class="track"><i></i></div><strong>Response trails expectation</strong></div>
+      </div>
+      <p class="question-band">What happens when a regional industry is growing, but local entrepreneurial activity is not keeping pace with what we would expect?</p>
+      <aside class="speaker-data"><p class="full-notes">The central problem is a mismatch. A regional industry may add jobs or economic activity without producing the entrepreneurial response we might expect under similar historical conditions. That is a predictive association, not a causal claim. The practical challenge is deciding which of thousands of regional-industry combinations deserve closer investigation.</p><ul class="cues"><li>Describe mismatch, not failure.</li><li>Avoid causal language.</li><li>Move from thousands of cases to prioritization.</li></ul></aside>
+    </section>
+
+    <section class="slide question-slide" data-title="Research question" data-time="35" aria-labelledby="s3-title">
+      <div class="slide-kicker">Research question</div>
+      <h2 id="s3-title">Can historical regional-industry conditions predict whether startup activity will fall below its expected level <em>three years later?</em></h2>
+      <div class="attention-line"><span>Thousands of markets</span><i></i><span>Limited analyst time</span><i></i><strong>Prioritized review</strong></div>
+      <p class="guardrail">A score can direct attention. It cannot allocate funding or replace local investigation.</p>
+      <aside class="speaker-data"><p class="full-notes">The research question is deliberately narrow: can information available today rank the risk that a model-relative entrepreneurial gap appears three years later? Economic-development organizations cannot investigate every market equally. A useful system would narrow the field while preserving human judgment. It would not automatically allocate funding, label a place as failing, or explain the cause of a gap.</p><ul class="cues"><li>Emphasize prediction at t plus three.</li><li>Explain the capacity constraint.</li><li>Draw a firm boundary around automated decisions.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Conceptual framework" data-time="35" aria-labelledby="s4-title">
+      <div class="slide-kicker">Conceptual framework</div>
+      <h2 id="s4-title">Entrepreneurial alignment compares response with context-specific expectation.</h2>
+      <div class="concept-chain" role="img" aria-label="Economic opportunity informs expected entrepreneurial response, which is compared with observed response to assess alignment and a potential gap">
+        <div><small>1</small><strong>Economic<br>opportunity</strong></div><b>→</b>
+        <div><small>2</small><strong>Expected<br>response</strong></div><b>↘</b>
+        <div class="compare"><span>compare</span><strong>Entrepreneurial<br>alignment</strong></div><b>→</b>
+        <div class="gap-node"><small>5</small><strong>Potential<br>gap</strong></div>
+        <div class="observed"><small>3</small><strong>Observed response</strong></div><b class="observed-arrow">↗</b>
+      </div>
+      <p class="plain-note">The expectation changes with historical regional and industry conditions; it is not one national target for every place.</p>
+      <aside class="speaker-data"><p class="full-notes">The framework has two paths. Historical opportunity and context generate an expected entrepreneurial response. Actual startup activity supplies the observed response. Their difference is entrepreneurial alignment. A materially negative difference becomes a potential gap. This avoids assuming that every industry or metro should produce the same startup rate. The benchmark is conditional and model-based.</p><ul class="cues"><li>Walk the two paths into the comparison.</li><li>Define entrepreneurial alignment once.</li><li>Stress context-specific expectations.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Data and unit" data-time="45" aria-labelledby="s5-title">
+      <div class="slide-kicker">Data and unit of analysis</div>
+      <h2 id="s5-title">One row = MSA × 2-digit NAICS industry × year</h2>
+      <div class="source-pipeline">
+        <div><strong>BDS</strong><span>Startup activity<br>and firm dynamics</span></div>
+        <div><strong>QCEW</strong><span>Employment and<br>economic conditions</span></div>
+        <div><strong>ACS</strong><span>Demographic and<br>labor context</span></div>
+        <div><strong>CBP</strong><span>Establishment<br>context</span></div>
+        <b aria-hidden="true">→</b>
+        <div class="panel-node"><strong>Analytical panel</strong><span>July 2023 CBSA geography<br>2022 NAICS harmonization</span></div>
+      </div>
+      <div class="stat-row four"><div><strong>63,577</strong><span>observations</span></div><div><strong>381</strong><span>metropolitan areas</span></div><div><strong>19</strong><span>sectors</span></div><div><strong>2010–2023</strong><span>study period</span></div></div>
+      <aside class="speaker-data"><p class="full-notes">The production panel contains 63,577 metro-industry-year observations across 381 metropolitan areas, 19 two-digit sectors, and 2010 through 2023. Business Dynamics Statistics provide startup activity; QCEW captures industry employment conditions; ACS adds regional demographic and labor context; and County Business Patterns adds establishment context. Sources are harmonized to July 2023 CBSA geography and the 2022 NAICS analytical standard.</p><ul class="cues"><li>Define the row before the sources.</li><li>Give the four scope numbers.</li><li>Keep harmonization detail secondary.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Defining the gap" data-time="50" aria-labelledby="s6-title">
+      <div class="slide-kicker">Defining the outcome</div>
+      <h2 id="s6-title">The gap is the lower tail of entrepreneurial alignment.</h2>
+      <div class="equation"><span>Alignment</span><b>=</b><span>Observed startup rate</span><b>−</b><span>Expected startup rate</span></div>
+      <div class="distribution" role="img" aria-label="Residual distribution with the lowest 20 percent marked as potential gaps">
+        <div class="dist-curve"></div><div class="tail"></div><div class="threshold"><i></i><strong>training p20</strong><span>materially negative</span></div>
+        <div class="axis"><span>Potential gap</span><span>Approximately meets / exceeds expectation</span></div>
+      </div>
+      <p class="guardrail"><strong>Model-relative:</strong> not an administrative designation, causal diagnosis, or judgment that an ecosystem is “failing.”</p>
+      <aside class="speaker-data"><p class="full-notes">Entrepreneurial alignment is observed startup activity minus expected startup activity. Positive or near-zero values approximately meet or exceed expectation. A potential gap is materially negative: below the twentieth percentile of residuals learned only from the training fold. That p20 rule identifies the lower tail without using future information. The label is model-relative. It is not a causal diagnosis, an administrative designation, or a judgment about ecosystem quality.</p><ul class="cues"><li>Say the equation in plain English.</li><li>Explain p20 as the lowest training-fifth.</li><li>State the model-relative caveat clearly.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Prediction design" data-time="40" aria-labelledby="s7-title">
+      <div class="slide-kicker">Leakage-safe prediction design</div>
+      <h2 id="s7-title">Conditions at <em>t</em> predict a gap at <em>t + 3</em>.</h2>
+      <div class="timeline">
+        <div class="period dev"><strong>2010–2017</strong><span>development predictor years</span></div>
+        <div class="period hold"><strong>2018–2020</strong><span>final holdout predictor years</span></div>
+        <div class="arrow-time"><span>+3 years</span></div>
+        <div class="period target"><strong>2021–2023</strong><span>reserved target years</span></div>
+      </div>
+      <div class="leakage-list"><span data-reveal>Expected model learned inside training data</span><span data-reveal>Gap threshold learned from training residuals</span><span data-reveal>Scaling learned from training rows</span><span data-reveal>Future benchmark covariates excluded</span></div>
+      <p class="question-band">Future information never flows backward into the predictor set.</p>
+      <aside class="speaker-data"><p class="full-notes">Every prediction uses conditions at time t to evaluate a gap three years later. Development predictor years run from 2010 through 2017. The reserved final holdout uses predictor years 2018 through 2020 and target years 2021 through 2023. Within each validation fold, the expected-rate model, residual threshold, and feature scaling are learned from training rows only. Future benchmark covariates are excluded. This is what leakage-safe means here: future information never moves backward.</p><ul class="cues"><li>Trace t to t plus three.</li><li>Separate development and final holdout.</li><li>Translate leakage as future information moving backward.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="EDA lessons" data-time="40" aria-labelledby="s8-title">
+      <div class="slide-kicker">What exploratory analysis taught us</div>
+      <h2 id="s8-title">Growth matters, sector matters more, and persistence is mostly between markets.</h2>
+      <div class="eda-grid">
+        <article data-reveal><span class="index">01</span><h3>Growth: related, but weakly</h3><strong>+0.175 pp</strong><p>startup-rate difference for a 5-point employment-growth difference</p><small>Coefficient 3.502 per 1.0 decimal growth</small></article>
+        <article data-reveal><span class="index">02</span><h3>Sector: substantial structure</h3><strong>Industry identity</strong><p>accounts for much more explanatory structure than growth alone</p></article>
+        <article data-reveal><span class="index">03</span><h3>Persistence: mostly between</h3><div class="paired"><span><b>0.690</b> pooled</span><span><b>0.077</b> within-panel</span></div><p>year-to-year deviations within the same market are far less persistent</p></article>
+      </div>
+      <aside class="speaker-data"><p class="full-notes">Three findings shaped the modeling. First, employment growth is related to startup activity, but weakly: a five-percentage-point growth difference corresponds to about 0.175 startup-rate points. Second, sector controls explain much more structure than growth alone. Third, the pooled lag correlation is 0.690, but within the same MSA-industry it is only 0.077. Stable differences between markets dominate year-to-year persistence. A null simulation was approximately negative 0.085, so I do not describe 0.077 as zero.</p><ul class="cues"><li>Translate 3.502 into the five-point effect.</li><li>Make sector the bridge to benchmarking.</li><li>Contrast pooled 0.690 with within 0.077.</li><li>If asked: null simulation about -0.085.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Two-stage modeling" data-time="35" aria-labelledby="s9-title">
+      <div class="slide-kicker">Modeling strategy</div>
+      <h2 id="s9-title">First estimate expectation. Then predict future gap risk.</h2>
+      <div class="two-stage">
+        <div class="stage"><small>Stage 1</small><strong>Expected startup activity</strong><span>OLS benchmark</span></div><b>→</b>
+        <div class="label-node"><strong>Leakage-safe<br>gap label</strong><span>training residual p20</span></div><b>→</b>
+        <div class="stage"><small>Stage 2</small><strong>Future gap risk</strong><span>Logistic Regression</span><span class="sensitivity">HGB sensitivity check</span></div>
+      </div>
+      <p class="model-choice"><strong>Why Logistic remains primary:</strong> preselected, interpretable, and competitive across temporal development.</p>
+      <aside class="speaker-data"><p class="full-notes">The workflow has two stages. OLS first estimates expected startup activity and creates the leakage-safe gap label from training residuals. Logistic Regression then predicts whether that gap appears three years later. HistGradientBoosting, or HGB, tests whether nonlinear structure improves ranking. Logistic remains primary because it was preselected, interpretable, and competitive across development. Random Forest was evaluated earlier but is not central to the final decision.</p><ul class="cues"><li>Separate expectation from risk prediction.</li><li>Name Logistic as primary before results.</li><li>Present HGB as a sensitivity model.</li></ul></aside>
+    </section>
+
+    <section class="slide anchor-slide" data-title="Main holdout result" data-time="50" aria-labelledby="s10-title">
+      <div class="slide-kicker">Final temporal holdout · Logistic Regression</div>
+      <h2 id="s10-title">The model creates a useful risk ranking, not perfect classification.</h2>
+      <div class="metric-hero"><div><strong>0.404</strong><span>Average Precision</span><small>vs 0.233 natural prevalence</small></div><div><strong>0.692</strong><span>ROC-AUC</span><small>moderate separation</small></div><div><strong>1.99×</strong><span>top-decile lift</span><small>risk concentration</small></div></div>
+      <div class="metric-explain"><p><b>AP</b> ranks a relatively uncommon outcome.</p><p><b>ROC-AUC</b> separates higher- and lower-risk cases.</p><p><b>Lift</b> shows concentration in the selected group.</p></div>
+      <p class="secondary-metric">Probability error remained moderate: <strong>Brier score 0.164</strong>.</p>
+      <aside class="speaker-data"><p class="full-notes">On the final temporal holdout, Logistic Regression reached Average Precision of 0.404 against a 23.3 percent prevalence baseline. That means it ranked the minority outcome substantially better than the natural benchmark; AP is not accuracy. ROC-AUC of 0.692 indicates moderate separation. The highest-risk decile contained gaps at 1.99 times the overall rate. Probability error remained moderate, with a Brier score of 0.164. The model is useful for ranking, not perfect classification.</p><ul class="cues"><li>Lead with AP versus prevalence.</li><li>Say AP is not accuracy.</li><li>Translate AUC, lift, and Brier.</li><li>Return to useful ranking.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Model comparison uncertainty" data-time="40" aria-labelledby="s11-title">
+      <div class="slide-kicker">Selection discipline</div>
+      <h2 id="s11-title">HGB improves holdout AP modestly—but not enough to satisfy the full switch rule.</h2>
+      <div class="bootstrap-layout"><img src="assets/figures/bootstrap-ap-difference.png" alt="Cluster bootstrap distribution of the HGB minus Logistic Average Precision difference"><div class="ci-list"><p><span>Logistic</span><strong>0.404</strong><small>95% CI 0.380–0.429</small></p><p><span>HGB</span><strong>0.424</strong><small>95% CI 0.398–0.450</small></p><p class="difference"><span>HGB − Logistic</span><strong>+0.020</strong><small>95% CI +0.006 to +0.034</small></p></div></div>
+      <div class="decision-strip"><span>48.7% of draws exceed practical +0.02</span><span>HGB wins 2 of 3 development folds</span><span>Pooled development advantage ≈ +0.004</span><strong>Logistic remains primary</strong></div>
+      <aside class="speaker-data"><p class="full-notes">HGB reached AP of 0.424 versus Logistic at 0.404. The paired MSA-cluster bootstrap difference is positive, with a 95 percent interval from 0.006 to 0.034. But the predeclared switch rule was stricter than statistical separation. Only 48.7 percent of draws exceeded the practical plus-0.02 threshold, HGB won two of three development folds, and its pooled development advantage was about 0.004. Therefore Logistic remains primary.</p><ul class="cues"><li>Acknowledge the positive holdout difference.</li><li>Distinguish statistical from practical criteria.</li><li>Explain why the primary model does not switch.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Sector benchmark" data-time="40" aria-labelledby="s12-title">
+      <div class="slide-kicker">How much is just the industry?</div>
+      <h2 id="s12-title">Sector is powerful. Regional and historical information still adds signal within sector.</h2>
+      <div class="ap-bars" role="img" aria-label="Average Precision comparison: prevalence 0.233, sector-only 0.325, Logistic 0.404, HGB 0.424">
+        <div><span>Natural prevalence</span><i style="--w:55%"></i><strong>0.233</strong></div>
+        <div><span>Sector-only</span><i style="--w:77%"></i><strong>0.325</strong></div>
+        <div class="primary"><span>Logistic</span><i style="--w:95%"></i><strong>0.404</strong></div>
+        <div><span>HGB</span><i style="--w:100%"></i><strong>0.424</strong></div>
+      </div>
+      <div class="increment"><strong>+0.079 AP</strong><span>Logistic over sector-only<br>95% CI +0.061 to +0.098</span><b>17 / 17</b><span>evaluable sectors beat their<br>own prevalence benchmark</span></div>
+      <aside class="speaker-data"><p class="full-notes">A sector-only benchmark reaches AP of 0.325, well above the 0.233 natural prevalence. Industry identity clearly matters. Logistic reaches 0.404, an incremental 0.079 with a cluster-bootstrap interval from 0.061 to 0.098. It also beats sector prevalence in all 17 evaluable sectors. So sector carries substantial information, but regional and historical features add meaningful ranking among places within the same industry. AP is not additively decomposed into shares explained.</p><ul class="cues"><li>Give sector credit first.</li><li>Quantify the +0.079 increment.</li><li>Use 17 of 17 as the within-sector evidence.</li><li>Do not call the difference “percent explained.”</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Decision use" data-time="50" aria-labelledby="s13-title">
+      <div class="slide-kicker">A practical screening rule</div>
+      <h2 id="s13-title">Review the highest-risk 10% as a focused early-warning queue.</h2>
+      <div class="hundred-visual"><div class="hundred-label"><strong>For every 100 priority cases reviewed</strong><span>≈46 realized gaps · ≈54 non-gaps</span></div><div class="blocks" aria-label="46 of 100 selected cases are realized gaps"><i class="true" style="--n:46"></i><i class="false" style="--n:54"></i></div></div>
+      <div class="decision-metrics"><div><strong>1,031</strong><span>cases reviewed</span></div><div><strong>476</strong><span>realized gaps</span></div><div><strong>46.2%</strong><span>precision</span></div><div><strong>19.9%</strong><span>recall</span></div><div><strong>1.99×</strong><span>lift</span></div><div><strong>1.17</strong><span>false positives / true positive</span></div></div>
+      <p class="guardrail"><strong>Focused, not comprehensive:</strong> the queue captures about 20% of all realized gaps.</p>
+      <aside class="speaker-data"><p class="full-notes">The most defensible practical rule is to review the highest-risk ten percent. That creates a queue of 1,031 cases, including 476 realized gaps. In plain terms, of every 100 priority cases reviewed, about 46 meet the eventual gap definition and 54 do not. Precision is 46.2 percent, lift is 1.99 times, and there are 1.17 review cases that do not become gaps per true gap. Recall is only 19.9 percent, so this is focused, not comprehensive.</p><ul class="cues"><li>Start with the 100-case translation.</li><li>Define precision and recall after plain English.</li><li>Call non-gaps additional-review cases.</li><li>Stress that 80% of gaps remain outside the queue.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Coverage" data-time="40" aria-labelledby="s14-title">
+      <div class="slide-kicker">Coverage matters as much as performance</div>
+      <h2 id="s14-title">The model scores 85.2% of candidate holdout cells—and abstains on the rest.</h2>
+      <div class="coverage-bar" aria-label="85.2 percent scoreable and 14.8 percent insufficient-data abstention"><div class="scoreable" style="width:85.2%"><strong>10,304</strong><span>scoreable · 85.2%</span></div><div class="abstain" style="width:14.8%"><strong>1,787</strong><span>abstain · 14.8%</span></div></div>
+      <p class="candidate">12,091 candidate MSA-industry-year cells</p>
+      <div class="size-bars"><h3>Exclusion rate by MSA size</h3><div><span>Small</span><i style="--w:100%"></i><strong>17.3%</strong></div><div><span>Middle</span><i style="--w:62%"></i><strong>10.7%</strong></div><div><span>Large</span><i style="--w:38%"></i><strong>6.6%</strong></div></div>
+      <p class="guardrail"><strong>AP 0.404 applies to the population the model can score.</strong> Abstention is not a negative prediction.</p>
+      <aside class="speaker-data"><p class="full-notes">Performance must be paired with coverage. Of 12,091 candidate holdout cells, 10,304 are scoreable: 85.2 percent. The remaining 14.8 percent are insufficient-data model abstentions, not negative predictions. Exclusion is uneven: 17.3 percent for smaller metros, 10.7 percent for the middle group, and 6.6 percent for large metros. Excluded rows also tend to have lower startup activity and missing population or control information. AP 0.404 applies only to scoreable cases.</p><ul class="cues"><li>Lead with 85.2% coverage.</li><li>Use “insufficient-data abstention.”</li><li>Show the size gradient.</li><li>Bound the performance population.</li></ul></aside>
+    </section>
+
+    <section class="slide" data-title="Shift and limitations" data-time="40" aria-labelledby="s15-title">
+      <div class="slide-kicker">Holdout shift and limitations</div>
+      <h2 id="s15-title">Gap prevalence rose, even though observed startup activity also increased.</h2>
+      <div class="shift"><div><span>Development</span><strong>19.1%</strong><small>gap prevalence</small></div><b>→</b><div><span>Holdout</span><strong>23.3%</strong><small>gap prevalence</small></div><p>Sector and MSA-size composition explain little of the increase.</p></div>
+      <p class="interpretation">A benchmark-relative temporal shift—not evidence of a simple decline in entrepreneurship.</p>
+      <div class="limitations"><span>Model-relative outcome</span><span>Prediction, not causation</span><span>Complete-case abstention</span><span>2-digit NAICS</span><span>Three-year horizon</span><span>Pandemic-era holdout</span><span>Calibration varies at extremes</span><span>Weaker small-market coverage</span></div>
+      <aside class="speaker-data"><p class="full-notes">Gap prevalence rose from 19.1 percent in development to 23.3 percent in the holdout. Yet observed startup activity also increased, and sector or MSA-size composition explains very little of the prevalence increase. This is a benchmark-relative temporal shift, not a simple decline in entrepreneurship. Other limits remain: the outcome is model-relative, the design is predictive rather than causal, complete-case rules create abstention, sectors are aggregated, the horizon is fixed at three years, and the holdout spans pandemic and post-pandemic conditions.</p><ul class="cues"><li>Pair prevalence increase with startup increase.</li><li>Reject the simple decline interpretation.</li><li>Keep limitations concise and concrete.</li></ul></aside>
+    </section>
+
+    <section class="slide demo-slide" data-title="Live demonstration" data-time="50" aria-labelledby="s16-title">
+      <div class="slide-kicker">Live demonstration</div>
+      <h2 id="s16-title">From Research Model to Decision Support</h2>
+      <p class="subtitle-small">One market. One industry. One question.</p>
+      <div class="demo-layout"><div class="screenshot-frame"><img src="assets/screenshots/pittsburgh-arts-explorer.png" alt="Actual Streamlit Explorer with Pittsburgh, Pennsylvania and Arts, Entertainment, and Recreation selected"><span>Static fallback · actual current application</span></div><div class="demo-copy"><strong>Pittsburgh, PA</strong><span>Arts, Entertainment, and Recreation</span><ul><li>14 observed years</li><li>4 comparable gap years</li><li>3 holdout prediction records</li></ul><a class="live-button" href="http://localhost:8772/explorer" target="_blank" rel="noopener">Open local dashboard <span aria-hidden="true">↗</span></a><small>Local route validated · deployed URL unavailable</small></div></div>
+      <aside class="speaker-data"><p class="full-notes">For the demonstration, I select Pittsburgh and Arts, Entertainment, and Recreation. First, I show the 14-year observed startup history and the four years with comparable expected-rate context. Second, I show the fixed three-year evaluation score, making clear that it is retrospective, not a live forecast. Third, I check data availability and confidence. The takeaway is whether this market merits deeper review—not why the pattern occurred or what intervention to fund. If the app is unavailable, this screenshot preserves the walkthrough.</p><ul class="cues"><li>Select Pittsburgh.</li><li>Select sector 71.</li><li>Show history, then fixed holdout score.</li><li>Check coverage and confidence.</li><li>End with “investigate, do not diagnose.”</li></ul></aside>
+    </section>
+
+    <section class="slide conclusion-slide" data-title="Conclusion" data-time="35" aria-labelledby="s17-title">
+      <div class="slide-kicker">What the evidence supports</div>
+      <h2 id="s17-title">Opportunity does not automatically become entrepreneurship.</h2>
+      <div class="support-grid"><div><h3>Supported</h3><ul><li>Future model-relative gaps contain predictable structure</li><li>Sector carries substantial information</li><li>Regional history adds within-sector signal</li><li>Risk rankings can support targeted review</li><li>High-risk cases concentrate realized gaps</li><li>Reasonable later-period generalization among eligible rows</li></ul></div><div><h3>Not supported</h3><ul><li>Growth causes entrepreneurship</li><li>A high score explains why a gap occurs</li><li>Every MSA-industry can be scored</li><li>A high score automatically warrants funding</li><li>The model is a current national forecast</li><li>Prediction replaces local judgment</li></ul></div></div>
+      <blockquote>The model identifies where to look—not what intervention to make.</blockquote>
+      <p class="closing-line">Prediction → Prioritization → Human Investigation</p>
+      <aside class="speaker-data"><p class="full-notes">The evidence supports a disciplined but bounded conclusion. Future model-relative gaps contain predictable structure. Sector matters substantially, and regional history adds signal within industries. Risk rankings can create a focused review queue among eligible observations. The evidence does not establish causation, explain why a gap occurs, score every market, or justify automatic funding. Opportunity does not automatically become entrepreneurship. The model identifies where to look—not what intervention to make.</p><ul class="cues"><li>Separate supported from unsupported claims.</li><li>Return to the opening tension.</li><li>End on the decision boundary.</li></ul></aside>
+    </section>
+
+    <section class="slide backup" data-title="Detailed model comparison" aria-labelledby="b1-title"><div class="slide-kicker">Backup B1</div><h2 id="b1-title">Detailed final holdout model comparison</h2><table><thead><tr><th>Model</th><th>AP</th><th>ROC-AUC</th><th>Brier</th><th>Role</th></tr></thead><tbody><tr><td>Logistic Regression</td><td>0.404</td><td>0.692</td><td>0.164</td><td>Primary</td></tr><tr><td>HistGradientBoosting</td><td>0.424</td><td>0.708</td><td>See artifact</td><td>Sensitivity</td></tr><tr><td>Sector-only</td><td>0.325</td><td>—</td><td>—</td><td>Benchmark</td></tr><tr><td>Natural prevalence</td><td>0.233</td><td>—</td><td>—</td><td>Baseline</td></tr></tbody></table><p class="footnote">Primary model choice follows the predeclared development and practical-improvement rule, not holdout AP alone.</p></section>
+    <section class="slide backup" data-title="Bootstrap method" aria-labelledby="b2-title"><div class="slide-kicker">Backup B2</div><h2 id="b2-title">Bootstrap uncertainty preserves geographic clustering.</h2><div class="method-flow"><span>Resample MSAs</span><b>→</b><span>Keep each MSA’s rows together</span><b>→</b><span>Recompute paired AP</span><b>→</b><span>Summarize percentile intervals</span></div><p class="big-callout">Inference target: HGB AP − Logistic AP on the same holdout resamples.</p><p class="plain-note">The paired cluster design respects dependence among sectors and years within a metropolitan area.</p></section>
+    <section class="slide backup" data-title="Persistence null" aria-labelledby="b3-title"><div class="slide-kicker">Backup B3</div><h2 id="b3-title">Why pooled persistence overstates within-market stability</h2><div class="metric-hero"><div><strong>0.690</strong><span>pooled lag-1</span></div><div><strong>0.077</strong><span>within-panel lag-1</span></div><div><strong>≈ −0.085</strong><span>simulated null</span></div></div><p class="question-band">Stable differences between markets are not the same as persistent annual deviations within a market.</p></section>
+    <section class="slide backup" data-title="Decision calibration" aria-labelledby="b4-title"><div class="slide-kicker">Backup B4</div><h2 id="b4-title">The review threshold trades reach for workload.</h2><table><thead><tr><th>Rule</th><th>Workload</th><th>Precision</th><th>Recall</th><th>Lift</th></tr></thead><tbody><tr><td>Top 10%</td><td>1,031</td><td>46.2%</td><td>19.9%</td><td>1.99×</td></tr><tr><td colspan="5">See <code>reports/tables/a6_decision_rule_comparison.csv</code> for all evaluated rules.</td></tr></tbody></table><p class="guardrail">Threshold choice is a capacity decision, not a universal optimum.</p></section>
+    <section class="slide backup" data-title="Sector prevalence" aria-labelledby="b5-title"><div class="slide-kicker">Backup B5</div><h2 id="b5-title">Sector prevalence differs, so within-sector ranking is the harder test.</h2><img class="backup-figure" src="assets/figures/sector-benchmark.png" alt="Sector-only and full-model Average Precision benchmark comparison"><p class="plain-note">Logistic exceeded the sector-specific prevalence benchmark in all 17 evaluable sectors.</p></section>
+    <section class="slide backup" data-title="Exclusion details" aria-labelledby="b6-title"><div class="slide-kicker">Backup B6</div><h2 id="b6-title">Complete-case requirements produce structured abstention.</h2><div class="support-grid"><div><h3>More likely scoreable</h3><ul><li>Larger MSAs</li><li>Complete population controls</li><li>Richer historical coverage</li></ul></div><div><h3>More likely excluded</h3><ul><li>Smaller MSAs</li><li>Lower observed startup activity</li><li>Missing population or control data</li></ul></div></div><p class="guardrail">No score is not evidence of low risk.</p></section>
+    <section class="slide backup" data-title="Reproducibility" aria-labelledby="b7-title"><div class="slide-kicker">Backup B7</div><h2 id="b7-title">The presentation traces to frozen Assignment 6/7 artifacts.</h2><div class="method-flow"><span>Federal source files</span><b>→</b><span>Versioned panel</span><b>→</b><span>Frozen predictions</span><b>→</b><span>Dashboard layer</span><b>→</b><span>Presentation</span></div><div class="repro-list"><p><strong>63,577</strong> analytical rows</p><p><strong>0</strong> duplicate analytical keys</p><p><strong>0</strong> reviewer-fixture foreign-key violations</p></div><p class="footnote">See DATA_PROVENANCE.md for slide-level claim mapping.</p></section>
+  </main>
+
+  <nav class="controls" aria-label="Presentation controls">
+    <button id="prev" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button>
+    <button id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button>
+    <span id="counter" aria-label="Slide counter">1 / 17</span>
+    <button id="backupToggle" aria-label="Toggle backup slides" title="Backup slides (B)">B</button>
+    <button id="presenter" aria-label="Open presenter view" title="Presenter view (P)">P</button>
+    <button id="fullscreen" aria-label="Toggle fullscreen" title="Fullscreen (F)">⛶</button>
+  </nav>
+  <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+  <div id="presenterShell" class="presenter-shell" hidden></div>
+  <noscript><p class="noscript">JavaScript is disabled. Scroll to view all slides; print still produces one slide per page.</p></noscript>
+  <script src="app.js"></script>
+</body>
+</html>
