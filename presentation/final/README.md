@@ -73,4 +73,5 @@ Presentation metrics come from frozen Assignment 6 and Assignment 7 artifacts. N
 - `assets/screenshots/`: actual current dashboard screenshot
 - `DATA_PROVENANCE.md`: claim-to-artifact audit trail
 - `SPEAKER_SCRIPT.md`: full script, cues, transitions, and timing
+- `LANGUAGE_AUDIENCE_QA.md`: doctoral, economics, and local-government language review
 - `BUILD_REPORT.md`: QA and deployment status

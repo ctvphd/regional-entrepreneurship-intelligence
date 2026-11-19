@@ -65,11 +65,32 @@ def main() -> None:
     canonical = [
         "63,577", "381", "19", "0.404", "23.3%", "0.692", "0.164", "1.99×",
         "0.424", "+0.020", "+0.006 to +0.034", "0.325", "+0.079", "17 / 17",
-        "1,031", "476", "46.2%", "19.9%", "1.17", "12,091", "10,304",
+        "1,031", "476", "46.2%", "19.9%", "1.17", "12,091", "10,304", "1,787",
         "85.2%", "14.8%", "17.3%", "10.7%", "6.6%", "19.1%",
     ]
     for value in canonical:
         assert value in html, f"Missing canonical display value: {value}"
+
+    meaning_first = [
+        "A gap means startup activity falls meaningfully below what the model expected.",
+        "We only use information that would have been available at the time of prediction.",
+        "Ranking quality",
+        "Risk separation",
+        "High-risk concentration",
+        "The more complex model scored slightly better",
+        "What industry identity alone can predict",
+        "additional reviews per gap",
+        "The model can issue a reliable score for 85.2% of candidate cases.",
+        "More cases fell below expectation in the holdout period",
+        "Investigate further.",
+    ]
+    for phrase in meaning_first:
+        assert phrase in html, f"Missing meaning-first language: {phrase}"
+
+    audience_qa = ROOT / "LANGUAGE_AUDIENCE_QA.md"
+    assert audience_qa.is_file(), "Missing mixed-audience language QA"
+    audience_text = audience_qa.read_text(encoding="utf-8")
+    assert "Lowest score on any main slide: **4 / 5**" in audience_text
 
     combined = f"{html}\n{script}".lower()
     prohibited = [
@@ -86,6 +107,7 @@ def main() -> None:
     print(f"Backup slides: {len(backup_slides)}")
     print("Planned time: 680 seconds (11:20)")
     print(f"Local assets checked: {len(parser.assets)}")
+    print("Meaning-first language checks: passed")
 
 
 if __name__ == "__main__":

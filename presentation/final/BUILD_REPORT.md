@@ -31,7 +31,7 @@ Presentation-specific automation checks:
 
 Manual review covers information hierarchy, direct labels, screenshot authenticity, claims, and the distinction between predictive screening and causal interpretation.
 
-Browser QA passed at 1920×1080 and 1366×768 for all 17 main slides: no slide-level or direct-child overflow, no console warnings/errors, and successful presenter/backup rendering.
+Browser QA passed at 1920×1080 and 1366×768 for all 17 main slides: no slide-level or direct-child overflow, no console warnings/errors, synchronized presenter notes, seven reachable backup slides, and an active print-media rule.
 
 ## Test results
 
@@ -46,3 +46,11 @@ Browser QA passed at 1920×1080 and 1366×768 for all 17 main slides: no slide-l
 - The holdout scores are retrospective evaluations, not live forecasts.
 - Coverage is reported alongside performance.
 - High scores prioritize investigation and do not prescribe funding or intervention.
+
+## Mixed-audience language pass
+
+The final language-steadying pass applies a consistent order across the main deck: plain-language meaning, technical term, then statistic. Slides 6–15 received the most visible revisions; model names, confidence intervals, validation years, and canonical metrics remain unchanged. Slides 10–12 now use an explicit three-question transition: useful ranking, complex-model replacement, and value beyond industry identity.
+
+Audience review is documented in `LANGUAGE_AUDIENCE_QA.md`. Average scores are 4.94/5 for a doctoral professor, 5.00/5 for an economist, and 4.76/5 for a local-government official; the lowest individual score is 4/5.
+
+The revised script contains 1,174 spoken words. At a deliberate 110–120 words per minute, the words occupy approximately 9:47–10:40; planned pauses, slide transitions, and the dashboard demonstration retain the existing 11:20 delivery target without requiring faster speech.
