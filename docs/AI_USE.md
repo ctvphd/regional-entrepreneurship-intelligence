@@ -593,3 +593,13 @@ as execution-path validation only. No production model was retrained, no
 production target or metric changed, and no synthetic performance result is
 presented as substantive evidence. The student remains responsible for
 reviewing the implementation and disclosure.
+
+## 2026-11-18 Assignment 6.8B Holdout AP Uncertainty
+
+AI assistance implemented and tested a deterministic paired MSA-cluster
+bootstrap over the frozen final-holdout labels and probabilities, generated a
+summary table and paired-difference figure, and documented the model-switch
+rule and limitations. The analysis did not retrain models, alter predictions,
+change labels, or modify the holdout sample. The student remains responsible
+for reviewing the uncertainty interpretation and the decision to retain
+Logistic as the primary model.

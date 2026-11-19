@@ -51,6 +51,12 @@ The Assignment 6 runner now has an explicit `--source reviewer` path that rebuil
 
 Reviewer outputs are isolated under `data/review/assignment6/` and state that they are execution-path validation only. The reviewer configuration uses 2018-2019 development predictors and a 2020 synthetic holdout over the fixture's 2017-2023 span. Clean-clone tests now create temporary parent directories and build their own fixtures, so no test requires a pre-existing `data/review/` directory, reviewer database, manual fixture command, or favorable test order. This remediation does not claim independent reproduction of the production A6 results.
 
+## A6.8B Holdout AP Uncertainty
+
+The frozen 10,304-row holdout predictions were evaluated with 5,000 paired MSA-cluster bootstrap replications using seed 754; all replications contained both classes. Logistic AP remains 0.404225 with a 95% percentile CI of 0.380018-0.429251. HGB AP remains 0.424238 with a CI of 0.397723-0.449830. The paired HGB-minus-Logistic difference is 0.020014 with a CI of 0.005531-0.033684, and HGB exceeded Logistic in 99.72% of valid resamples.
+
+The interval is above zero, so the holdout ranking difference is distinguishable from zero under this resampling design. The prespecified model-switch rule nevertheless is not met: although the observed gain just exceeds 0.02 and HGB is higher in all three holdout target years, HGB exceeded Logistic in only two of three development folds and its pooled development OOF gain was 0.004. Logistic remains the primary model; this post-assignment remediation did not refit models or alter labels, predictions, or evaluation rows.
+
 ## A7.8D Verification Addendum
 
 - The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).

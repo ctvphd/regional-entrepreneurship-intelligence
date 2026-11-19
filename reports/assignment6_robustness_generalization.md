@@ -8,6 +8,12 @@ The primary study remains the A6.3 fold-local p20 exact-t+3 target with simple l
 
 The temporal folds, target construction, and feature boundary remain unchanged. The A6.4 common complete-case feature sample is used for paired tests when possible. Cutoffs and preprocessing are learned within each fold. The geographic test uses a deterministic SHA-256 hash partition of CBSA codes (hash bucket modulo 10,000; buckets 0–1,999 assigned to test), with temporal training/validation chronology preserved inside each fold. Geographic-test MSAs never appear in any training fold. Only fixed-formula logistic is tested geographically: HGB is omitted because its A6.5 settings were tuned using temporal development folds containing all MSAs.
 
+## A6.8B Final-Holdout AP Uncertainty Addendum
+
+A post-assignment instructor-feedback remediation used the unchanged final holdout labels and probabilities in a paired MSA-cluster bootstrap. Across 5,000 valid seed-754 replications, Logistic AP was 0.404225 (95% percentile CI 0.380018-0.429251), HGB AP was 0.424238 (0.397723-0.449830), and HGB-minus-Logistic AP was 0.020014 (0.005531-0.033684). The difference was positive in 99.72% of replications, exceeded 0.01 in 90.28%, exceeded 0.02 in 48.74%, and never exceeded 0.05.
+
+The difference interval clears zero, but the prespecified switch rule also requires a gain of at least 0.02 and stable advantage across temporal development evidence. HGB won only two of three development folds and had a pooled OOF gain of 0.004, so the full rule is not met and Logistic remains primary. See `reports/assignment6_bootstrap_uncertainty.md` for design, limitations, target-year context, and the paired-difference figure.
+
 ## Gap-Threshold Robustness
 
 The approved p10, p20, p25, and training residual mean-minus-one-SD labels are taken from A6.3, where thresholds are fold-local and training-only. p20 remains primary. AP is interpreted against each definition's natural prevalence and within-fold prevalence baselines; pooled AP is also affected by fold-level score scale.
