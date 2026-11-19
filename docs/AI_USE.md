@@ -581,3 +581,15 @@ reported as incomplete rather than passed. No production ETL, model fitting,
 target changes, or empirical metric changes were performed. The student is
 responsible for final interpretation, review of the research decisions, and
 course-policy compliance.
+
+## 2026-11-18 Assignment 6.8A Reviewer Execution Remediation
+
+AI assistance added an explicit synthetic reviewer mode to the Assignment 6
+runner, a validated temporal-design object with unchanged production defaults,
+reviewer-only output isolation, and clean-clone/order-independent tests. The
+reviewer path reuses existing expected-rate, residual-threshold, exact-horizon,
+feature-registry, and logistic helpers on fictional data and labels all output
+as execution-path validation only. No production model was retrained, no
+production target or metric changed, and no synthetic performance result is
+presented as substantive evidence. The student remains responsible for
+reviewing the implementation and disclosure.

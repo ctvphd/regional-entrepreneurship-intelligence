@@ -45,6 +45,12 @@ Without the authorized production cache, a reviewer cannot independently verify 
 
 The 63,577-row production panel and final predictive metrics remain production-cache-derived and are not claimed as independently reproduced by this review fixture. Large source files and the production SQLite file remain outside Git.
 
+## A6.8A Reviewer-Engine Remediation
+
+The Assignment 6 runner now has an explicit `--source reviewer` path that rebuilds the fictional fixture and exercises temporal validation, exact `t+3` target construction, the expected-rate and gap-label helpers, registered predictor restrictions, and logistic execution. The reusable temporal window is explicit rather than inferred from whatever years happen to be present. Production defaults remain frozen at 2010-2017 development predictors, 2018-2020 holdout predictors, and a three-year horizon; production still fails closed when its authorized database or locked inputs are unavailable and never substitutes reviewer data.
+
+Reviewer outputs are isolated under `data/review/assignment6/` and state that they are execution-path validation only. The reviewer configuration uses 2018-2019 development predictors and a 2020 synthetic holdout over the fixture's 2017-2023 span. Clean-clone tests now create temporary parent directories and build their own fixtures, so no test requires a pre-existing `data/review/` directory, reviewer database, manual fixture command, or favorable test order. This remediation does not claim independent reproduction of the production A6 results.
+
 ## A7.8D Verification Addendum
 
 - The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).

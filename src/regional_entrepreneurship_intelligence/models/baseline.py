@@ -39,7 +39,12 @@ class LogisticFit:
     numeric_features: tuple[str, ...]
 
 
-def build_predictor_pairs(target_pairs: pd.DataFrame, predictor_panel: pd.DataFrame) -> pd.DataFrame:
+def build_predictor_pairs(
+    target_pairs: pd.DataFrame,
+    predictor_panel: pd.DataFrame,
+    *,
+    max_predictor_year: int = 2017,
+) -> pd.DataFrame:
     """Attach only the predictor-year panel row to each A6.3 labeled pair."""
     keys = ["cbsa_code", "sector_code", "predictor_year"]
     panel = predictor_panel.copy()
@@ -53,8 +58,10 @@ def build_predictor_pairs(target_pairs: pd.DataFrame, predictor_panel: pd.DataFr
     if absent:
         raise ValueError(f"Predictor panel is missing registered fields: {absent}")
     feature_panel = panel[feature_columns].copy()
-    if not feature_panel.predictor_year.le(2017).all():
-        raise ValueError("Holdout predictor years must not enter A6.4 development features")
+    if not feature_panel.predictor_year.le(max_predictor_year).all():
+        raise ValueError(
+            f"Predictor years after the explicit {max_predictor_year} cutoff are prohibited"
+        )
     left = target_pairs.copy()
     left["predictor_year"] = pd.to_numeric(left.predictor_year, errors="raise").astype(int)
     for key in ("cbsa_code", "sector_code"):

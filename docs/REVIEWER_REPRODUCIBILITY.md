@@ -6,11 +6,27 @@
 
 **Clean-review reproduction** runs `uv run python -m regional_entrepreneurship_intelligence.review.build_reviewer_fixture`. It creates deterministic fictional source-shaped files, executes the existing A4 raw loaders, transformations, and analytics panel builder, and writes only to `data/review/`. This is not a production mode.
 
+**Assignment 6 reviewer execution** runs:
+
+```powershell
+uv run python -m regional_entrepreneurship_intelligence.models.run_assignment6 --source reviewer
+```
+
+Reviewer mode is explicit and never an automatic fallback. It rebuilds the 2017-2023 fictional fixture, uses predictor years 2018-2019 for synthetic development and 2020 for a synthetic final holdout, preserves the exact `t+3` horizon, and writes only to `data/review/assignment6/`. Production remains the default source and retains development predictor years 2010-2017, holdout predictor years 2018-2020, and outcomes through 2023.
+
 ## What the Synthetic Path Verifies
 
 The fixture exercises source ingestion, the July 2023 CBSA-shaped geography mapping, 2022 NAICS 2-digit sector references, source joins, suppression/null/zero distinctions, lag generation, analytical key uniqueness, SQLite foreign keys, a descriptive dashboard-compatible Parquet panel, and loading that panel with the dashboard loader. The key grain remains CBSA/MSA x 2-digit NAICS sector x year.
 
 It does **not** establish production row counts, crosswalk coverage, suppression prevalence, target prevalence, predictive performance, generalization, or real-world estimates. No synthetic model metrics are produced.
+
+The A6 reviewer command verifies orchestration, explicit temporal-window validation, exact-horizon pair construction, expected-rate execution, development-only synthetic threshold freezing, registered predictor attachment, future-feature rejection, logistic execution, and output contracts. Every reviewer result carries this guardrail: **Synthetic reviewer fixture — execution-path validation only. Performance metrics are not interpretable.** It does not reproduce production AP, production prevalence, real-world model quality, or generalization.
+
+The clean-clone tests create their own temporary directory trees and invoke the fixture builder themselves. They do not require `data/review/`, a reviewer SQLite file, or a prior fixture command to exist, and they do not depend on test order.
+
+## A6.8A Verification
+
+The focused temporal, expected-model, gap-target, baseline, reviewer-fixture, production-preflight, and reviewer-run set passed 34 tests in 27.908 seconds. The final complete offline suite passed 201 tests in 96.262 seconds with zero failures, errors, or skips. The final reviewer command completed on the 2017-2023 fixture with seven development rows from predictor years 2018-2019, three synthetic holdout rows from predictor year 2020, both development target classes, active feature-registry checks, and exact `t+3` validation. Production artifacts were hash-checked before and after the reviewer integration test.
 
 ## Production-Only Evidence
 

@@ -6,13 +6,12 @@ import unittest
 from pathlib import Path
 
 from regional_entrepreneurship_intelligence.dashboard.loader import load_dataset
-from regional_entrepreneurship_intelligence.database.connection import PROJECT_ROOT
 from regional_entrepreneurship_intelligence.review.build_reviewer_fixture import build
 
 
 class ReviewerReproducibilityTest(unittest.TestCase):
     def test_synthetic_end_to_end_build_is_repeatable_and_dashboard_loadable(self):
-        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "data" / "review") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             database = root / "reviewer_fixture.sqlite"
             sources = root / "sources"
@@ -47,7 +46,7 @@ class ReviewerReproducibilityTest(unittest.TestCase):
             self.assertTrue(missing_control.fillna(False).any())
 
     def test_generated_fixture_exposes_exact_three_year_pairs_and_prior_lags(self):
-        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "data" / "review") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             build(root / "review.sqlite", root / "sources")
             import sqlite3
@@ -64,6 +63,19 @@ class ReviewerReproducibilityTest(unittest.TestCase):
                 self.assertEqual(row[0], prior[0])
             finally:
                 connection.close()
+
+    def test_builder_creates_missing_review_tree_without_touching_production(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            review_root = root / "missing" / "data" / "review"
+            database = review_root / "reviewer.sqlite"
+            source_dir = review_root / "sources"
+            self.assertFalse(review_root.exists())
+            result = build(database, source_dir)
+            self.assertTrue(database.is_file())
+            self.assertTrue((review_root / "dashboard" / "dashboard_msa_industry_year.parquet").is_file())
+            self.assertEqual(result["year_min_max"], [2017, 2023])
+            self.assertFalse((root / "database" / "assignment4_production.sqlite").exists())
 
 
 if __name__ == "__main__":

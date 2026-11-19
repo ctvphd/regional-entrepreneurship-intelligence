@@ -89,6 +89,7 @@ uv run python -m unittest discover -s tests -v
 ```powershell
 uv sync
 uv run python -m regional_entrepreneurship_intelligence.review.build_reviewer_fixture
+uv run python -m regional_entrepreneurship_intelligence.models.run_assignment6 --source reviewer
 uv run --offline python -m unittest discover -s tests -v
 ```
 
@@ -100,6 +101,7 @@ This validates the end-to-end transformation and dashboard-integration path usin
 | Synthetic end-to-end ETL | Yes | No |
 | Review SQLite database | Yes | No |
 | Dashboard descriptive-panel loader integration | Yes | No |
+| Synthetic A6 orchestration and exact t+3 execution | Yes | No |
 | Production 63,577-row panel | No | Yes |
 | Final predictive metrics | No | Yes |
 | Production dashboard artifacts | No | Yes |

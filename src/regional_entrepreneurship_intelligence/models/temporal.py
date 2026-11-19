@@ -10,6 +10,60 @@ from regional_entrepreneurship_intelligence.models.design import PREDICTION_HORI
 
 
 @dataclass(frozen=True)
+class TemporalDesign:
+    """Explicit predictor windows for production or synthetic execution."""
+
+    development_predictor_years: tuple[int, ...]
+    holdout_predictor_years: tuple[int, ...]
+    horizon: int = PREDICTION_HORIZON_YEARS
+    label: str = "production"
+
+    @property
+    def development_target_years(self) -> tuple[int, ...]:
+        return tuple(year + self.horizon for year in self.development_predictor_years)
+
+    @property
+    def holdout_target_years(self) -> tuple[int, ...]:
+        return tuple(year + self.horizon for year in self.holdout_predictor_years)
+
+    def validate(self, available_years: set[int] | None = None) -> None:
+        if self.horizon != PREDICTION_HORIZON_YEARS:
+            raise ValueError(f"Assignment 6 requires the exact t+{PREDICTION_HORIZON_YEARS} horizon")
+        for name, years in (
+            ("development", self.development_predictor_years),
+            ("holdout", self.holdout_predictor_years),
+        ):
+            if not years:
+                raise ValueError(f"{name.title()} predictor years cannot be empty")
+            if tuple(sorted(set(years))) != years:
+                raise ValueError(f"{name.title()} predictor years must be unique and increasing")
+            if any(right != left + 1 for left, right in zip(years, years[1:])):
+                raise ValueError(f"{name.title()} predictor years must be contiguous")
+        if set(self.development_predictor_years) & set(self.holdout_predictor_years):
+            raise ValueError("Development and holdout predictor years cannot overlap")
+        if max(self.development_predictor_years) >= min(self.holdout_predictor_years):
+            raise ValueError("Development predictor years must precede holdout predictor years")
+        if available_years is not None:
+            required = {
+                *self.development_predictor_years,
+                *self.holdout_predictor_years,
+                *self.development_target_years,
+                *self.holdout_target_years,
+            }
+            missing = sorted(required - {int(year) for year in available_years})
+            if missing:
+                raise ValueError(f"Temporal design requires unavailable panel years: {missing}")
+
+
+PRODUCTION_TEMPORAL_DESIGN = TemporalDesign(
+    development_predictor_years=tuple(range(2010, 2018)),
+    holdout_predictor_years=(2018, 2019, 2020),
+    horizon=PREDICTION_HORIZON_YEARS,
+    label="production",
+)
+
+
+@dataclass(frozen=True)
 class TemporalFold:
     name: str
     train_predictor_start_year: int
@@ -138,6 +192,43 @@ def generate_temporal_fold_spec(
             )
         )
     return tuple(enriched)
+
+
+def generate_sample_fold_spec(design: TemporalDesign) -> tuple[TemporalFold, ...]:
+    """Build a minimal expanding fold plus final holdout for an explicit sample design."""
+    design.validate()
+    if len(design.development_predictor_years) < 2:
+        raise ValueError("Reviewer temporal design requires at least two development predictor years")
+    development = design.development_predictor_years
+    validation_year = development[-1]
+    train_years = development[:-1]
+    folds = (
+        TemporalFold(
+            "reviewer_development",
+            train_years[0],
+            train_years[-1],
+            train_years[0] + design.horizon,
+            train_years[-1] + design.horizon,
+            validation_year,
+            validation_year,
+            validation_year + design.horizon,
+            validation_year + design.horizon,
+        ),
+        TemporalFold(
+            "reviewer_final_holdout",
+            development[0],
+            development[-1],
+            development[0] + design.horizon,
+            development[-1] + design.horizon,
+            design.holdout_predictor_years[0],
+            design.holdout_predictor_years[-1],
+            design.holdout_target_years[0],
+            design.holdout_target_years[-1],
+            True,
+        ),
+    )
+    validate_temporal_folds(folds)
+    return folds
 
 
 def latest_targetable_predictor_year(max_observed_year: int, horizon: int = PREDICTION_HORIZON_YEARS) -> int:

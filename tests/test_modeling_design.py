@@ -13,7 +13,10 @@ from regional_entrepreneurship_intelligence.models.features import (
     validate_feature_years,
 )
 from regional_entrepreneurship_intelligence.models.temporal import (
+    PRODUCTION_TEMPORAL_DESIGN,
+    TemporalDesign,
     build_temporal_pairs,
+    generate_sample_fold_spec,
     generate_temporal_fold_spec,
     latest_targetable_predictor_year,
     validate_msa_only,
@@ -63,6 +66,27 @@ class ModelingDesignTest(unittest.TestCase):
         design = validate_modeling_design()
         self.assertEqual(design["primary_gap_quantile"], 0.20)
         self.assertEqual(design["gap_threshold_scope"], "training_fold_only")
+
+    def test_production_temporal_defaults_are_frozen(self) -> None:
+        self.assertEqual(PRODUCTION_TEMPORAL_DESIGN.development_predictor_years, tuple(range(2010, 2018)))
+        self.assertEqual(PRODUCTION_TEMPORAL_DESIGN.holdout_predictor_years, (2018, 2019, 2020))
+        self.assertEqual(PRODUCTION_TEMPORAL_DESIGN.horizon, 3)
+        PRODUCTION_TEMPORAL_DESIGN.validate(set(range(2010, 2024)))
+
+    def test_explicit_sample_design_validates_order_horizon_and_available_years(self) -> None:
+        reviewer = TemporalDesign((2018, 2019), (2020,), label="reviewer")
+        reviewer.validate(set(range(2017, 2024)))
+        folds = generate_sample_fold_spec(reviewer)
+        self.assertEqual(folds[0].validation_target_start_year, 2022)
+        self.assertEqual(folds[-1].validation_target_end_year, 2023)
+        with self.assertRaisesRegex(ValueError, "precede"):
+            TemporalDesign((2020,), (2019,), label="invalid").validate()
+        with self.assertRaisesRegex(ValueError, "overlap"):
+            TemporalDesign((2018, 2019), (2019, 2020), label="invalid").validate()
+        with self.assertRaisesRegex(ValueError, r"exact t\+3"):
+            TemporalDesign((2018, 2019), (2020,), horizon=2, label="invalid").validate()
+        with self.assertRaisesRegex(ValueError, "unavailable"):
+            reviewer.validate({2018, 2019, 2020, 2021, 2022})
 
     def test_feature_registry_rejects_future_and_unknown_predictors(self) -> None:
         names = tuple(row["variable"] for row in FEATURE_REGISTRY)

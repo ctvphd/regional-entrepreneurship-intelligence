@@ -6,12 +6,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 from regional_entrepreneurship_intelligence.etl.run_pipeline import run_pipeline
-from regional_entrepreneurship_intelligence.database.connection import PROJECT_ROOT
 
 
 class ProductionPreflightTest(unittest.TestCase):
     def test_missing_cache_fails_before_database_or_log_creation_with_exact_paths(self):
-        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "data" / "review") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             missing = [root / "bds.csv", root / "qcew.zip", root / "acs.csv"]
             database, logs = root / "production.sqlite", root / "logs"

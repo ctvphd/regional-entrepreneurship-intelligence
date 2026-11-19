@@ -53,7 +53,8 @@ def write_sources(directory: Path = SOURCE_DIR) -> list[Path]:
         for cbsa, _name, _county in SYNTHETIC_CBSAS:
             for sector, _title in SECTORS:
                 bds_rows.append(dict(zip(bds_fields, [str(year), cbsa, sector, "20", "22", "80", "20", "2", "10.0", "1", "5.0", "12", "4", "8", "5.0", "15.0", "6", "2", "4", "2.5", "7.5", "6", "7.5", "22.5", "1", "1", "3"])))
-                age0 = "D" if (year, cbsa, sector) == (2019, "99902", "54") else "0" if (year, cbsa, sector) == (2018, "99901", "11") else "3"
+                synthetic_count = "3" if year < 2017 else str(1 + ((year + int(cbsa[-1]) + int(sector)) % 5))
+                age0 = "D" if (year, cbsa, sector) == (2019, "99902", "54") else "0" if (year, cbsa, sector) == (2018, "99901", "11") else synthetic_count
                 age_rows.append({**dict(zip(bds_fields, [str(year), cbsa, sector, age0, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""])), "fagecoarse": "a) 0"})
     # An unmapped synthetic geography/industry row audits explicit exclusion.
     bds_rows.append(dict(zip(bds_fields, ["2020", "99888", "98", "7", "8", "20", "7", "1", "14.3", "0", "0.0", "4", "2", "2", "10.0", "20.0", "1", "0", "1", "0.0", "5.0", "3", "15.0", "25.0", "0", "0", "0"])))
