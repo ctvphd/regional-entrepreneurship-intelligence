@@ -57,6 +57,12 @@ The frozen 10,304-row holdout predictions were evaluated with 5,000 paired MSA-c
 
 The interval is above zero, so the holdout ranking difference is distinguishable from zero under this resampling design. The prespecified model-switch rule nevertheless is not met: although the observed gain just exceeds 0.02 and HGB is higher in all three holdout target years, HGB exceeded Logistic in only two of three development folds and its pooled development OOF gain was 0.004. Logistic remains the primary model; this post-assignment remediation did not refit models or alter labels, predictions, or evaluation rows.
 
+## A6.8C Sector-Only Benchmark
+
+To separate broad industry composition from within-sector ranking signal, each holdout row was assigned its sector's pooled development OOF gap prevalence. The holdout labels were not used to fit or recalibrate these scores. Sector-only AP is 0.325, above the 0.233 prevalence benchmark but below Logistic at 0.404 and HGB at 0.424. The paired MSA-cluster 95% intervals for Logistic-minus-sector (0.061-0.098) and HGB-minus-sector (0.078-0.121) are both above zero across 5,000 seed-755 replications.
+
+Logistic also exceeds natural prevalence within all 17 sectors having at least 30 positive holdout labels; two sparse sectors are suppressed. This supports the narrower conclusion that sector context explains part, but not all, of frozen predictive ranking. It does not establish a causal sector effect. No model, probability, label, threshold, or evaluation row was changed.
+
 ## A7.8D Verification Addendum
 
 - The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).

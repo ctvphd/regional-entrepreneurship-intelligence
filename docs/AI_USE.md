@@ -603,3 +603,13 @@ rule and limitations. The analysis did not retrain models, alter predictions,
 change labels, or modify the holdout sample. The student remains responsible
 for reviewing the uncertainty interpretation and the decision to retain
 Logistic as the primary model.
+
+## 2026-11-18 Assignment 6.8C Sector-Only Benchmark
+
+AI assistance implemented and tested a development-only sector-prevalence
+benchmark, applied it to frozen final-holdout rows, generated paired MSA-cluster
+bootstrap intervals, summarized within-sector Logistic ranking and sector
+prevalence drift, and produced a comparison table, figure, and methods report.
+The work did not retrain models or alter labels, probabilities, thresholds, or
+evaluation rows. The student remains responsible for reviewing the benchmark
+interpretation, predictive-not-causal boundary, and course-policy compliance.

@@ -244,3 +244,9 @@ Figures: `reports/figures/a6_robust_gap_ap.png`, `reports/figures/a6_robust_gap_
 ## Readiness for A6.7
 
 A6.6 ends here. No holdout metrics, final model refit, deployment threshold, dashboard, or A6.7 implementation is included.
+
+## A6.8C Post-Assignment Sector-Only Benchmark
+
+The frozen final holdout was subsequently evaluated against a leakage-safe sector-only score derived from pooled development OOF gap prevalence. Sector-only AP is 0.325 versus 0.233 for the prevalence benchmark, 0.404 for Logistic, and 0.424 for HGB. In 5,000 paired MSA-cluster bootstrap replications (seed 755), Logistic minus sector-only AP is 0.079 with a 95% percentile CI of 0.061-0.098; HGB minus sector-only is 0.099 with a CI of 0.078-0.121. No model was refit and no label, probability, threshold, or evaluation row changed.
+
+The benchmark shows that broad sector context is predictive, but does not explain all model ranking performance. Within-sector Logistic AP exceeds within-sector prevalence in all 17 sectors meeting the minimum-positive rule. Sector prevalence ranks are fairly persistent from development to holdout (rank correlation 0.919), although levels drift. Full methods, limitations, and outputs are in `reports/assignment6_sector_only_benchmark.md`.
