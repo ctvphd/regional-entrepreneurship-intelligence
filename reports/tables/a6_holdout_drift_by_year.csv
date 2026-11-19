@@ -1,0 +1,4 @@
+period,n,gap_prevalence,observed_startup_mean,observed_startup_median,logistic_AP,expected_startup_mean,expected_startup_median,residual_mean,residual_median,residual_sd,residual_p10,residual_p20,residual_p25,share_below_frozen_final_cutoff,residual_availability
+2021,3372,0.2428825623,7.176571924,6.894665359,0.4353874758,,,,,,,,,,not committed; no refit performed
+2022,3432,0.1809440559,7.667606504,7.510532724,0.3549859449,,,,,,,,,,not committed; no refit performed
+2023,3500,0.2731428571,7.312329411,7.287794394,0.4273398492,,,,,,,,,,not committed; no refit performed

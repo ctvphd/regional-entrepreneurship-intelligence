@@ -1,0 +1,4 @@
+standardization,raw_development_prevalence,raw_holdout_prevalence,holdout_prevalence_at_development_composition,raw_difference_percentage_points,adjusted_difference_percentage_points,composition_contribution_percentage_points,strata_n
+sector,0.1913005208,0.2325310559,0.2312315958,4.123053511,3.993107498,0.1299460122,19
+msa_size,0.1913005208,0.2325310559,0.2339007916,4.123053511,4.260027076,-0.1369735657,3
+sector_x_msa_size,0.1913005208,0.2325310559,0.232635938,4.123053511,4.133541723,-0.01048821283,57

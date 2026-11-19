@@ -256,3 +256,9 @@ The benchmark shows that broad sector context is predictive, but does not explai
 Capacity-based evaluation of the unchanged final Logistic ranking supports a top-10% priority-review rule. It flags 1,031 cells, of which 476 are realized gaps: precision 46.2%, recall 19.9%, lift 1.99x, and 1.17 false positives per true positive. The committed development-prevalence threshold flags 5,173 cells with 32.8% precision and 70.8% recall, illustrating the workload cost of broader early-warning coverage.
 
 The recommendation is a screening queue for deeper human investigation, not an automatic allocation or intervention rule. Sector, MSA, and training-cutpoint MSA-size concentration are documented in `reports/assignment6_decision_calibration.md`. No model, label, prediction, scientific target threshold, or dashboard output changed.
+
+## A6.8E Post-Assignment Holdout Drift and Coverage
+
+Development OOF prevalence is 19.130% versus 23.253% in the final holdout. Sector, MSA-size, and joint composition standardization leave holdout prevalence at 23.123%, 23.390%, and 23.264%, respectively, so observed composition does not explain the 4.123-point increase. Raw observed startup activity is higher in eligible holdout rows, and annual prevalence ranges from 18.1% to 27.3%. The supported interpretation is a mixed benchmark-relative temporal shift; final holdout residual magnitudes were not persisted and were not reconstructed by refitting.
+
+Coverage is 10,304 of 12,091 exact candidate pairs (85.220%). The 1,787 excluded cells are smaller and lower-startup on available measures, and exclusion rates decrease from 17.3% for small to 6.6% for large size-classified candidates. AP 0.404 therefore applies only to exact-pair, target-eligible, complete-case observations. Full exclusion reasons, composition checks, abstention language, and artifact limitations are in `reports/assignment6_holdout_drift_and_coverage.md`.

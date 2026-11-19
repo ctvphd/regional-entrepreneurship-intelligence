@@ -1,0 +1,3 @@
+period,n,gap_prevalence,observed_startup_mean,observed_startup_median,logistic_AP,expected_startup_mean,expected_startup_median,residual_mean,residual_median,residual_sd,residual_p10,residual_p20,residual_p25,share_below_frozen_final_cutoff,residual_availability,raw_prevalence_difference_percentage_points
+development_oof,13633,0.1913005208,6.733876965,6.531881804,0.3673097575,6.681093631,6.717211842,0.05278333326,-0.06553385914,2.12620952,-2.223659959,-1.416038666,-1.123770213,0.190126898,committed fold-validation Model A predictions,0
+holdout_pooled,10304,0.2325310559,7.386236315,7.218967494,0.4042247779,,,,,,,,,,not committed; no refit performed,4.123053511

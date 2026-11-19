@@ -624,3 +624,16 @@ The analysis did not retrain models, alter predictions or labels, change the
 scientific target threshold, assign monetary costs, or modify dashboard outputs.
 The student remains responsible for reviewing the operating-rule recommendation,
 stakeholder-burden interpretation, and course-policy compliance.
+
+## 2026-11-18 Assignment 6.8E Holdout Drift and Complete-Case Scope
+
+AI assistance reconstructed the frozen holdout candidate/eligibility boundary
+from committed descriptive data, standardized holdout prevalence to development
+sector and MSA-size composition, compared eligible and abstained cells, audited
+overlapping missingness reasons, and generated diagnostic tables, figures, and
+a methods report. It explicitly reported that final holdout expected values and
+continuous residuals were not committed and did not refit the expected model to
+recreate them. No model, label, probability, threshold, complete-case rule,
+panel, decision rule, or dashboard output was changed. The student remains
+responsible for reviewing the drift interpretation, abstention language, and
+course-policy compliance.

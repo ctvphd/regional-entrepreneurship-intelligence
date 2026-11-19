@@ -1,0 +1,20 @@
+sector_code,sector_title,candidate_n,eligible_n,excluded_n,exclusion_rate
+11,"Agriculture, Forestry, Fishing and Hunting",142,74,68,0.4788732394
+21,"Mining, Quarrying, and Oil and Gas Extraction",211,130,81,0.3838862559
+55,Management of Companies and Enterprises,308,196,112,0.3636363636
+22,Utilities,256,169,87,0.33984375
+51,Information,458,315,143,0.3122270742
+61,Educational Services,417,303,114,0.273381295
+42,Wholesale Trade,521,411,110,0.2111324376
+71,"Arts, Entertainment, and Recreation",635,506,129,0.2031496063
+31-33,Manufacturing,841,706,135,0.1605231867
+52,Finance and Insurance,776,659,117,0.1507731959
+48-49,Transportation and Warehousing,575,492,83,0.1443478261
+56,Administrative and Support and Waste Management and Remediation Services,749,654,95,0.126835781
+54,"Professional, Scientific, and Technical Services",679,593,86,0.1266568483
+53,Real Estate and Rental and Leasing,894,791,103,0.115212528
+81,Other Services (except Public Administration),937,856,81,0.08644610459
+72,Accommodation and Food Services,883,814,69,0.07814269536
+62,Health Care and Social Assistance,682,629,53,0.07771260997
+23,Construction,1020,960,60,0.05882352941
+44-45,Retail Trade,1107,1046,61,0.05510388437

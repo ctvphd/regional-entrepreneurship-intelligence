@@ -1,0 +1,20 @@
+scope,reason,excluded_n,pct_all_candidates,pct_excluded,overlap_allowed
+broad,target benchmark inputs incomplete,1167,0.09651807129,0.6530498041,True
+broad,predictor complete-case inputs incomplete,1308,0.1081796377,0.7319529938,True
+broad,both target and predictor inputs incomplete,688,0.05690182781,0.385002798,True
+target_field,missing target_startup_rate,0,0,0,True
+target_field,missing target_startup_rate_lag1,543,0.04490943677,0.3038612199,True
+target_field,missing target_employment_growth,208,0.01720287817,0.1163961947,True
+target_field,missing target_acs_population_growth,467,0.03862376975,0.2613318411,True
+target_field,missing target_median_household_income,318,0.02630055413,0.1779518747,True
+target_field,missing target_educational_attainment_pct,318,0.02630055413,0.1779518747,True
+target_field,missing target_labor_force_participation_pct,318,0.02630055413,0.1779518747,True
+target_field,missing target_unemployment_rate,318,0.02630055413,0.1779518747,True
+predictor_field,missing startup_rate,0,0,0,True
+predictor_field,missing startup_rate_lag1,571,0.04722520883,0.3195299384,True
+predictor_field,missing employment_growth,258,0.02133818543,0.1443760492,True
+predictor_field,missing acs_population_growth,532,0.04399966918,0.2977056519,True
+predictor_field,missing median_household_income,496,0.04102224795,0.2775601567,True
+predictor_field,missing educational_attainment_pct,496,0.04102224795,0.2775601567,True
+predictor_field,missing labor_force_participation_pct,496,0.04102224795,0.2775601567,True
+predictor_field,missing unemployment_rate,496,0.04102224795,0.2775601567,True

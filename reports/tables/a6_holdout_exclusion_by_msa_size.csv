@@ -1,0 +1,5 @@
+msa_size_group,candidate_n,eligible_n,excluded_n,exclusion_rate,candidate_share,eligible_share
+large,4250,3968,282,0.06635294118,0.3515011165,0.3850931677
+middle,3976,3550,426,0.1071428571,0.3288396328,0.3445263975
+small,3369,2786,583,0.1730483823,0.2786370027,0.2703804348
+unclassified_missing_population,496,0,496,1,0.04102224795,0

@@ -69,6 +69,12 @@ The frozen Logistic holdout ranking was translated into explicit capacity-based 
 
 The committed 0.188348 development-prevalence threshold was also checked directly. It flags 5,173 cells, confirming the professor's approximate count, with 1,696 realized gaps, 3,477 false positives, 32.8% precision, and 70.8% recall. This broader rule captures more gaps but requires reviewing half the holdout. The top-decile recommendation is a human-review priority queue, not an automatic funding, deficiency, or intervention decision. Models, predictions, labels, scientific target thresholds, and dashboard outputs were not changed.
 
+## A6.8E Holdout Drift and Complete-Case Scope
+
+Development OOF gap prevalence is 19.130% and final holdout prevalence is 23.253%, a 4.123 percentage-point increase. Reweighting holdout rates to development composition gives 23.123% by sector, 23.390% by MSA size, and 23.264% jointly by sector and size; composition therefore explains little of the increase. Eligible observed startup activity is higher, not lower, in the holdout (mean 7.386 versus 6.734 in development OOF rows). The evidence is most consistent with a mixed benchmark-relative temporal shift, but final holdout expected values and continuous residuals were not committed and were not recreated because that would require prohibited expected-model refitting.
+
+The exact holdout universe contains 12,091 candidate pairs; 10,304 are scoreable and 1,787 abstain for insufficient target or predictor data, so AP 0.404 applies to 85.220% candidate coverage. Exclusion is patterned: 17.3% of small, 10.7% of middle, and 6.6% of large MSA-size candidates are excluded, while 496 candidates with missing population cannot be size-classified and all abstain. Eligible rows have higher average predictor startup rate and population than available excluded rows. Excluded cells are described as insufficient-data abstentions, not negative predictions, and no probabilities are imputed.
+
 ## A7.8D Verification Addendum
 
 - The synthetic reviewer build completed with seven source files, 27 analytical rows, two fictional MSAs, two sectors, 2017-2023 coverage, zero duplicate keys, four quality checks, and zero foreign-key violations. Repeatability, dashboard-loader integration, exact t+3 pairing/prior lags, and mocked missing-cache preflight passed in focused tests (3 tests in the current sandbox run).
