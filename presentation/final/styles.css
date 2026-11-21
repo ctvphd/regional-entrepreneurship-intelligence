@@ -2,7 +2,7 @@
   --paper: #f7f8f6;
   --white: #ffffff;
   --ink: #20292b;
-  --muted: #637173;
+  --muted: #4f5d5f;
   --line: #ccd4d2;
   --teal: #087f78;
   --teal-soft: #dcefed;
@@ -186,11 +186,19 @@ p, li, td, th { font-size: clamp(12px, 1.24vw, 24px); line-height: 1.35; }
 .blocks i { display: block; flex: var(--n); }
 .blocks .true { background: var(--teal); }
 .blocks .false { background: #d4dcda; }
-.decision-metrics { display: grid; grid-template-columns: repeat(6, 1fr); gap: .5%; margin-top: 3%; }
-.decision-metrics div { padding-left: 8%; border-left: 2px solid var(--line); }
-.decision-metrics strong { display: block; color: var(--teal); font-size: clamp(20px, 2.2vw, 42px); }
-.decision-metrics span { color: var(--muted); font-size: clamp(9px, .78vw, 15px); }
-.decision-metrics + .guardrail { margin-top: 3%; }
+.decision-primary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3%; margin-top: 2.5%; }
+.decision-primary > div { padding: 0 5%; border-left: 3px solid var(--line); }
+.decision-primary > div:first-child { border-left-color: var(--teal); }
+.decision-primary span { display: block; color: var(--ink); font-size: clamp(12px, 1.05vw, 20px); font-weight: 750; }
+.decision-primary strong { display: block; margin: 1% 0; color: var(--teal); font-size: clamp(25px, 2.8vw, 54px); line-height: 1; }
+.decision-primary p { margin: 0; color: var(--ink); font-size: clamp(10px, .9vw, 17px); }
+.decision-primary small { display: block; margin-top: 2%; color: var(--muted); font-size: clamp(9px, .72vw, 14px); font-weight: 700; text-transform: uppercase; }
+.decision-support { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3%; margin-top: 2%; padding-top: 1.5%; border-top: 1px solid var(--line); }
+.decision-support > div { display: flex; align-items: baseline; gap: 3%; min-width: 0; }
+.decision-support strong { flex: 0 0 auto; color: var(--ink); font-size: clamp(16px, 1.55vw, 30px); }
+.decision-support span { color: var(--ink); font-size: clamp(10px, .82vw, 16px); line-height: 1.2; }
+.decision-support small { display: block; color: var(--muted); font-size: clamp(8px, .66vw, 13px); line-height: 1.15; }
+.decision-support + .guardrail { margin-top: 2.2%; }
 
 .coverage-bar { display: flex; height: 17%; margin-top: 4%; color: #fff; }
 .coverage-bar > div { padding: 2%; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
@@ -252,11 +260,13 @@ th { background: var(--ink); color: #fff; }
 .repro-list p { padding: 4%; background: #fff; }
 .repro-list strong { display: block; color: var(--teal); font-size: 3vw; }
 
-.controls { position: fixed; z-index: 20; left: 50%; bottom: 1.2%; transform: translateX(-50%); display: flex; align-items: center; gap: .35rem; padding: .4rem; background: rgb(32 41 43 / 92%); box-shadow: 0 8px 28px rgb(0 0 0 / 20%); opacity: .16; transition: opacity .2s; }
+.controls { position: fixed; z-index: 20; left: 50%; bottom: 1.2%; transform: translateX(-50%); display: flex; align-items: center; gap: .35rem; padding: .4rem; background: rgb(32 41 43 / 94%); box-shadow: 0 8px 28px rgb(0 0 0 / 20%); opacity: .78; transition: opacity .2s; }
 .controls:hover, .controls:focus-within { opacity: 1; }
-.controls button { width: 2.25rem; height: 2.25rem; border: 0; background: transparent; color: #fff; cursor: pointer; font-weight: 800; }
+.controls button { width: auto; min-width: 2.25rem; height: 2.25rem; padding: 0 .6rem; border: 0; background: transparent; color: #fff; cursor: pointer; font-weight: 800; }
+.controls button.icon-control { width: 2.25rem; padding: 0; }
 .controls button:hover { background: #4b5859; }
-#counter { min-width: 4rem; color: #fff; text-align: center; font-size: .82rem; }
+.deck-mode { padding: 0 .55rem; border-left: 1px solid #596567; color: #d8e0de; font-size: .75rem; font-weight: 700; white-space: nowrap; }
+#counter { min-width: 6.7rem; padding-right: .45rem; color: #fff; text-align: center; font-size: .82rem; white-space: nowrap; }
 .progress { position: fixed; z-index: 21; left: 0; bottom: 0; width: 100%; height: 5px; background: rgb(255 255 255 / 32%); }
 .progress i { display: block; width: 0; height: 100%; background: var(--teal); transition: width .25s ease-out; }
 .noscript { position: fixed; inset: auto 1rem 1rem; z-index: 99; background: #fff3cd; padding: 1rem; }

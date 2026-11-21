@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f8f6">
   <title>Regional Entrepreneurship Intelligence</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261121">
 </head>
 <body>
   <a class="skip-link" href="#deck">Skip to presentation</a>
@@ -155,9 +155,18 @@
 
     <section class="slide" data-title="Decision use" data-time="50" aria-labelledby="s13-title">
       <div class="slide-kicker">A practical screening rule</div>
-      <h2 id="s13-title">Review the highest-risk 10% as a focused early-warning queue.</h2>
+      <h2 id="s13-title">The highest-risk 10% creates a focused review queue</h2>
       <div class="hundred-visual"><div class="hundred-label"><strong>For every 100 priority cases reviewed</strong><span>≈46 realized gaps · ≈54 non-gaps</span></div><div class="blocks" aria-label="46 of 100 selected cases are realized gaps"><i class="true" style="--n:46"></i><i class="false" style="--n:54"></i></div></div>
-      <div class="decision-metrics"><div><strong>1,031</strong><span>cases reviewed</span></div><div><strong>476</strong><span>realized gaps</span></div><div><strong>46.2%</strong><span>of reviews became gaps</span><small>precision</small></div><div><strong>19.9%</strong><span>of all gaps captured</span><small>recall</small></div><div><strong>1.99×</strong><span>overall gap rate</span><small>lift</small></div><div><strong>1.17</strong><span>additional reviews per gap</span><small>false-positive / true-positive ratio</small></div></div>
+      <div class="decision-primary">
+        <div><span>Review yield</span><strong>46.2%</strong><p>of reviewed cases became realized gaps</p><small>Precision</small></div>
+        <div><span>Gaps captured</span><strong>19.9%</strong><p>of all realized gaps entered the queue</p><small>Recall</small></div>
+        <div><span>Risk concentration</span><strong>1.99×</strong><p>the overall realized-gap rate</p><small>Lift</small></div>
+      </div>
+      <div class="decision-support">
+        <div><strong>1,031</strong><span>cases reviewed</span></div>
+        <div><strong>476</strong><span>realized gaps</span></div>
+        <div><strong>1.17</strong><span>additional reviews per realized gap</span><small>False-positive / true-positive ratio</small></div>
+      </div>
       <p class="guardrail"><strong>Focused, not comprehensive:</strong> the queue captures about 20% of all realized gaps.</p>
       <aside class="speaker-data"><p class="full-notes">The practical option is a focused queue: review the highest-risk ten percent. That is 1,031 cases, of which 476 became realized gaps. For every 100 priority reviews, about 46 became gaps and 54 did not. That 46.2 percent share is precision. The queue captured 19.9 percent of all realized gaps, which is recall, and concentrated gaps at 1.99 times the overall rate, which is lift. Each realized gap required 1.17 additional reviews that did not become gaps. Those reviews are not automatically worthless; they are the workload cost of screening.</p><ul class="cues"><li>Meaning: a manageable priority-review queue.</li><li>46 of 100 reviews became gaps = precision.</li><li>19.9% of all gaps captured = recall.</li><li>1.99× overall rate = lift.</li><li>Focused, not comprehensive or mandatory policy.</li></ul></aside>
     </section>
@@ -186,7 +195,7 @@
       <div class="slide-kicker">Live demonstration</div>
       <h2 id="s16-title">From Research Model to Decision Support</h2>
       <p class="subtitle-small">One market. One industry. One question.</p>
-      <div class="demo-layout"><div class="screenshot-frame"><img src="assets/screenshots/pittsburgh-arts-explorer.png" alt="Actual Streamlit Explorer with Pittsburgh, Pennsylvania and Arts, Entertainment, and Recreation selected"><span>Static fallback · actual current application</span></div><div class="demo-copy"><strong>Pittsburgh, PA</strong><span>Arts, Entertainment, and Recreation</span><ul><li>14 observed years</li><li>4 comparable gap years</li><li>3 holdout prediction records</li></ul><p><strong>Investigate further.</strong><br>Do not diagnose.</p><a class="live-button" href="http://localhost:8772/explorer" target="_blank" rel="noopener">Open local dashboard <span aria-hidden="true">↗</span></a><small>Local route validated · deployed URL unavailable</small></div></div>
+      <div class="demo-layout"><div class="screenshot-frame"><img src="assets/screenshots/pittsburgh-arts-explorer.png" alt="Actual Streamlit Explorer with Pittsburgh, Pennsylvania and Arts, Entertainment, and Recreation selected"><span>Static fallback · actual current application</span></div><div class="demo-copy"><strong>Pittsburgh, PA</strong><span>Arts, Entertainment, and Recreation</span><ul><li>14 observed years</li><li>4 comparable gap years</li><li>3 holdout prediction records</li></ul><p><strong>Investigate further.</strong><br>Do not diagnose.</p><a class="live-button" href="https://regional-entrepreneurship-intelligence-sag3gkhdnpptv6hbxapp6yn.streamlit.app/explorer" target="_blank" rel="noopener">Open live Streamlit dashboard <span aria-hidden="true">↗</span></a><small>Verified public Explorer route</small></div></div>
       <aside class="speaker-data"><p class="full-notes">For the demonstration, I select Pittsburgh and Arts, Entertainment, and Recreation. I begin with the 14-year observed history and four years with comparable expected-rate context. For this historical evaluation period, the model assigned the market-industry combination an elevated gap-risk score. That is a retrospective ranking signal, not a 44 percent chance of failure and not a current forecast. I then check data confidence. The appropriate takeaway is to investigate further; the score does not explain why the pattern occurred or what intervention to fund.</p><ul class="cues"><li>Select Pittsburgh and sector 71.</li><li>Show history before the score.</li><li>Describe an elevated historical gap-risk score.</li><li>Not a probability of failure or current forecast.</li><li>Investigate; do not diagnose.</li></ul></aside>
     </section>
 
@@ -209,16 +218,17 @@
   </main>
 
   <nav class="controls" aria-label="Presentation controls">
-    <button id="prev" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button>
-    <button id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button>
-    <span id="counter" aria-label="Slide counter">1 / 17</span>
-    <button id="backupToggle" aria-label="Toggle backup slides" title="Backup slides (B)">B</button>
-    <button id="presenter" aria-label="Open presenter view" title="Presenter view (P)">P</button>
-    <button id="fullscreen" aria-label="Toggle fullscreen" title="Fullscreen (F)">⛶</button>
+    <button id="prev" class="icon-control" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button>
+    <button id="next" class="icon-control" aria-label="Next slide" title="Next slide (Right arrow)">→</button>
+    <span id="deckMode" class="deck-mode">Main presentation</span>
+    <span id="counter" aria-label="Slide counter">Slide 1 of 17</span>
+    <button id="backupToggle" aria-label="Open Q&A backup slides" title="Open Q&A backup slides (B)">Q&amp;A</button>
+    <button id="presenter" aria-label="Open presenter notes" title="Presenter notes: current slide, next slide, script, cues, and timer (P)">Notes</button>
+    <button id="fullscreen" class="icon-control" aria-label="Toggle fullscreen" title="Fullscreen (F)">⛶</button>
   </nav>
   <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
   <div id="presenterShell" class="presenter-shell" hidden></div>
   <noscript><p class="noscript">JavaScript is disabled. Scroll to view all slides; print still produces one slide per page.</p></noscript>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261121"></script>
 </body>
 </html>

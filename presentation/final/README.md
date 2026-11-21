@@ -10,9 +10,9 @@ From the repository root:
 uv run python -m http.server 8765 --directory presentation/final
 ```
 
-Open `http://localhost:8765/`.
+Open `http://localhost:8765/REI%20Presentation.html`.
 
-The presentation also works when `index.html` is opened directly. A local HTTP server is recommended for consistent browser behavior.
+The presentation also works when `REI Presentation.html` is opened directly. A local HTTP server is recommended for consistent browser behavior.
 
 ## Navigation
 
@@ -20,18 +20,16 @@ The presentation also works when `index.html` is opened directly. A local HTTP s
 - `Left arrow` or `Page Up`: go back
 - `Home` / `End`: first / last slide in the current group
 - Click the right or left half of a slide: advance or go back
-- `B`: enter or leave Q&A backup slides
+- `Q&A` button or `B`: enter or leave the seven technical Q&A backup slides
 - `Escape`: leave backup slides
 - `F`: toggle fullscreen
-- `P`: open presenter view
+- `Notes` button or `P`: enter or leave presenter notes view
 
 ## Presenter mode
 
-Press `P`, or open:
+Press `P` or select **Notes**. Presenter view replaces the audience slide in the same tab and includes the current slide, next-slide preview, full notes, concise cues, elapsed time, target time, and slide number. Select **Exit notes** to return to the audience view.
 
-`http://localhost:8765/?presenter=1`
-
-The presenter window includes the current slide, next-slide preview, full notes, concise cues, elapsed time, target time, and slide number. Audience and presenter windows synchronize through browser local storage.
+Slides 1–17 are the timed classroom presentation. Slides B1–B7 are technical Q&A backups and are excluded from the planned speaking time.
 
 ## Print to PDF
 
@@ -46,7 +44,11 @@ Print CSS produces one 16:9 slide per page and excludes notes and controls. Back
 
 ## Live demo
 
-Validated local route: `http://localhost:8772/explorer`
+Verified public dashboard: `https://regional-entrepreneurship-intelligence-sag3gkhdnpptv6hbxapp6yn.streamlit.app/`
+
+Slide 16 opens the public Explorer directly:
+
+`https://regional-entrepreneurship-intelligence-sag3gkhdnpptv6hbxapp6yn.streamlit.app/explorer`
 
 Start the dashboard from the repository root if needed:
 
@@ -54,7 +56,7 @@ Start the dashboard from the repository root if needed:
 uv run python -m streamlit run streamlit_app.py --server.port 8772
 ```
 
-No current working deployed Streamlit URL is documented in the repository. The live-demo button therefore opens the validated local route. Slide 16 includes an actual application screenshot as a fallback.
+The public Overview and Explorer routes were verified on November 21, 2026. Their visible title, navigation, model roles, 2010–2023 period, AP 0.404, and top-decile lift 1.99× match the current committed dashboard. Slide 16 includes an actual application screenshot as a fallback.
 
 Selected case: **Pittsburgh, PA × Arts, Entertainment, and Recreation (NAICS 71)**.
 
@@ -66,7 +68,7 @@ Presentation metrics come from frozen Assignment 6 and Assignment 7 artifacts. N
 
 ## File map
 
-- `index.html`: semantic slide content and presenter notes
+- `REI Presentation.html`: semantic slide content and presenter notes
 - `styles.css`: 16:9 layout, visual system, responsive and print styles
 - `app.js`: navigation, progressive reveals, presenter mode, timing, and fullscreen
 - `assets/figures/`: copied frozen production figures used by the deck

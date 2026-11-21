@@ -8,6 +8,7 @@ import re
 
 
 ROOT = Path(__file__).resolve().parent
+DECK_FILE = ROOT / "REI Presentation.html"
 
 
 class DeckParser(HTMLParser):
@@ -44,7 +45,7 @@ class DeckParser(HTMLParser):
 
 
 def main() -> None:
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    html = DECK_FILE.read_text(encoding="utf-8")
     script = (ROOT / "SPEAKER_SCRIPT.md").read_text(encoding="utf-8")
     parser = DeckParser()
     parser.feed(html)
@@ -60,7 +61,8 @@ def main() -> None:
     assert sum(int(slide["time"]) for slide in main_slides) == 680, "Timing must total 11:20"
 
     for asset in parser.assets:
-        assert (ROOT / asset).is_file(), f"Missing local asset: {asset}"
+        asset_path = asset.split("?", 1)[0]
+        assert (ROOT / asset_path).is_file(), f"Missing local asset: {asset}"
 
     canonical = [
         "63,577", "381", "19", "0.404", "23.3%", "0.692", "0.164", "1.99×",
@@ -79,13 +81,22 @@ def main() -> None:
         "High-risk concentration",
         "The more complex model scored slightly better",
         "What industry identity alone can predict",
-        "additional reviews per gap",
+        "additional reviews per realized gap",
         "The model can issue a reliable score for 85.2% of candidate cases.",
         "More cases fell below expectation in the holdout period",
         "Investigate further.",
     ]
     for phrase in meaning_first:
         assert phrase in html, f"Missing meaning-first language: {phrase}"
+
+    navigation_labels = [
+        "Main presentation",
+        "Open Q&A backup slides",
+        "Open presenter notes",
+        "Open live Streamlit dashboard",
+    ]
+    for label in navigation_labels:
+        assert label in html, f"Missing clarified control or link: {label}"
 
     audience_qa = ROOT / "LANGUAGE_AUDIENCE_QA.md"
     assert audience_qa.is_file(), "Missing mixed-audience language QA"

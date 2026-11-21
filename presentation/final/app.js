@@ -6,9 +6,12 @@
   const backupSlides = allSlides.filter((slide) => slide.classList.contains("backup"));
   const deck = document.getElementById("deck");
   const counter = document.getElementById("counter");
+  const deckMode = document.getElementById("deckMode");
   const progressBar = document.getElementById("progressBar");
   const presenterShell = document.getElementById("presenterShell");
-  const presenterMode = new URLSearchParams(location.search).get("presenter") === "1";
+  const audienceControls = document.querySelector("body > .controls");
+  const audienceProgress = document.querySelector("body > .progress");
+  let presenterMode = new URLSearchParams(location.search).get("presenter") === "1";
   const state = { group: "main", index: 0, startedAt: Date.now() };
 
   const slides = () => state.group === "main" ? mainSlides : backupSlides;
@@ -34,7 +37,8 @@
     allSlides.forEach((slide) => slide.classList.remove("active"));
     current().classList.add("active");
     const total = slides().length;
-    counter.textContent = state.group === "main" ? `${state.index + 1} / ${total}` : `B${state.index + 1} / ${total}`;
+    deckMode.textContent = state.group === "main" ? "Main presentation" : "Q&A backup";
+    counter.textContent = state.group === "main" ? `Slide ${state.index + 1} of ${total}` : `Backup B${state.index + 1} of ${total}`;
     progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
     document.title = `${current().dataset.title} · Regional Entrepreneurship Intelligence`;
     if (broadcast) publish();
@@ -68,10 +72,13 @@
     else document.exitFullscreen?.();
   }
 
-  function openPresenter() {
-    const url = new URL(location.href);
-    url.searchParams.set("presenter", "1");
-    window.open(url, "rei-presenter", "popup,width=1500,height=920");
+  function togglePresenter() {
+    presenterMode = !presenterMode;
+    deck.hidden = presenterMode;
+    audienceControls.hidden = presenterMode;
+    audienceProgress.hidden = presenterMode;
+    presenterShell.hidden = !presenterMode;
+    if (presenterMode) renderPresenter();
   }
 
   function formatTime(seconds) {
@@ -102,7 +109,7 @@
         </div>
         <article class="presenter-notes"><h2>${active.dataset.title}</h2><p>${notes}</p><h3>Concise cues</h3><ul>${cues || "<li>Use only if requested during Q&A.</li>"}</ul></article>
       </div>
-      <nav class="controls" aria-label="Presenter controls"><button data-action="prev" aria-label="Previous slide">←</button><button data-action="next" aria-label="Next slide">→</button><button data-action="backup" aria-label="Toggle backup slides">B</button><button data-action="reset" aria-label="Reset timer">Reset</button></nav>`;
+      <nav class="controls" aria-label="Presenter controls"><button data-action="prev" aria-label="Previous slide">←</button><button data-action="next" aria-label="Next slide">→</button><button data-action="backup" aria-label="Toggle Q&A backup slides">Q&amp;A</button><button data-action="reset" aria-label="Reset timer">Reset timer</button><button data-action="exit" aria-label="Exit presenter notes">Exit notes</button></nav>`;
     const currentClone = active.cloneNode(true);
     const nextClone = nextSlide.cloneNode(true);
     currentClone.classList.add("active");
@@ -113,12 +120,13 @@
     presenterShell.querySelector("[data-action='next']").onclick = () => move(1);
     presenterShell.querySelector("[data-action='backup']").onclick = toggleBackups;
     presenterShell.querySelector("[data-action='reset']").onclick = () => { state.startedAt = Date.now(); renderPresenter(); };
+    presenterShell.querySelector("[data-action='exit']").onclick = togglePresenter;
   }
 
   document.getElementById("prev").addEventListener("click", () => move(-1));
   document.getElementById("next").addEventListener("click", () => move(1));
   document.getElementById("backupToggle").addEventListener("click", toggleBackups);
-  document.getElementById("presenter").addEventListener("click", openPresenter);
+  document.getElementById("presenter").addEventListener("click", togglePresenter);
   document.getElementById("fullscreen").addEventListener("click", toggleFullscreen);
 
   document.addEventListener("keydown", (event) => {
@@ -128,7 +136,7 @@
     if (event.key === "End") { event.preventDefault(); goTo(slides().length - 1); }
     if (event.key.toLowerCase() === "b") toggleBackups();
     if (event.key.toLowerCase() === "f") toggleFullscreen();
-    if (event.key.toLowerCase() === "p" && !presenterMode) openPresenter();
+    if (event.key.toLowerCase() === "p") togglePresenter();
     if (event.key === "Escape" && state.group === "backup") toggleBackups();
   });
 
@@ -148,8 +156,8 @@
 
   if (presenterMode) {
     deck.hidden = true;
-    document.querySelector("body > .controls").hidden = true;
-    document.querySelector("body > .progress").hidden = true;
+    audienceControls.hidden = true;
+    audienceProgress.hidden = true;
     presenterShell.hidden = false;
     setInterval(() => {
       const elapsed = document.getElementById("elapsed");

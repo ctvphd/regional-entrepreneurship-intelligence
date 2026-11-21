@@ -12,7 +12,7 @@
 
 The selected demonstration case is Pittsburgh, PA × Arts, Entertainment, and Recreation. The Explorer state was validated in the running application and captured as `assets/screenshots/pittsburgh-arts-explorer.png`.
 
-The repository does not document a current public deployment. The deck therefore uses the validated local URL `http://localhost:8772/explorer` and visibly labels the deployed URL as unavailable. The screenshot is the fallback.
+The Slide 16 link uses the verified public Explorer route at `https://regional-entrepreneurship-intelligence-sag3gkhdnpptv6hbxapp6yn.streamlit.app/explorer`. The public Overview and Explorer loaded successfully on November 21, 2026, with the expected project title, routes, study period, model roles, AP 0.404, and top-decile lift 1.99×. The screenshot remains the fallback.
 
 ## Visual and interaction QA
 
